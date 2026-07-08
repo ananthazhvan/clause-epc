@@ -1,0 +1,67 @@
+{% extends "base_layout.html" %}
+{% block content %}
+<div class="page">
+    <div style="border-bottom: 3px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">
+        <h1 style="margin: 0; font-size: 22pt; color: var(--primary);">ADDENDUM NO. 3</h1>
+        <div style="font-size: 10pt; color: var(--text-light);">Project: {{ project.name }} | Navi Mumbai, India</div>
+        <div style="font-size: 10pt; color: var(--text-light);">Date: June 15, 2026 | Ref: ADD-003-R0</div>
+    </div>
+    
+    <p>To all prospective bidders, contractors, and vendors, this Addendum is issued to modify and amend the active tender and construction specification documents. The changes detailed below shall supersede the original clauses with immediate effect.</p>
+    
+    <h2>1. Modifications to Technical Specifications</h2>
+    
+    {% for change in changes %}
+    <div style="border: 1px solid var(--border-color); padding: 15px; margin-bottom: 15px; background-color: var(--bg-light);">
+        <div style="font-weight: 600; color: var(--primary); font-size: 11pt; margin-bottom: 5px;">Reference: {{ change.reference }}</div>
+        <div style="font-family: monospace; font-size: 10pt; margin: 10px 0; background-color: white; padding: 10px; border-left: 4px solid var(--error);">
+            Instruction: {{ change.action }}
+        </div>
+        <div style="font-size: 9.5pt; color: var(--text-dark);">
+            Description: {{ change.description }}
+        </div>
+    </div>
+    {% endfor %}
+    
+    <h2>2. Impact Summary & Affected Registers</h2>
+    <p>Ingestion of Addendum No. 3 shifts the compliance status of several packages, procurement orders, and testing criteria. The affected elements are detailed in the project bible flips directory.</p>
+    
+    <div class="footer">
+        <span>ADD-003</span>
+        <span>Page 1 of 2</span>
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span class="logo">ADDENDUM NO. 3 - MERIDIAN CAMPUS</span>
+        <span>ADD-003</span>
+    </div>
+    <h2>3. Detailed Ingestion Flips (Audit Trails)</h2>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Affected Target</th>
+                <th>Pre-Addendum Verdict</th>
+                <th>Post-Addendum Verdict</th>
+                <th>Technical Reason for Flip</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flip in flips %}
+            <tr>
+                <td>{{ flip.id }}</td>
+                <td style="font-weight: bold; color: var(--success);">{{ flip.before_verdict }}</td>
+                <td style="font-weight: bold; color: var(--error);">{{ flip.after_verdict }}</td>
+                <td>{{ flip.explanation }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="footer">
+        <span>ADD-003</span>
+        <span>Page 2 of 2</span>
+    </div>
+</div>
+{% endblock %}

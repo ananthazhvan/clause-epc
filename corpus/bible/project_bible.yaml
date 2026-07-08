@@ -1,0 +1,2379 @@
+project:
+  name: Meridian Data Centre Campus, Phase 1
+  location: Navi Mumbai, India
+  capacity: 20MW IT load
+  tier_target: Tier III (Concurrently Maintainable)
+  client: Meridian Digital Infrastructure Pvt Ltd.
+  epc: you
+  consultant: Apex Engineering Consultants
+  design_basis:
+    total_it_load_kw: 20000
+    ups_redundancy: N+1
+    design_ambient_temp_c: 45
+    pue_target: 1.45
+    generator_autonomy_h: 48
+    cooling_redundancy: N+1
+    battery_runtime_min: 10
+    nominal_voltage_mv: 11
+    nominal_voltage_lv: 0.415
+timeline:
+- event: VoltEdge UPS R0 submitted
+  date: '2026-02-15'
+- event: VoltEdge UPS R0 reviewed & rejected
+  date: '2026-03-01'
+- event: VoltEdge UPS R1 submitted
+  date: '2026-03-15'
+- event: Addendum No. 3 issued
+  date: '2026-06-15'
+  description: Modifies UPS efficiency and CRAH design water temp
+rules:
+  superseded_packages_rule: Superseded submittal packages are frozen at their last
+    review verdict. They are never re-evaluated against subsequent design addenda.
+    For example, VoltEdge UPS R0 remains rejected due to R0-specific deviations and
+    is not re-verdicted for Addendum 3; only the active VoltEdge UPS R1 package is
+    re-evaluated and flipped.
+submittal_packages:
+  VoltEdge UPS, R0:
+    status: SUPERSEDED
+    superseded_by: VoltEdge UPS, R1
+  Deccan generator:
+    status: ACTIVE
+  CryoCore CRAH:
+    status: ACTIVE
+  Trident switchgear:
+    status: ACTIVE
+  AegisFire suppression:
+    status: ACTIVE
+  VoltEdge UPS, R1:
+    status: ACTIVE
+  VoltEdge battery cabinet:
+    status: ACTIVE
+spec_defects:
+- defect_id: DEF-001
+  section: 26 33 53
+  type: contradiction
+  description: Design Basis says UPS N+1, but Section 26 33 53 Part 2.1.2.A states
+    'UPS system modules shall be configured in a minimum N+2 parallel redundant configuration'.
+  location: 26 33 53 Part 2.1.2.A vs DBR Section 3.1
+- defect_id: DEF-002
+  section: 26 33 53
+  type: contradiction
+  description: UPS spec Section 26 33 53 Part 2.3.1.E requires a 10-min battery runtime,
+    but its own Part 3.4.2.C Field testing acceptance criterion says 'inverter shall
+    maintain full 100% IT load for a minimum of 12 minutes on battery power'.
+  location: 26 33 53 Part 2.3.1.E vs Part 3.4.2.C
+- defect_id: DEF-003
+  section: 26 13 26
+  type: contradiction
+  description: Common Electrical Section 26 05 00 Part 1.4.3.B mandates IEC test certificates
+    for all medium voltage gear, but Section 26 13 26 Part 1.2.1 references UL standards
+    only for certification, causing a conflict.
+  location: 26 05 00 Part 1.4.3.B vs 26 13 26 Part 1.2.1
+- defect_id: DEF-004
+  section: 23 81 23
+  type: ambiguity
+  description: CRAH cooling unit COP/efficiency is specified as 'minimum COP of 5.2'
+    in Part 2.2.4.C with no operating conditions (no entering/leaving water temperatures
+    or airflow speed specified), making the performance claim unverifiable.
+  location: 23 81 23 Part 2.2.4.C
+- defect_id: DEF-005
+  section: 26 32 13
+  type: ambiguity
+  description: Generator room clause Part 3.2.1.F mandates 'adequate ventilation shall
+    be provided in the generator room to prevent heat buildup,' which is an unverifiable
+    qualitative requirement.
+  location: 26 32 13 Part 3.2.1.F
+- defect_id: DEF-006
+  section: 21 22 00
+  type: obsolete_reference
+  description: Clean Agent Fire Suppression spec Section 21 22 00 Part 1.2.1 references
+    'NFPA 2001 (2008 Edition)', which is a withdrawn standard revision.
+  location: 21 22 00 Part 1.2.1
+- defect_id: DEF-007
+  section: 26 32 13
+  type: code_conflict
+  description: Section 26 32 13 Part 2.3.8.C demands generator day tanks support >=
+    2.0 hours of runtime at full load (1040 L), which directly conflicts with local
+    NBC fire safety codes capping indoor fuel day tanks at 1000 L.
+  location: 26 32 13 Part 2.3.8.C vs NBC Part 4
+addendum_3:
+  doc_id: ADD-003
+  date: '2026-06-15'
+  changes:
+  - reference: Section 26 33 53, Part 2.3.4
+    action: DELETE '96%' and INSERT '96.5%'
+    description: UPS double-conversion efficiency requirement increased from 96.0%
+      to 96.5% at 50%, 75%, and 100% load points.
+  - reference: Section 23 81 23, Part 2.2.1
+    action: "DELETE '10\xB0C entering' and INSERT '11\xB0C entering'"
+    description: "CRAH chilled water design entering temperature increased from 10\xB0\
+      C to 11\xB0C, reducing cooling plant chiller energy."
+  flips:
+  - id: DEV-UPS-R1-ADD3-EFF100
+    type: check
+    before_verdict: COMPLIANT
+    after_verdict: DEVIATION
+    explanation: UPS R1 efficiency at 100% load is 96.2%. Spec is increased from 96.0%
+      to 96.5% under Addendum 3, flipping this parameter non-compliant.
+  - id: DEV-UPS-R1-ADD3-EFF75
+    type: check
+    before_verdict: COMPLIANT
+    after_verdict: DEVIATION
+    explanation: UPS R1 efficiency at 75% load is 96.0%. Spec is increased from 96.0%
+      to 96.5% under Addendum 3, flipping this parameter non-compliant.
+  - id: DEV-UPS-R1-ADD3-EFF50
+    type: check
+    before_verdict: COMPLIANT
+    after_verdict: DEVIATION
+    explanation: UPS R1 efficiency at 50% load is 96.2%. Spec is increased from 96.0%
+      to 96.5% under Addendum 3, flipping this parameter non-compliant.
+  - id: COMP-CRAH-CHW-IN
+    type: check
+    before_verdict: COMPLIANT
+    after_verdict: DEVIATION
+    explanation: "CRAH entering water temperature claimed is 10\xB0C. Addendum 3 shifts\
+      \ spec to 11\xB0C entering, making the 10\xB0C unit a deviation."
+  - id: PO-263353-H1
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: UPS modules procured under PO-263353-H1 no longer meet the updated
+      efficiency specification of 96.5%.
+  - id: PO-263353-H2
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: UPS modules procured under PO-263353-H2 no longer meet the updated
+      efficiency specification of 96.5%.
+  - id: PO-263353-H3
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: UPS modules procured under PO-263353-H3 no longer meet the updated
+      efficiency specification of 96.5%.
+  - id: PO-263353-H4
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: UPS modules procured under PO-263353-H4 no longer meet the updated
+      efficiency specification of 96.5%.
+  - id: PO-238123-H1
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: "CRAH units procured under PO-238123-H1 are designed for 10\xB0C\
+      \ entering chilled water, but the chilled water loop design has changed to 11\xB0\
+      C."
+  - id: PO-238123-H2
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: "CRAH units procured under PO-238123-H2 are designed for 10\xB0C\
+      \ entering chilled water, but the chilled water loop design has changed to 11\xB0\
+      C."
+  - id: PO-238123-H3
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: "CRAH units procured under PO-238123-H3 are designed for 10\xB0C\
+      \ entering chilled water, but the chilled water loop design has changed to 11\xB0\
+      C."
+  - id: PO-238123-H4
+    type: po
+    before_verdict: VALID
+    after_verdict: INVALID
+    explanation: "CRAH units procured under PO-238123-H4 are designed for 10\xB0C\
+      \ entering chilled water, but the chilled water loop design has changed to 11\xB0\
+      C."
+  - id: CX-UPS-L5-01
+    type: cx_test
+    before_verdict: VALID
+    after_verdict: STALE
+    explanation: Acceptance criteria of 96.0% efficiency in the UPS L5 test plan is
+      now stale and must be updated to 96.5%.
+  - id: CX-CRAH-L4-01
+    type: cx_test
+    before_verdict: VALID
+    after_verdict: STALE
+    explanation: "Acceptance criteria of 250 kW capacity at 10\xB0C entering water\
+      \ temp in the CRAH test plan is now stale and must be updated to 11\xB0C entering\
+      \ water temp."
+deviations:
+- check_id: DEV-UPS-R0-EFF50
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.2.B
+  rule_id: UPS-EFF-50
+  deviation_type: value_out_of_spec
+  tier: T3
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Datasheet table claims 96.1% efficiency at 50% load, but footnote 3
+    on page 8 states 'Efficiency reduces to 95.1% under VFI mode when harmonic filters
+    are active at 50% load', which is below the 96% spec requirement.
+  where_expressed: footnote
+- check_id: DEV-UPS-R0-RED
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.1.2.A
+  rule_id: UPS-REDUNDANCY
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Vendor submittal proposes N+1 module configuration (5 active, 1 standby)
+    which complies with the Design Basis Report but violates Section 26 33 53 Part
+    2.1.2.A which mistakenly demands a minimum of N+2 redundancy.
+  where_expressed: main table
+- check_id: DEV-UPS-R0-CERT
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 1.4.1.C
+  rule_id: UPS-CERTIFICATION
+  deviation_type: certification_mismatch
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Vendor submittal states compliance with IEC 62040-2 (EMC requirements)
+    but does not provide certification under IEC 62040-3 (performance and test requirements)
+    as explicitly mandated.
+  where_expressed: compliance matrix
+- check_id: DEV-UPS-R0-REV
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 1.3.1
+  rule_id: UPS-SPEC-REVISION
+  deviation_type: revision_mismatch
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Submittal transmittal cover sheet states the submittal is reviewed
+    against spec revision 'Rev 2020', but the active project specification is 'Rev
+    2024'.
+  where_expressed: transmittal
+- check_id: DEV-UPS-R0-MISS-PARAM
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.8
+  rule_id: UPS-BYPASS-TRANSFER-TIME
+  deviation_type: missing_parameter
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Bypass static switch transfer time (spec required <= 4ms) is completely
+    missing from the vendor datasheet parameter table.
+  where_expressed: missing
+- check_id: DEV-UPS-R0-OVERLOAD
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.5.A
+  rule_id: UPS-OVERLOAD-CAPACITY
+  deviation_type: value_out_of_spec
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: UPS module overload rating is claimed as 125% for 5 minutes. Spec requires
+    125% overload capability for a minimum of 10 minutes.
+  where_expressed: main table
+- check_id: DEV-UPS-R0-AIRFLOW-PATH
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.4.2
+  rule_id: UPS-AIRFLOW-PATH
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Datasheet shows cooling airflow path as rear-exhaust. Spec requires
+    a front-inlet and top-exhaust airflow configuration for hot/cold aisle containment.
+  where_expressed: main table
+- check_id: DEV-UPS-R0-PAINT
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.4.5.C
+  rule_id: UPS-ENCLOSURE-PAINT
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: UPS enclosure paint finish is listed as RAL 9005 (Jet Black). Spec
+    requires RAL 7035 (Light Grey) polyester powder coating.
+  where_expressed: main table
+- check_id: DEV-GEN-TEMP
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.2.1.A
+  rule_id: GEN-RATING-TEMP
+  deviation_type: condition_mismatch
+  tier: T3
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: "Generator standby rating of 2500 kVA is quoted at a reference ambient\
+    \ of 40\xB0C on the datasheet cover. The spec mandates ratings be verified at\
+    \ the project design basis ambient of 45\xB0C."
+  where_expressed: main table
+- check_id: DEV-GEN-SHORTFALL
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.2.1.B
+  rule_id: GEN-RATING-SHORTFALL
+  deviation_type: value_out_of_spec
+  tier: T3
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: "At 45\xB0C design ambient, the Deccan generator derating curve (Figure\
+    \ 2, page 12) applies a -2.0% derating factor to the standby rating, resulting\
+    \ in an active capacity of 2450 kVA, which is below the 2500 kVA spec requirement."
+  where_expressed: curve
+- check_id: DEV-GEN-OBS-CERT
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.3.5.A
+  rule_id: GEN-CONTROL-OBSOLETE
+  deviation_type: certification_mismatch
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Submittal states the generator controller utilizes the 'EMCP 3.2' control
+    system. The spec mandates the current 'EMCP 4.4' controller, rendering this an
+    obsolete hardware version.
+  where_expressed: compliance matrix
+- check_id: DEV-GEN-AMB-VENT
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 3.2.1.F
+  rule_id: GEN-ROOM-VENTILATION
+  deviation_type: value_out_of_spec
+  tier: T2
+  verdict_pre_addendum: NEEDS_REVIEW
+  verdict_post_addendum: NEEDS_REVIEW
+  explanation: Spec clause demands 'adequate ventilation' in the room. Submittal states
+    'room ventilation is adequate', which is a qualitative, unverifiable statement
+    and does not submit air flow calculations. A deterministic verifier cannot rule
+    on this.
+  where_expressed: compliance matrix
+- check_id: DEV-GEN-DAYTANK
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.3.8.C
+  rule_id: GEN-DAY-TANK-RUN
+  deviation_type: value_out_of_spec
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Vendor submittal day tank has a maximum capacity of 990 Liters, providing
+    only 1.9 hours of autonomy at full load. This violates spec 2.3.8.C requiring
+    2.0 hours (1040 L) and is linked to the code conflict spec defect DEF-007.
+  where_expressed: main table
+- check_id: DEV-GEN-MISS-PARAM
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.2.4.D
+  rule_id: GEN-FUEL-CONS-50
+  deviation_type: missing_parameter
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Fuel consumption rate at 50% load is omitted from the generator performance
+    table on page 6 of the submittal.
+  where_expressed: missing
+- check_id: DEV-GEN-STARTER
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.3.3.A
+  rule_id: GEN-STARTER-MOTORS
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Generator uses a single 24VDC electric starter motor. Spec requires
+    dual starter motors in redundant configuration with independent starter batteries.
+  where_expressed: main table
+- check_id: DEV-GEN-SOUND
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.4.3.B
+  rule_id: GEN-SOUND-LEVEL
+  deviation_type: value_out_of_spec
+  tier: T3
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Datasheet shows sound level at 1 meter is 88 dBA in footnote 1. Spec
+    requires maximum 85 dBA sound pressure level in a free field at 1 meter.
+  where_expressed: footnote
+- check_id: DEV-CRAH-AIRFLOW
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.2.2.A
+  rule_id: CRAH-AIRFLOW-RATE
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: CRAH unit airflow is 62,390 m3/h, which is 3.0% below the spec requirement
+    of 64,320 m3/h, violating the cooling-airflow basis.
+  where_expressed: main table
+- check_id: DEV-CRAH-AMB-CHW
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.2.4.C
+  rule_id: CRAH-COP-AMBIGUITY
+  deviation_type: condition_mismatch
+  tier: T3
+  verdict_pre_addendum: NEEDS_REVIEW
+  verdict_post_addendum: NEEDS_REVIEW
+  explanation: Vendor submittal claims a COP of 5.3, matching the required COP of
+    5.2, but fails to state the chilled water entering/leaving temperatures or the
+    air wet/dry bulb temperatures at which this COP is achieved, leaving the claim
+    unverifiable. A deterministic verifier cannot rule on this.
+  where_expressed: main table
+- check_id: DEV-CRAH-UNIT-HP
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.3.2.B
+  rule_id: CRAH-MOTOR-UNIT
+  deviation_type: unit_mismatch
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: 'CRAH fan motor power is listed as ''7.5 HP'' in the datasheet. The
+    spec requires motor power to be defined in electrical kilowatts (kW) (conversion:
+    7.5 HP * 0.746 = 5.6 kW).'
+  where_expressed: main table
+- check_id: DEV-CRAH-REFRIGERANT
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.2.8
+  rule_id: CRAH-REFRIGERANT-TYPE
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: CRAH cooling coil utilizes R-407C refrigerant, but spec clause 2.2.8
+    explicitly mandates R-410A refrigerant for compliance with environmental policies.
+  where_expressed: main table
+- check_id: DEV-CRAH-MISS-PARAM
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.3.5.A
+  rule_id: CRAH-VALVE-CV
+  deviation_type: missing_parameter
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: The valve flow coefficient (Cv) of the 2-way modulating control valve
+    is missing from the CRAH component table.
+  where_expressed: missing
+- check_id: DEV-CRAH-HUMIDIFIER
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.3.6.B
+  rule_id: CRAH-HUMIDIFIER-TYPE
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Vendor submittal specifies an infrared humidifier system. The specification
+    explicitly mandates an electrode steam generating humidifier for humidity control.
+  where_expressed: main table
+- check_id: DEV-CRAH-VALVE-TYPE
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.3.5.C
+  rule_id: CRAH-VALVE-TYPE
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: CRAH is provided with a standard 2-way modulating control valve. Spec
+    requires a pressure independent control valve (PICV) for chilled water flow regulation.
+  where_expressed: main table
+- check_id: DEV-CRAH-WIDTH
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.4.1.A
+  rule_id: CRAH-UNIT-WIDTH
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: CRAH unit overall cabinet width is 2450 mm. The spec mandates a maximum
+    cabinet width of 2400 mm to ensure transport clearance in corridors.
+  where_expressed: main table
+- check_id: DEV-FIRE-CERT-MISS
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 1.3.3
+  rule_id: FIRE-TEST-CERTIFICATE
+  deviation_type: missing_document
+  tier: T1
+  verdict_pre_addendum: MISSING
+  verdict_post_addendum: MISSING
+  explanation: The vendor submittal package does not contain the required UL/FM factory
+    test and compliance certificate for the clean agent cylinder valves.
+  where_expressed: missing
+- check_id: DEV-FIRE-STD-OBS
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 1.2.1
+  rule_id: FIRE-STD-EDITION
+  deviation_type: certification_mismatch
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Submittal states compliance with NFPA 2001 (2008 Edition). The project
+    specification requires NFPA 2001 (2018 Edition), which contains critical safety
+    amendments regarding agent hold times.
+  where_expressed: compliance matrix
+- check_id: DEV-FIRE-DISCH-FOOT
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.2.3.A
+  rule_id: FIRE-DISCHARGE-TIME
+  deviation_type: value_out_of_spec
+  tier: T3
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Main data table claims a 9.2s discharge time, but footnote 2 on page
+    5 reveals that 'discharge time extends to 11.0 seconds when piping runs exceed
+    45 meters', violating the NFPA 2001 maximum limit of 10 seconds.
+  where_expressed: footnote
+- check_id: DEV-FIRE-HOLDTIME
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.2.3.B
+  rule_id: FIRE-HOLD-TIME
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Vendor compliance matrix states the agent hold time (retention) is
+    9 minutes (540 seconds) under worst-case room leakage, failing the spec minimum
+    requirement of 10 minutes (600 seconds).
+  where_expressed: compliance matrix
+- check_id: DEV-FIRE-MISS-PARAM
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.3.4.F
+  rule_id: FIRE-NOAEL-MARGIN
+  deviation_type: missing_parameter
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: The NOAEL safety margin calculation is missing from the vendor submittal
+    package.
+  where_expressed: missing
+- check_id: DEV-FIRE-PRESSURE
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.3.1.A
+  rule_id: FIRE-CYLINDER-PRESSURE
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Submittal provides a 360 psi ECS system. Spec requires 500 psi ECS-500
+    system configuration for optimal high-pressure gas distribution.
+  where_expressed: main table
+- check_id: DEV-FIRE-QUANTITY
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.2.5
+  rule_id: FIRE-AGENT-QUANTITY
+  deviation_type: value_out_of_spec
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Total clean agent quantity detailed in the bill of materials is 11,800
+    kg. Design calculations in the specification mandate a minimum of 12,500 kg of
+    agent to maintain design concentration across all zones.
+  where_expressed: main table
+- check_id: DEV-FIRE-STANDARDS
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 1.2.3
+  rule_id: FIRE-STANDARDS-ISO
+  deviation_type: certification_mismatch
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Submittal compliance matrix notes that cylinders are certified to ISO
+    9809-1 only. The specification mandates certification under UL 2166 and FM 5600
+    standards.
+  where_expressed: compliance matrix
+- check_id: DEV-UPS-R1-THD
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.2.1.D
+  rule_id: UPS-R1-INPUT-THD
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Revised submittal VoltEdge UPS R1 shows an input THDi of 5.2% at full
+    load, which exceeds the specified limit of 5.0% (introduced as a new deviation
+    in R1).
+  where_expressed: main table
+- check_id: DEV-UPS-R1-ADD3-EFF100
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.3.4
+  rule_id: UPS-R1-EFF-100
+  deviation_type: value_out_of_spec
+  tier: T3
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: DEVIATION
+  explanation: Under Addendum 3, the UPS efficiency requirement was increased to 96.5%.
+    VoltEdge UPS R1 efficiency at 100% load is 96.2%, failing this updated specification.
+  where_expressed: main table
+- check_id: DEV-UPS-R1-ADD3-EFF75
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.3.4
+  rule_id: UPS-R1-EFF-75
+  deviation_type: value_out_of_spec
+  tier: T3
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: DEVIATION
+  explanation: Under Addendum 3, the UPS efficiency requirement was increased to 96.5%.
+    VoltEdge UPS R1 efficiency at 75% load is 96.0%, failing this updated specification.
+  where_expressed: main table
+- check_id: DEV-UPS-R1-ADD3-EFF50
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.3.4
+  rule_id: UPS-R1-EFF-50
+  deviation_type: value_out_of_spec
+  tier: T3
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: DEVIATION
+  explanation: Under Addendum 3, the UPS efficiency requirement was increased to 96.5%.
+    VoltEdge UPS R1 efficiency at 50% load is 96.2%, failing this updated specification.
+  where_expressed: main table
+- check_id: DEV-UPS-R1-MISS-PARAM
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.2.8
+  rule_id: UPS-R1-BYPASS-TIME
+  deviation_type: missing_parameter
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Bypass static switch transfer time remains missing in the R1 submittal
+    package.
+  where_expressed: missing
+- check_id: DEV-UPS-R1-OVERLOAD
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.2.5.A
+  rule_id: UPS-R1-OVERLOAD-CAPACITY
+  deviation_type: value_out_of_spec
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: UPS module overload rating remains claimed as 125% for 5 minutes, failing
+    the spec minimum of 10 minutes.
+  where_expressed: main table
+- check_id: DEV-UPS-R1-AIRFLOW-PATH
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.4.2
+  rule_id: UPS-R1-AIRFLOW-PATH
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: R1 submittal still specifies a rear-exhaust airflow configuration,
+    violating the top-exhaust layout requirement.
+  where_expressed: main table
+- check_id: DEV-UPS-R1-PAINT
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.4.5.C
+  rule_id: UPS-R1-ENCLOSURE-PAINT
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: R1 submittal still lists RAL 9005 (Jet Black) paint finish, violating
+    the RAL 7035 (Light Grey) specification.
+  where_expressed: main table
+- check_id: DEV-BAT-UNIT-SHORTFALL
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.2.A
+  rule_id: BAT-CAPACITY-SHORTFALL
+  deviation_type: value_out_of_spec
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Vendor datasheet claims nominal capacity is 550 kWh, which when converted
+    (550,000 Wh / 480 V = 1145.8 Ah) is below the required 1200 Ah, indicating a capacity
+    shortfall of 54.2 Ah (4.5%).
+  where_expressed: main table
+- check_id: DEV-BAT-COND-PF
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.2.B
+  rule_id: BAT-PF-CONDITION
+  deviation_type: condition_mismatch
+  tier: T3
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Datasheet claims 10-minute battery runtime is rated at a load power
+    factor of 0.9 PF. The spec requires battery runtime to be rated at a load power
+    factor of 1.0 PF (unity), which represents a larger active power draw.
+  where_expressed: footnote
+- check_id: DEV-BAT-DCBUS
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.2.C
+  rule_id: BAT-DC-BUS-VOLTAGE
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Battery cabinet DC bus voltage is listed as 400 VDC. The spec requires
+    a 480 VDC nominal bus voltage to match the UPS inverter requirements.
+  where_expressed: main table
+- check_id: DEV-BAT-MISS-PARAM
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.3
+  rule_id: BAT-SHELF-LIFE
+  deviation_type: missing_parameter
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: The battery shelf life (required to be >= 6 months without charge)
+    is missing from the battery cabinet specification sheet.
+  where_expressed: missing
+- check_id: DEV-BAT-CABINET-WEIGHT
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.5.A
+  rule_id: BAT-CABINET-WEIGHT
+  deviation_type: value_out_of_spec
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Fully loaded battery cabinet weight is listed as 3200 kg. Spec limits
+    the maximum floor-load weight per cabinet to 2800 kg to prevent exceeding structural
+    slab limits.
+  where_expressed: main table
+- check_id: DEV-BAT-OPERATING-TEMP
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.6.B
+  rule_id: BAT-OPERATING-TEMP
+  deviation_type: condition_mismatch
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: "Battery cabinet datasheet lists operating temperature of 0\xB0C to\
+    \ 20\xB0C. Spec requires full battery warranty and operating parameters to hold\
+    \ from 0\xB0C to 25\xB0C ambient."
+  where_expressed: main table
+- check_id: DEV-BAT-CABLE-ENTRY
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.8
+  rule_id: BAT-CABLE-ENTRY
+  deviation_type: configuration_deviation
+  tier: T2
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Battery cabinet is configured for bottom cable entry only. Spec requires
+    dual entry (top or bottom cable entry conduits) to match overhead cable trays.
+  where_expressed: main table
+- check_id: DEV-BAT-LVD-VALVE
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.9.C
+  rule_id: BAT-LVD-CONTACTOR
+  deviation_type: missing_parameter
+  tier: T1
+  verdict_pre_addendum: DEVIATION
+  verdict_post_addendum: DEVIATION
+  explanation: Low Voltage Disconnect (LVD) contactor rating is omitted from the battery
+    cabinet component details.
+  where_expressed: missing
+compliant_checks:
+- check_id: COMP-SWG-VOLT
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.2.1.A
+  rule_id: SWG-VOLTAGE
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Switchgear rated voltage is 12 kV, which meets the specified minimum
+    of 12 kV.
+- check_id: COMP-SWG-AMP
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.2.1.B
+  rule_id: SWG-MAIN-BUS-CURRENT
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Switchgear main busbar current rating is 2000 A, which meets the specified
+    minimum of 2000 A.
+- check_id: COMP-SWG-KA
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.2.2.A
+  rule_id: SWG-SHORT-CIRCUIT-KA
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Short-circuit withstand is 31.5 kA, which meets the specified minimum
+    of 31.5 kA.
+- check_id: COMP-SWG-TIME
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.2.2.B
+  rule_id: SWG-SHORT-CIRCUIT-TIME
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Short-circuit duration rating is 3 seconds, which meets the specified
+    minimum of 3 seconds.
+- check_id: COMP-SWG-IP
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.3.1.A
+  rule_id: SWG-IP-RATING
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Enclosure IP rating is IP4X, which meets the specified minimum IP4X.
+- check_id: COMP-SWG-IAC
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.3.1.E
+  rule_id: SWG-IAC-RATING
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Internal Arc Classification is AFLR, which meets the specified classification
+    of AFLR.
+- check_id: COMP-SWG-CERT
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 1.4.2
+  rule_id: SWG-IEC-CERT
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Switchgear includes ASTA/KEMA type test certificates for compliance
+    with IEC 62271-200.
+- check_id: COMP-SWG-MAKING
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.2.3
+  rule_id: SWG-MAKING-CAPACITY
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Rated short-circuit making capacity is 66 kA peak, meeting the specified
+    minimum 66 kA.
+- check_id: COMP-SWG-BIL
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.2.4
+  rule_id: SWG-IMPULSE-BIL
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Lightning impulse withstand voltage (BIL) is 75 kV, matching the specified
+    75 kV requirement.
+- check_id: COMP-SWG-BUS-MAT
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.3.2.A
+  rule_id: SWG-BUS-MATERIAL
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Busbar material is high conductivity copper, meeting the specification.
+- check_id: COMP-SWG-EARTH
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.3.3.B
+  rule_id: SWG-EARTH-BUS
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Earthing busbar is copper and sized for full short circuit rating,
+    meeting the spec.
+- check_id: COMP-SWG-CT-ACC
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.3.7.A
+  rule_id: SWG-CT-ACCURACY
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Current transformers have metering accuracy class 0.5s and protection
+    class 5P20, meeting spec.
+- check_id: COMP-SWG-VT-ACC
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.3.7.C
+  rule_id: SWG-VT-ACCURACY
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Voltage transformers have accuracy class 0.5, meeting the spec.
+- check_id: COMP-SWG-OPER-TEMP
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 1.4.5
+  rule_id: SWG-OPERATING-TEMP
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: "Switchgear operating temperature range is -5\xB0C to 45\xB0C, meeting\
+    \ design basis."
+- check_id: COMP-SWG-LSC
+  package: Trident switchgear
+  spec_clause: 26 13 26 Part 2.3.1.F
+  rule_id: SWG-LSC-RATING
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Loss of service continuity is LSC-2B, which meets LSC-2B specification.
+- check_id: COMP-UPS-R0-CAP
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.1.A
+  rule_id: UPS-CAPACITY
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: UPS module capacity is 1200 kW, which meets the specified minimum of
+    1200 kW.
+- check_id: COMP-UPS-R0-PF
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.1.B
+  rule_id: UPS-POWER-FACTOR
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: UPS module has a unity power factor (1.0), matching the specified 1.0
+    PF.
+- check_id: COMP-UPS-R0-THD
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.1.D
+  rule_id: UPS-INPUT-THD
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: UPS input THD is 4.2% at full load, which meets the specified maximum
+    of 5.0%.
+- check_id: COMP-UPS-R0-EFF100
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.2.A
+  rule_id: UPS-EFF-100
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: UPS module double-conversion efficiency at 100% load is 96.2%, meeting
+    the specified minimum of 96.0%.
+- check_id: COMP-UPS-R0-EFF75
+  package: VoltEdge UPS, R0
+  spec_clause: 26 33 53 Part 2.2.2.B
+  rule_id: UPS-EFF-75
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: UPS module double-conversion efficiency at 75% load is 96.0%, meeting
+    the specified minimum of 96.0%.
+- check_id: COMP-GEN-PF
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.2.1.C
+  rule_id: GEN-POWER-FACTOR
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Generator power factor is 0.8, which meets the specified 0.8 PF.
+- check_id: COMP-GEN-VOLT
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.2.1.D
+  rule_id: GEN-VOLTAGE
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Generator output voltage is 11 kV, matching the specified 11 kV system
+    nominal voltage.
+- check_id: COMP-GEN-SPEED
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.2.1.E
+  rule_id: GEN-SPEED
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Generator speed is 1500 RPM, matching the specified 1500 RPM for 50Hz
+    operation.
+- check_id: COMP-GEN-LOAD
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.2.2
+  rule_id: GEN-BLOCK-LOAD
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Generator accepts 100% block load in a single step, meeting the ISO
+    8528-5 G3 performance class.
+- check_id: COMP-GEN-GOVERNOR
+  package: Deccan generator
+  spec_clause: 26 32 13 Part 2.3.2.A
+  rule_id: GEN-GOVERNOR-TYPE
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Generator uses electronic governor class G3 per ISO 8528-5, meeting
+    the spec.
+- check_id: COMP-CRAH-CAP
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.2.1.A
+  rule_id: CRAH-SENSIBLE-CAP
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: CRAH unit sensible cooling capacity is 250 kW, which meets the specified
+    minimum of 250 kW.
+- check_id: COMP-CRAH-CHW-IN
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.2.1.B
+  rule_id: CRAH-CHW-INLET-TEMP
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: DEVIATION
+  explanation: "CRAH entering water temperature claimed is 10\xB0C, matching pre-addendum\
+    \ spec of 10\xB0C, but violating post-addendum spec of 11\xB0C."
+- check_id: COMP-CRAH-CHW-OUT
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.2.1.C
+  rule_id: CRAH-CHW-OUTLET-TEMP
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: "CRAH leaving water temperature is 18\xB0C, matching the design basis\
+    \ 18\xB0C leaving chilled water."
+- check_id: COMP-CRAH-FAN-EFF
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.3.2.A
+  rule_id: CRAH-FAN-POWER-DENSITY
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Fan power density is 0.09 W/(m3/h), which meets the specified limit
+    of < 0.10 W/(m3/h).
+- check_id: COMP-CRAH-HUMIDITY-RANGE
+  package: CryoCore CRAH
+  spec_clause: 23 81 23 Part 2.2.5
+  rule_id: CRAH-HUMIDITY-RANGE
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: CRAH operating relative humidity range is 20% to 80% non-condensing,
+    meeting spec.
+- check_id: COMP-FIRE-AGENT
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.1.1
+  rule_id: FIRE-AGENT-TYPE
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Suppressant agent is FK-5-1-12, matching the specified FK-5-1-12 clean
+    agent.
+- check_id: COMP-FIRE-CONC
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.2.1
+  rule_id: FIRE-DESIGN-CONCENTRATION
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Design concentration is 4.7% (v/v), which matches the specified design
+    basis.
+- check_id: COMP-FIRE-NOAEL
+  package: AegisFire suppression
+  spec_clause: 21 22 00 Part 2.2.2
+  rule_id: FIRE-NOAEL-LIMIT
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Design concentration of 4.7% is below the NOAEL safety threshold of
+    10.0% (v/v), providing an acceptable safety margin.
+- check_id: COMP-UPS-R1-CAP
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.2.1.A
+  rule_id: UPS-R1-CAPACITY
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: UPS module capacity is 1200 kW, meeting the 1200 kW requirement.
+- check_id: COMP-UPS-R1-PF
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 2.2.1.B
+  rule_id: UPS-R1-POWER-FACTOR
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: UPS module operates at unity power factor, meeting spec.
+- check_id: COMP-UPS-R1-CERT
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 1.4.1.C
+  rule_id: UPS-R1-CERTIFICATION
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: R1 submittal now specifies performance compliance and testing certifications
+    per IEC 62040-3.
+- check_id: COMP-UPS-R1-REV
+  package: VoltEdge UPS, R1
+  spec_clause: 26 33 53 Part 1.3.1
+  rule_id: UPS-R1-SPEC-REVISION
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: R1 submittal transmittal cover sheet correctly cites active spec revision
+    'Rev 2024'.
+- check_id: DEV-BAT-UNIT-KWH
+  package: VoltEdge battery cabinet
+  spec_clause: 26 33 53 Part 2.3.2.A
+  rule_id: BAT-CAPACITY-UNIT
+  verdict_pre_addendum: COMPLIANT
+  verdict_post_addendum: COMPLIANT
+  explanation: Battery capacity is quoted as '576 kWh' in the submittal. Converting
+    this (576,000 Wh / 480 V = 1200 Ah) matches the required capacity of 1200 Ah.
+equipment:
+  ups:
+    vendor: VoltEdge Power Systems
+    model: VoltEdge PX-1200
+    spec_section: 26 33 53
+    parameters:
+      capacity_kw:
+        true_val: 1200.0
+        spec_val: 1200.0
+        claimed_val: 1200.0
+        claimed_condition: at 40C ambient
+        where_expressed: main table
+        unit: kW
+      power_factor:
+        true_val: 1.0
+        spec_val: 1.0
+        claimed_val: 1.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: dimensionless
+      input_voltage:
+        true_val: 415.0
+        spec_val: 415.0
+        claimed_val: 415.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: V
+      output_voltage:
+        true_val: 415.0
+        spec_val: 415.0
+        claimed_val: 415.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: V
+      input_thd:
+        true_val: 4.2
+        spec_val: 5.0
+        claimed_val: 4.2
+        claimed_condition: at 100% load
+        where_expressed: main table
+        unit: '%'
+      efficiency_100_load:
+        true_val: 96.2
+        spec_val: 96.0
+        claimed_val: 96.2
+        claimed_condition: double-conversion mode
+        where_expressed: main table
+        unit: '%'
+      efficiency_75_load:
+        true_val: 96.0
+        spec_val: 96.0
+        claimed_val: 96.0
+        claimed_condition: double-conversion mode
+        where_expressed: main table
+        unit: '%'
+      efficiency_50_load:
+        true_val: 95.1
+        spec_val: 96.0
+        claimed_val: 96.1
+        claimed_condition: double-conversion mode
+        where_expressed: main table
+        unit: '%'
+      battery_runtime_min:
+        true_val: 10.0
+        spec_val: 10.0
+        claimed_val: 10.0
+        claimed_condition: at 100% load
+        where_expressed: main table
+        unit: min
+      battery_chemistry:
+        true_val: VRLA
+        spec_val: VRLA
+        claimed_val: VRLA
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+      certification:
+        true_val: IEC 62040-3
+        spec_val: IEC 62040-3
+        claimed_val: IEC 62040-3
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+  generator:
+    vendor: Deccan Diesel Co.
+    model: Deccan DD-2500
+    spec_section: 26 32 13
+    parameters:
+      standby_rating_kva:
+        true_val: 2450.0
+        spec_val: 2500.0
+        claimed_val: 2500.0
+        claimed_condition: at 40C reference ambient
+        where_expressed: main table
+        unit: kVA
+      power_factor:
+        true_val: 0.8
+        spec_val: 0.8
+        claimed_val: 0.8
+        claimed_condition: standard
+        where_expressed: main table
+        unit: dimensionless
+      voltage_kv:
+        true_val: 11.0
+        spec_val: 11.0
+        claimed_val: 11.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: kV
+      speed_rpm:
+        true_val: 1500.0
+        spec_val: 1500.0
+        claimed_val: 1500.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: RPM
+      fuel_autonomy_h:
+        true_val: 48.0
+        spec_val: 48.0
+        claimed_val: 48.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: h
+      fuel_consumption_100_l_h:
+        true_val: 520.0
+        spec_val: 520.0
+        claimed_val: 520.0
+        claimed_condition: at 100% load
+        where_expressed: main table
+        unit: L/h
+      block_load_acceptance:
+        true_val: 100.0
+        spec_val: 100.0
+        claimed_val: 100.0
+        claimed_condition: single-step loading
+        where_expressed: main table
+        unit: '%'
+      reference_ambient_temp_c:
+        true_val: 40.0
+        spec_val: 45.0
+        claimed_val: 40.0
+        claimed_condition: rating reference
+        where_expressed: main table
+        unit: C
+      day_tank_capacity_l:
+        true_val: 990.0
+        spec_val: 1040.0
+        claimed_val: 990.0
+        claimed_condition: nominal capacity
+        where_expressed: main table
+        unit: L
+  crah:
+    vendor: CryoCore Climate
+    model: CryoCore CR-250
+    spec_section: 23 81 23
+    parameters:
+      sensible_cooling_kw:
+        true_val: 250.0
+        spec_val: 250.0
+        claimed_val: 250.0
+        claimed_condition: entering water 10C, return air 35C
+        where_expressed: main table
+        unit: kW
+      airflow_m3_h:
+        true_val: 62390.0
+        spec_val: 64320.0
+        claimed_val: 62390.0
+        claimed_condition: at peak fan speed
+        where_expressed: main table
+        unit: m3/h
+      entering_water_temp_c:
+        true_val: 10.0
+        spec_val: 10.0
+        claimed_val: 10.0
+        claimed_condition: design chilled water loop
+        where_expressed: main table
+        unit: C
+      leaving_water_temp_c:
+        true_val: 18.0
+        spec_val: 18.0
+        claimed_val: 18.0
+        claimed_condition: design chilled water loop
+        where_expressed: main table
+        unit: C
+      water_delta_t_k:
+        true_val: 8.0
+        spec_val: 8.0
+        claimed_val: 8.0
+        claimed_condition: standard design
+        where_expressed: main table
+        unit: K
+      ec_fan_power_kw:
+        true_val: 5.6
+        spec_val: 6.0
+        claimed_val: 5.6
+        claimed_condition: at peak design airflow
+        where_expressed: main table
+        unit: kW
+      fan_power_density_w_m3_h:
+        true_val: 0.09
+        spec_val: 0.1
+        claimed_val: 0.09
+        claimed_condition: at design airflow
+        where_expressed: main table
+        unit: W/(m3/h)
+      refrigerant:
+        true_val: R-407C
+        spec_val: R-410A
+        claimed_val: R-407C
+        claimed_condition: factory charge
+        where_expressed: main table
+        unit: text
+  switchgear:
+    vendor: Trident Switchgear
+    model: Trident T-2000
+    spec_section: 26 13 26
+    parameters:
+      voltage_kv:
+        true_val: 12.0
+        spec_val: 12.0
+        claimed_val: 12.0
+        claimed_condition: rated maximum
+        where_expressed: main table
+        unit: kV
+      busbar_current_a:
+        true_val: 2000.0
+        spec_val: 2000.0
+        claimed_val: 2000.0
+        claimed_condition: continuous service
+        where_expressed: main table
+        unit: A
+      short_circuit_withstand_ka:
+        true_val: 31.5
+        spec_val: 31.5
+        claimed_val: 31.5
+        claimed_condition: 3s rating
+        where_expressed: main table
+        unit: kA
+      short_circuit_duration_s:
+        true_val: 3.0
+        spec_val: 3.0
+        claimed_val: 3.0
+        claimed_condition: short circuit limit
+        where_expressed: main table
+        unit: s
+      ip_rating:
+        true_val: IP4X
+        spec_val: IP4X
+        claimed_val: IP4X
+        claimed_condition: standard enclosure
+        where_expressed: main table
+        unit: text
+      internal_arc_class:
+        true_val: AFLR
+        spec_val: AFLR
+        claimed_val: AFLR
+        claimed_condition: 1s arc withstand
+        where_expressed: main table
+        unit: text
+      certification:
+        true_val: IEC 62271-200
+        spec_val: IEC 62271-200
+        claimed_val: IEC 62271-200
+        claimed_condition: standard certification
+        where_expressed: main table
+        unit: text
+  fire_suppression:
+    vendor: AegisFire Systems
+    model: Aegis CleanAgent ECS-500
+    spec_section: 21 22 00
+    parameters:
+      agent_type:
+        true_val: FK-5-1-12
+        spec_val: FK-5-1-12
+        claimed_val: FK-5-1-12
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+      discharge_time_s:
+        true_val: 11.0
+        spec_val: 10.0
+        claimed_val: 9.2
+        claimed_condition: standard pipe configuration
+        where_expressed: main table
+        unit: s
+      hold_time_min:
+        true_val: 9.0
+        spec_val: 10.0
+        claimed_val: 9.0
+        claimed_condition: nominal enclosure leakage
+        where_expressed: main table
+        unit: min
+      design_concentration_pct:
+        true_val: 4.7
+        spec_val: 4.7
+        claimed_val: 4.7
+        claimed_condition: at design volume
+        where_expressed: main table
+        unit: '%'
+      noael_limit_pct:
+        true_val: 10.0
+        spec_val: 10.0
+        claimed_val: 10.0
+        claimed_condition: safety limit
+        where_expressed: main table
+        unit: '%'
+      standards_reference:
+        true_val: NFPA 2001-2008
+        spec_val: NFPA 2001-2018
+        claimed_val: NFPA 2001-2008
+        claimed_condition: edition standard
+        where_expressed: main table
+        unit: text
+registers:
+  po_register:
+  - po_number: PO-263353-H1
+    equipment_tag: UPS-01-01
+    spec_section: 26 33 53
+    vendor: VoltEdge Power Systems
+    item_description: VoltEdge PX-1200 UPS Module 1200kW Hall 1
+    value_inr: 25000000
+    order_date: '2026-01-10'
+    lead_time_weeks: 24
+    delivery_status: DELIVERED
+  - po_number: PO-263353-H2
+    equipment_tag: UPS-02-01
+    spec_section: 26 33 53
+    vendor: VoltEdge Power Systems
+    item_description: VoltEdge PX-1200 UPS Module 1200kW Hall 2
+    value_inr: 25000000
+    order_date: '2026-01-10'
+    lead_time_weeks: 24
+    delivery_status: DELIVERED
+  - po_number: PO-263353-H3
+    equipment_tag: UPS-03-01
+    spec_section: 26 33 53
+    vendor: VoltEdge Power Systems
+    item_description: VoltEdge PX-1200 UPS Module 1200kW Hall 3
+    value_inr: 25000000
+    order_date: '2026-01-10'
+    lead_time_weeks: 24
+    delivery_status: DELIVERED
+  - po_number: PO-263353-H4
+    equipment_tag: UPS-04-01
+    spec_section: 26 33 53
+    vendor: VoltEdge Power Systems
+    item_description: VoltEdge PX-1200 UPS Module 1200kW Hall 4
+    value_inr: 25000000
+    order_date: '2026-01-10'
+    lead_time_weeks: 24
+    delivery_status: DELIVERED
+  - po_number: PO-263213-G1
+    equipment_tag: GEN-01-01
+    spec_section: 26 32 13
+    vendor: Deccan Diesel Co.
+    item_description: Deccan DD-2500 Generator Set 2500kVA Hall 1
+    value_inr: 38000000
+    order_date: '2026-01-15'
+    lead_time_weeks: 40
+    delivery_status: IN_TRANSIT
+  - po_number: PO-263213-G2
+    equipment_tag: GEN-02-01
+    spec_section: 26 32 13
+    vendor: Deccan Diesel Co.
+    item_description: Deccan DD-2500 Generator Set 2500kVA Hall 2
+    value_inr: 38000000
+    order_date: '2026-01-15'
+    lead_time_weeks: 40
+    delivery_status: IN_TRANSIT
+  - po_number: PO-263213-G3
+    equipment_tag: GEN-03-01
+    spec_section: 26 32 13
+    vendor: Deccan Diesel Co.
+    item_description: Deccan DD-2500 Generator Set 2500kVA Hall 3
+    value_inr: 38000000
+    order_date: '2026-01-15'
+    lead_time_weeks: 40
+    delivery_status: IN_TRANSIT
+  - po_number: PO-263213-G4
+    equipment_tag: GEN-04-01
+    spec_section: 26 32 13
+    vendor: Deccan Diesel Co.
+    item_description: Deccan DD-2500 Generator Set 2500kVA Hall 4
+    value_inr: 38000000
+    order_date: '2026-01-15'
+    lead_time_weeks: 40
+    delivery_status: IN_TRANSIT
+  - po_number: PO-238123-H1
+    equipment_tag: CRAH-01-01
+    spec_section: 23 81 23
+    vendor: CryoCore Climate
+    item_description: CryoCore CR-250 CRAH Unit Hall 1
+    value_inr: 3500000
+    order_date: '2026-02-01'
+    lead_time_weeks: 16
+    delivery_status: DELIVERED
+  - po_number: PO-238123-H2
+    equipment_tag: CRAH-02-01
+    spec_section: 23 81 23
+    vendor: CryoCore Climate
+    item_description: CryoCore CR-250 CRAH Unit Hall 2
+    value_inr: 3500000
+    order_date: '2026-02-01'
+    lead_time_weeks: 16
+    delivery_status: DELIVERED
+  - po_number: PO-238123-H3
+    equipment_tag: CRAH-03-01
+    spec_section: 23 81 23
+    vendor: CryoCore Climate
+    item_description: CryoCore CR-250 CRAH Unit Hall 3
+    value_inr: 3500000
+    order_date: '2026-02-01'
+    lead_time_weeks: 16
+    delivery_status: DELIVERED
+  - po_number: PO-238123-H4
+    equipment_tag: CRAH-04-01
+    spec_section: 23 81 23
+    vendor: CryoCore Climate
+    item_description: CryoCore CR-250 CRAH Unit Hall 4
+    value_inr: 3500000
+    order_date: '2026-02-01'
+    lead_time_weeks: 16
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW01
+    equipment_tag: SWG-PANEL-01
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 1
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW02
+    equipment_tag: SWG-PANEL-02
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 2
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW03
+    equipment_tag: SWG-PANEL-03
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 3
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW04
+    equipment_tag: SWG-PANEL-04
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 4
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW05
+    equipment_tag: SWG-PANEL-05
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 5
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW06
+    equipment_tag: SWG-PANEL-06
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 6
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW07
+    equipment_tag: SWG-PANEL-07
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 7
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW08
+    equipment_tag: SWG-PANEL-08
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 8
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW09
+    equipment_tag: SWG-PANEL-09
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 9
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-261326-SW10
+    equipment_tag: SWG-PANEL-10
+    spec_section: 26 13 26
+    vendor: Trident Switchgear
+    item_description: Trident T-2000 Switchgear Panel 10
+    value_inr: 12000000
+    order_date: '2026-01-20'
+    lead_time_weeks: 28
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z01
+    equipment_tag: FIRE-SYS-01
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 1 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z02
+    equipment_tag: FIRE-SYS-02
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 2 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z03
+    equipment_tag: FIRE-SYS-03
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 3 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z04
+    equipment_tag: FIRE-SYS-04
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 4 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z05
+    equipment_tag: FIRE-SYS-05
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 5 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z06
+    equipment_tag: FIRE-SYS-06
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 6 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z07
+    equipment_tag: FIRE-SYS-07
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 7 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  - po_number: PO-212200-Z08
+    equipment_tag: FIRE-SYS-08
+    spec_section: 21 22 00
+    vendor: AegisFire Systems
+    item_description: Aegis CleanAgent ECS-500 Zone 8 System
+    value_inr: 4500000
+    order_date: '2026-02-10'
+    lead_time_weeks: 12
+    delivery_status: DELIVERED
+  schedule:
+  - activity_id: ACT-CIV-01
+    name: Civil Works - Main Structure Phase 1
+    duration_days: 15
+    predecessors: ''
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-CIV-02
+    name: Civil Works - Main Structure Phase 2
+    duration_days: 15
+    predecessors: ACT-CIV-01
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-CIV-03
+    name: Civil Works - Main Structure Phase 3
+    duration_days: 15
+    predecessors: ACT-CIV-02
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-CIV-04
+    name: Civil Works - Main Structure Phase 4
+    duration_days: 15
+    predecessors: ACT-CIV-03
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-CIV-05
+    name: Civil Works - Main Structure Phase 5
+    duration_days: 15
+    predecessors: ACT-CIV-04
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-CIV-06
+    name: Civil/Site Ancillary Phase 6
+    duration_days: 10
+    predecessors: ACT-CIV-05
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-07
+    name: Civil/Site Ancillary Phase 7
+    duration_days: 10
+    predecessors: ACT-CIV-06
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-08
+    name: Civil/Site Ancillary Phase 8
+    duration_days: 10
+    predecessors: ACT-CIV-07
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-09
+    name: Civil/Site Ancillary Phase 9
+    duration_days: 10
+    predecessors: ACT-CIV-08
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-10
+    name: Civil/Site Ancillary Phase 10
+    duration_days: 10
+    predecessors: ACT-CIV-09
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-11
+    name: Civil/Site Ancillary Phase 11
+    duration_days: 10
+    predecessors: ACT-CIV-10
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-12
+    name: Civil/Site Ancillary Phase 12
+    duration_days: 10
+    predecessors: ACT-CIV-11
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-13
+    name: Civil/Site Ancillary Phase 13
+    duration_days: 10
+    predecessors: ACT-CIV-12
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-14
+    name: Civil/Site Ancillary Phase 14
+    duration_days: 10
+    predecessors: ACT-CIV-13
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-15
+    name: Civil/Site Ancillary Phase 15
+    duration_days: 10
+    predecessors: ACT-CIV-14
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-16
+    name: Civil/Site Ancillary Phase 16
+    duration_days: 10
+    predecessors: ACT-CIV-15
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-17
+    name: Civil/Site Ancillary Phase 17
+    duration_days: 10
+    predecessors: ACT-CIV-16
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-18
+    name: Civil/Site Ancillary Phase 18
+    duration_days: 10
+    predecessors: ACT-CIV-17
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-19
+    name: Civil/Site Ancillary Phase 19
+    duration_days: 10
+    predecessors: ACT-CIV-18
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-CIV-20
+    name: Civil/Site Ancillary Phase 20
+    duration_days: 10
+    predecessors: ACT-CIV-19
+    float_days: 20
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-01
+    name: Procure and Deliver Deccan Standby Generators
+    duration_days: 280
+    predecessors: ACT-CIV-05
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-ELE-GEN-02
+    name: Install and Mount Standby Generators
+    duration_days: 14
+    predecessors: ACT-ELE-GEN-01
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-ELE-GEN-03
+    name: Generator Aux Cabling & Fuel Line Phase 3
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-02
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-04
+    name: Generator Aux Cabling & Fuel Line Phase 4
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-03
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-05
+    name: Generator Aux Cabling & Fuel Line Phase 5
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-04
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-06
+    name: Generator Aux Cabling & Fuel Line Phase 6
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-05
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-07
+    name: Generator Aux Cabling & Fuel Line Phase 7
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-06
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-08
+    name: Generator Aux Cabling & Fuel Line Phase 8
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-07
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-09
+    name: Generator Aux Cabling & Fuel Line Phase 9
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-08
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-10
+    name: Generator Aux Cabling & Fuel Line Phase 10
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-09
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-11
+    name: Generator Aux Cabling & Fuel Line Phase 11
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-10
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-12
+    name: Generator Aux Cabling & Fuel Line Phase 12
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-11
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-13
+    name: Generator Aux Cabling & Fuel Line Phase 13
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-12
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-14
+    name: Generator Aux Cabling & Fuel Line Phase 14
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-13
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-GEN-15
+    name: Generator Aux Cabling & Fuel Line Phase 15
+    duration_days: 10
+    predecessors: ACT-ELE-GEN-14
+    float_days: 15
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-01
+    name: UPS Electrical Module Phase 1
+    duration_days: 15
+    predecessors: ACT-CIV-05
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-02
+    name: UPS Electrical Module Phase 2
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-01
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-03
+    name: UPS Electrical Module Phase 3
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-02
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-04
+    name: UPS Electrical Module Phase 4
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-03
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-05
+    name: UPS Electrical Module Phase 5
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-04
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-06
+    name: UPS Electrical Module Phase 6
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-05
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-07
+    name: UPS Electrical Module Phase 7
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-06
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-08
+    name: UPS Electrical Module Phase 8
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-07
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-09
+    name: UPS Electrical Module Phase 9
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-08
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-ELE-UPS-10
+    name: UPS Electrical Module Phase 10
+    duration_days: 15
+    predecessors: ACT-ELE-UPS-09
+    float_days: 42
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-01
+    name: CRAH Cooling Unit Placement Phase 1
+    duration_days: 14
+    predecessors: ACT-CIV-05
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-02
+    name: CRAH Cooling Unit Placement Phase 2
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-01
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-03
+    name: CRAH Cooling Unit Placement Phase 3
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-02
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-04
+    name: CRAH Cooling Unit Placement Phase 4
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-03
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-05
+    name: CRAH Cooling Unit Placement Phase 5
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-04
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-06
+    name: CRAH Cooling Unit Placement Phase 6
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-05
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-07
+    name: CRAH Cooling Unit Placement Phase 7
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-06
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-08
+    name: CRAH Cooling Unit Placement Phase 8
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-07
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-09
+    name: CRAH Cooling Unit Placement Phase 9
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-08
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-CRAH-10
+    name: CRAH Cooling Unit Placement Phase 10
+    duration_days: 14
+    predecessors: ACT-MEC-CRAH-09
+    float_days: 75
+    critical_path: false
+  - activity_id: ACT-MEC-FIRE-01
+    name: Clean Agent Piping installation Zone 1
+    duration_days: 12
+    predecessors: ACT-CIV-05
+    float_days: 80
+    critical_path: false
+  - activity_id: ACT-MEC-FIRE-02
+    name: Clean Agent Piping installation Zone 2
+    duration_days: 12
+    predecessors: ACT-MEC-FIRE-01
+    float_days: 80
+    critical_path: false
+  - activity_id: ACT-MEC-FIRE-03
+    name: Clean Agent Piping installation Zone 3
+    duration_days: 12
+    predecessors: ACT-MEC-FIRE-02
+    float_days: 80
+    critical_path: false
+  - activity_id: ACT-COM-01
+    name: Commissioning Level L1 FAT & Audits
+    duration_days: 10
+    predecessors: ACT-CIV-05
+    float_days: 35
+    critical_path: false
+  - activity_id: ACT-COM-02
+    name: Commissioning Level L2 Pre-functional inspection
+    duration_days: 12
+    predecessors: ACT-COM-01
+    float_days: 35
+    critical_path: false
+  - activity_id: ACT-COM-03
+    name: Commissioning Level L3 Equipment Startup
+    duration_days: 12
+    predecessors: ACT-COM-02
+    float_days: 35
+    critical_path: false
+  - activity_id: ACT-COM-04
+    name: Commissioning Level L4 Functional testing
+    duration_days: 15
+    predecessors: ACT-ELE-GEN-02
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-COM-05
+    name: Commissioning Level L5 Integrated Systems test
+    duration_days: 15
+    predecessors: ACT-COM-04
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-COM-06
+    name: Campus Handover and Closeout Phase 1
+    duration_days: 5
+    predecessors: ACT-COM-05
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-COM-07
+    name: Campus Handover and Closeout Phase 2
+    duration_days: 5
+    predecessors: ACT-COM-06
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-COM-08
+    name: Campus Handover and Closeout Phase 3
+    duration_days: 5
+    predecessors: ACT-COM-07
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-COM-09
+    name: Campus Handover and Closeout Phase 4
+    duration_days: 5
+    predecessors: ACT-COM-08
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-COM-10
+    name: Campus Handover and Closeout Phase 5
+    duration_days: 5
+    predecessors: ACT-COM-09
+    float_days: 0
+    critical_path: true
+  - activity_id: ACT-COM-11
+    name: Campus Handover and Closeout Phase 6
+    duration_days: 5
+    predecessors: ACT-COM-10
+    float_days: 0
+    critical_path: true
+  cx_test_register:
+  - test_id: CX-TEST-L1-01
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.A
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      1.
+    status: PENDING
+  - test_id: CX-TEST-L1-02
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.B
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      2.
+    status: PENDING
+  - test_id: CX-TEST-L1-03
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.C
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      3.
+    status: PENDING
+  - test_id: CX-TEST-L1-04
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.D
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      4.
+    status: PENDING
+  - test_id: CX-TEST-L1-05
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.E
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      5.
+    status: PENDING
+  - test_id: CX-TEST-L1-06
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.F
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      6.
+    status: PENDING
+  - test_id: CX-TEST-L1-07
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.G
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      7.
+    status: PENDING
+  - test_id: CX-TEST-L1-08
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.H
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      8.
+    status: PENDING
+  - test_id: CX-TEST-L1-09
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.I
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      9.
+    status: PENDING
+  - test_id: CX-TEST-L1-10
+    level: L1
+    system: Electrical/Mechanical Factory test
+    spec_clause: 26 05 00 Part 1.4.3.J
+    acceptance_criteria: Verify factory test certificate for electrical panel class
+      10.
+    status: PENDING
+  - test_id: CX-TEST-L2-01
+    level: L2
+    system: Pre-functional Inspection
+    spec_clause: 26 33 53 Part 3.2.1
+    acceptance_criteria: Verify cable torque markings and structural mounting for
+      module 1.
+    status: PENDING
+  - test_id: CX-TEST-L2-02
+    level: L2
+    system: Pre-functional Inspection
+    spec_clause: 26 33 53 Part 3.2.2
+    acceptance_criteria: Verify cable torque markings and structural mounting for
+      module 2.
+    status: PENDING
+  - test_id: CX-TEST-L2-03
+    level: L2
+    system: Pre-functional Inspection
+    spec_clause: 26 33 53 Part 3.2.3
+    acceptance_criteria: Verify cable torque markings and structural mounting for
+      module 3.
+    status: PENDING
+  - test_id: CX-TEST-L2-04
+    level: L2
+    system: Pre-functional Inspection
+    spec_clause: 26 33 53 Part 3.2.4
+    acceptance_criteria: Verify cable torque markings and structural mounting for
+      module 4.
+    status: PENDING
+  - test_id: CX-TEST-L2-05
+    level: L2
+    system: Pre-functional Inspection
+    spec_clause: 26 33 53 Part 3.2.5
+    acceptance_criteria: Verify cable torque markings and structural mounting for
+      module 5.
+    status: PENDING
+  - test_id: CX-GEN-L4-01
+    level: L4
+    system: Generator
+    spec_clause: 26 32 13 Part 3.3.4.A
+    acceptance_criteria: Perform 100% block load acceptance in a single step per ISO
+      8528-5 G3.
+    status: PENDING
+  - test_id: CX-FIRE-L5-01
+    level: L5
+    system: Fire Suppression
+    spec_clause: 21 22 00 Part 3.4.1
+    acceptance_criteria: Verify agent discharge completion within 10 seconds of activation.
+    status: PENDING
+  - test_id: CX-TEST-L3-03
+    level: L3
+    system: Component Startup
+    spec_clause: 26 32 13 Part 3.3.3
+    acceptance_criteria: Perform initial start sequence and voltage balance checks
+      for engine 3.
+    status: PENDING
+  - test_id: CX-TEST-L3-04
+    level: L3
+    system: Component Startup
+    spec_clause: 26 32 13 Part 3.3.4
+    acceptance_criteria: Perform initial start sequence and voltage balance checks
+      for engine 4.
+    status: PENDING
+  - test_id: CX-TEST-L3-05
+    level: L3
+    system: Component Startup
+    spec_clause: 26 32 13 Part 3.3.5
+    acceptance_criteria: Perform initial start sequence and voltage balance checks
+      for engine 5.
+    status: PENDING
+  - test_id: CX-CRAH-L4-01
+    level: L4
+    system: CRAH
+    spec_clause: 23 81 23 Part 3.3.2.A
+    acceptance_criteria: "Verify sensible cooling capacity is >= 250 kW at 10\xB0\
+      C entering water temp."
+    status: PENDING
+  - test_id: CX-TEST-L4-02
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.B
+    acceptance_criteria: Verify cooling capacity verification step 2
+    status: PENDING
+  - test_id: CX-TEST-L4-03
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.C
+    acceptance_criteria: Verify cooling capacity verification step 3
+    status: PENDING
+  - test_id: CX-TEST-L4-04
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.D
+    acceptance_criteria: Verify cooling capacity verification step 4
+    status: PENDING
+  - test_id: CX-TEST-L4-05
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.E
+    acceptance_criteria: Verify cooling capacity verification step 5
+    status: PENDING
+  - test_id: CX-TEST-L4-06
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.F
+    acceptance_criteria: Verify cooling capacity verification step 6
+    status: PENDING
+  - test_id: CX-TEST-L4-07
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.G
+    acceptance_criteria: Verify cooling capacity verification step 7
+    status: PENDING
+  - test_id: CX-TEST-L4-08
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.H
+    acceptance_criteria: Verify cooling capacity verification step 8
+    status: PENDING
+  - test_id: CX-TEST-L4-09
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.I
+    acceptance_criteria: Verify cooling capacity verification step 9
+    status: PENDING
+  - test_id: CX-TEST-L4-10
+    level: L4
+    system: Functional performance
+    spec_clause: 23 81 23 Part 3.3.2.J
+    acceptance_criteria: Verify cooling capacity verification step 10
+    status: PENDING
+  - test_id: CX-UPS-L5-01
+    level: L5
+    system: UPS
+    spec_clause: 26 33 53 Part 3.4.2.A
+    acceptance_criteria: Verify double-conversion efficiency is >= 96.0% at 100% and
+      75% load.
+    status: PENDING
+  - test_id: CX-UPS-L5-02
+    level: L5
+    system: UPS
+    spec_clause: 26 33 53 Part 3.4.2.C
+    acceptance_criteria: Verify battery autonomous discharge runtime is >= 12 minutes
+      at full load.
+    status: PENDING
+  - test_id: CX-TEST-L5-03
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.C
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 3
+    status: PENDING
+  - test_id: CX-TEST-L5-04
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.D
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 4
+    status: PENDING
+  - test_id: CX-TEST-L5-05
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.E
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 5
+    status: PENDING
+  - test_id: CX-TEST-L5-06
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.F
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 6
+    status: PENDING
+  - test_id: CX-TEST-L5-07
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.G
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 7
+    status: PENDING
+  - test_id: CX-TEST-L5-08
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.H
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 8
+    status: PENDING
+  - test_id: CX-TEST-L5-09
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.I
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 9
+    status: PENDING
+  - test_id: CX-TEST-L5-10
+    level: L5
+    system: Integrated Systems test
+    spec_clause: 26 33 53 Part 3.4.2.J
+    acceptance_criteria: Verify UPS integrated performance criteria under clause 10
+    status: PENDING
+  rfi_log:
+  - rfi_id: RFI-263353-01
+    subject: Clarification on Battery Runtime Acceptance
+    query: Section 26 33 53 Part 2.3.1.E requires a 10-minute battery runtime, but
+      Part 3.4.2.C demands 12 minutes during site commissioning. Please clarify which
+      runtime is the basis of design.
+    response: The design basis runtime is 10 minutes at full load. The field testing
+      criteria in Part 3.4.2.C shall be corrected to 10 minutes. An addendum or site
+      instruction will follow.
+    status: RESOLVED
+  - rfi_id: RFI-238123-01
+    subject: Chilled Water Design Temperature Change
+    query: "The design basis report lists 10\xB0C entering chilled water, but chillers\
+      \ are optimized for 11\xB0C entering in the energy model. Please clarify entering\
+      \ chilled water temperature."
+    response: "Entering chilled water temperature is revised to 11\xB0C. Spec Section\
+      \ 23 81 23 Part 2.2.1 is updated via Addendum No. 3."
+    status: RESOLVED
+  - rfi_id: RFI-263213-01
+    subject: Fuel Autonomy day tank local codes
+    query: Is there a conflict between Section 26 32 13 Part 2.3.8.C day tank capacity
+      (1040 L) and local NBC codes capping indoor tanks below 1000 L?
+    response: Day tank size is capped at 990 L for fire code safety compliance. Spec
+      Section 26 32 13 will be amended.
+    status: RESOLVED
+  - rfi_id: RFI-261326-01
+    subject: Short circuit rating busbar switchgear
+    query: Verify short-time short circuit rating requirement duration.
+    response: Busbar short-circuit rating duration is 3 seconds, as specified in 26
+      13 26 Part 2.2.2.B.
+    status: RESOLVED
+  - rfi_id: RFI-212200-01
+    subject: Fire Suppression hold time testing standard
+    query: Please clarify room leakage and hold time verification testing requirements.
+    response: Hold time must be verified by door fan testing in accordance with NFPA
+      2001.
+    status: RESOLVED
+  - rfi_id: RFI-260500-01
+    subject: Submittal review turnaround time
+    query: What is the standard engineering submittal review turnaround time?
+    response: Turnaround time is 14 calendar days from receipt of package.
+    status: RESOLVED
+  - rfi_id: RFI-263353-02
+    subject: Bypass static switch transfer time limit
+    query: What is the required bypass static switch transfer time?
+    response: Bypass transfer time shall be <= 4ms, as specified in Section 26 33
+      53 Part 2.2.8.
+    status: RESOLVED
+  - rfi_id: RFI-263213-02
+    subject: Generator transient load class
+    query: Confirm if generator must accept 100% block load.
+    response: Generator must accept 100% block load in a single step per ISO 8528-5
+      G3 class.
+    status: RESOLVED
+  - rfi_id: RFI-238123-02
+    subject: CRAH Fan motor power units
+    query: Clarify if fan motor power must be listed in kW or HP.
+    response: Fan motor power must be listed in electrical kW as specified in Part
+      2.3.2.B.
+    status: RESOLVED
+  - rfi_id: RFI-212200-02
+    subject: Obsolete NFPA standards reference
+    query: Spec Section 21 22 00 references NFPA 2001 (2008 Edition). Is this correct?
+    response: No. The reference is incorrect. The applicable version is NFPA 2001
+      (2018 Edition). This will be corrected.
+    status: RESOLVED

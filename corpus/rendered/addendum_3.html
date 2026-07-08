@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Addendum No. 3</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary: #4a5568;
+            --success: #2f855a;
+            --error: #9b2c2c;
+            --warning: #c05621;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --border-color: #cbd5e0;
+            --bg-light: #f7fafc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            background-color: #ffffff;
+            font-size: 10.5pt;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            padding: 25mm 20mm 25mm 20mm;
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+            background-color: white;
+        }
+
+        .header {
+            position: absolute;
+            top: 12mm;
+            left: 20mm;
+            right: 20mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8.5pt;
+            color: var(--text-light);
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 2mm;
+        }
+
+        .header .logo {
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 20mm;
+            right: 20mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8.5pt;
+            color: var(--text-light);
+            border-top: 1px solid var(--border-color);
+            padding-top: 2mm;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 24pt;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 16pt;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 3px;
+            margin-bottom: 12px;
+            margin-top: 20px;
+        }
+
+        h3 {
+            font-size: 12.5pt;
+            margin-bottom: 8px;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 9.5pt;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            padding: 6px 8px;
+            border: 1px solid var(--primary);
+        }
+
+        td {
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) td {
+            background-color: var(--bg-light);
+        }
+
+        .footnote {
+            font-size: 8pt;
+            color: var(--text-light);
+            margin-top: 10px;
+            line-height: 1.3;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 30mm;
+            right: 20mm;
+            border: 4px double;
+            padding: 8px 15px;
+            font-size: 14pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            transform: rotate(-5deg);
+            z-index: 100;
+            background-color: white;
+        }
+
+        .stamp-approved {
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .stamp-approved-noted {
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .stamp-revise-resubmit {
+            color: var(--error);
+            border-color: var(--error);
+        }
+
+        .hidden-anchor {
+            font-size: 1px;
+            color: transparent;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+        
+        .alert-box {
+            border-left: 4px solid var(--primary-light);
+            background-color: var(--bg-light);
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+            font-size: 9.5pt;
+        }
+    </style>
+</head>
+<body>
+    
+<div class="page">
+    <div style="border-bottom: 3px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">
+        <h1 style="margin: 0; font-size: 22pt; color: var(--primary);">ADDENDUM NO. 3</h1>
+        <div style="font-size: 10pt; color: var(--text-light);">Project: Meridian Data Centre Campus, Phase 1 | Navi Mumbai, India</div>
+        <div style="font-size: 10pt; color: var(--text-light);">Date: June 15, 2026 | Ref: ADD-003-R0</div>
+    </div>
+    
+    <p>To all prospective bidders, contractors, and vendors, this Addendum is issued to modify and amend the active tender and construction specification documents. The changes detailed below shall supersede the original clauses with immediate effect.</p>
+    
+    <h2>1. Modifications to Technical Specifications</h2>
+    
+    
+    <div style="border: 1px solid var(--border-color); padding: 15px; margin-bottom: 15px; background-color: var(--bg-light);">
+        <div style="font-weight: 600; color: var(--primary); font-size: 11pt; margin-bottom: 5px;">Reference: Section 26 33 53, Part 2.3.4</div>
+        <div style="font-family: monospace; font-size: 10pt; margin: 10px 0; background-color: white; padding: 10px; border-left: 4px solid var(--error);">
+            Instruction: DELETE '96%' and INSERT '96.5%'
+        </div>
+        <div style="font-size: 9.5pt; color: var(--text-dark);">
+            Description: UPS double-conversion efficiency requirement increased from 96.0% to 96.5% at 50%, 75%, and 100% load points.
+        </div>
+    </div>
+    
+    <div style="border: 1px solid var(--border-color); padding: 15px; margin-bottom: 15px; background-color: var(--bg-light);">
+        <div style="font-weight: 600; color: var(--primary); font-size: 11pt; margin-bottom: 5px;">Reference: Section 23 81 23, Part 2.2.1</div>
+        <div style="font-family: monospace; font-size: 10pt; margin: 10px 0; background-color: white; padding: 10px; border-left: 4px solid var(--error);">
+            Instruction: DELETE '10°C entering' and INSERT '11°C entering'
+        </div>
+        <div style="font-size: 9.5pt; color: var(--text-dark);">
+            Description: CRAH chilled water design entering temperature increased from 10°C to 11°C, reducing cooling plant chiller energy.
+        </div>
+    </div>
+    
+    
+    <h2>2. Impact Summary & Affected Registers</h2>
+    <p>Ingestion of Addendum No. 3 shifts the compliance status of several packages, procurement orders, and testing criteria. The affected elements are detailed in the project bible flips directory.</p>
+    
+    <div class="footer">
+        <span>ADD-003</span>
+        <span>Page 1 of 2</span>
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span class="logo">ADDENDUM NO. 3 - MERIDIAN CAMPUS</span>
+        <span>ADD-003</span>
+    </div>
+    <h2>3. Detailed Ingestion Flips (Audit Trails)</h2>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Affected Target</th>
+                <th>Pre-Addendum Verdict</th>
+                <th>Post-Addendum Verdict</th>
+                <th>Technical Reason for Flip</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>DEV-UPS-R1-ADD3-EFF100</td>
+                <td style="font-weight: bold; color: var(--success);">COMPLIANT</td>
+                <td style="font-weight: bold; color: var(--error);">DEVIATION</td>
+                <td>UPS R1 efficiency at 100% load is 96.2%. Spec is increased from 96.0% to 96.5% under Addendum 3, flipping this parameter non-compliant.</td>
+            </tr>
+            
+            <tr>
+                <td>DEV-UPS-R1-ADD3-EFF75</td>
+                <td style="font-weight: bold; color: var(--success);">COMPLIANT</td>
+                <td style="font-weight: bold; color: var(--error);">DEVIATION</td>
+                <td>UPS R1 efficiency at 75% load is 96.0%. Spec is increased from 96.0% to 96.5% under Addendum 3, flipping this parameter non-compliant.</td>
+            </tr>
+            
+            <tr>
+                <td>DEV-UPS-R1-ADD3-EFF50</td>
+                <td style="font-weight: bold; color: var(--success);">COMPLIANT</td>
+                <td style="font-weight: bold; color: var(--error);">DEVIATION</td>
+                <td>UPS R1 efficiency at 50% load is 96.2%. Spec is increased from 96.0% to 96.5% under Addendum 3, flipping this parameter non-compliant.</td>
+            </tr>
+            
+            <tr>
+                <td>COMP-CRAH-CHW-IN</td>
+                <td style="font-weight: bold; color: var(--success);">COMPLIANT</td>
+                <td style="font-weight: bold; color: var(--error);">DEVIATION</td>
+                <td>CRAH entering water temperature claimed is 10°C. Addendum 3 shifts spec to 11°C entering, making the 10°C unit a deviation.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-263353-H1</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>UPS modules procured under PO-263353-H1 no longer meet the updated efficiency specification of 96.5%.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-263353-H2</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>UPS modules procured under PO-263353-H2 no longer meet the updated efficiency specification of 96.5%.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-263353-H3</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>UPS modules procured under PO-263353-H3 no longer meet the updated efficiency specification of 96.5%.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-263353-H4</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>UPS modules procured under PO-263353-H4 no longer meet the updated efficiency specification of 96.5%.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-238123-H1</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>CRAH units procured under PO-238123-H1 are designed for 10°C entering chilled water, but the chilled water loop design has changed to 11°C.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-238123-H2</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>CRAH units procured under PO-238123-H2 are designed for 10°C entering chilled water, but the chilled water loop design has changed to 11°C.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-238123-H3</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>CRAH units procured under PO-238123-H3 are designed for 10°C entering chilled water, but the chilled water loop design has changed to 11°C.</td>
+            </tr>
+            
+            <tr>
+                <td>PO-238123-H4</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">INVALID</td>
+                <td>CRAH units procured under PO-238123-H4 are designed for 10°C entering chilled water, but the chilled water loop design has changed to 11°C.</td>
+            </tr>
+            
+            <tr>
+                <td>CX-UPS-L5-01</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">STALE</td>
+                <td>Acceptance criteria of 96.0% efficiency in the UPS L5 test plan is now stale and must be updated to 96.5%.</td>
+            </tr>
+            
+            <tr>
+                <td>CX-CRAH-L4-01</td>
+                <td style="font-weight: bold; color: var(--success);">VALID</td>
+                <td style="font-weight: bold; color: var(--error);">STALE</td>
+                <td>Acceptance criteria of 250 kW capacity at 10°C entering water temp in the CRAH test plan is now stale and must be updated to 11°C entering water temp.</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <div class="footer">
+        <span>ADD-003</span>
+        <span>Page 2 of 2</span>
+    </div>
+</div>
+
+</body>
+</html>

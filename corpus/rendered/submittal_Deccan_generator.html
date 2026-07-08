@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Submittal Package - Deccan generator</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary: #4a5568;
+            --success: #2f855a;
+            --error: #9b2c2c;
+            --warning: #c05621;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --border-color: #cbd5e0;
+            --bg-light: #f7fafc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            background-color: #ffffff;
+            font-size: 10.5pt;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            padding: 25mm 20mm 25mm 20mm;
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+            background-color: white;
+        }
+
+        .header {
+            position: absolute;
+            top: 12mm;
+            left: 20mm;
+            right: 20mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8.5pt;
+            color: var(--text-light);
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 2mm;
+        }
+
+        .header .logo {
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 20mm;
+            right: 20mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8.5pt;
+            color: var(--text-light);
+            border-top: 1px solid var(--border-color);
+            padding-top: 2mm;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 24pt;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 16pt;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 3px;
+            margin-bottom: 12px;
+            margin-top: 20px;
+        }
+
+        h3 {
+            font-size: 12.5pt;
+            margin-bottom: 8px;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 9.5pt;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            padding: 6px 8px;
+            border: 1px solid var(--primary);
+        }
+
+        td {
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) td {
+            background-color: var(--bg-light);
+        }
+
+        .footnote {
+            font-size: 8pt;
+            color: var(--text-light);
+            margin-top: 10px;
+            line-height: 1.3;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 30mm;
+            right: 20mm;
+            border: 4px double;
+            padding: 8px 15px;
+            font-size: 14pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            transform: rotate(-5deg);
+            z-index: 100;
+            background-color: white;
+        }
+
+        .stamp-approved {
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .stamp-approved-noted {
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .stamp-revise-resubmit {
+            color: var(--error);
+            border-color: var(--error);
+        }
+
+        .hidden-anchor {
+            font-size: 1px;
+            color: transparent;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+        
+        .alert-box {
+            border-left: 4px solid var(--primary-light);
+            background-color: var(--bg-light);
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+            font-size: 9.5pt;
+        }
+    </style>
+</head>
+<body>
+    
+<!-- Page 1: Transmittal Sheet -->
+<div class="page">
+    
+    <div class="stamp stamp-revise-resubmit">REVISE AND RESUBMIT</div>
+    
+    
+    <div style="border: 2px solid var(--primary); padding: 15px; margin-bottom: 20px;">
+        <h2 style="margin: 0; text-align: center; border: none; color: var(--primary);">EQUIPMENT SUBMITTAL TRANSMITTAL</h2>
+    </div>
+    
+    <table style="width: 100%; border: none;">
+        <tr style="background: none;"><td style="font-weight: 600; width: 25%;">Transmittal No:</td><td></td><td style="font-weight: 600; width: 20%;">Date:</td><td></td></tr>
+        <tr style="background: none;"><td style="font-weight: 600;">Project:</td><td>Meridian Data Centre Campus, Phase 1</td><td style="font-weight: 600;">Spec Section:</td><td>26 32 13</td></tr>
+        <tr style="background: none;"><td style="font-weight: 600;">Vendor:</td><td>Deccan Diesel Co.</td><td style="font-weight: 600;">Revision:</td><td></td></tr>
+        <tr style="background: none;"><td style="font-weight: 600;">Status:</td><td>FOR REVIEW</td><td style="font-weight: 600;">EPC Lead:</td><td>YOU Electrical</td></tr>
+    </table>
+    
+    <h3>Submittal Item Description</h3>
+    <p>We submit for engineering review and approval the product datasheet, compliance matrix, and test certifications for the following equipment:</p>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Model Number</th>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Manufacturer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Deccan DD-2500</td>
+                <td>Deccan DD-2500 Standby Diesel Generator Set</td>
+                <td>16</td>
+                <td>Deccan Diesel Co.</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Review Comments / Action Taken</h3>
+    <div style="border: 1px solid var(--border-color); height: 50mm; padding: 10px; background-color: var(--bg-light); font-size: 9.5pt;">
+        <strong>Engineering Review Result:</strong> REVISE AND RESUBMIT<br>
+        <strong>Comments:</strong><br>
+        
+        - Approved with no major comments. All values check compliant.
+        
+    </div>
+    
+    <div class="footer">
+        <span></span>
+        <span>Page 1 of 6</span>
+    </div>
+</div>
+
+<!-- Page 2: Product Datasheet -->
+<div class="page">
+    <div class="header">
+        <span class="logo">DECCAN DIESEL CO. PRODUCT DATASHEET</span>
+        <span>Deccan DD-2500</span>
+    </div>
+    <h2>Product Datasheet: Deccan DD-2500</h2>
+    <p>The Deccan DD-2500 is a premium standby reciprocating diesel generator set rated for 2500 kVA standby power at 50Hz, 1500 RPM. Designed with robust transient response capabilities conforming to ISO G3 standards.</p>
+    
+    <h3>Technical Parameter Specifications</h3>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Parameter Name</th>
+                <th>Claimed Value</th>
+                <th>Claimed Condition</th>
+                <th>Spec Limit</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>Standby rating kva</td>
+                <td>2500.0 kVA</td>
+                <td>at 40C reference ambient</td>
+                <td>2500.0 kVA</td>
+            </tr>
+            
+            <tr>
+                <td>Power factor</td>
+                <td>0.8 </td>
+                <td>standard</td>
+                <td>0.8 </td>
+            </tr>
+            
+            <tr>
+                <td>Voltage kv</td>
+                <td>11.0 kV</td>
+                <td>standard</td>
+                <td>11.0 kV</td>
+            </tr>
+            
+            <tr>
+                <td>Speed rpm</td>
+                <td>1500.0 RPM</td>
+                <td>standard</td>
+                <td>1500.0 RPM</td>
+            </tr>
+            
+            <tr>
+                <td>Fuel autonomy h</td>
+                <td>48.0 h</td>
+                <td>standard</td>
+                <td>48.0 h</td>
+            </tr>
+            
+            <tr>
+                <td>Fuel consumption 100 l h</td>
+                <td>520.0 L/h</td>
+                <td>at 100% load</td>
+                <td>520.0 L/h</td>
+            </tr>
+            
+            <tr>
+                <td>Block load acceptance</td>
+                <td>100.0 %</td>
+                <td>single-step loading</td>
+                <td>100.0 %</td>
+            </tr>
+            
+            <tr>
+                <td>Reference ambient temp c</td>
+                <td>40.0 C</td>
+                <td>rating reference</td>
+                <td>45.0 C</td>
+            </tr>
+            
+            <tr>
+                <td>Day tank capacity l</td>
+                <td>990.0 L</td>
+                <td>nominal capacity</td>
+                <td>1040.0 L</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    
+    <div class="footnote">
+        <strong>Notes:</strong><br>
+        1. Standby rating is defined at 40°C reference ambient temperature and 0.8 power factor. Sound pressure level is 88 dBA at 1 meter free-field.
+2. Ambient temperature derating: Above 40°C, the generator capacity is subject to the Deccan DD-2500 derating curve, which applies a -2.0% capacity reduction per 1°C ambient temperature rise (giving 2450 kVA capacity at 45°C site ambient).
+    </div>
+    
+    
+    <div class="footer">
+        <span></span>
+        <span>Page 2 of 6</span>
+    </div>
+</div>
+
+<!-- Page 3: Performance Curves / Charts -->
+<div class="page">
+    <div class="header">
+        <span class="logo">DECCAN DIESEL CO. PERFORMANCE CURVES</span>
+        <span>Deccan DD-2500</span>
+    </div>
+    <h2>Equipment Performance Curves</h2>
+    <p>The following performance characteristic curves are extracted from the factory testing data registry and represent standard operational output limits.</p>
+    
+    <div style="text-align: center; margin-top: 15mm; margin-bottom: 10mm;">
+        
+        <img src="assets/gen_derating_curve.png" style="width: 120mm; border: 1px solid var(--border-color);" alt="Generator Derating Curve">
+        
+    </div>
+    
+    <div class="footnote">
+        * Charts generated programmatically from mathematical model of physical properties at design limit.
+    </div>
+    
+    <div class="footer">
+        <span></span>
+        <span>Page 3 of 6</span>
+    </div>
+</div>
+
+<!-- Page 4: Compliance Matrix Statement -->
+<div class="page">
+    <div class="header">
+        <span class="logo">DECCAN DIESEL CO. COMPLIANCE MATRIX</span>
+        <span>Deccan DD-2500</span>
+    </div>
+    <h2>Clause-by-Clause Conformance Statement</h2>
+    <p>Below is our conformance statement indicating compliance with each clause of Section 26 32 13 of the construction specifications.</p>
+    
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Spec Clause</th>
+                <th>Parameter / Requirement</th>
+                <th>Conformance Claim</th>
+                <th>Remarks / Evidence</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>26 32 13 Part 2.2.1.A</td>
+                <td>GEN-RATING-TEMP</td>
+                <td style="font-weight: bold; color: var(--error);">
+                    NC
+                </td>
+                <td>
+                    
+                    Non-Conformant. Generator standby rating of 2500 kVA is quoted at a reference ambient of 40°C on the datasheet cover. The spec mandates ratings be verified at the project design basis ambient of 45°C.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.2.1.B</td>
+                <td>GEN-RATING-SHORTFALL</td>
+                <td style="font-weight: bold; color: var(--error);">
+                    NC
+                </td>
+                <td>
+                    
+                    Non-Conformant. At 45°C design ambient, the Deccan generator derating curve (Figure 2, page 12) applies a -2.0% derating factor to the standby rating, resulting in an active capacity of 2450 kVA, which is below the 2500 kVA spec requirement.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.2.1.C</td>
+                <td>GEN-POWER-FACTOR</td>
+                <td style="font-weight: bold; color: var(--success);">
+                    C
+                </td>
+                <td>
+                    
+                    Conforms. Generator power factor is 0.8, which meets the specified 0.8 PF.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.2.1.D</td>
+                <td>GEN-VOLTAGE</td>
+                <td style="font-weight: bold; color: var(--success);">
+                    C
+                </td>
+                <td>
+                    
+                    Conforms. Generator output voltage is 11 kV, matching the specified 11 kV system nominal voltage.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.2.1.E</td>
+                <td>GEN-SPEED</td>
+                <td style="font-weight: bold; color: var(--success);">
+                    C
+                </td>
+                <td>
+                    
+                    Conforms. Generator speed is 1500 RPM, matching the specified 1500 RPM for 50Hz operation.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.2.2</td>
+                <td>GEN-BLOCK-LOAD</td>
+                <td style="font-weight: bold; color: var(--success);">
+                    C
+                </td>
+                <td>
+                    
+                    Conforms. Generator accepts 100% block load in a single step, meeting the ISO 8528-5 G3 performance class.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.2.4.D</td>
+                <td>GEN-FUEL-CONS-50</td>
+                <td style="font-weight: bold; color: var(--error);">
+                    NC
+                </td>
+                <td>
+                    
+                    Non-Conformant. Fuel consumption rate at 50% load is omitted from the generator performance table on page 6 of the submittal.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.3.2.A</td>
+                <td>GEN-GOVERNOR-TYPE</td>
+                <td style="font-weight: bold; color: var(--success);">
+                    C
+                </td>
+                <td>
+                    
+                    Conforms. Generator uses electronic governor class G3 per ISO 8528-5, meeting the spec.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.3.3.A</td>
+                <td>GEN-STARTER-MOTORS</td>
+                <td style="font-weight: bold; color: var(--error);">
+                    NC
+                </td>
+                <td>
+                    
+                    Non-Conformant. Generator uses a single 24VDC electric starter motor. Spec requires dual starter motors in redundant configuration with independent starter batteries.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.3.5.A</td>
+                <td>GEN-CONTROL-OBSOLETE</td>
+                <td style="font-weight: bold; color: var(--error);">
+                    NC
+                </td>
+                <td>
+                    
+                    Non-Conformant. Submittal states the generator controller utilizes the 'EMCP 3.2' control system. The spec mandates the current 'EMCP 4.4' controller, rendering this an obsolete hardware version.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.3.8.C</td>
+                <td>GEN-DAY-TANK-RUN</td>
+                <td style="font-weight: bold; color: var(--error);">
+                    NC
+                </td>
+                <td>
+                    
+                    Non-Conformant. Vendor submittal day tank has a maximum capacity of 990 Liters, providing only 1.9 hours of autonomy at full load. This violates spec 2.3.8.C requiring 2.0 hours (1040 L) and is linked to the code conflict spec defect DEF-007.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 2.4.3.B</td>
+                <td>GEN-SOUND-LEVEL</td>
+                <td style="font-weight: bold; color: var(--error);">
+                    NC
+                </td>
+                <td>
+                    
+                    Non-Conformant. Datasheet shows sound level at 1 meter is 88 dBA in footnote 1. Spec requires maximum 85 dBA sound pressure level in a free field at 1 meter.
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td>26 32 13 Part 3.2.1.F</td>
+                <td>GEN-ROOM-VENTILATION</td>
+                <td style="font-weight: bold; color: var(--warning);">
+                    NEEDS REVIEW
+                </td>
+                <td>
+                    
+                    Complies, subject to qualitative review of the ventilation and chilled water conditions.
+                    
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <div class="footer">
+        <span></span>
+        <span>Page 4 of 6</span>
+    </div>
+</div>
+
+<!-- Page 5: Test Certificate -->
+<div class="page">
+    <div class="header">
+        <span class="logo">DECCAN DIESEL CO. TEST CERTIFICATE</span>
+        <span>Deccan DD-2500</span>
+    </div>
+    <div style="border: 2px solid var(--primary); padding: 30px; text-align: center; margin-top: 20mm; background-color: var(--bg-light);">
+        <h2 style="color: var(--primary); margin: 0; font-size: 20pt; border: none; padding: 0;">CERTIFICATE OF CONFORMANCE</h2>
+        <div style="font-size: 11pt; color: var(--text-light); margin-top: 10px;">Factory Quality Assurance Department</div>
+        
+        <div style="margin-top: 20mm; font-size: 11pt; text-align: left; line-height: 1.8; padding: 0 10mm;">
+            We hereby certify that the equipment listed below has been manufactured, tested, and inspected in accordance with all active factory testing specifications and international standards.<br><br>
+            <strong>Equipment Model:</strong> Deccan DD-2500<br>
+            <strong>Serial Numbers:</strong> DEC-2026-2601 to 08<br>
+            <strong>Test Standards:</strong> IEC 62040-3, IEC 62271-200, ISO 8528-5 as applicable.<br>
+            <strong>Quality Inspector:</strong> Dr. H. Bose (Director of QA)<br>
+            <strong>Date of Inspection:</strong> January 8, 2026
+        </div>
+        
+        <div style="margin-top: 25mm; display: flex; justify-content: space-around; font-size: 10pt;">
+            <div>
+                <div style="border-top: 1px solid var(--text-dark); width: 40mm; margin: 0 auto;"></div>
+                <div style="margin-top: 5px;">Quality Inspector Signature</div>
+            </div>
+            <div>
+                <div style="border-top: 1px solid var(--text-dark); width: 40mm; margin: 0 auto;"></div>
+                <div style="margin-top: 5px;">Plant Manager Signature</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span></span>
+        <span>Page 5 of 6</span>
+    </div>
+</div>
+
+</body>
+</html>

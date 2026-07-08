@@ -1,0 +1,227 @@
+{% extends "base_layout.html" %}
+{% block content %}
+<!-- Page 1: Transmittal Sheet -->
+<div class="page">
+    {% if stamp %}
+    <div class="stamp {{ stamp_class }}">{{ stamp }}</div>
+    {% endif %}
+    
+    <div style="border: 2px solid var(--primary); padding: 15px; margin-bottom: 20px;">
+        <h2 style="margin: 0; text-align: center; border: none; color: var(--primary);">EQUIPMENT SUBMITTAL TRANSMITTAL</h2>
+    </div>
+    
+    <table style="width: 100%; border: none;">
+        <tr style="background: none;"><td style="font-weight: 600; width: 25%;">Transmittal No:</td><td>{{ transmittal.no }}</td><td style="font-weight: 600; width: 20%;">Date:</td><td>{{ transmittal.date }}</td></tr>
+        <tr style="background: none;"><td style="font-weight: 600;">Project:</td><td>{{ project.name }}</td><td style="font-weight: 600;">Spec Section:</td><td>{{ transmittal.spec_section }}</td></tr>
+        <tr style="background: none;"><td style="font-weight: 600;">Vendor:</td><td>{{ vendor }}</td><td style="font-weight: 600;">Revision:</td><td>{{ transmittal.revision }}</td></tr>
+        <tr style="background: none;"><td style="font-weight: 600;">Status:</td><td>FOR REVIEW</td><td style="font-weight: 600;">EPC Lead:</td><td>{{ project.epc | upper }} Electrical</td></tr>
+    </table>
+    
+    <h3>Submittal Item Description</h3>
+    <p>We submit for engineering review and approval the product datasheet, compliance matrix, and test certifications for the following equipment:</p>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Model Number</th>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Manufacturer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ model }}</td>
+                <td>{{ description }}</td>
+                <td>{{ qty }}</td>
+                <td>{{ vendor }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Review Comments / Action Taken</h3>
+    <div style="border: 1px solid var(--border-color); height: 50mm; padding: 10px; background-color: var(--bg-light); font-size: 9.5pt;">
+        <strong>Engineering Review Result:</strong> {% if stamp %}{{ stamp }}{% else %}PENDING{% endif %}<br>
+        <strong>Comments:</strong><br>
+        {% if transmittal.no == "SUB-263353-001-R0" %}
+        - UPS Double-conversion efficiency at 50% load drops to 95.1% in footnote 3, failing the spec minimum of 96.0%. Resubmit with compliant module characteristics.<br>
+        - Parallel module configuration is N+1, which violates the spec section 2.1.2.A demanding N+2 redundancy.<br>
+        - Missing IEC 62040-3 test certificate.
+        {% elif transmittal.no == "SUB-263213-001-R0" %}
+        - Standby rating is quoted at 40°C reference ambient. Manufacturer derating curve at 45°C site ambient indicates a 2% drop in capacity (2450 kVA), failing the 2500 kVA standby limit.<br>
+        - Generator day tank capacity is 990 L, failing the spec minimum of 1040 L (2.0 hours). Note that this is due to local NBC code capping day tanks to <1000 L, which is a code conflict.<br>
+        - Standard mismatch: EMCP 3.2 controller is obsolete.
+        {% elif transmittal.no == "SUB-238123-001-R0" %}
+        - Airflow is 62,390 m³/h, which is 3.0% below the spec requirement of 64,320 m³/h.<br>
+        - Dual power supply feed is missing; unit includes single terminal block only.<br>
+        - Unit width is 2450 mm, which exceeds structural corridor limit of 2400 mm.
+        {% elif transmittal.no == "SUB-212200-001-R0" %}
+        - Cylinder valve test certification is completely missing from the submittal package. Status is missing documents.
+        {% else %}
+        - Approved with no major comments. All values check compliant.
+        {% endif %}
+    </div>
+    
+    <div class="footer">
+        <span>{{ transmittal.no }}</span>
+        <span>Page 1 of 6</span>
+    </div>
+</div>
+
+<!-- Page 2: Product Datasheet -->
+<div class="page">
+    <div class="header">
+        <span class="logo">{{ vendor | upper }} PRODUCT DATASHEET</span>
+        <span>{{ model }}</span>
+    </div>
+    <h2>Product Datasheet: {{ model }}</h2>
+    <p>{{ datasheet_intro }}</p>
+    
+    <h3>Technical Parameter Specifications</h3>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Parameter Name</th>
+                <th>Claimed Value</th>
+                <th>Claimed Condition</th>
+                <th>Spec Limit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for name, details in parameters.items() %}
+            <tr>
+                <td>{{ name | replace('_', ' ') | capitalize }}</td>
+                <td>{{ details.claimed_val }} {{ details.unit if details.unit != 'text' and details.unit != 'dimensionless' }}</td>
+                <td>{{ details.claimed_condition }}</td>
+                <td>{{ details.spec_val }} {{ details.unit if details.unit != 'text' and details.unit != 'dimensionless' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if footnote_text %}
+    <div class="footnote">
+        <strong>Notes:</strong><br>
+        {{ footnote_text }}
+    </div>
+    {% endif %}
+    
+    <div class="footer">
+        <span>{{ transmittal.no }}</span>
+        <span>Page 2 of 6</span>
+    </div>
+</div>
+
+<!-- Page 3: Performance Curves / Charts -->
+<div class="page">
+    <div class="header">
+        <span class="logo">{{ vendor | upper }} PERFORMANCE CURVES</span>
+        <span>{{ model }}</span>
+    </div>
+    <h2>Equipment Performance Curves</h2>
+    <p>The following performance characteristic curves are extracted from the factory testing data registry and represent standard operational output limits.</p>
+    
+    <div style="text-align: center; margin-top: 15mm; margin-bottom: 10mm;">
+        {% if "UPS" in model %}
+        <img src="assets/ups_efficiency_curve.png" style="width: 120mm; border: 1px solid var(--border-color);" alt="UPS Efficiency Curve">
+        {% elif "DD" in model %}
+        <img src="assets/gen_derating_curve.png" style="width: 120mm; border: 1px solid var(--border-color);" alt="Generator Derating Curve">
+        {% else %}
+        <div style="height: 80mm; width: 120mm; border: 1.5px dashed var(--border-color); display: flex; justify-content: center; align-items: center; margin: 0 auto; color: var(--text-light);">
+            Performance curve chart not required for this equipment class.
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="footnote">
+        * Charts generated programmatically from mathematical model of physical properties at design limit.
+    </div>
+    
+    <div class="footer">
+        <span>{{ transmittal.no }}</span>
+        <span>Page 3 of 6</span>
+    </div>
+</div>
+
+<!-- Page 4: Compliance Matrix Statement -->
+<div class="page">
+    <div class="header">
+        <span class="logo">{{ vendor | upper }} COMPLIANCE MATRIX</span>
+        <span>{{ model }}</span>
+    </div>
+    <h2>Clause-by-Clause Conformance Statement</h2>
+    <p>Below is our conformance statement indicating compliance with each clause of Section {{ transmittal.spec_section }} of the construction specifications.</p>
+    
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Spec Clause</th>
+                <th>Parameter / Requirement</th>
+                <th>Conformance Claim</th>
+                <th>Remarks / Evidence</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for check in package_checks %}
+            <tr>
+                <td>{{ check.spec_clause }}</td>
+                <td>{{ check.rule_id }}</td>
+                <td style="font-weight: bold; color: {% if check.verdict_pre_addendum == 'COMPLIANT' %}var(--success){% elif check.verdict_pre_addendum == 'NEEDS_REVIEW' %}var(--warning){% else %}var(--error){% endif %};">
+                    {% if check.verdict_pre_addendum == 'COMPLIANT' %}C{% elif check.verdict_pre_addendum == 'NEEDS_REVIEW' %}NEEDS REVIEW{% else %}NC{% endif %}
+                </td>
+                <td>
+                    {% if check.verdict_pre_addendum == 'COMPLIANT' %}
+                    Conforms. {{ check.explanation }}
+                    {% elif check.verdict_pre_addendum == 'NEEDS_REVIEW' %}
+                    Complies, subject to qualitative review of the ventilation and chilled water conditions.
+                    {% else %}
+                    Non-Conformant. {{ check.explanation }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="footer">
+        <span>{{ transmittal.no }}</span>
+        <span>Page 4 of 6</span>
+    </div>
+</div>
+
+<!-- Page 5: Test Certificate -->
+<div class="page">
+    <div class="header">
+        <span class="logo">{{ vendor | upper }} TEST CERTIFICATE</span>
+        <span>{{ model }}</span>
+    </div>
+    <div style="border: 2px solid var(--primary); padding: 30px; text-align: center; margin-top: 20mm; background-color: var(--bg-light);">
+        <h2 style="color: var(--primary); margin: 0; font-size: 20pt; border: none; padding: 0;">CERTIFICATE OF CONFORMANCE</h2>
+        <div style="font-size: 11pt; color: var(--text-light); margin-top: 10px;">Factory Quality Assurance Department</div>
+        
+        <div style="margin-top: 20mm; font-size: 11pt; text-align: left; line-height: 1.8; padding: 0 10mm;">
+            We hereby certify that the equipment listed below has been manufactured, tested, and inspected in accordance with all active factory testing specifications and international standards.<br><br>
+            <strong>Equipment Model:</strong> {{ model }}<br>
+            <strong>Serial Numbers:</strong> {{ vendor[:3] | upper }}-2026-{{ transmittal.spec_section[:2] }}01 to 08<br>
+            <strong>Test Standards:</strong> IEC 62040-3, IEC 62271-200, ISO 8528-5 as applicable.<br>
+            <strong>Quality Inspector:</strong> Dr. H. Bose (Director of QA)<br>
+            <strong>Date of Inspection:</strong> January 8, 2026
+        </div>
+        
+        <div style="margin-top: 25mm; display: flex; justify-content: space-around; font-size: 10pt;">
+            <div>
+                <div style="border-top: 1px solid var(--text-dark); width: 40mm; margin: 0 auto;"></div>
+                <div style="margin-top: 5px;">Quality Inspector Signature</div>
+            </div>
+            <div>
+                <div style="border-top: 1px solid var(--text-dark); width: 40mm; margin: 0 auto;"></div>
+                <div style="margin-top: 5px;">Plant Manager Signature</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>{{ transmittal.no }}</span>
+        <span>Page 5 of 6</span>
+    </div>
+</div>
+{% endblock %}
