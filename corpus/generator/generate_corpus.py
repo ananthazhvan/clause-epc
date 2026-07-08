@@ -380,6 +380,13 @@ def generate_submittals(env, bible):
         # Sort checks by spec clause
         package_checks.sort(key=lambda x: x["spec_clause"])
         
+        # Chunk compliance matrix checks to 7 items per page
+        chunks = [package_checks[i:i + 7] for i in range(0, len(package_checks), 7)]
+        if not chunks:
+            chunks = [[]]
+            
+        total_pages = 3 + len(chunks) + 1  # 3 cover pages + compliance pages + 1 certificate page
+        
         html_content = template.render(
             project=bible["project"],
             transmittal=pkg,
@@ -392,7 +399,8 @@ def generate_submittals(env, bible):
             datasheet_intro=pkg["datasheet_intro"],
             parameters=pkg["parameters"],
             footnote_text=pkg["footnote_text"],
-            package_checks=package_checks,
+            compliance_pages=chunks,
+            total_pages=total_pages,
             title=f"Submittal Package - {pkg['pkg_name']}"
         )
         

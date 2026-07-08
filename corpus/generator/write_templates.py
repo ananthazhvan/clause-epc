@@ -508,7 +508,7 @@ templates = {
     
     <div class="footer">
         <span>{{ transmittal.no }}</span>
-        <span>Page 1 of 6</span>
+        <span>Page 1 of {{ total_pages }}</span>
     </div>
 </div>
 
@@ -552,7 +552,7 @@ templates = {
     
     <div class="footer">
         <span>{{ transmittal.no }}</span>
-        <span>Page 2 of 6</span>
+        <span>Page 2 of {{ total_pages }}</span>
     </div>
 </div>
 
@@ -583,30 +583,33 @@ templates = {
     
     <div class="footer">
         <span>{{ transmittal.no }}</span>
-        <span>Page 3 of 6</span>
+        <span>Page 3 of {{ total_pages }}</span>
     </div>
 </div>
 
-<!-- Page 4: Compliance Matrix Statement -->
+<!-- Page 4+: Compliance Matrix Statement pages -->
+{% for page_checks in compliance_pages %}
 <div class="page">
     <div class="header">
         <span class="logo">{{ vendor | upper }} COMPLIANCE MATRIX</span>
         <span>{{ model }}</span>
     </div>
-    <h2>Clause-by-Clause Conformance Statement</h2>
+    <h2>Clause-by-Clause Conformance Statement {% if compliance_pages | length > 1 %}(Page {{ loop.index }}){% endif %}</h2>
+    {% if loop.first %}
     <p>Below is our conformance statement indicating compliance with each clause of Section {{ transmittal.spec_section }} of the construction specifications.</p>
+    {% endif %}
     
     <table style="width: 100%;">
         <thead>
             <tr>
-                <th>Spec Clause</th>
-                <th>Parameter / Requirement</th>
-                <th>Conformance Claim</th>
-                <th>Remarks / Evidence</th>
+                <th style="width: 20%;">Spec Clause</th>
+                <th style="width: 25%;">Parameter / Requirement</th>
+                <th style="width: 15%;">Conformance Claim</th>
+                <th style="width: 40%;">Remarks / Evidence</th>
             </tr>
         </thead>
         <tbody>
-            {% for check in package_checks %}
+            {% for check in page_checks %}
             <tr>
                 <td>{{ check.spec_clause }}</td>
                 <td>{{ check.rule_id }}</td>
@@ -629,11 +632,12 @@ templates = {
     
     <div class="footer">
         <span>{{ transmittal.no }}</span>
-        <span>Page 4 of 6</span>
+        <span>Page {{ 3 + loop.index }} of {{ total_pages }}</span>
     </div>
 </div>
+{% endfor %}
 
-<!-- Page 5: Test Certificate -->
+<!-- Page Last: Test Certificate -->
 <div class="page">
     <div class="header">
         <span class="logo">{{ vendor | upper }} TEST CERTIFICATE</span>
@@ -666,7 +670,7 @@ templates = {
     
     <div class="footer">
         <span>{{ transmittal.no }}</span>
-        <span>Page 5 of 6</span>
+        <span>Page {{ 3 + compliance_pages | length + 1 }} of {{ total_pages }}</span>
     </div>
 </div>
 {% endblock %}

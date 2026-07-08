@@ -10,7 +10,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Datasheet table claims 96.1% efficiency at 50% load, but footnote 3 on page 8 states 'Efficiency reduces to 95.1% under VFI mode when harmonic filters are active at 50% load', which is below the 96% spec requirement.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-UPS-R0-RED",
@@ -75,7 +75,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "UPS module overload rating is claimed as 125% for 5 minutes. Spec requires 125% overload capability for a minimum of 10 minutes.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-UPS-R0-AIRFLOW-PATH",
@@ -140,7 +140,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Submittal states the generator controller utilizes the 'EMCP 3.2' control system. The spec mandates the current 'EMCP 4.4' controller, rendering this an obsolete hardware version.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-GEN-AMB-VENT",
@@ -166,7 +166,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Vendor submittal day tank has a maximum capacity of 990 Liters, providing only 1.9 hours of autonomy at full load. This violates spec 2.3.8.C requiring 2.0 hours (1040 L) and is linked to the code conflict spec defect DEF-007.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-GEN-MISS-PARAM",
@@ -192,7 +192,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Generator uses a single 24VDC electric starter motor. Spec requires dual starter motors in redundant configuration with independent starter batteries.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-GEN-SOUND",
@@ -244,7 +244,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "CRAH fan motor power is listed as '7.5 HP' in the datasheet. The spec requires motor power to be defined in electrical kilowatts (kW) (conversion: 7.5 HP * 0.746 = 5.6 kW).",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-CRAH-REFRIGERANT",
@@ -270,7 +270,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "The valve flow coefficient (Cv) of the 2-way modulating control valve is missing from the CRAH component table.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-CRAH-HUMIDIFIER",
@@ -296,7 +296,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "CRAH is provided with a standard 2-way modulating control valve. Spec requires a pressure independent control valve (PICV) for chilled water flow regulation.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-CRAH-WIDTH",
@@ -361,7 +361,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Vendor compliance matrix states the agent hold time (retention) is 9 minutes (540 seconds) under worst-case room leakage, failing the spec minimum requirement of 10 minutes (600 seconds).",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-FIRE-MISS-PARAM",
@@ -400,7 +400,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Total clean agent quantity detailed in the bill of materials is 11,800 kg. Design calculations in the specification mandate a minimum of 12,500 kg of agent to maintain design concentration across all zones.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-FIRE-STANDARDS",
@@ -439,7 +439,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Under Addendum 3, the UPS efficiency requirement was increased to 96.5%. VoltEdge UPS R1 efficiency at 100% load is 96.2%, failing this updated specification.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-UPS-R1-ADD3-EFF75",
@@ -452,7 +452,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Under Addendum 3, the UPS efficiency requirement was increased to 96.5%. VoltEdge UPS R1 efficiency at 75% load is 96.0%, failing this updated specification.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-UPS-R1-ADD3-EFF50",
@@ -465,7 +465,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Under Addendum 3, the UPS efficiency requirement was increased to 96.5%. VoltEdge UPS R1 efficiency at 50% load is 96.2%, failing this updated specification.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-UPS-R1-MISS-PARAM",
@@ -504,7 +504,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "R1 submittal still specifies a rear-exhaust airflow configuration, violating the top-exhaust layout requirement.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-UPS-R1-PAINT",
@@ -608,7 +608,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Battery cabinet is configured for bottom cable entry only. Spec requires dual entry (top or bottom cable entry conduits) to match overhead cable trays.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "DEV-BAT-LVD-VALVE",
@@ -621,7 +621,7 @@
     "verdict_post_addendum": "DEVIATION",
     "explanation": "Low Voltage Disconnect (LVD) contactor rating is omitted from the battery cabinet component details.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-SWG-VOLT",
@@ -686,7 +686,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Enclosure IP rating is IP4X, which meets the specified minimum IP4X.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-SWG-IAC",
@@ -699,7 +699,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Internal Arc Classification is AFLR, which meets the specified classification of AFLR.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-SWG-CERT",
@@ -738,7 +738,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Lightning impulse withstand voltage (BIL) is 75 kV, matching the specified 75 kV requirement.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-SWG-BUS-MAT",
@@ -751,7 +751,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Busbar material is high conductivity copper, meeting the specification.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-SWG-EARTH",
@@ -764,7 +764,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Earthing busbar is copper and sized for full short circuit rating, meeting the spec.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-SWG-CT-ACC",
@@ -777,7 +777,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Current transformers have metering accuracy class 0.5s and protection class 5P20, meeting spec.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-SWG-VT-ACC",
@@ -790,7 +790,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Voltage transformers have accuracy class 0.5, meeting the spec.",
     "spec_page": 2,
-    "submittal_page": 5
+    "submittal_page": 6
   },
   {
     "check_id": "COMP-SWG-OPER-TEMP",
@@ -816,7 +816,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Loss of service continuity is LSC-2B, which meets LSC-2B specification.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-UPS-R0-CAP",
@@ -881,7 +881,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "UPS module double-conversion efficiency at 75% load is 96.0%, meeting the specified minimum of 96.0%.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-GEN-PF",
@@ -946,7 +946,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Generator uses electronic governor class G3 per ISO 8528-5, meeting the spec.",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-CRAH-CAP",
@@ -998,7 +998,7 @@
     "verdict_post_addendum": "COMPLIANT",
     "explanation": "Fan power density is 0.09 W/(m3/h), which meets the specified limit of < 0.10 W/(m3/h).",
     "spec_page": 2,
-    "submittal_page": 4
+    "submittal_page": 5
   },
   {
     "check_id": "COMP-CRAH-HUMIDITY-RANGE",
