@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page {{ vendor_class }}">
+    <div class="header">
+        <span class="logo-text">{{ vendor_name }}</span>
+        <span>Submittal Package {{ submittal_id }}</span>
+    </div>
+    
+    <div class="content" style="margin-top: 20mm; text-align: center;">
+        <h1 class="cover-title">EQUIPMENT SUBMITTAL</h1>
+        <h2>{{ package_title }}</h2>
+        
+        <div class="cover-meta">
+            <p><strong>Project:</strong> Meridian Data Centre Campus - Phase 1</p>
+            <p><strong>Reference Section:</strong> {{ spec_section }}</p>
+            <p><strong>Package ID:</strong> {{ submittal_id }}</p>
+            <p><strong>Revision:</strong> {{ revision }}</p>
+            <p><strong>Reviewed Spec Revision:</strong> {{ spec_revision }}</p>
+            <p><strong>Date:</strong> {{ date }}</p>
+            
+            <div style="margin-top: 10mm;">
+                <span class="status-badge status-{{ status }}">{{ status }}</span>
+            </div>
+        </div>
+        
+        <table style="width: 80%; margin: 20mm auto;">
+            <tr>
+                <th>Rev</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>{{ revision }}</td>
+                <td>{{ date }}</td>
+                <td>Initial / Updated Submittal</td>
+            </tr>
+        </table>
+    </div>
+    <div class="footer">Page 1 of {{ total_pages }}</div>
+</div>
+
+<div class="page {{ vendor_class }}">
+    <div class="header">
+        <span class="logo-text">{{ vendor_name }}</span>
+        <span>Technical Datasheet</span>
+    </div>
+    <div class="content" style="margin-top: 10mm;">
+        <h3>Technical Parameters</h3>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Claimed Value</th>
+            </tr>
+            {% for row in datasheet_rows %}
+            <tr>
+                <td>{{ row.name }}</td>
+                <td>{{ row.value }}{% if row.footnote %}<sup>{{ row.footnote }}</sup>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        {% if footnotes %}
+        <div class="footnotes">
+            {% for fn in footnotes %}
+            <div><sup>{{ fn.num }}</sup> {{ fn.text }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="footer">Page 2 of {{ total_pages }}</div>
+</div>
+
+{% if performance_curves %}
+<div class="page {{ vendor_class }}">
+    <div class="header">
+        <span class="logo-text">{{ vendor_name }}</span>
+        <span>Performance Curves</span>
+    </div>
+    <div class="content" style="margin-top: 10mm; text-align: center;">
+        {% for curve in performance_curves %}
+        <img src="{{ curve.image_data }}" style="max-width: 90%; max-height: 200mm;" />
+        {% endfor %}
+    </div>
+    <div class="footer">Page 3 of {{ total_pages }}</div>
+</div>
+{% endif %}
+
+{% for matrix_page in compliance_matrix_pages %}
+<div class="page {{ vendor_class }}">
+    <div class="header">
+        <span class="logo-text">{{ vendor_name }}</span>
+        <span>Compliance Matrix</span>
+    </div>
+    <div class="content" style="margin-top: 10mm;">
+        <table>
+            <tr>
+                <th style="width: 25%">Clause ID</th>
+                <th style="width: 55%">Requirement Summary</th>
+                <th style="width: 20%">Response</th>
+            </tr>
+            {% for row in matrix_page %}
+            <tr>
+                <td>{{ row.clause_id }}</td>
+                <td>{{ row.text[:100] }}...</td>
+                <td>{{ row.response }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="footer">Page {{ 3 + (1 if performance_curves else 0) + loop.index - 1 }} of {{ total_pages }}</div>
+</div>
+{% endfor %}
+
+{% if certificate_included %}
+<div class="page {{ vendor_class }}">
+    <div class="header">
+        <span class="logo-text">{{ vendor_name }}</span>
+        <span>Certificates</span>
+    </div>
+    <div class="content" style="margin-top: 10mm; text-align: center; border: 5px double #ccc; padding: 20mm;">
+        <h1>CERTIFICATE OF COMPLIANCE</h1>
+        <p>This certifies that the equipment complies with standard testing requirements.</p>
+        <p><strong>Issued by:</strong> Third Party Testing Laboratory</p>
+    </div>
+    <div class="footer">Page {{ total_pages }} of {{ total_pages }}</div>
+</div>
+{% endif %}
+{% endblock %}

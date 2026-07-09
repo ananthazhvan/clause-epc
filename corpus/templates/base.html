@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page { size: A4; margin: 0; }
+        body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #fff; 
+            font-size: 10pt;
+            line-height: 1.4;
+        }
+        .page { 
+            width: 210mm; 
+            height: 297mm; 
+            box-sizing: border-box; 
+            padding: 20mm; 
+            position: relative; 
+            page-break-after: always; 
+            overflow: hidden;
+            background: white;
+        }
+        .header { 
+            position: absolute; 
+            top: 15mm; 
+            left: 20mm; 
+            right: 20mm; 
+            border-bottom: 1px solid #ccc; 
+            padding-bottom: 3mm;
+            font-size: 9pt; 
+            color: #666; 
+            display: flex; 
+            justify-content: space-between; 
+        }
+        .footer { 
+            position: absolute; 
+            bottom: 15mm; 
+            left: 20mm; 
+            right: 20mm; 
+            border-top: 1px solid #ccc; 
+            font-size: 9pt; 
+            color: #666; 
+            text-align: right; 
+            padding-top: 3mm; 
+        }
+        .footnotes { 
+            position: absolute; 
+            bottom: 25mm; 
+            left: 20mm; 
+            right: 20mm; 
+            border-top: 1px solid #ccc; 
+            padding-top: 2mm; 
+            font-size: 8pt; 
+        }
+        h1, h2, h3, h4 { color: #333; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5mm; font-size: 9pt; }
+        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+        th { background-color: #f5f5f5; }
+        .clause { margin-bottom: 4mm; text-align: justify; }
+        .clause-id { font-weight: bold; color: #444; }
+        
+        /* Vendor styles */
+        .vendor-VoltEdge { border-top: 4mm solid #0056b3; }
+        .vendor-Deccan { border-top: 4mm solid #e6b800; }
+        .vendor-CryoCore { border-top: 4mm solid #008080; }
+        .vendor-Trident { border-top: 4mm solid #708090; }
+        .vendor-AegisFire { border-top: 4mm solid #cc0000; }
+        
+        .logo-text { font-size: 18pt; font-weight: bold; letter-spacing: 1px; }
+        .VoltEdge .logo-text { color: #0056b3; }
+        .Deccan .logo-text { color: #e6b800; }
+        .CryoCore .logo-text { color: #008080; }
+        .Trident .logo-text { color: #708090; }
+        .AegisFire .logo-text { color: #cc0000; }
+        
+        .cover-title { font-size: 24pt; margin-top: 40mm; text-align: center; }
+        .cover-meta { margin-top: 20mm; font-size: 12pt; }
+        .status-badge { display: inline-block; padding: 2mm 5mm; border-radius: 2mm; font-weight: bold; font-size: 14pt;}
+        .status-ACTIVE { background: #d4edda; color: #155724; }
+        .status-SUPERSEDED { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

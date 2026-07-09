@@ -36,6 +36,14 @@ submittal_packages:
   VoltEdge UPS, R0:
     status: SUPERSEDED
     superseded_by: VoltEdge UPS, R1
+    parameter_overrides:
+      efficiency_50_load:
+        claimed_val: 96.1
+        where_expressed: main table
+      efficiency_50_load_footnote:
+        claimed_val: Efficiency reduces to 95.1% under VFI mode when harmonic filters
+          are active at 50% load
+        where_expressed: footnote
   Deccan generator:
     status: ACTIVE
   CryoCore CRAH:
@@ -46,6 +54,31 @@ submittal_packages:
     status: ACTIVE
   VoltEdge UPS, R1:
     status: ACTIVE
+    parameter_overrides:
+      input_thd:
+        claimed_val: 5.2
+        where_expressed: main table
+      efficiency_100_load:
+        claimed_val: 96.2
+        spec_val: 96.5
+        where_expressed: main table
+      efficiency_75_load:
+        claimed_val: 96.0
+        spec_val: 96.5
+        where_expressed: main table
+      efficiency_50_load:
+        claimed_val: 96.2
+        spec_val: 96.5
+        where_expressed: main table
+      certification:
+        claimed_val: IEC 62040-3
+        where_expressed: compliance matrix
+      spec_revision:
+        claimed_val: Rev 2024
+        where_expressed: transmittal
+      efficiency_50_load_footnote:
+        claimed_val: missing
+        where_expressed: missing
   VoltEdge battery cabinet:
     status: ACTIVE
 spec_defects:
@@ -1061,6 +1094,7 @@ equipment:
         claimed_condition: at 40C ambient
         where_expressed: main table
         unit: kW
+        display_name: UPS Module Capacity
       power_factor:
         true_val: 1.0
         spec_val: 1.0
@@ -1068,6 +1102,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: dimensionless
+        display_name: Power Factor
       input_voltage:
         true_val: 415.0
         spec_val: 415.0
@@ -1075,6 +1110,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: V
+        display_name: Input Voltage
       output_voltage:
         true_val: 415.0
         spec_val: 415.0
@@ -1082,6 +1118,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: V
+        display_name: Output Voltage
       input_thd:
         true_val: 4.2
         spec_val: 5.0
@@ -1089,6 +1126,7 @@ equipment:
         claimed_condition: at 100% load
         where_expressed: main table
         unit: '%'
+        display_name: Input Harmonic Distortion
       efficiency_100_load:
         true_val: 96.2
         spec_val: 96.0
@@ -1096,6 +1134,7 @@ equipment:
         claimed_condition: double-conversion mode
         where_expressed: main table
         unit: '%'
+        display_name: Efficiency at 100% Load
       efficiency_75_load:
         true_val: 96.0
         spec_val: 96.0
@@ -1103,6 +1142,7 @@ equipment:
         claimed_condition: double-conversion mode
         where_expressed: main table
         unit: '%'
+        display_name: Efficiency at 75% Load
       efficiency_50_load:
         true_val: 95.1
         spec_val: 96.0
@@ -1110,6 +1150,7 @@ equipment:
         claimed_condition: double-conversion mode
         where_expressed: main table
         unit: '%'
+        display_name: Efficiency at 50% Load
       battery_runtime_min:
         true_val: 10.0
         spec_val: 10.0
@@ -1117,6 +1158,7 @@ equipment:
         claimed_condition: at 100% load
         where_expressed: main table
         unit: min
+        display_name: Battery Runtime
       battery_chemistry:
         true_val: VRLA
         spec_val: VRLA
@@ -1124,6 +1166,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: text
+        display_name: Battery Chemistry
       certification:
         true_val: IEC 62040-3
         spec_val: IEC 62040-3
@@ -1131,6 +1174,64 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: text
+        display_name: Certifications
+      parallel_redundancy:
+        true_val: N+1
+        spec_val: N+2
+        claimed_val: N+1
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Parallel Redundancy Configuration
+      spec_revision:
+        true_val: Rev 2024
+        spec_val: Rev 2024
+        claimed_val: Rev 2020
+        claimed_condition: standard
+        where_expressed: transmittal
+        unit: text
+        display_name: Reviewed Specification Revision
+      bypass_transfer_time_ms:
+        true_val: 4.0
+        spec_val: 4.0
+        claimed_val: missing
+        claimed_condition: standard
+        where_expressed: missing
+        unit: ms
+        display_name: Bypass Static Switch Transfer Time
+      overload_capacity:
+        true_val: 125% for 10 minutes
+        spec_val: 125% for 10 minutes
+        claimed_val: 125% for 5 minutes
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Inverter Overload Capacity
+      cooling_airflow_path:
+        true_val: Front-inlet / Top-exhaust
+        spec_val: Front-inlet / Top-exhaust
+        claimed_val: Rear-exhaust
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Cooling Airflow Configuration
+      enclosure_paint_finish:
+        true_val: RAL 7035
+        spec_val: RAL 7035
+        claimed_val: RAL 9005
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Enclosure Paint Finish
+      efficiency_50_load_footnote:
+        true_val: standard
+        spec_val: standard
+        claimed_val: Efficiency reduces to 95.1% under VFI mode when harmonic filters
+          are active at 50% load
+        claimed_condition: standard
+        where_expressed: footnote
+        unit: text
+        display_name: Efficiency Footnote
   generator:
     vendor: Deccan Diesel Co.
     model: Deccan DD-2500
@@ -1143,6 +1244,7 @@ equipment:
         claimed_condition: at 40C reference ambient
         where_expressed: main table
         unit: kVA
+        display_name: Standby Rating
       power_factor:
         true_val: 0.8
         spec_val: 0.8
@@ -1150,6 +1252,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: dimensionless
+        display_name: Power Factor
       voltage_kv:
         true_val: 11.0
         spec_val: 11.0
@@ -1157,6 +1260,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: kV
+        display_name: Voltage
       speed_rpm:
         true_val: 1500.0
         spec_val: 1500.0
@@ -1164,6 +1268,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: RPM
+        display_name: Engine Speed
       fuel_autonomy_h:
         true_val: 48.0
         spec_val: 48.0
@@ -1171,6 +1276,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: h
+        display_name: Fuel Autonomy
       fuel_consumption_100_l_h:
         true_val: 520.0
         spec_val: 520.0
@@ -1178,6 +1284,7 @@ equipment:
         claimed_condition: at 100% load
         where_expressed: main table
         unit: L/h
+        display_name: Fuel Consumption at 100% Load
       block_load_acceptance:
         true_val: 100.0
         spec_val: 100.0
@@ -1185,6 +1292,7 @@ equipment:
         claimed_condition: single-step loading
         where_expressed: main table
         unit: '%'
+        display_name: Block Load Acceptance
       reference_ambient_temp_c:
         true_val: 40.0
         spec_val: 45.0
@@ -1192,6 +1300,7 @@ equipment:
         claimed_condition: rating reference
         where_expressed: main table
         unit: C
+        display_name: Reference Ambient Temperature
       day_tank_capacity_l:
         true_val: 990.0
         spec_val: 1040.0
@@ -1199,6 +1308,63 @@ equipment:
         claimed_condition: nominal capacity
         where_expressed: main table
         unit: L
+        display_name: Day Tank Capacity
+      derated_standby_capacity:
+        true_val: 2450.0
+        spec_val: 2500.0
+        claimed_val: 2450.0
+        claimed_condition: at 45C ambient
+        where_expressed: curve
+        unit: kVA
+        display_name: Derated Standby Capacity
+      generator_controller:
+        true_val: EMCP 4.4
+        spec_val: EMCP 4.4
+        claimed_val: EMCP 3.2
+        claimed_condition: standard
+        where_expressed: compliance matrix
+        unit: text
+        display_name: Generator Control System
+      room_ventilation:
+        true_val: adequate ventilation
+        spec_val: adequate ventilation
+        claimed_val: room ventilation is adequate
+        claimed_condition: standard
+        where_expressed: compliance matrix
+        unit: text
+        display_name: Room Ventilation
+      fuel_consumption_50_l_h:
+        true_val: 290.0
+        spec_val: 290.0
+        claimed_val: missing
+        claimed_condition: at 50% load
+        where_expressed: missing
+        unit: L/h
+        display_name: Fuel Consumption at 50% Load
+      electric_starter_motors:
+        true_val: Dual starters
+        spec_val: Dual starters
+        claimed_val: Single starter
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Electric Starter Configuration
+      sound_pressure_level_dba:
+        true_val: 85.0
+        spec_val: 85.0
+        claimed_val: 88.0
+        claimed_condition: at 1 meter in free field
+        where_expressed: footnote
+        unit: dBA
+        display_name: Sound Pressure Level
+      governor_type:
+        true_val: Class G3
+        spec_val: Class G3
+        claimed_val: Class G3
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Governor Classification
   crah:
     vendor: CryoCore Climate
     model: CryoCore CR-250
@@ -1211,6 +1377,7 @@ equipment:
         claimed_condition: entering water 10C, return air 35C
         where_expressed: main table
         unit: kW
+        display_name: Sensible Cooling Capacity
       airflow_m3_h:
         true_val: 62390.0
         spec_val: 64320.0
@@ -1218,6 +1385,7 @@ equipment:
         claimed_condition: at peak fan speed
         where_expressed: main table
         unit: m3/h
+        display_name: Airflow
       entering_water_temp_c:
         true_val: 10.0
         spec_val: 10.0
@@ -1225,6 +1393,7 @@ equipment:
         claimed_condition: design chilled water loop
         where_expressed: main table
         unit: C
+        display_name: Entering Water Temperature
       leaving_water_temp_c:
         true_val: 18.0
         spec_val: 18.0
@@ -1232,6 +1401,7 @@ equipment:
         claimed_condition: design chilled water loop
         where_expressed: main table
         unit: C
+        display_name: Leaving Water Temperature
       water_delta_t_k:
         true_val: 8.0
         spec_val: 8.0
@@ -1239,6 +1409,7 @@ equipment:
         claimed_condition: standard design
         where_expressed: main table
         unit: K
+        display_name: Water Temperature Delta-T
       ec_fan_power_kw:
         true_val: 5.6
         spec_val: 6.0
@@ -1246,6 +1417,7 @@ equipment:
         claimed_condition: at peak design airflow
         where_expressed: main table
         unit: kW
+        display_name: EC Fan Power
       fan_power_density_w_m3_h:
         true_val: 0.09
         spec_val: 0.1
@@ -1253,6 +1425,7 @@ equipment:
         claimed_condition: at design airflow
         where_expressed: main table
         unit: W/(m3/h)
+        display_name: Fan Power Density
       refrigerant:
         true_val: R-407C
         spec_val: R-410A
@@ -1260,6 +1433,63 @@ equipment:
         claimed_condition: factory charge
         where_expressed: main table
         unit: text
+        display_name: Refrigerant Type
+      cop:
+        true_val: 5.2
+        spec_val: 5.2
+        claimed_val: 5.3
+        claimed_condition: standard
+        where_expressed: main table
+        unit: dimensionless
+        display_name: Coefficient of Performance
+      fan_motor_power:
+        true_val: 5.6
+        spec_val: 5.6
+        claimed_val: 7.5 HP
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Fan Motor Power
+      valve_flow_coefficient:
+        true_val: 16.0
+        spec_val: 16.0
+        claimed_val: missing
+        claimed_condition: standard
+        where_expressed: missing
+        unit: Cv
+        display_name: Modulating Control Valve Cv
+      humidifier_type:
+        true_val: Electrode steam generating
+        spec_val: Electrode steam generating
+        claimed_val: Infrared
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Humidifier System Type
+      control_valve_type:
+        true_val: PICV
+        spec_val: PICV
+        claimed_val: 2-way modulating control valve
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Chilled Water Modulating Valve Type
+      cabinet_width_mm:
+        true_val: 2400.0
+        spec_val: 2400.0
+        claimed_val: 2450.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: mm
+        display_name: Overall Cabinet Width
+      operating_humidity_range:
+        true_val: 20% to 80% non-condensing
+        spec_val: 20% to 80% non-condensing
+        claimed_val: 20% to 80% non-condensing
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Operating Humidity Range
   switchgear:
     vendor: Trident Switchgear
     model: Trident T-2000
@@ -1272,6 +1502,7 @@ equipment:
         claimed_condition: rated maximum
         where_expressed: main table
         unit: kV
+        display_name: Rated Voltage
       busbar_current_a:
         true_val: 2000.0
         spec_val: 2000.0
@@ -1279,6 +1510,7 @@ equipment:
         claimed_condition: continuous service
         where_expressed: main table
         unit: A
+        display_name: Main Busbar Current
       short_circuit_withstand_ka:
         true_val: 31.5
         spec_val: 31.5
@@ -1286,6 +1518,7 @@ equipment:
         claimed_condition: 3s rating
         where_expressed: main table
         unit: kA
+        display_name: Short-Circuit Withstand
       short_circuit_duration_s:
         true_val: 3.0
         spec_val: 3.0
@@ -1293,6 +1526,7 @@ equipment:
         claimed_condition: short circuit limit
         where_expressed: main table
         unit: s
+        display_name: Short-Circuit Duration
       ip_rating:
         true_val: IP4X
         spec_val: IP4X
@@ -1300,6 +1534,7 @@ equipment:
         claimed_condition: standard enclosure
         where_expressed: main table
         unit: text
+        display_name: Enclosure IP Rating
       internal_arc_class:
         true_val: AFLR
         spec_val: AFLR
@@ -1307,6 +1542,7 @@ equipment:
         claimed_condition: 1s arc withstand
         where_expressed: main table
         unit: text
+        display_name: Internal Arc Classification
       certification:
         true_val: IEC 62271-200
         spec_val: IEC 62271-200
@@ -1314,6 +1550,63 @@ equipment:
         claimed_condition: standard certification
         where_expressed: main table
         unit: text
+        display_name: Certifications
+      making_capacity_ka_peak:
+        true_val: 66.0
+        spec_val: 66.0
+        claimed_val: 66.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: kA peak
+        display_name: Rated Short-Circuit Making Capacity
+      lightning_impulse_withstand_voltage:
+        true_val: 75.0
+        spec_val: 75.0
+        claimed_val: 75.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: kV
+        display_name: Lightning Impulse Withstand Voltage (BIL)
+      busbar_material:
+        true_val: Copper
+        spec_val: Copper
+        claimed_val: High conductivity copper
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Busbar Material
+      earthing_busbar_material:
+        true_val: Copper
+        spec_val: Copper
+        claimed_val: Copper sized for full short circuit rating
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Earthing Busbar Material
+      ct_accuracy_class:
+        true_val: 0.5s metering / 5P20 protection
+        spec_val: 0.5s metering / 5P20 protection
+        claimed_val: 0.5s metering class and 5P20 protection class
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Current Transformer Accuracy Class
+      vt_accuracy_class:
+        true_val: '0.5'
+        spec_val: '0.5'
+        claimed_val: '0.5'
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Voltage Transformer Accuracy Class
+      loss_of_service_continuity:
+        true_val: LSC-2B
+        spec_val: LSC-2B
+        claimed_val: LSC-2B
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Loss of Service Continuity
   fire_suppression:
     vendor: AegisFire Systems
     model: Aegis CleanAgent ECS-500
@@ -1326,6 +1619,7 @@ equipment:
         claimed_condition: standard
         where_expressed: main table
         unit: text
+        display_name: Suppressant Agent Type
       discharge_time_s:
         true_val: 11.0
         spec_val: 10.0
@@ -1333,6 +1627,7 @@ equipment:
         claimed_condition: standard pipe configuration
         where_expressed: main table
         unit: s
+        display_name: Discharge Time
       hold_time_min:
         true_val: 9.0
         spec_val: 10.0
@@ -1340,6 +1635,7 @@ equipment:
         claimed_condition: nominal enclosure leakage
         where_expressed: main table
         unit: min
+        display_name: Agent Hold Time
       design_concentration_pct:
         true_val: 4.7
         spec_val: 4.7
@@ -1347,6 +1643,7 @@ equipment:
         claimed_condition: at design volume
         where_expressed: main table
         unit: '%'
+        display_name: Design Concentration
       noael_limit_pct:
         true_val: 10.0
         spec_val: 10.0
@@ -1354,6 +1651,7 @@ equipment:
         claimed_condition: safety limit
         where_expressed: main table
         unit: '%'
+        display_name: NOAEL Safety Limit
       standards_reference:
         true_val: NFPA 2001-2008
         spec_val: NFPA 2001-2018
@@ -1361,6 +1659,133 @@ equipment:
         claimed_condition: edition standard
         where_expressed: main table
         unit: text
+        display_name: Standards Reference
+      factory_test_certificate:
+        true_val: UL/FM test certificate
+        spec_val: UL/FM test certificate
+        claimed_val: missing
+        claimed_condition: standard
+        where_expressed: missing
+        unit: text
+        display_name: UL/FM Factory Test and Compliance Certificate
+      standard_edition_compliance:
+        true_val: NFPA 2001 (2018 Edition)
+        spec_val: NFPA 2001 (2018 Edition)
+        claimed_val: NFPA 2001 (2008 Edition)
+        claimed_condition: standard
+        where_expressed: compliance matrix
+        unit: text
+        display_name: Fire Suppression Standard Edition
+      noael_safety_margin_calculation:
+        true_val: NOAEL calculation
+        spec_val: NOAEL calculation
+        claimed_val: missing
+        claimed_condition: standard
+        where_expressed: missing
+        unit: text
+        display_name: NOAEL Safety Margin Calculation
+      cylinder_pressure_rating:
+        true_val: 500.0
+        spec_val: 500.0
+        claimed_val: 360.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: psi
+        display_name: Cylinder Operating Pressure
+      clean_agent_quantity_kg:
+        true_val: 12500.0
+        spec_val: 12500.0
+        claimed_val: 11800.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: kg
+        display_name: Total Clean Agent Agent Quantity
+      cylinder_certification_standard:
+        true_val: UL 2166 / FM 5600
+        spec_val: UL 2166 / FM 5600
+        claimed_val: ISO 9809-1
+        claimed_condition: standard
+        where_expressed: compliance matrix
+        unit: text
+        display_name: Cylinder Certification Standard
+      discharge_time_footnote:
+        true_val: standard
+        spec_val: standard
+        claimed_val: discharge time extends to 11.0 seconds when piping runs exceed
+          45 meters
+        claimed_condition: standard
+        where_expressed: footnote
+        unit: text
+        display_name: Discharge Footnote
+  battery:
+    vendor: VoltEdge Power Systems
+    model: VoltEdge BESS-500
+    spec_section: 26 33 53
+    parameters:
+      nominal_capacity:
+        true_val: 1200.0
+        spec_val: 1200.0
+        claimed_val: 550 kWh
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Nominal Battery Bank Capacity
+      runtime_load_pf:
+        true_val: 1.0
+        spec_val: 1.0
+        claimed_val: 0.9 PF
+        claimed_condition: standard
+        where_expressed: footnote
+        unit: text
+        display_name: Runtime Load Power Factor
+      nominal_dc_bus_voltage:
+        true_val: 480.0
+        spec_val: 480.0
+        claimed_val: 400.0
+        claimed_condition: standard
+        where_expressed: main table
+        unit: VDC
+        display_name: Nominal DC Bus Voltage
+      battery_shelf_life:
+        true_val: 6 months
+        spec_val: 6 months
+        claimed_val: missing
+        claimed_condition: without charge
+        where_expressed: missing
+        unit: text
+        display_name: Battery Shelf Life
+      fully_loaded_weight:
+        true_val: 2800.0
+        spec_val: 2800.0
+        claimed_val: 3200.0
+        claimed_condition: per cabinet
+        where_expressed: main table
+        unit: kg
+        display_name: Fully Loaded Cabinet Weight
+      operating_temperature_range:
+        true_val: 0C to 25C
+        spec_val: 0C to 25C
+        claimed_val: 0C to 20C
+        claimed_condition: ambient
+        where_expressed: main table
+        unit: text
+        display_name: Operating Temperature Range
+      cable_entry_configuration:
+        true_val: Top or Bottom entry
+        spec_val: Top or Bottom entry
+        claimed_val: Bottom only
+        claimed_condition: standard
+        where_expressed: main table
+        unit: text
+        display_name: Cable Entry Configuration
+      lvd_contactor_rating:
+        true_val: 500A
+        spec_val: 500A
+        claimed_val: missing
+        claimed_condition: standard
+        where_expressed: missing
+        unit: text
+        display_name: LVD Contactor Rating
 registers:
   po_register:
   - po_number: PO-263353-H1
@@ -2377,3 +2802,1267 @@ registers:
     response: No. The reference is incorrect. The applicable version is NFPA 2001
       (2018 Edition). This will be corrected.
     status: RESOLVED
+clauses:
+  26 05 00:
+    title: Common Work Results for Electrical
+    parts:
+    - part: 1
+      title: GENERAL
+      articles:
+      - number: '1.1'
+        title: Summary
+        paragraphs:
+        - clause_id: 26 05 00 Part 1.1.1.A
+          text: This section specifies the general electrical requirements common
+            to all electrical specification sections for the Meridian Data Centre
+            Campus, Phase 1, located in Navi Mumbai, India. All electrical work shall
+            comply with the requirements of this section and the applicable individual
+            equipment sections.
+        - clause_id: 26 05 00 Part 1.1.1.B
+          text: 'Related specification sections include but are not limited to: Section
+            26 33 53 Static Uninterruptible Power Supply, Section 26 32 13 Engine
+            Generators, Section 26 13 26 Medium Voltage Switchgear, Section 23 81
+            23 Computer Room Air Handling Units, and Section 21 22 00 Clean Agent
+            Fire Suppression Systems.'
+      - number: '1.2'
+        title: References
+        paragraphs:
+        - clause_id: 26 05 00 Part 1.2.1.A
+          text: 'The following Indian and International standards form part of this
+            specification to the extent referenced herein: IS 732 (Code of Practice
+            for Electrical Wiring Installations), IS 3043 (Code of Practice for Earthing),
+            IS 694 (PVC Insulated Cables), IEC 60364 (Low Voltage Electrical Installations),
+            IEC 61439 (Low-Voltage Switchgear and Controlgear Assemblies).'
+        - clause_id: 26 05 00 Part 1.2.1.B
+          text: All electrical installations shall comply with the National Electrical
+            Code (NEC) of India, the National Building Code (NBC) of India Part 8
+            Building Services Section 2 Electrical and Allied Installations, and the
+            local regulations of the Maharashtra State Electricity Distribution Company
+            (MSEDCL).
+      - number: '1.3'
+        title: Submittal Requirements
+        paragraphs:
+        - clause_id: 26 05 00 Part 1.3.1.A
+          text: The Contractor shall submit equipment shop drawings, product data
+            sheets, and compliance statements for each electrical equipment item specified
+            in the individual equipment sections. Submittals shall be transmitted
+            using the project standard transmittal form with a unique submittal identification
+            number.
+        - clause_id: 26 05 00 Part 1.3.1.B
+          text: Each equipment submittal shall include manufacturer's published product
+            data, certified performance test reports, dimensional drawings, wiring
+            diagrams, and a clause-by-clause compliance matrix referencing the applicable
+            spec section.
+        - clause_id: 26 05 00 Part 1.3.1.C
+          text: Submittal review turnaround time is 14 calendar days from receipt
+            of the complete package. Incomplete submittals will be returned without
+            review.
+      - number: '1.4'
+        title: Quality Assurance
+        paragraphs:
+        - clause_id: 26 05 00 Part 1.4.1.A
+          text: Equipment manufacturers shall have a minimum of 10 years demonstrated
+            experience in the design and manufacture of the specified equipment type,
+            with verifiable installations in mission-critical data centre facilities.
+        - clause_id: 26 05 00 Part 1.4.1.B
+          text: Equipment manufacturers shall hold current ISO 9001 quality management
+            system certification from an accredited certification body for all manufacturing
+            facilities producing equipment for this project.
+        - clause_id: 26 05 00 Part 1.4.2.A
+          text: The installing contractor shall be licensed by the appropriate state
+            regulatory authority and shall have a minimum of 5 years experience in
+            installing similar equipment in mission-critical or Tier III and above
+            data centre environments.
+        - clause_id: 26 05 00 Part 1.4.3.A
+          text: All factory-assembled electrical equipment shall be subjected to routine
+            tests at the manufacturer's facility prior to shipment. Factory test certificates
+            shall be submitted as part of the equipment submittal package.
+        - clause_id: 26 05 00 Part 1.4.3.B
+          text: All medium voltage equipment and switchgear assemblies shall be type
+            tested and certified in accordance with the applicable IEC standards.
+            IEC type test certificates from an accredited third-party laboratory (ASTA,
+            KEMA, or equivalent NABL-accredited body) shall be provided for each equipment
+            type.
+          cross_references:
+          - 26 13 26 Part 1.4.2
+          - 26 33 53 Part 1.4.1.C
+        - clause_id: 26 05 00 Part 1.4.3.C
+          text: Low voltage switchgear and controlgear assemblies shall be type tested
+            in accordance with IEC 61439-1 and IEC 61439-2. Design verification reports
+            shall be submitted for Consultant review.
+        - clause_id: 26 05 00 Part 1.4.3.D
+          text: Power cables rated above 1.1 kV shall be type tested to IS 7098 Part
+            2 or IEC 60502-2 as applicable. Cable test certificates shall include
+            conductor resistance, insulation resistance, and high voltage withstand
+            test results.
+        - clause_id: 26 05 00 Part 1.4.3.E
+          text: Current transformers and voltage transformers shall be type tested
+            in accordance with IEC 61869-2 and IEC 61869-3 respectively. Accuracy
+            class certificates shall be submitted.
+        - clause_id: 26 05 00 Part 1.4.3.F
+          text: Protective relays and metering equipment shall be factory-calibrated
+            and supplied with calibration certificates traceable to national standards.
+            Relay settings shall be submitted for Consultant approval prior to dispatch.
+        - clause_id: 26 05 00 Part 1.4.3.G
+          text: Earthing and lightning protection system components shall comply with
+            IS 3043 and IEC 62305. Material test certificates for copper earthing
+            conductors and earth electrodes shall be submitted.
+        - clause_id: 26 05 00 Part 1.4.3.H
+          text: Emergency lighting and exit signs shall be tested to IS 10118 and
+            IS 6665. Battery backup duration and illumination level test reports shall
+            be submitted.
+        - clause_id: 26 05 00 Part 1.4.3.I
+          text: Fire detection and alarm system components shall be tested and listed
+            to IS 2189 or UL 268 / UL 864 as applicable. Third-party listing certificates
+            shall be submitted.
+        - clause_id: 26 05 00 Part 1.4.3.J
+          text: Diesel generator auxiliary systems including fuel transfer pumps,
+            day tank level controls, and exhaust treatment systems shall be factory
+            tested per the applicable IS or IEC standards. Test records shall be submitted.
+      - number: '1.5'
+        title: Warranty
+        paragraphs:
+        - clause_id: 26 05 00 Part 1.5.1.A
+          text: The Contractor shall provide a minimum warranty period of 24 months
+            from the date of substantial completion or 30 months from the date of
+            delivery, whichever occurs first, for all electrical equipment and installations.
+    - part: 2
+      title: PRODUCTS
+      articles:
+      - number: '2.1'
+        title: General Electrical Requirements
+        paragraphs:
+        - clause_id: 26 05 00 Part 2.1.1.A
+          text: The campus electrical distribution system shall be designed for a
+            nominal medium voltage of 11 kV, 3-phase, 50 Hz from the utility incoming
+            feed and standby generator plant. Secondary distribution shall be at 415
+            V, 3-phase, 4-wire plus ground, 50 Hz.
+        - clause_id: 26 05 00 Part 2.1.1.B
+          text: Power factor at the point of common coupling shall be maintained at
+            a minimum of 0.95 lagging. Automatic power factor correction equipment
+            shall be provided where required.
+    - part: 3
+      title: EXECUTION
+      articles:
+      - number: '3.1'
+        title: Examination and Preparation
+        paragraphs:
+        - clause_id: 26 05 00 Part 3.1.1.A
+          text: Prior to installation, the Contractor shall examine all areas and
+            conditions under which electrical equipment is to be installed and notify
+            the Consultant in writing of any conditions that may adversely affect
+            the installation.
+      - number: '3.2'
+        title: Installation
+        paragraphs:
+        - clause_id: 26 05 00 Part 3.2.1.A
+          text: All electrical equipment shall be installed in strict accordance with
+            the manufacturer's written installation instructions, approved shop drawings,
+            and the requirements of this specification.
+  26 33 53:
+    title: Static Uninterruptible Power Supply
+    parts:
+    - part: 1
+      title: GENERAL
+      articles:
+      - number: '1.1'
+        title: Summary
+        paragraphs:
+        - clause_id: 26 33 53 Part 1.1.1.A
+          text: This section specifies the requirements for modular static uninterruptible
+            power supply (UPS) systems, battery energy storage cabinets, and associated
+            accessories for the Meridian Data Centre Campus, Phase 1. The UPS systems
+            shall provide continuous, conditioned power to the IT server load across
+            four independent Server Halls.
+        - clause_id: 26 33 53 Part 1.1.1.B
+          text: The scope of supply includes UPS power modules, static bypass switches,
+            battery cabinets, monitoring and control interfaces, and all interconnecting
+            power and control cabling within the UPS room.
+      - number: '1.2'
+        title: References
+        paragraphs:
+        - clause_id: 26 33 53 Part 1.2.1.A
+          text: 'The following standards shall apply: IEC 62040-1 (General and Safety
+            Requirements), IEC 62040-2 (Electromagnetic Compatibility), IEC 62040-3
+            (Performance Requirements and Test Methods), IS 16242 (UPS Requirements),
+            IEC 60896 (Stationary Lead-Acid Batteries).'
+      - number: '1.3'
+        title: Submittal Requirements
+        paragraphs:
+        - clause_id: 26 33 53 Part 1.3.1
+          text: The Contractor shall submit the equipment submittal package referencing
+            the current active project specification revision. The active specification
+            revision for this section is Rev 2024. Submittals referencing an incorrect
+            or outdated specification revision shall be returned without review.
+        - clause_id: 26 33 53 Part 1.3.2.A
+          text: Submittals shall include certified manufacturer product data sheets,
+            performance test reports, dimensional drawings with weights, single line
+            diagrams, battery sizing calculations, and a clause-by-clause compliance
+            matrix.
+      - number: '1.4'
+        title: Quality Assurance
+        paragraphs:
+        - clause_id: 26 33 53 Part 1.4.1.A
+          text: UPS manufacturer shall have a minimum of 15 years experience in the
+            design and manufacture of static UPS systems rated above 500 kW, with
+            at least 5 reference installations in Tier III or above data centres.
+        - clause_id: 26 33 53 Part 1.4.1.B
+          text: Manufacturing facility shall hold current ISO 9001 and ISO 14001 certifications.
+        - clause_id: 26 33 53 Part 1.4.1.C
+          text: UPS equipment shall be tested and certified in accordance with IEC
+            62040-3 (Method of Specifying the Performance and Test Requirements).
+            The Contractor shall submit IEC 62040-3 type test reports from an accredited
+            testing laboratory as part of the submittal package.
+          cross_references:
+          - 26 05 00 Part 1.4.3.B
+      - number: '1.5'
+        title: Warranty and Spares
+        paragraphs:
+        - clause_id: 26 33 53 Part 1.5.1.A
+          text: The UPS manufacturer shall provide a minimum of 24 months on-site
+            warranty from the date of commissioning. Warranty shall include all power
+            electronic components, control boards, fans, and capacitors.
+        - clause_id: 26 33 53 Part 1.5.1.B
+          text: A recommended spare parts list with pricing shall be submitted for
+            Consultant review. Minimum spares to be supplied include one complete
+            set of control boards, one fan assembly, and one set of DC fuses per UPS
+            group.
+    - part: 2
+      title: PRODUCTS
+      articles:
+      - number: '2.1'
+        title: Acceptable Manufacturers and System Configuration
+        paragraphs:
+        - clause_id: 26 33 53 Part 2.1.1.A
+          text: 'Acceptable UPS manufacturers: VoltEdge Power Systems, or approved
+            equivalent meeting all performance requirements of this section.'
+        - clause_id: 26 33 53 Part 2.1.2.A
+          text: UPS system modules shall be configured in a minimum N+2 parallel redundant
+            configuration to ensure system availability during concurrent maintenance
+            and single fault conditions. Each Server Hall shall be served by an independent
+            UPS group.
+      - number: '2.2'
+        title: Performance and Design Criteria
+        paragraphs:
+        - clause_id: 26 33 53 Part 2.2.1.A
+          text: "Each UPS module shall have a minimum continuous output power rating\
+            \ of 1200 kW at unity power factor (1.0 PF), 415 VAC three-phase output,\
+            \ 50 Hz. Rating shall be verified at 40\xB0C ambient temperature."
+        - clause_id: 26 33 53 Part 2.2.1.B
+          text: UPS module output power factor shall be unity (1.0 PF) at full rated
+            load. No derating for power factor below unity is permitted.
+        - clause_id: 26 33 53 Part 2.2.1.C
+          text: UPS operating topology shall be double-conversion online mode (VFI-SS-111)
+            per IEC 62040-3 classification. The UPS shall provide continuous voltage
+            and frequency regulation independent of utility supply conditions.
+        - clause_id: 26 33 53 Part 2.2.1.D
+          text: Input total harmonic current distortion (THDi) shall not exceed 5.0%
+            at full rated load without external input harmonic filters. THDi measurement
+            shall be per IEC 62040-3 Annex E.
+        - clause_id: 26 33 53 Part 2.2.2.A
+          text: Double-conversion online mode efficiency at 100% rated load shall
+            be a minimum of 96.0%. Efficiency shall be measured per IEC 62040-3 at
+            nominal input voltage and rated load.
+        - clause_id: 26 33 53 Part 2.2.2.B
+          text: Double-conversion online mode efficiency at 75% and 50% rated load
+            shall each be a minimum of 96.0%. All efficiency values shall be measured
+            in VFI mode with harmonic filters active.
+        - clause_id: 26 33 53 Part 2.2.3.A
+          text: Output voltage regulation shall be within +/- 1% of nominal under
+            steady state conditions, and within +/- 5% during 100% load step transients,
+            with recovery to +/- 1% within 20 milliseconds.
+        - clause_id: 26 33 53 Part 2.2.4.A
+          text: Output frequency regulation shall be within +/- 0.1% of 50 Hz under
+            free-running conditions.
+        - clause_id: 26 33 53 Part 2.2.5.A
+          text: UPS module shall sustain 125% of rated load for a minimum of 10 minutes
+            continuously without transfer to static bypass. At 150% overload, the
+            UPS shall sustain the load for a minimum of 30 seconds before bypass transfer.
+        - clause_id: 26 33 53 Part 2.2.6.A
+          text: Input power factor shall be 0.99 or better at full rated load.
+        - clause_id: 26 33 53 Part 2.2.7.A
+          text: ECO mode efficiency shall be a minimum of 99.0% at rated load. ECO
+            mode transfer to double-conversion mode shall occur within 2 milliseconds
+            of detecting input power disturbance.
+        - clause_id: 26 33 53 Part 2.2.8
+          text: The static bypass switch transfer time shall not exceed 4 milliseconds
+            for any transfer between inverter output and bypass supply, measured as
+            total interruption duration per IEC 62040-3 classification.
+      - number: '2.3'
+        title: Battery and Energy Storage System
+        paragraphs:
+        - clause_id: 26 33 53 Part 2.3.1.A
+          text: Battery system shall use Valve Regulated Lead-Acid (VRLA) batteries
+            in sealed maintenance-free construction mounted in dedicated battery cabinets.
+        - clause_id: 26 33 53 Part 2.3.1.B
+          text: Battery system shall comprise 240 cells of 2 V nominal (40 blocks
+            of 12 V batteries in series) providing a nominal DC bus voltage of 480
+            VDC.
+        - clause_id: 26 33 53 Part 2.3.1.C
+          text: Battery string configuration shall consist of a minimum of 6 parallel
+            strings of 200 Ah (C10 rate) battery blocks per UPS module.
+        - clause_id: 26 33 53 Part 2.3.1.D
+          text: Battery monitoring system shall include individual block voltage monitoring,
+            string current monitoring, ambient and pilot cell temperature sensors,
+            and Modbus TCP/IP interface for integration with the BMS.
+        - clause_id: 26 33 53 Part 2.3.1.E
+          text: The battery system shall support the full rated UPS load at 100% capacity
+            for a minimum continuous runtime of 10.0 minutes. Battery sizing calculations
+            shall account for the high-rate discharge factor and end-of-life capacity
+            degradation of 20%.
+        - clause_id: 26 33 53 Part 2.3.2.A
+          text: Total battery bank nominal energy capacity shall be a minimum of 576
+            kWh at the nominal DC bus voltage of 480 VDC, equivalent to a minimum
+            of 1200 Ah at the C10 rate. Vendor datasheet shall clearly state both
+            kWh and Ah capacity values.
+        - clause_id: 26 33 53 Part 2.3.2.B
+          text: Battery runtime performance shall be rated and verified at a load
+            power factor of 1.0 PF (unity). Runtime claims at reduced power factors
+            shall not be accepted as equivalent.
+        - clause_id: 26 33 53 Part 2.3.2.C
+          text: Battery system nominal DC bus voltage shall be 480 VDC to match the
+            UPS inverter DC link requirements. End-of-discharge voltage shall not
+            fall below 408 VDC (1.7 V per cell).
+        - clause_id: 26 33 53 Part 2.3.3
+          text: Battery shelf life without charge shall be a minimum of 6 months from
+            the date of manufacture without permanent capacity loss. The vendor shall
+            submit storage conditions and shelf life test data as part of the submittal.
+        - clause_id: 26 33 53 Part 2.3.4
+          text: UPS double-conversion efficiency shall be a minimum of 96.0% at each
+            of the 50%, 75%, and 100% load points, measured in VFI mode per IEC 62040-3.
+            Efficiency values shall be based on active power (kW) measurements.
+        - clause_id: 26 33 53 Part 2.3.5.A
+          text: Maximum floor-load weight per fully loaded battery cabinet shall not
+            exceed 2800 kg. Floor loading calculations based on cabinet footprint
+            and weight distribution shall be submitted for structural review.
+        - clause_id: 26 33 53 Part 2.3.5.B
+          text: Battery cabinet dimensions shall permit standard freight elevator
+            transport. Maximum individual module shipping weight shall be noted on
+            the dimensional drawing.
+        - clause_id: 26 33 53 Part 2.3.6.A
+          text: "Battery design life shall be a minimum of 10 years at 25\xB0C average\
+            \ ambient temperature per IEC 60896-21 / Eurobat classification."
+        - clause_id: 26 33 53 Part 2.3.6.B
+          text: "Battery system shall maintain full manufacturer warranty coverage\
+            \ and published performance parameters across an ambient operating temperature\
+            \ range of 0\xB0C to 25\xB0C."
+        - clause_id: 26 33 53 Part 2.3.7.A
+          text: Battery cabinets shall include hydrogen gas detection sensors with
+            alarm contacts connected to the BMS. Ventilation calculations for the
+            battery room shall be submitted per IEC 62485-2.
+        - clause_id: 26 33 53 Part 2.3.8
+          text: Battery cabinet power cable entry shall accommodate both top and bottom
+            cable entry conduits to match overhead cable tray or under-floor cable
+            routing as determined by the final installation layout.
+        - clause_id: 26 33 53 Part 2.3.9.A
+          text: Each battery cabinet shall incorporate a manual maintenance bypass
+            switch allowing isolation of individual battery strings without disrupting
+            the remaining parallel strings.
+        - clause_id: 26 33 53 Part 2.3.9.B
+          text: Battery cabinet DC distribution shall include appropriately rated
+            fuses or circuit breakers on each battery string for short circuit protection.
+        - clause_id: 26 33 53 Part 2.3.9.C
+          text: A Low Voltage Disconnect (LVD) contactor shall be provided on each
+            battery cabinet to prevent deep discharge damage. The LVD contactor ampere
+            rating and breaking capacity shall be submitted with the battery cabinet
+            specification sheet.
+      - number: '2.4'
+        title: Physical Construction and Enclosure
+        paragraphs:
+        - clause_id: 26 33 53 Part 2.4.1.A
+          text: UPS module enclosure shall be constructed of minimum 1.6 mm steel
+            sheet with IP20 minimum ingress protection rating per IEC 60529.
+        - clause_id: 26 33 53 Part 2.4.1.B
+          text: Enclosure shall include lockable front and rear access doors with
+            captive fasteners. Minimum service clearance of 1000 mm shall be maintained
+            on all accessible sides.
+        - clause_id: 26 33 53 Part 2.4.2
+          text: UPS module cooling airflow shall be configured for front-inlet and
+            top-exhaust to support hot aisle/cold aisle containment architecture in
+            the UPS room. Rear-exhaust or side-exhaust configurations are not acceptable.
+        - clause_id: 26 33 53 Part 2.4.3.A
+          text: UPS module cooling fans shall be hot-swappable without requiring UPS
+            shutdown or load transfer. Fan failure alarms shall be reported via the
+            monitoring interface.
+        - clause_id: 26 33 53 Part 2.4.4.A
+          text: All internal power connections shall utilise bolted joints with calibrated
+            torque values marked on the assembly. Spring-type terminal connections
+            are not permitted for power circuits above 100 A.
+        - clause_id: 26 33 53 Part 2.4.5.A
+          text: UPS module enclosure shall have a seismic rating suitable for Zone
+            III per IS 1893 or equivalent IBC classification.
+        - clause_id: 26 33 53 Part 2.4.5.B
+          text: Equipment shall be suitable for installation on a raised access floor
+            with standard pedestal height of 600 mm. Anti-vibration pads shall be
+            provided under all mounting points.
+        - clause_id: 26 33 53 Part 2.4.5.C
+          text: UPS module enclosure paint finish shall be RAL 7035 (Light Grey) polyester
+            powder coating, minimum 60 micron average dry film thickness, with corrosion
+            resistance suitable for indoor C1 environment per ISO 12944.
+    - part: 3
+      title: EXECUTION
+      articles:
+      - number: '3.1'
+        title: Examination and Preparation
+        paragraphs:
+        - clause_id: 26 33 53 Part 3.1.1.A
+          text: Prior to delivery, the Contractor shall verify that the UPS room structural
+            slab, cable trays, and HVAC provisions are complete and ready to receive
+            equipment.
+      - number: '3.2'
+        title: Installation
+        paragraphs:
+        - clause_id: 26 33 53 Part 3.2.1
+          text: Verify all power cable terminations have been torque-marked per manufacturer
+            specifications. Inspect structural mounting bolts and anti-vibration pads
+            for Module 1. Record torque values on the commissioning checklist.
+        - clause_id: 26 33 53 Part 3.2.2
+          text: Verify all power cable terminations have been torque-marked per manufacturer
+            specifications. Inspect structural mounting bolts and anti-vibration pads
+            for Module 2. Record torque values on the commissioning checklist.
+        - clause_id: 26 33 53 Part 3.2.3
+          text: Verify all power cable terminations have been torque-marked per manufacturer
+            specifications. Inspect structural mounting bolts and anti-vibration pads
+            for Module 3. Record torque values on the commissioning checklist.
+        - clause_id: 26 33 53 Part 3.2.4
+          text: Verify all power cable terminations have been torque-marked per manufacturer
+            specifications. Inspect structural mounting bolts and anti-vibration pads
+            for Module 4. Record torque values on the commissioning checklist.
+        - clause_id: 26 33 53 Part 3.2.5
+          text: Verify all power cable terminations have been torque-marked per manufacturer
+            specifications. Inspect structural mounting bolts and anti-vibration pads
+            for Module 5. Record torque values on the commissioning checklist.
+      - number: '3.3'
+        title: Field Quality Control
+        paragraphs:
+        - clause_id: 26 33 53 Part 3.3.1.A
+          text: "Perform insulation resistance testing on all power cables prior to\
+            \ energisation. Minimum acceptable insulation resistance is 100 M\u03A9\
+            \ at 1000 VDC for LV circuits."
+      - number: '3.4'
+        title: Commissioning and Acceptance Testing
+        paragraphs:
+        - clause_id: 26 33 53 Part 3.4.1.A
+          text: The commissioning agent shall perform a complete functional test of
+            each UPS module including input/output voltage verification, frequency
+            stability, and battery charger operation.
+        - clause_id: 26 33 53 Part 3.4.2.A
+          text: Verify UPS double-conversion efficiency is a minimum of 96.0% at both
+            100% and 75% rated load points. Efficiency measurements shall use calibrated
+            power analysers with accuracy class 0.5 or better.
+        - clause_id: 26 33 53 Part 3.4.2.B
+          text: Perform input harmonic current measurement at full rated load. Input
+            THDi shall not exceed the value specified in Part 2.2.1.D of this section.
+        - clause_id: 26 33 53 Part 3.4.2.C
+          text: During site battery discharge testing, the inverter shall maintain
+            full 100% IT load for a minimum of 12 minutes on battery power. The discharge
+            test shall be conducted at design ambient temperature with all battery
+            strings connected.
+        - clause_id: 26 33 53 Part 3.4.2.D
+          text: Perform UPS static bypass transfer test. Verify seamless transfer
+            from inverter to bypass and back with no load interruption exceeding the
+            specified transfer time.
+        - clause_id: 26 33 53 Part 3.4.2.E
+          text: Verify UPS module parallel operation and active load sharing. Load
+            imbalance between parallel modules shall not exceed 5% of rated load.
+        - clause_id: 26 33 53 Part 3.4.2.F
+          text: Simulate single module failure and verify N+1 redundancy takeover.
+            Remaining modules shall assume full load without interruption.
+        - clause_id: 26 33 53 Part 3.4.2.G
+          text: Perform 100% load step test and verify output voltage transient recovery
+            is within the limits specified in Part 2.2.3.A of this section.
+        - clause_id: 26 33 53 Part 3.4.2.H
+          text: Verify battery recharge time from fully discharged state. Battery
+            system shall reach 90% of nominal capacity within 8 hours of recharge
+            initiation.
+        - clause_id: 26 33 53 Part 3.4.2.I
+          text: Perform BMS communication integration test. Verify all UPS alarm and
+            status signals are correctly mapped and displayed on the central BMS operator
+            console.
+        - clause_id: 26 33 53 Part 3.4.2.J
+          text: Execute a coordinated full-load transfer test from utility to generator
+            and back. Verify the UPS maintains uninterrupted output power throughout
+            the transfer sequence.
+  26 32 13:
+    title: Engine Generators
+    parts:
+    - part: 1
+      title: GENERAL
+      articles:
+      - number: '1.1'
+        title: Summary
+        paragraphs:
+        - clause_id: 26 32 13 Part 1.1.1.A
+          text: This section specifies the requirements for standby diesel engine
+            generator sets for the Meridian Data Centre Campus, Phase 1. The generator
+            plant shall provide emergency power to the full campus load including
+            IT systems, cooling, and building services during utility power interruptions.
+      - number: '1.2'
+        title: References
+        paragraphs:
+        - clause_id: 26 32 13 Part 1.2.1.A
+          text: 'The following standards shall apply: ISO 8528 (Reciprocating Internal
+            Combustion Engine Driven Alternating Current Generating Sets), IS 10000
+            (Methods of Tests for IC Engines), IS 13364 (Gas/Dual Fuel Engine Generator
+            Sets), BS 5514 (Reciprocating IC Engines Performance), NFPA 110 (Standard
+            for Emergency and Standby Power Systems).'
+      - number: '1.3'
+        title: Submittal Requirements
+        paragraphs:
+        - clause_id: 26 32 13 Part 1.3.1.A
+          text: Submittals shall include engine performance data sheets, alternator
+            test certificates, fuel consumption curves at 25%, 50%, 75%, and 100%
+            load, ambient derating curves, noise emission data, exhaust emission data,
+            and dimensional drawings with weights.
+      - number: '1.4'
+        title: Quality Assurance
+        paragraphs:
+        - clause_id: 26 32 13 Part 1.4.1.A
+          text: Generator set manufacturer shall have ISO 9001 certification and a
+            minimum of 10 years experience in manufacturing standby generator sets
+            rated above 1500 kVA for mission-critical installations.
+          cross_references:
+          - 26 05 00 Part 1.4.3.B
+      - number: '1.5'
+        title: Warranty
+        paragraphs:
+        - clause_id: 26 32 13 Part 1.5.1.A
+          text: Generator set warranty shall be a minimum of 24 months from the date
+            of commissioning or 2000 operating hours, whichever occurs first. Warranty
+            shall cover engine, alternator, control system, and all factory-supplied
+            accessories.
+    - part: 2
+      title: PRODUCTS
+      articles:
+      - number: '2.1'
+        title: Acceptable Manufacturers
+        paragraphs:
+        - clause_id: 26 32 13 Part 2.1.1.A
+          text: 'Acceptable generator set manufacturers: Deccan Diesel Co., or approved
+            equivalent meeting all performance requirements of this section.'
+      - number: '2.2'
+        title: Performance and Design Criteria
+        paragraphs:
+        - clause_id: 26 32 13 Part 2.2.1.A
+          text: "Generator standby power rating shall be a minimum of 2500 kVA. The\
+            \ standby rating shall be verified and guaranteed at the project design\
+            \ basis ambient temperature of 45\xB0C. Ratings quoted at lower reference\
+            \ ambient temperatures shall be derated per the manufacturer's published\
+            \ derating curve."
+        - clause_id: 26 32 13 Part 2.2.1.B
+          text: "After applying the manufacturer's published ambient temperature derating\
+            \ factors for operation at 45\xB0C, the available standby output shall\
+            \ not fall below 2500 kVA. The vendor shall submit the derating curve\
+            \ and demonstrate compliance at design ambient."
+        - clause_id: 26 32 13 Part 2.2.1.C
+          text: Generator power factor rating shall be 0.8 lagging. Generator shall
+            be capable of delivering rated kW output continuously at 0.8 power factor.
+        - clause_id: 26 32 13 Part 2.2.1.D
+          text: Generator output voltage shall be 11 kV, 3-phase, 50 Hz. Voltage regulation
+            shall be within +/- 0.5% under steady-state conditions.
+        - clause_id: 26 32 13 Part 2.2.1.E
+          text: Generator operating speed shall be 1500 RPM synchronous for 50 Hz
+            output. Speed governing shall meet ISO 8528-5 performance class G3 requirements.
+        - clause_id: 26 32 13 Part 2.2.2
+          text: Generator shall accept 100% block load in a single step and recover
+            to steady-state voltage and frequency within the limits specified by ISO
+            8528-5 performance class G3. Transient voltage dip shall not exceed 15%
+            and recovery to within 3% shall occur within 10 seconds.
+        - clause_id: 26 32 13 Part 2.2.3.A
+          text: Fuel consumption rate at 100% standby load shall not exceed 520 litres
+            per hour of high speed diesel (HSD) conforming to IS 1460. The vendor
+            shall submit a fuel consumption certificate from the engine manufacturer.
+        - clause_id: 26 32 13 Part 2.2.4.A
+          text: Fuel consumption rate at 75% load shall be submitted in the vendor
+            performance data table.
+        - clause_id: 26 32 13 Part 2.2.4.B
+          text: Fuel consumption rate at 25% load shall be submitted in the vendor
+            performance data table.
+        - clause_id: 26 32 13 Part 2.2.4.C
+          text: The vendor shall submit a complete performance data table listing
+            engine output power, alternator output, fuel consumption, exhaust temperature,
+            and cooling water temperature at 25%, 50%, 75%, and 100% load points.
+        - clause_id: 26 32 13 Part 2.2.4.D
+          text: Fuel consumption rate at 50% load shall be submitted in the vendor
+            performance data table. Omission of any load point data from the performance
+            table shall be treated as a non-compliant submittal.
+      - number: '2.3'
+        title: Component Description
+        paragraphs:
+        - clause_id: 26 32 13 Part 2.3.1.A
+          text: Engine shall be a multi-cylinder, turbocharged, charge air-cooled,
+            4-stroke diesel engine designed for standby duty. Engine shall conform
+            to CPCB Stage IV emission norms or equivalent.
+        - clause_id: 26 32 13 Part 2.3.2.A
+          text: Engine speed governor shall be electronic type, meeting ISO 8528-5
+            performance class G3 requirements. Governor shall provide isochronous
+            frequency control suitable for paralleling applications.
+        - clause_id: 26 32 13 Part 2.3.3.A
+          text: Generator shall be equipped with dual starter motors in redundant
+            configuration, each with independent 24 VDC starter batteries and battery
+            chargers. Automatic crank sequence shall attempt start on the primary
+            starter, and transfer to the secondary starter after three failed attempts.
+        - clause_id: 26 32 13 Part 2.3.4.A
+          text: "Alternator shall be brushless, self-excited, with a permanent magnet\
+            \ pilot exciter. Insulation class shall be Class H (180\xB0C) with Class\
+            \ F (155\xB0C) temperature rise at rated load."
+        - clause_id: 26 32 13 Part 2.3.5.A
+          text: Generator controller shall be the current model EMCP 4.4 digital electronic
+            control panel, or approved equivalent, providing engine monitoring, protection,
+            and paralleling control functions. Obsolete controller versions shall
+            not be accepted.
+        - clause_id: 26 32 13 Part 2.3.6.A
+          text: "Radiator cooling system shall be engine-driven with belt-driven fans.\
+            \ Cooling system shall be designed for continuous operation at 45\xB0\
+            C ambient temperature."
+        - clause_id: 26 32 13 Part 2.3.7.A
+          text: "Exhaust system shall include a hospital-grade residential silencer\
+            \ providing a minimum of 25 dBA attenuation. Exhaust piping shall be insulated\
+            \ and lagged to limit surface temperature to below 60\xB0C."
+        - clause_id: 26 32 13 Part 2.3.8.A
+          text: Bulk fuel storage system shall consist of 4 underground double-walled
+            steel tanks of 100,000 litres each, providing 48 hours of fuel autonomy
+            for the complete generator plant at full standby load.
+        - clause_id: 26 32 13 Part 2.3.8.B
+          text: Fuel transfer pumping system shall include duty and standby transfer
+            pumps with automatic changeover. The fuel transfer system shall maintain
+            the local day tank level between the high and low level setpoints at all
+            times.
+        - clause_id: 26 32 13 Part 2.3.8.C
+          text: Each generator shall be provided with a local day tank sized to provide
+            a minimum of 2.0 hours of continuous operation at full standby load. Based
+            on the specified fuel consumption rate of 520 litres per hour, the minimum
+            day tank capacity shall be 1040 litres.
+      - number: '2.4'
+        title: Physical Construction and Acoustic Treatment
+        paragraphs:
+        - clause_id: 26 32 13 Part 2.4.1.A
+          text: Generator set base frame shall be heavy-duty fabricated steel with
+            integral anti-vibration mounts. Base frame shall include a fuel-tight
+            drip tray.
+        - clause_id: 26 32 13 Part 2.4.2.A
+          text: Generator set enclosure (if outdoor installation) shall be weatherproof
+            to IP44 with acoustic lining to meet the specified noise limits.
+        - clause_id: 26 32 13 Part 2.4.3.A
+          text: Generator set noise level shall not exceed 105 dBA at 1 metre distance
+            without acoustic enclosure. Manufacturer shall state the open-set and
+            enclosed noise levels separately.
+        - clause_id: 26 32 13 Part 2.4.3.B
+          text: With the acoustic enclosure and silencer installed, the generator
+            set sound pressure level shall not exceed 85 dBA measured in a free field
+            at 1 metre distance from the enclosure surface at full rated standby load.
+    - part: 3
+      title: EXECUTION
+      articles:
+      - number: '3.1'
+        title: Examination and Preparation
+        paragraphs:
+        - clause_id: 26 32 13 Part 3.1.1.A
+          text: Verify that generator room foundations, exhaust penetrations, fuel
+            piping, and electrical cable routes are complete and ready prior to generator
+            delivery.
+      - number: '3.2'
+        title: Installation
+        paragraphs:
+        - clause_id: 26 32 13 Part 3.2.1.A
+          text: Generator sets shall be rigged and placed on prepared foundations
+            using certified lifting equipment. Anti-vibration mounts shall be adjusted
+            to achieve level installation within 2 mm across the base frame.
+        - clause_id: 26 32 13 Part 3.2.1.B
+          text: Flexible fuel connections, exhaust bellows, and cable gland plates
+            shall be installed per manufacturer details. All fuel connections shall
+            be leak tested at 1.5 times working pressure.
+        - clause_id: 26 32 13 Part 3.2.1.C
+          text: Battery banks and chargers shall be installed and commissioned prior
+            to engine first start. Electrolyte levels shall be verified in flooded-type
+            batteries.
+        - clause_id: 26 32 13 Part 3.2.1.D
+          text: Cooling water system shall be filled, vented, and leak tested. Coolant
+            mixture shall be per engine manufacturer's recommendation for the local
+            climate conditions.
+        - clause_id: 26 32 13 Part 3.2.1.E
+          text: All generator room cable trays, busbar trunking, and power cable terminations
+            shall be completed and torque-marked prior to energisation of the generator
+            output circuit breaker.
+        - clause_id: 26 32 13 Part 3.2.1.F
+          text: Adequate ventilation shall be provided in the generator room to prevent
+            heat buildup and ensure proper engine combustion air supply during full
+            load operation. Room ventilation provisions shall be verified complete
+            prior to engine commissioning.
+      - number: '3.3'
+        title: Startup and Field Testing
+        paragraphs:
+        - clause_id: 26 32 13 Part 3.3.1.A
+          text: Prior to initial start, perform a complete pre-start checklist including
+            oil level, coolant level, belt tension, battery voltage, and control system
+            self-test.
+        - clause_id: 26 32 13 Part 3.3.2.A
+          text: Perform initial no-load start test. Engine shall reach rated speed
+            and voltage within 10 seconds of the start command.
+        - clause_id: 26 32 13 Part 3.3.3
+          text: Perform initial start sequence and voltage balance checks for engine
+            3. Verify three-phase voltage balance is within 1% of nominal at no load
+            and at 50% load.
+        - clause_id: 26 32 13 Part 3.3.4
+          text: Perform initial start sequence and voltage balance checks for engine
+            4. Verify three-phase voltage balance is within 1% of nominal at no load
+            and at 50% load.
+        - clause_id: 26 32 13 Part 3.3.4.A
+          text: Perform 100% block load acceptance test in a single step per ISO 8528-5
+            performance class G3. Record transient voltage dip, frequency dip, and
+            recovery times. Results shall meet the limits specified in Part 2.2.2
+            of this section.
+        - clause_id: 26 32 13 Part 3.3.5
+          text: Perform initial start sequence and voltage balance checks for engine
+            5. Verify three-phase voltage balance is within 1% of nominal at no load
+            and at 50% load.
+  26 13 26:
+    title: Medium Voltage Switchgear
+    parts:
+    - part: 1
+      title: GENERAL
+      articles:
+      - number: '1.1'
+        title: Summary
+        paragraphs:
+        - clause_id: 26 13 26 Part 1.1.1.A
+          text: This section specifies the requirements for factory-assembled, metal-enclosed,
+            medium voltage switchgear for the 11 kV power distribution system of the
+            Meridian Data Centre Campus, Phase 1.
+      - number: '1.2'
+        title: References
+        paragraphs:
+        - clause_id: 26 13 26 Part 1.2.1
+          text: All medium voltage switchgear assemblies shall comply with UL 1558
+            (Standard for Metal-Enclosed Low-Voltage Power Circuit Breaker Switchgear)
+            and shall be UL listed and labeled. Switchgear components shall be UL
+            recognized or listed as applicable.
+        - clause_id: 26 13 26 Part 1.2.2.A
+          text: 'Additional applicable standards include: IS 3427 (Metal-Enclosed
+            Switchgear), IS/IEC 62271-200 (AC Metal-Enclosed Switchgear for Rated
+            Voltages Above 1 kV and Up To and Including 52 kV), IEC 62271-1 (Common
+            Specifications for High-Voltage Switchgear).'
+      - number: '1.3'
+        title: Submittal Requirements
+        paragraphs:
+        - clause_id: 26 13 26 Part 1.3.1.A
+          text: Submittals shall include general arrangement drawings, single line
+            diagrams, control schematics, busbar current rating calculations, type
+            test reports, and a clause-by-clause compliance matrix.
+      - number: '1.4'
+        title: Quality Assurance
+        paragraphs:
+        - clause_id: 26 13 26 Part 1.4.1.A
+          text: Switchgear manufacturer shall have a minimum of 15 years experience
+            in manufacturing medium voltage switchgear assemblies rated 12 kV and
+            above.
+        - clause_id: 26 13 26 Part 1.4.2
+          text: Manufacturer shall provide ASTA or KEMA type test certificates for
+            the switchgear assemblies demonstrating compliance with IEC 62271-200.
+            Type test reports shall cover rated voltage, short circuit withstand,
+            temperature rise, internal arc, and dielectric tests.
+          cross_references:
+          - 26 05 00 Part 1.4.3.B
+        - clause_id: 26 13 26 Part 1.4.3.A
+          text: Manufacturing facility shall hold current ISO 9001 certification.
+            The Consultant reserves the right to conduct a factory inspection prior
+            to dispatch.
+        - clause_id: 26 13 26 Part 1.4.4.A
+          text: Routine factory tests shall be conducted on each switchgear panel
+            prior to dispatch, including power frequency voltage withstand, mechanical
+            operation, and wiring checks per IEC 62271-200 Clause 8.
+        - clause_id: 26 13 26 Part 1.4.5
+          text: "Switchgear shall be rated for continuous operation over an ambient\
+            \ temperature range of -5\xB0C to 45\xB0C. Temperature rise of busbars\
+            \ and connections shall not exceed the limits specified in IEC 62271-200\
+            \ Table 4 at 45\xB0C ambient."
+    - part: 2
+      title: PRODUCTS
+      articles:
+      - number: '2.1'
+        title: Acceptable Manufacturers
+        paragraphs:
+        - clause_id: 26 13 26 Part 2.1.1.A
+          text: 'Acceptable switchgear manufacturers: Trident Switchgear, or approved
+            equivalent meeting all performance requirements of this section.'
+      - number: '2.2'
+        title: Electrical Ratings
+        paragraphs:
+        - clause_id: 26 13 26 Part 2.2.1.A
+          text: Switchgear rated voltage shall be 12 kV, suitable for the 11 kV nominal
+            system voltage. Rated insulation level shall be 12/28/75 kV (rated voltage
+            / power frequency withstand / lightning impulse withstand).
+        - clause_id: 26 13 26 Part 2.2.1.B
+          text: "Main busbar continuous current rating shall be a minimum of 2000\
+            \ A at 45\xB0C ambient temperature."
+        - clause_id: 26 13 26 Part 2.2.2.A
+          text: Rated short-time withstand current shall be a minimum of 31.5 kA (rms)
+            for a duration of 3 seconds.
+        - clause_id: 26 13 26 Part 2.2.2.B
+          text: Short-circuit current withstand duration shall be a minimum of 3 seconds.
+            All busbars, connections, and supporting insulators shall be rated accordingly.
+        - clause_id: 26 13 26 Part 2.2.3
+          text: Rated short-circuit making capacity shall be a minimum of 66 kA peak.
+            Circuit breakers shall have a making capacity not less than the peak value
+            of the rated short-circuit withstand current.
+        - clause_id: 26 13 26 Part 2.2.4
+          text: Rated lightning impulse withstand voltage (BIL) shall be a minimum
+            of 75 kV (1.2/50 microsecond wave). Power frequency withstand voltage
+            shall be 28 kV for 1 minute.
+      - number: '2.3'
+        title: Construction and Components
+        paragraphs:
+        - clause_id: 26 13 26 Part 2.3.1.A
+          text: Switchgear enclosure external protection shall be a minimum of IP4X
+            per IEC 60529. Internal compartment protection between functional units
+            shall be IP2X minimum.
+        - clause_id: 26 13 26 Part 2.3.1.B
+          text: Switchgear construction shall be compartmentalised type with metallic
+            shutters on all circuit breaker compartments, busbar compartments, and
+            cable compartments.
+        - clause_id: 26 13 26 Part 2.3.1.C
+          text: Circuit breakers shall be vacuum type, withdrawable on truck mechanism.
+            Breaker truck shall have test, connected, and disconnected positions with
+            mechanical interlocks.
+        - clause_id: 26 13 26 Part 2.3.1.D
+          text: Anti-condensation space heaters shall be provided in each switchgear
+            compartment. Heaters shall be thermostatically controlled and powered
+            from the auxiliary supply.
+        - clause_id: 26 13 26 Part 2.3.1.E
+          text: 'Switchgear shall be classified for Internal Arc Containment (IAC)
+            AFLR (Accessibility: Front, Lateral, Rear) rated for 31.5 kA for 1 second
+            per IEC 62271-200 Annex A.'
+        - clause_id: 26 13 26 Part 2.3.1.F
+          text: Loss of service continuity classification shall be LSC-2B per IEC
+            62271-200, ensuring that maintenance on any single functional unit does
+            not require de-energisation of adjacent units.
+        - clause_id: 26 13 26 Part 2.3.2.A
+          text: Main busbars shall be high conductivity electrolytic copper, silver-plated
+            at all joint surfaces. Busbars shall be sized for the rated continuous
+            current with temperature rise within IEC 62271-200 limits.
+        - clause_id: 26 13 26 Part 2.3.3.A
+          text: Cable termination compartment shall accommodate XLPE-insulated cables
+            with heat-shrink terminations. Cable compartment depth shall be a minimum
+            of 600 mm.
+        - clause_id: 26 13 26 Part 2.3.3.B
+          text: Earthing busbar shall be high conductivity copper, continuous throughout
+            the switchgear lineup, and sized for the full rated short circuit current.
+            Earth bus connections shall be bolted with calibrated torque.
+        - clause_id: 26 13 26 Part 2.3.4.A
+          text: Circuit breaker operating mechanism shall be spring-charged, motor-wound
+            type suitable for auto-reclosing. Stored energy shall be sufficient for
+            one close-open-close operation.
+        - clause_id: 26 13 26 Part 2.3.5.A
+          text: Protection relays shall be microprocessor-based numerical type with
+            overcurrent, earth fault, and under/over voltage functions. Relay communications
+            shall be IEC 61850 compatible.
+        - clause_id: 26 13 26 Part 2.3.6.A
+          text: Metering instruments shall include digital multifunction meters with
+            accuracy class 0.5. Meters shall display voltage, current, power, energy,
+            power factor, and frequency.
+        - clause_id: 26 13 26 Part 2.3.7.A
+          text: Current transformers shall have metering accuracy class 0.5s and protection
+            accuracy class 5P20. CT ratios shall be as shown on the single line diagram.
+        - clause_id: 26 13 26 Part 2.3.7.B
+          text: Current transformers shall have a rated burden not less than the connected
+            metering and protection burden with a 25% margin.
+        - clause_id: 26 13 26 Part 2.3.7.C
+          text: "Voltage transformers shall have accuracy class 0.5 for metering and\
+            \ 3P for protection. Primary voltage shall be 11 kV/\u221A3, secondary\
+            \ 110 V/\u221A3."
+    - part: 3
+      title: EXECUTION
+      articles:
+      - number: '3.1'
+        title: Installation
+        paragraphs:
+        - clause_id: 26 13 26 Part 3.1.1.A
+          text: Switchgear shall be installed on prepared foundations with adequate
+            clearances per manufacturer recommendations. Minimum front clearance shall
+            be 2000 mm. Minimum rear clearance shall be 1000 mm.
+      - number: '3.2'
+        title: Field Quality Control
+        paragraphs:
+        - clause_id: 26 13 26 Part 3.2.1.A
+          text: "Perform insulation resistance tests on all busbars and cable terminations\
+            \ prior to energisation. Minimum acceptable IR value is 1000 M\u03A9 at\
+            \ 5 kV DC."
+  23 81 23:
+    title: Computer Room Air Handling Units
+    parts:
+    - part: 1
+      title: GENERAL
+      articles:
+      - number: '1.1'
+        title: Summary
+        paragraphs:
+        - clause_id: 23 81 23 Part 1.1.1.A
+          text: This section specifies the requirements for chilled water Computer
+            Room Air Handling (CRAH) units for the Meridian Data Centre Campus, Phase
+            1. CRAH units shall provide precision sensible cooling to each Server
+            Hall using the campus chilled water plant.
+      - number: '1.2'
+        title: References
+        paragraphs:
+        - clause_id: 23 81 23 Part 1.2.1.A
+          text: 'The following standards shall apply: AHRI 1360 (Performance Rating
+            of Computer and Data Processing Room Air Conditioners), ASHRAE 90.1 (Energy
+            Standard for Buildings), IS 1391 (Room Air Conditioners), ASHRAE TC 9.9
+            (Thermal Guidelines for Data Processing Environments).'
+      - number: '1.3'
+        title: Submittal Requirements
+        paragraphs:
+        - clause_id: 23 81 23 Part 1.3.1.A
+          text: Submittals shall include certified cooling capacity data, airflow
+            performance curves, chilled water coil ratings, fan performance data,
+            dimensional drawings, electrical data, and BMS integration details.
+      - number: '1.4'
+        title: Quality Assurance
+        paragraphs:
+        - clause_id: 23 81 23 Part 1.4.1.A
+          text: CRAH manufacturer shall have a minimum of 10 years experience in the
+            manufacture of precision cooling systems for mission-critical data centre
+            environments. Manufacturer shall hold ISO 9001 certification.
+    - part: 2
+      title: PRODUCTS
+      articles:
+      - number: '2.1'
+        title: Acceptable Manufacturers
+        paragraphs:
+        - clause_id: 23 81 23 Part 2.1.1.A
+          text: 'Acceptable CRAH manufacturers: CryoCore Climate, or approved equivalent
+            meeting all performance requirements of this section.'
+      - number: '2.2'
+        title: Performance and Design Criteria
+        paragraphs:
+        - clause_id: 23 81 23 Part 2.2.1.A
+          text: Each CRAH unit shall provide a minimum sensible cooling capacity of
+            250 kW at the design conditions specified herein.
+        - clause_id: 23 81 23 Part 2.2.1.B
+          text: "Design entering chilled water temperature shall be 10\xB0C. The CRAH\
+            \ cooling coil shall be selected and rated at this entering water temperature."
+        - clause_id: 23 81 23 Part 2.2.1.C
+          text: "Design leaving chilled water temperature shall be 18\xB0C, resulting\
+            \ in a chilled water temperature differential (delta-T) of 8 K across\
+            \ the cooling coil."
+        - clause_id: 23 81 23 Part 2.2.2.A
+          text: "Minimum unit airflow rate shall be 64,320 m\xB3/h at the design external\
+            \ static pressure. Airflow shall be measured at the unit discharge per\
+            \ AHRI 1360 test conditions."
+        - clause_id: 23 81 23 Part 2.2.3.A
+          text: "Supply air temperature shall be 23\xB0C +/- 1\xB0C at design conditions.\
+            \ Return air temperature shall be 35\xB0C maximum under hot aisle containment."
+        - clause_id: 23 81 23 Part 2.2.4.A
+          text: Total cooling capacity (sensible plus latent) shall be submitted along
+            with the sensible heat ratio (SHR) at design conditions.
+        - clause_id: 23 81 23 Part 2.2.4.B
+          text: Cooling capacity shall be verified by the manufacturer at the specified
+            entering and leaving water temperatures and air conditions.
+        - clause_id: 23 81 23 Part 2.2.4.C
+          text: Unit coefficient of performance (COP) shall be a minimum of 5.2. The
+            vendor shall submit the COP value as part of the performance data submittal.
+        - clause_id: 23 81 23 Part 2.2.5
+          text: CRAH unit shall maintain operation across a relative humidity range
+            of 20% to 80% non-condensing within the server room environment. Humidity
+            control shall be integrated with the unit controller.
+        - clause_id: 23 81 23 Part 2.2.6.A
+          text: CRAH unit controller shall provide proportional-integral (PI) control
+            of supply air temperature with adjustable setpoints. Controller shall
+            support Modbus TCP/IP and BACnet communication protocols.
+        - clause_id: 23 81 23 Part 2.2.7.A
+          text: Unit shall include high-efficiency air filters with a minimum MERV
+            11 rating. Filter frames shall be accessible for replacement without tools.
+        - clause_id: 23 81 23 Part 2.2.8
+          text: Where the CRAH unit incorporates a direct expansion (DX) trim cooling
+            circuit, the refrigerant type shall be R-410A only. Use of R-407C, R-22,
+            or any other refrigerant is not permitted.
+      - number: '2.3'
+        title: Component Description
+        paragraphs:
+        - clause_id: 23 81 23 Part 2.3.1.A
+          text: Chilled water cooling coil shall be copper tube with aluminium or
+            copper fins. Coil shall be leak tested at the factory at 1.5 times working
+            pressure. Coil connections shall be flanged.
+        - clause_id: 23 81 23 Part 2.3.2.A
+          text: "CRAH unit fans shall be electronically commutated (EC) type with\
+            \ variable speed drive. Fan motor power density shall be less than 0.10\
+            \ W per m\xB3/h of airflow at design conditions."
+        - clause_id: 23 81 23 Part 2.3.2.B
+          text: Fan motor power shall be specified in electrical kilowatts (kW). Specifications
+            of motor power in alternative units (HP, BHP, or PS) shall not be accepted.
+        - clause_id: 23 81 23 Part 2.3.3.A
+          text: Fan assemblies shall be direct-drive with integrated EC motors. Belt-driven
+            fan arrangements are not acceptable.
+        - clause_id: 23 81 23 Part 2.3.4.A
+          text: Unit shall include a condensate drain pan of stainless steel construction
+            with dual drain connections. Drain pan shall be insulated to prevent external
+            condensation.
+        - clause_id: 23 81 23 Part 2.3.5.A
+          text: CRAH unit shall be equipped with a 2-way modulating control valve
+            for chilled water flow regulation. The valve flow coefficient (Cv) shall
+            be specified and submitted for hydraulic circuit balancing calculations.
+        - clause_id: 23 81 23 Part 2.3.5.B
+          text: Control valve actuator shall be spring-return, fail-closed type with
+            a modulating signal range of 0-10 VDC or 4-20 mA.
+        - clause_id: 23 81 23 Part 2.3.5.C
+          text: Chilled water flow regulation shall utilise pressure independent control
+            valves (PICV) to ensure consistent flow regulation regardless of system
+            pressure variations. Standard 2-way modulating valves without pressure
+            independence are not acceptable.
+        - clause_id: 23 81 23 Part 2.3.6.A
+          text: Unit shall include onboard humidity sensing with dry bulb and dew
+            point temperature sensors.
+        - clause_id: 23 81 23 Part 2.3.6.B
+          text: Humidity control shall be provided by an electrode steam generating
+            humidifier integrated within the CRAH unit. Infrared, ultrasonic, or spray-type
+            humidifier systems are not acceptable.
+      - number: '2.4'
+        title: Physical Construction
+        paragraphs:
+        - clause_id: 23 81 23 Part 2.4.1.A
+          text: CRAH unit overall cabinet width shall not exceed 2400 mm to ensure
+            transport clearance through standard data centre corridors and freight
+            elevator openings. Units exceeding this width shall not be accepted.
+        - clause_id: 23 81 23 Part 2.4.1.B
+          text: Cabinet construction shall be double-skin insulated panels with powder
+            coated galvanised steel exterior finish. Internal lining shall be acoustically
+            treated.
+        - clause_id: 23 81 23 Part 2.4.2.A
+          text: Unit shall be suitable for underfloor air discharge configuration
+            with bottom discharge plenum. Side return air inlet arrangement shall
+            be provided.
+    - part: 3
+      title: EXECUTION
+      articles:
+      - number: '3.1'
+        title: Examination and Preparation
+        paragraphs:
+        - clause_id: 23 81 23 Part 3.1.1.A
+          text: Verify that chilled water piping, floor grilles, and electrical connections
+            are complete and ready prior to CRAH unit placement.
+      - number: '3.2'
+        title: Installation
+        paragraphs:
+        - clause_id: 23 81 23 Part 3.2.1.A
+          text: CRAH units shall be placed on anti-vibration pads on the prepared
+            raised floor structure. Chilled water connections shall be made with flexible
+            connectors and isolation valves.
+      - number: '3.3'
+        title: Field Testing and Commissioning
+        paragraphs:
+        - clause_id: 23 81 23 Part 3.3.1.A
+          text: Perform chilled water system flushing and water quality verification
+            prior to CRAH unit startup.
+        - clause_id: 23 81 23 Part 3.3.2.A
+          text: Verify sensible cooling capacity is a minimum of 250 kW at the specified
+            entering chilled water temperature. Measurements shall use calibrated
+            temperature sensors and flow meters.
+        - clause_id: 23 81 23 Part 3.3.2.B
+          text: Verify chilled water flow rate through the CRAH cooling coil matches
+            the design value within +/- 10%. Flow shall be measured using an ultrasonic
+            flow meter.
+        - clause_id: 23 81 23 Part 3.3.2.C
+          text: "Verify entering and leaving chilled water temperatures match the\
+            \ design basis values. Temperature measurements shall use calibrated RTD\
+            \ sensors with accuracy of +/- 0.1\xB0C."
+        - clause_id: 23 81 23 Part 3.3.2.D
+          text: "Verify supply air temperature is within the specified tolerance of\
+            \ 23\xB0C +/- 1\xB0C at design load conditions."
+        - clause_id: 23 81 23 Part 3.3.2.E
+          text: Verify unit airflow rate at design external static pressure using
+            a calibrated airflow measurement station or traverse method per ASHRAE
+            111.
+        - clause_id: 23 81 23 Part 3.3.2.F
+          text: Verify EC fan motor current draw is within the nameplate rating. Fan
+            speed shall be set to achieve the specified airflow rate.
+        - clause_id: 23 81 23 Part 3.3.2.G
+          text: Verify humidity control operation. Humidifier shall maintain room
+            humidity within the specified range during the test period.
+        - clause_id: 23 81 23 Part 3.3.2.H
+          text: Verify BMS communication and alarm integration. All critical alarms
+            (high supply temperature, low airflow, chilled water leak, filter differential
+            pressure) shall be confirmed operational.
+        - clause_id: 23 81 23 Part 3.3.2.I
+          text: Verify condensate drain system operation under full cooling load.
+            Drain pan shall show no evidence of overflow or leakage during the test.
+        - clause_id: 23 81 23 Part 3.3.2.J
+          text: Perform 72-hour continuous run test under simulated IT load. CRAH
+            unit shall maintain stable supply air temperature throughout the test
+            period without nuisance alarms or shutdowns.
+  21 22 00:
+    title: Clean Agent Fire Suppression Systems
+    parts:
+    - part: 1
+      title: GENERAL
+      articles:
+      - number: '1.1'
+        title: Summary
+        paragraphs:
+        - clause_id: 21 22 00 Part 1.1.1.A
+          text: This section specifies the requirements for clean agent fire suppression
+            systems using FK-5-1-12 (Dodecafluoro-2-methylpentan-3-one) for server
+            rooms and critical electrical rooms at the Meridian Data Centre Campus,
+            Phase 1.
+        - clause_id: 21 22 00 Part 1.1.1.B
+          text: The clean agent system shall provide total flooding fire suppression
+            for Class A (ordinary combustibles) and Class C (energised electrical
+            equipment) hazards. The system shall be safe for use in occupied spaces.
+      - number: '1.2'
+        title: References
+        paragraphs:
+        - clause_id: 21 22 00 Part 1.2.1
+          text: The clean agent fire suppression system shall be designed, installed,
+            and tested in accordance with NFPA 2001 (2008 Edition) - Standard on Clean
+            Agent Fire Extinguishing Systems. All system components shall comply with
+            the requirements of this standard.
+        - clause_id: 21 22 00 Part 1.2.2.A
+          text: 'Additional applicable standards include: IS 15493 (Clean Agent Fire
+            Extinguishing Systems), NBC Part 4 (Fire and Life Safety), and the local
+            fire department regulations of Navi Mumbai Municipal Corporation.'
+        - clause_id: 21 22 00 Part 1.2.3
+          text: All clean agent storage cylinders and discharge valve assemblies shall
+            be tested, listed, and labeled in accordance with UL 2166 (Halocarbon
+            Clean Agent Extinguishing System Units) and FM 5600 (Clean Agent Extinguishing
+            Systems). Cylinders certified only to ISO 9809-1 without UL and FM listing
+            shall not be accepted.
+      - number: '1.3'
+        title: Submittal Requirements
+        paragraphs:
+        - clause_id: 21 22 00 Part 1.3.1.A
+          text: Submittals shall include system design calculations, agent quantity
+            calculations, hydraulic flow calculations, nozzle layout drawings, detection
+            zone drawings, and control panel wiring diagrams.
+        - clause_id: 21 22 00 Part 1.3.2.A
+          text: A room integrity (door fan) test report shall be submitted for each
+            protected enclosure, demonstrating the required agent hold time.
+        - clause_id: 21 22 00 Part 1.3.3
+          text: Factory test and compliance certificates issued by UL and FM for all
+            clean agent storage cylinder valve assemblies shall be submitted as part
+            of the vendor submittal package. Submittals without these certificates
+            shall be considered incomplete.
+      - number: '1.4'
+        title: Quality Assurance
+        paragraphs:
+        - clause_id: 21 22 00 Part 1.4.1.A
+          text: System designer shall be a licensed fire protection engineer registered
+            with the relevant statutory authority. The designer shall have a minimum
+            of 5 installations of clean agent systems in data centre environments.
+    - part: 2
+      title: PRODUCTS
+      articles:
+      - number: '2.1'
+        title: Clean Agent System
+        paragraphs:
+        - clause_id: 21 22 00 Part 2.1.1
+          text: The clean agent shall be FK-5-1-12 (Dodecafluoro-2-methylpentan-3-one),
+            chemically identified as CF3CF2C(O)CF(CF3)2. The agent shall have zero
+            ozone depletion potential (ODP) and a global warming potential (GWP) of
+            1. No alternative agents shall be substituted without written approval.
+      - number: '2.2'
+        title: System Performance Requirements
+        paragraphs:
+        - clause_id: 21 22 00 Part 2.2.1
+          text: Design concentration shall be 4.7% by volume (v/v) for Class A and
+            Class C fire hazards. The design concentration shall be maintained uniformly
+            throughout the protected enclosure volume within the agent hold time period.
+        - clause_id: 21 22 00 Part 2.2.2
+          text: The No Observed Adverse Effect Level (NOAEL) for FK-5-1-12 is 10.0%
+            by volume (v/v). The design concentration of 4.7% provides a safety margin
+            well below the NOAEL, ensuring the system is safe for occupied spaces
+            without pre-discharge personnel evacuation.
+        - clause_id: 21 22 00 Part 2.2.3.A
+          text: Clean agent discharge time shall not exceed 10 seconds from the moment
+            the discharge valve opens until 95% of the design agent quantity has been
+            released into the protected enclosure, per NFPA 2001 requirements.
+        - clause_id: 21 22 00 Part 2.2.3.B
+          text: Agent hold time (retention) shall be a minimum of 10 minutes (600
+            seconds) to prevent re-ignition. Hold time shall be verified by a room
+            integrity (door fan) test conducted per NFPA 2001 Annex C.
+        - clause_id: 21 22 00 Part 2.2.4.A
+          text: System shall include automatic detection using cross-zoned smoke detectors
+            (two detectors in alarm required for discharge). Manual pull stations
+            shall be provided at each exit.
+        - clause_id: 21 22 00 Part 2.2.5
+          text: Minimum total clean agent quantity for the campus shall be 12,500
+            kg of FK-5-1-12. Agent quantity per zone shall be determined by the design
+            concentration, protected volume, and altitude correction factors per NFPA
+            2001 calculation methodology.
+      - number: '2.3'
+        title: System Components
+        paragraphs:
+        - clause_id: 21 22 00 Part 2.3.1.A
+          text: Clean agent storage cylinders shall be pressurised to 500 psi (34.5
+            bar) with nitrogen super-pressurisation. The system configuration shall
+            be ECS-500 type with high-pressure distribution for optimal nozzle coverage
+            and discharge performance.
+        - clause_id: 21 22 00 Part 2.3.1.B
+          text: Cylinder valve assemblies shall be UL listed and FM approved. Valves
+            shall include a manual safety pin, pressure gauge, and electric solenoid
+            actuator.
+        - clause_id: 21 22 00 Part 2.3.2.A
+          text: Distribution piping shall be Schedule 40 galvanised steel per ASTM
+            A53. Pipe sizing shall be per NFPA 2001 hydraulic calculations to achieve
+            the required discharge time.
+        - clause_id: 21 22 00 Part 2.3.3.A
+          text: Discharge nozzles shall be 360-degree pattern type designed specifically
+            for FK-5-1-12 agent. Nozzle coverage shall be as per manufacturer's approved
+            layout based on ceiling height and room geometry.
+        - clause_id: 21 22 00 Part 2.3.4.A
+          text: Control panel shall be UL/FM listed, with zone identification, alarm
+            history, and supervisory signal monitoring capabilities.
+        - clause_id: 21 22 00 Part 2.3.4.B
+          text: Pre-discharge audible and visual alarm devices shall be installed
+            inside each protected space. Alarm shall provide a minimum of 30 seconds
+            warning prior to agent discharge.
+        - clause_id: 21 22 00 Part 2.3.4.C
+          text: Post-discharge exhaust fan system shall be provided to evacuate agent
+            and combustion byproducts from the protected space. Exhaust rate shall
+            achieve 6 air changes per hour minimum.
+        - clause_id: 21 22 00 Part 2.3.4.D
+          text: Pressure relief venting shall be provided in each protected enclosure
+            to prevent structural damage during rapid agent discharge. Vent area shall
+            be calculated per NFPA 2001 guidelines.
+        - clause_id: 21 22 00 Part 2.3.4.E
+          text: System shall include abort switches at each exit door allowing personnel
+            to delay agent discharge during the pre-discharge alarm period.
+        - clause_id: 21 22 00 Part 2.3.4.F
+          text: The vendor shall submit a NOAEL safety margin calculation demonstrating
+            that the actual maximum agent concentration in the protected space does
+            not exceed the NOAEL limit of 10.0% (v/v) under worst-case conditions
+            including altitude and temperature corrections.
+    - part: 3
+      title: EXECUTION
+      articles:
+      - number: '3.1'
+        title: Examination and Preparation
+        paragraphs:
+        - clause_id: 21 22 00 Part 3.1.1.A
+          text: Verify that all room envelope penetrations are sealed and room integrity
+            is maintained prior to system installation. Coordinate with architectural
+            and mechanical trades.
+      - number: '3.2'
+        title: Installation
+        paragraphs:
+        - clause_id: 21 22 00 Part 3.2.1.A
+          text: Clean agent piping shall be installed with adequate supports and expansion
+            provisions. All piping joints shall be threaded or groove-coupled as specified
+            by the system manufacturer.
+      - number: '3.3'
+        title: Field Quality Control
+        paragraphs:
+        - clause_id: 21 22 00 Part 3.3.1.A
+          text: Pneumatic pressure test all agent distribution piping at 1.5 times
+            the maximum storage cylinder pressure. Hold time shall be 24 hours with
+            no measurable pressure drop.
+      - number: '3.4'
+        title: Commissioning and Acceptance
+        paragraphs:
+        - clause_id: 21 22 00 Part 3.4.1
+          text: Perform system functional test verifying agent discharge completion
+            within 10 seconds of system activation. Test shall be conducted using
+            a simulated discharge (nitrogen blow-through) or full live discharge per
+            the approved commissioning test plan.
+        - clause_id: 21 22 00 Part 3.4.2.A
+          text: Conduct a room integrity (door fan) test to verify the agent hold
+            time meets the minimum requirement. Test report shall be prepared by a
+            qualified fire protection technician.
