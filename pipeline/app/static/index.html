@@ -1,37 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<title>CLAUSE — requirement ledger</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CLAUSE AI — Project Meridian</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<aside id="sidebar">
-  <div class="brand">CLAUSE <span>AI</span><div class="sub">Project Meridian · 20MW Tier III</div></div>
-  <nav>
-    <button class="nav-btn active" data-view="dashboard">Dashboard</button>
-    <button class="nav-btn" data-view="queue">Submittal Queue</button>
-    <button class="nav-btn" data-view="review">Review</button>
-    <button class="nav-btn" data-view="graph">Ledger Graph</button>
-    <button class="nav-btn" data-view="blast">Blast Wave</button>
-    <button class="nav-btn" data-view="ncr">NCR Register</button>
-  </nav>
-  <div class="foot">deterministic verifier · every verdict cites both documents</div>
-</aside>
-<main id="main">
-  <section id="view-dashboard" class="view active"></section>
-  <section id="view-queue" class="view"></section>
-  <section id="view-review" class="view"></section>
-  <section id="view-graph" class="view">
-    <div id="graph-wrap"><canvas id="graph-canvas"></canvas>
-      <div id="graph-panel" class="hidden"></div>
-      <div id="graph-legend"></div>
+<div id="app">
+  <header>
+    <div class="brand">
+      <span class="seal" aria-hidden="true">C</span>
+      <span class="brand-name">CLAUSE</span>
+      <span class="brand-sub">requirement ledger</span>
     </div>
-  </section>
-  <section id="view-blast" class="view"></section>
-  <section id="view-ncr" class="view"></section>
-</main>
+    <div class="top-right">
+      <span class="net" title="last API round-trip"><span class="net-dot" id="net-dot"></span><span id="net-ms" class="mono">—</span></span>
+      <span id="spend" class="mono" title="cumulative LLM spend for everything on screen">$—</span>
+      <span id="clock" class="mono"></span>
+      <button id="btn-recompute" class="btn btn-primary" title="re-run the deterministic layer live">Recompute</button>
+      <button id="btn-settings" class="iconbtn" title="Settings · bring your own model"></button>
+    </div>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <nav id="tabs" aria-label="sections"></nav>
+  <footer id="ticker" title="live server activity — every request, timed"><span id="ticker-inner" class="mono"></span></footer>
+</div>
+<div id="toast" class="hidden"></div>
+<div id="modal" class="hidden" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-head"><span id="modal-title" class="mono"></span><button id="modal-close" class="iconbtn"></button></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+<div id="err-overlay" class="hidden"></div>
+<script src="icons.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
