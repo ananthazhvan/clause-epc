@@ -24,7 +24,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--labels", default="../clause_corpus/_answer_key/labels.json")
     ap.add_argument("--out", default="out")
+    ap.add_argument("--post", action="store_true",
+                    help="score out/post (addendum-amended) verdicts against "
+                         "verdict_post_addendum ground truth")
     a = ap.parse_args()
+    gt_field = "verdict_post_addendum" if a.post else "verdict_pre_addendum"
+    if a.post:
+        a.out = os.path.join(a.out, "post")
 
     labels = json.load(open(a.labels))
     verdicts = {}
@@ -39,7 +45,7 @@ def main():
         pkg = (lab.get("submittal_pdf") or "").replace(".pdf", "")
         clause = lab.get("spec_clause") or ""
         tier = lab.get("tier") or "OK"
-        gt_dev = (lab.get("verdict_pre_addendum") or "").upper().startswith("DEV")
+        gt_dev = (lab.get(gt_field) or "").upper().startswith("DEV")
         if pkg not in verdicts or not clause:
             out_of_scope.append(lab["check_id"])
             continue
@@ -78,7 +84,7 @@ def main():
                 false_alarms.append((lab["check_id"], pkg, clause, lab.get("explanation", "")[:140]))
         tallies[tier][outcome] += 1
 
-    print("=== M4 vs answer key (pre-addendum ground truth) ===")
+    print(f"\n=== M4 vs answer key ({gt_field} ground truth) ===")
     for tier in sorted(tallies):
         print(f"  {tier}: {dict(tallies[tier])}")
     dev_total = sum(t["caught"] + t["flagged"] + t["missed"] for t in tallies.values())
@@ -96,6 +102,23 @@ def main():
         print("\n=== FALSE ALARMS ===")
         for m in false_alarms:
             print("  ", m)
+
+    report = {
+        "ground_truth": gt_field,
+        "tallies": {t: dict(c) for t, c in tallies.items()},
+        "deviations_total": dev_total,
+        "caught": caught,
+        "flagged": flagged,
+        "hard_recall": round(caught / dev_total, 3) if dev_total else None,
+        "flag_inclusive_recall": round((caught + flagged) / dev_total, 3) if dev_total else None,
+        "false_alarms": len(false_alarms),
+        "misses": [list(m) for m in misses],
+        "out_of_scope": out_of_scope,
+    }
+    rep_path = os.path.join(a.out, "eval_report.json")
+    with open(rep_path, "w") as f:
+        json.dump(report, f, indent=1)
+    print(f"\n  report -> {rep_path}")
 
 
 if __name__ == "__main__":
