@@ -160,22 +160,10 @@ async function route() {
   const seg = h.split("/");
   const id = seg.shift() || "hub";
   const arg = decodeURIComponent(seg.join("/") || "");
-  const EXTRA = { settings: { id: "settings", fn: vSettings }, run: { id: "run", icon: "queue", fn: vRun } };
-  const r = ROUTES.find((x) => x.id === id) || EXTRA[id] || ROUTES[0];
+  const r = ROUTES.find((x) => x.id === id) || (id === "settings" ? { id: "settings", fn: vSettings } : ROUTES[0]);
   renderTabs(r.id);
   const view = $("#view");
   view.innerHTML = skeleton();
-  if (r.id !== "hub" && r.id !== "settings" && r.id !== "run") {
-    let p = null;
-    try { p = await projectState(); } catch (e) { p = PROJECT; }
-    if (p && p.running) { location.hash = "#run"; return; }
-    if (p && !p.loaded) {
-      view.innerHTML = '<div class="view"><div class="empty-wrap"><div class="empty-card card">' + icon(r.icon || "hub") +
-        "<h1>nothing here yet</h1><p>No project is loaded. Nothing on this site is pre-loaded or replayed \u2014 every screen is computed from the documents you upload, by the real pipeline, on this machine.</p>" +
-        '<button class="btn btn-primary" onclick="location.hash=\'#hub\'">Upload your project documents</button></div></div></div>';
-      return;
-    }
-  }
   try { await r.fn(view, arg); } catch (e) {
     view.innerHTML = '<div class="view"><div class="callout">This screen failed to load: ' + esc(e.message) + "</div></div>";
   }
@@ -192,13 +180,6 @@ function head(title, sub, extra) {
 }
 
 /* =========================================================== hub */
-let PROJECT = null;
-async function projectState() {
-  PROJECT = await api("/api/project");
-  const chip = $("#model-chip");
-  if (chip) chip.textContent = (PROJECT.model || "no model") + (PROJECT.has_key ? "" : " \u00b7 no key");
-  return PROJECT;
-}
 const SOURCES = [
   { key: "documents", label: "Project documents", route: "#review", count: (s) => (s.corpus_files || 0) + " files" },
   { key: "specs", label: "Specifications", route: "#lint", count: (s) => (s.rules || 0) + " rules" },
@@ -206,319 +187,257 @@ const SOURCES = [
   { key: "procurement", label: "Procurement", route: "#vendors", count: (s) => ((s.node_types || {}).po || 0) + " POs" },
   { key: "quality", label: "Quality records", route: "#cx", count: (s) => (((s.node_types || {}).cx || 0)) + " tests \u00b7 " + (s.ncrs || 0) + " NCRs" },
 ];
-function kstamp(kind) {
-  const m = { specification: "st-ok", submittal: "st-ok", addendum: "st-warn", register: "st-ok", reference: "", "project document": "", refused: "st-bad", error: "st-bad", skipped: "" };
-  return '<span class="stamp ' + (m[kind] || "") + '">' + esc(kind) + "</span>";
-}
-function checksTotalOf(s) { return Object.values(s.verdicts_post || {}).reduce((a, b) => a + b, 0); }
-
 async function vHub(view) {
-  const p = await projectState();
-  if (p.running) { location.hash = "#run"; return; }
-  if (p.loaded) return hubLoaded(view, p);
-  return hubEmpty(view, p);
+  const s = await api("/api/summary");
+  $("#spend").textContent = "$" + (s.llm_spend_usd == null ? "\u2014" : s.llm_spend_usd.toFixed(2));
+  const checksTotal = Object.values(s.verdicts_post || {}).reduce((a, b) => a + b, 0);
+  view.innerHTML =
+    '<div class="view">' +
+    head("The intelligence layer", "five sources, one ledger \u2014 every count on this screen was fetched and computed just now") +
+    '<div class="hub">' +
+    '  <div class="card hub-canvas-card" style="min-height:460px"><canvas id="hub-canvas"></canvas>' +
+    '    <div class="hub-cap">click a source to open its ledger view \u00b7 ' + s.graph_nodes + " nodes / " + s.graph_edges + ' edges in the full graph</div></div>' +
+    "  <div>" +
+    '    <div class="card mb"><h2>' + icon("upload") + 'Feed the ledger <span class="right">sha-256 fingerprinting, live</span></h2>' +
+    '      <div class="dropzone" id="dz">' + icon("upload") + '<div class="dz-title">Drop project documents here</div>' +
+    '      <div class="dz-sub">PDF, CSV, HTML \u00b7 corpus files are recognized; unseen documents get a live numeric-claim harvest \u2014 no LLM needed</div></div>' +
+    '      <input type="file" id="dz-input" multiple style="display:none">' +
+    '      <div id="ingest-out"></div>' +
+    "    </div>" +
+    '    <div class="card"><h2>Start here</h2><div id="hub-links"></div></div>' +
+    "  </div>" +
+    "</div>" +
+    '<div class="footnote">CLAUSE \u00b7 DC-EPC-01 \u00b7 set in ink &amp; paper \u00b7 verdicts are stamps and stamps must be earned</div>' +
+    "</div>";
+  const links = [
+    ["#overview", "overview", "Ledger overview", checksTotal + " checks held \u00b7 " + ((s.verdicts_post || {}).DEVIATION || 0) + " deviations"],
+    ["#clock", "clock", "Decision clock", (s.days_to_decide != null ? s.days_to_decide + " days to decide concessions" : "windows & exposure")],
+    ["#review", "review", "Evidence review", "every verdict beside its two quotes"],
+    ["#external", "external", "External reality check", (s.external_checks || 0) + " checks on real documents"],
+  ];
+  $("#hub-links").innerHTML = links.map((l) =>
+    '<div class="neigh" data-h="' + l[0] + '" style="padding:7px 4px">' + icon(l[1]) + "<b>" + esc(l[2]) + '</b><span class="et">' + esc(l[3]) + "</span></div>").join("");
+  $("#hub-links").querySelectorAll(".neigh").forEach((n) => { n.onclick = () => { location.hash = n.dataset.h; }; });
+  initConstellation(s, checksTotal);
+  initUploader();
 }
-
-function uploadCardHtml(big) {
-  return '<div class="card">' +
-    "<h2>" + icon("doc") + (big ? "upload your project documents" : "feed it more documents") + "</h2>" +
-    '<div class="dropzone' + (big ? " dz-big" : "") + '" id="dz">' + icon("doc") +
-    "<div><b>Drop files or a whole folder here</b>" +
-    '<div class="form-note">specs \u00b7 vendor submittals \u00b7 client addenda \u00b7 registers (CSV) \u00b7 minutes, reports, correspondence</div></div>' +
-    '<div class="row mt" style="justify-content:center"><button class="btn" id="pick-files">Choose files</button><button class="btn" id="pick-folder">Choose a folder</button></div></div>' +
-    '<input id="dz-files" type="file" multiple style="display:none">' +
-    '<input id="dz-folder" type="file" webkitdirectory style="display:none">' +
-    '<div id="up-out"></div></div>';
+function initConstellation(s, checksTotal) {
+  const canvas = $("#hub-canvas"), card = canvas.parentElement;
+  const ctx = canvas.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let W = 0, H = 0, raf = 0, frame = 0, theta = -Math.PI / 2, hover = -1;
+  const pos = SOURCES.map(() => ({ x: 0, y: 0 }));
+  function size() {
+    W = card.clientWidth; H = card.clientHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + "px"; canvas.style.height = H + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  const onResize = () => size();
+  window.addEventListener("resize", onResize);
+  const ink = "#211c14", verm = "#c9442a", paper = "#faf7ef";
+  function draw() {
+    frame++;
+    theta += 0.00045;
+    const intro = Math.min(1, frame / 80);
+    const ease = 1 - Math.pow(1 - intro, 3);
+    const cx = W / 2, cy = H / 2 - 8;
+    const rx = Math.min(W * 0.36, 330), ry = Math.min(H * 0.32, 190);
+    ctx.clearRect(0, 0, W, H);
+    // edges
+    for (let i = 0; i < SOURCES.length; i++) {
+      const a = theta + (i * 2 * Math.PI) / SOURCES.length;
+      const tx = cx + Math.cos(a) * rx, ty = cy + Math.sin(a) * ry;
+      const x = cx + (tx - cx) * ease, y = cy + (ty - cy) * ease;
+      pos[i].x = x; pos[i].y = y;
+      ctx.strokeStyle = "rgba(33,28,20," + (hover === i ? "0.85" : "0.3") + ")";
+      ctx.lineWidth = hover === i ? 1.8 : 1.2;
+      ctx.setLineDash([5, 6]);
+      ctx.lineDashOffset = -(frame * 0.35);
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(cx, cy); ctx.stroke();
+      ctx.setLineDash([]);
+      // packet flowing inward
+      const t = ((frame * 0.004) + i / 5) % 1;
+      ctx.fillStyle = verm;
+      ctx.beginPath(); ctx.arc(x + (cx - x) * t, y + (cy - y) * t, 2.4, 0, 7); ctx.fill();
+    }
+    // source nodes
+    for (let i = 0; i < SOURCES.length; i++) {
+      const p = pos[i], hovered = hover === i;
+      const r = hovered ? 32 : 28;
+      ctx.fillStyle = paper;
+      ctx.strokeStyle = ink; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 7); ctx.fill(); ctx.stroke();
+      if (hovered) { ctx.strokeStyle = verm; ctx.beginPath(); ctx.arc(p.x, p.y, r + 3.5, 0, 7); ctx.stroke(); }
+      ctx.fillStyle = ink;
+      ctx.textAlign = "center";
+      ctx.font = "600 11px -apple-system, Segoe UI, sans-serif";
+      const lift = p.y < cy ? -r - 20 : r + 14;
+      ctx.fillText(SOURCES[i].label, p.x, p.y + lift);
+      ctx.font = "10px ui-monospace, Menlo, monospace";
+      ctx.fillStyle = "rgba(33,28,20,.62)";
+      ctx.fillText(SOURCES[i].count(s), p.x, p.y + lift + 13);
+      ctx.font = "700 10px ui-monospace, Menlo, monospace";
+      ctx.fillStyle = hovered ? verm : "rgba(33,28,20,.8)";
+      ctx.fillText(hovered ? "open \u2192" : String(i + 1).padStart(2, "0"), p.x, p.y + 3.5);
+    }
+    // core seal
+    ctx.save();
+    ctx.translate(cx, cy); ctx.rotate(-0.035);
+    const cw = 108, ch = 64;
+    ctx.fillStyle = verm; ctx.strokeStyle = ink; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(-cw / 2, -ch / 2, cw, ch, 7); else ctx.rect(-cw / 2, -ch / 2, cw, ch);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = paper;
+    ctx.textAlign = "center";
+    ctx.font = "700 16px Iowan Old Style, Palatino, Georgia, serif";
+    ctx.fillText("CLAUSE", 0, -6);
+    ctx.font = "9px ui-monospace, Menlo, monospace";
+    ctx.fillText(checksTotal + " checks held", 0, 12);
+    ctx.restore();
+    raf = requestAnimationFrame(draw);
+  }
+  function hitTest(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    let h = -1;
+    for (let i = 0; i < pos.length; i++) {
+      if ((mx - pos[i].x) ** 2 + (my - pos[i].y) ** 2 < 36 * 36) h = i;
+    }
+    const coreHit = Math.abs(mx - W / 2) < 58 && Math.abs(my - (H / 2 - 8)) < 36;
+    return { h, coreHit };
+  }
+  canvas.onmousemove = (e) => {
+    const { h, coreHit } = hitTest(e);
+    hover = h;
+    canvas.style.cursor = (h >= 0 || coreHit) ? "pointer" : "default";
+  };
+  canvas.onclick = (e) => {
+    const { h, coreHit } = hitTest(e);
+    if (h >= 0) location.hash = SOURCES[h].route;
+    else if (coreHit) location.hash = "#overview";
+  };
+  raf = requestAnimationFrame(draw);
+  CLEANUP = () => { cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); };
 }
-
-function renderStaged(p) {
-  const el = $("#staged-body");
-  if (!el) return;
-  el.innerHTML = !p.staged_total
-    ? '<div class="form-note">nothing staged yet \u2014 the ledger is empty until you feed it</div>'
-    : Object.entries(p.staged || {}).map(([k, v]) => '<div class="d-kv"><span class="k mono">' + esc(k) + '/</span><span class="v">' + v + " file(s)</span></div>").join("");
-  const run = $("#btn-run"), clr = $("#btn-clear");
-  if (run) run.disabled = !p.staged_total;
-  if (clr) clr.disabled = !p.staged_total;
-}
-
-function wireUploader(afterUpload) {
-  const dz = $("#dz"), fi = $("#dz-files"), fo = $("#dz-folder"), out = $("#up-out");
-  if (!dz) return;
-  dz.onclick = () => fi.click();
-  $("#pick-files").onclick = (e) => { e.stopPropagation(); fi.click(); };
-  $("#pick-folder").onclick = (e) => { e.stopPropagation(); fo.click(); };
+const MODULE_NAMES = {
+  "m5_addendum.py": "M5 \u00b7 addendum blast wave", "m5_graph.py": "M5 \u00b7 ledger graph",
+  "m6_disposition.py": "M6 \u00b7 NCRs & dispositions", "m7_options.py": "M7 \u00b7 decision clock",
+  "m8_margin.py": "M8 \u00b7 margins & energy", "m9_vendor.py": "M9 \u00b7 vendor trust",
+  "m10_paperwork.py": "M10 \u00b7 spec linter & paperwork", "m11_cx.py": "M11 \u00b7 commissioning packs",
+};
+function initUploader() {
+  const dz = $("#dz"), input = $("#dz-input"), out = $("#ingest-out");
+  dz.onclick = () => input.click();
   ["dragover", "dragenter"].forEach((ev) => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add("over"); }));
   ["dragleave", "drop"].forEach((ev) => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.remove("over"); }));
   dz.addEventListener("drop", (e) => handleFiles(e.dataTransfer.files));
-  fi.onchange = () => handleFiles(fi.files);
-  fo.onchange = () => handleFiles(fo.files);
+  input.onchange = () => handleFiles(input.files);
   async function handleFiles(fileList) {
-    const files = Array.from(fileList || []).slice(0, 400);
+    const files = Array.from(fileList || []).slice(0, 12);
     if (!files.length) return;
-    out.innerHTML = '<div class="mt mono" style="font-size:11px;color:var(--ink3)">reading ' + files.length + " file(s)\u2026</div>";
+    out.innerHTML = '<div class="mt mono" style="font-size:11px;color:var(--ink3)">reading ' + files.length + " file(s) + computing fingerprints\u2026</div>";
     const payload = [];
     for (const f of files) {
-      if (f.size > 40e6) { payload.push({ name: f.name, relpath: f.webkitRelativePath || f.name, b64: "" }); continue; }
+      if (f.size > 30e6) { payload.push({ name: f.name, b64: "" }); continue; }
       const b64 = await new Promise((res, rej) => {
         const rd = new FileReader();
         rd.onload = () => res(String(rd.result).split(",")[1] || "");
         rd.onerror = rej;
         rd.readAsDataURL(f);
       });
-      payload.push({ name: f.name, relpath: f.webkitRelativePath || f.name, b64 });
+      payload.push({ name: f.name, b64 });
     }
     let res;
-    try { res = await post("/api/upload", { files: payload }); }
+    try { res = await post("/api/ingest", { files: payload }); }
     catch (e) { out.innerHTML = '<div class="callout mt">' + esc(e.message) + "</div>"; return; }
-    const ord = { error: 0, refused: 1 };
-    const rows = (res.results || []).slice().sort((a, b) => ((ord[a.kind] !== undefined ? ord[a.kind] : 2) - (ord[b.kind] !== undefined ? ord[b.kind] : 2))).map((r) =>
-      '<div class="up-row">' + kstamp(r.kind) + '<span class="fn">' + esc(r.name) + '</span><span class="note">' + esc(r.note || "") + "</span></div>").join("");
-    const bad = (res.results || []).filter((r) => r.kind === "error").length;
-    out.innerHTML = '<div class="mt">' + rows + "</div>" +
-      '<div class="row mt"><span class="prov">' + (res.staged_total || 0) + " file(s) staged \u00b7 classified by content, not filename" + (bad ? " \u00b7 <b>" + bad + " rejected</b>" : "") + "</span></div>";
-    PROJECT = null;
-    const np = await projectState();
-    renderStaged(np);
-    if (afterUpload) afterUpload(res, np);
-  }
-}
-
-function hubEmpty(view, p) {
-  view.innerHTML = '<div class="view">' +
-    head("Feed the ledger", "this site starts empty \u2014 every screen is computed from what you upload, by the real pipeline") +
-    '<div class="hub">' +
-    uploadCardHtml(true) +
-    "<div>" +
-    '<div class="card mb"><h2>' + icon("queue") + 'staged, waiting for a run</h2><div id="staged-body"></div>' +
-    '<div class="row mt"><button class="btn btn-primary" id="btn-run">Run the pipeline</button><button class="btn" id="btn-clear">Clear</button></div>' +
-    '<div class="form-note">the run streams live: parsing, rule compilation, claim extraction, verification, consequences. LLM stages use the model in Settings \u2014 prompts already in the local cache replay instantly and free; new prompts hit the endpoint and take real time.</div></div>' +
-    '<div class="card"><h2>' + icon("paperwork") + "what it eats</h2>" +
-    '<div class="d-kv"><span class="k">specifications</span><span class="v">PDF/HTML \u00b7 clause-numbered</span></div>' +
-    '<div class="d-kv"><span class="k">vendor submittals</span><span class="v">PDF with a transmittal page</span></div>' +
-    '<div class="d-kv"><span class="k">client addenda</span><span class="v">PDF \u2014 detected by content</span></div>' +
-    '<div class="d-kv"><span class="k">registers</span><span class="v">CSV \u00b7 PO / schedule / Cx / RFI</span></div>' +
-    '<div class="d-kv"><span class="k">anything else</span><span class="v">parsed as project documents</span></div>' +
-    '<div class="row mt"><button class="btn" id="open-format">Document format guide</button></div>' +
-    '<div class="form-note">answer keys and generator/ground-truth files are refused on upload \u2014 the pipeline must never see them.</div></div>' +
-    "</div></div></div>";
-  renderStaged(p);
-  $("#btn-run").onclick = async () => { try { await post("/api/run"); PROJECT = null; location.hash = "#run"; } catch (e) { toast(esc(e.message)); } };
-  $("#btn-clear").onclick = async () => { try { await post("/api/project/reset"); PROJECT = null; toast("Cleared \u2014 staged documents and artifacts removed"); route(); } catch (e) { toast(esc(e.message)); } };
-  $("#open-format").onclick = () => openGuide("CORPUS_FORMAT.md");
-  wireUploader();
-}
-
-async function hubLoaded(view, p) {
-  const s = await api("/api/summary");
-  view.innerHTML = '<div class="view">' +
-    head("The intelligence layer", "every count on this screen was computed by the last real run \u2014 nothing is pre-loaded") +
-    '<div class="hub">' +
-    '<div class="card hub-canvas-card" style="min-height:460px"><canvas id="hub-canvas"></canvas>' +
-    '<div class="hub-cap">one-line diagram \u00b7 click a source to open its ledger view \u00b7 ' + s.graph_nodes + " nodes / " + s.graph_edges + " edges in the full graph</div></div>" +
-    "<div>" +
-    '<div class="card mb"><h2>' + icon("hub") + "sources</h2>" +
-    SOURCES.map((src) => '<div class="d-kv" style="cursor:pointer" data-r="' + src.route + '"><span class="k">' + esc(src.label) + '</span><span class="v mono">' + esc(src.count(s)) + "</span></div>").join("") +
-    '<div class="d-kv"><span class="k">checks in the ledger</span><span class="v mono">' + fmtN(checksTotalOf(s)) + "</span></div></div>" +
-    uploadCardHtml(false) +
-    '<div class="card mt"><h2>' + icon("settings") + "project</h2>" +
-    '<div class="d-kv"><span class="k">loaded</span><span class="v mono">' + esc(p.loaded_at || "") + "</span></div>" +
-    '<div class="d-kv"><span class="k">model</span><span class="v mono">' + esc(p.model || "") + "</span></div>" +
-    ((p.failed_stages || []).length ? '<div class="d-kv"><span class="k">skipped stages</span><span class="v mono">' + esc(p.failed_stages.join(", ")) + "</span></div>" : "") +
-    '<div class="row mt"><button class="btn" id="btn-rerun">Re-run pipeline</button><button class="btn" id="btn-reset">Reset project</button></div>' +
-    '<div class="form-note">new documents join the staged set \u2014 re-run to fold them into the ledger. A different model in Settings means cache misses: the run makes real LLM calls and takes real time.</div></div>' +
-    "</div></div></div>";
-  view.querySelectorAll("[data-r]").forEach((el) => { el.onclick = () => { location.hash = el.dataset.r; }; });
-  $("#btn-rerun").onclick = async () => { try { await post("/api/run"); PROJECT = null; location.hash = "#run"; } catch (e) { toast(esc(e.message)); } };
-  $("#btn-reset").onclick = async () => { try { await post("/api/project/reset"); PROJECT = null; toast("Project cleared"); route(); } catch (e) { toast(esc(e.message)); } };
-  wireUploader();
-  CLEANUP = initDiagram(s);
-}
-
-/* one-line diagram: sources on a bus, converging into the seal */
-function initDiagram(s) {
-  const canvas = $("#hub-canvas");
-  if (!canvas) return null;
-  const wrap = canvas.parentElement;
-  const ctx = canvas.getContext("2d");
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  let W = 0, H = 0, raf = 0, t = 0, hover = -1;
-  const items = SOURCES.map((src) => ({ label: src.label, route: src.route, count: src.count(s), x: 0, y: 0, r: 27 }));
-  function size(force) {
-    const rect = wrap.getBoundingClientRect();
-    const w = Math.max(320, Math.round(rect.width)), h = Math.max(380, Math.round(rect.height));
-    if (!force && Math.abs(w - W) < 9 && Math.abs(h - H) < 9) return;
-    W = w; H = h;
-    canvas.width = W * dpr; canvas.height = H * dpr;
-    canvas.style.width = W + "px"; canvas.style.height = H + "px";
-    const m = 78;
-    items.forEach((it, i) => {
-      it.x = m + (W - 2 * m) * (items.length === 1 ? 0.5 : i / (items.length - 1));
-      it.y = 136;
-    });
-  }
-  function draw() {
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, H);
-    const ink = "#211c14", ink3 = "#94886e", verm = "#c9442a";
-    const busY = 46, collY = H - 122, sealW = 172, sealH = 58, sx = W / 2, sy = H - 78;
-    ctx.lineWidth = 1.5; ctx.strokeStyle = ink; ctx.setLineDash([]);
-    ctx.beginPath(); ctx.moveTo(items[0].x - 24, busY); ctx.lineTo(items[items.length - 1].x + 24, busY); ctx.stroke();
-    [items[0].x - 24, items[items.length - 1].x + 24].forEach((x) => { ctx.beginPath(); ctx.moveTo(x, busY - 5); ctx.lineTo(x, busY + 5); ctx.stroke(); });
-    ctx.font = "10px ui-monospace, Menlo, monospace";
-    ctx.fillStyle = ink3; ctx.textAlign = "left";
-    ctx.fillText("PROJECT DOCUMENTS IN", items[0].x - 24, busY - 12);
-    items.forEach((it, i) => {
-      ctx.strokeStyle = ink; ctx.setLineDash([]);
-      ctx.beginPath(); ctx.moveTo(it.x, busY); ctx.lineTo(it.x, it.y - it.r); ctx.stroke();
-      ctx.beginPath(); ctx.arc(it.x, it.y, it.r, 0, Math.PI * 2);
-      ctx.fillStyle = hover === i ? "#e3d9c4" : "#faf7ef";
-      ctx.fill(); ctx.stroke();
-      if (hover === i) { ctx.beginPath(); ctx.arc(it.x, it.y, it.r + 3.5, 0, Math.PI * 2); ctx.stroke(); }
-      const cparts = String(it.count).split(" ");
-      ctx.fillStyle = ink; ctx.textAlign = "center";
-      ctx.font = "600 12px ui-monospace, Menlo, monospace";
-      ctx.fillText(cparts[0], it.x, it.y - 1);
-      ctx.font = "8.5px ui-monospace, Menlo, monospace";
-      ctx.fillStyle = ink3;
-      ctx.fillText(cparts.slice(1).join(" ").slice(0, 15), it.x, it.y + 11);
-      ctx.font = "11px Georgia, serif";
-      ctx.fillStyle = ink;
-      ctx.fillText(it.label.toLowerCase(), it.x, it.y + it.r + 16);
-      ctx.strokeStyle = ink3;
-      ctx.setLineDash([1.5, 6]); ctx.lineDashOffset = -t;
-      ctx.beginPath();
-      ctx.moveTo(it.x, it.y + it.r);
-      ctx.lineTo(it.x, collY);
-      ctx.lineTo(sx, collY);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    });
-    ctx.strokeStyle = ink3; ctx.setLineDash([1.5, 6]); ctx.lineDashOffset = -t;
-    ctx.beginPath(); ctx.moveTo(sx, collY); ctx.lineTo(sx, sy - sealH / 2); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.strokeStyle = ink; ctx.fillStyle = "#faf7ef";
-    ctx.fillRect(sx - sealW / 2, sy - sealH / 2, sealW, sealH);
-    ctx.strokeRect(sx - sealW / 2, sy - sealH / 2, sealW, sealH);
-    ctx.strokeRect(sx - sealW / 2 + 4, sy - sealH / 2 + 4, sealW - 8, sealH - 8);
-    ctx.textAlign = "center"; ctx.fillStyle = ink;
-    ctx.font = "700 15px Georgia, serif";
-    ctx.fillText("CLAUSE", sx, sy - 1);
-    ctx.font = "8.5px ui-monospace, Menlo, monospace";
-    ctx.fillStyle = ink3;
-    ctx.fillText("REQUIREMENT LEDGER", sx, sy + 12);
-    const dev = (s.verdicts_post || {}).DEVIATION || 0;
-    ctx.fillStyle = dev ? verm : ink3;
-    ctx.font = "9.5px ui-monospace, Menlo, monospace";
-    ctx.fillText(fmtN(checksTotalOf(s)) + " checks \u00b7 " + dev + " deviations", sx, sy + sealH / 2 + 16);
-  }
-  function loop() { t += 0.3; draw(); raf = requestAnimationFrame(loop); }
-  size(true); loop();
-  const onResize = () => size(false);
-  window.addEventListener("resize", onResize);
-  canvas.onmousemove = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-    hover = items.findIndex((it) => (mx - it.x) * (mx - it.x) + (my - it.y) * (my - it.y) <= (it.r + 6) * (it.r + 6));
-    canvas.style.cursor = hover >= 0 ? "pointer" : "default";
-  };
-  canvas.onclick = () => { if (hover >= 0) location.hash = items[hover].route; };
-  return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); };
-}
-
-/* =========================================================== run console */
-async function vRun(view) {
-  view.innerHTML = '<div class="view" style="max-width:none">' +
-    head("Pipeline run", "live stdout from the real modules \u2014 nothing replayed, nothing simulated") +
-    '<div class="run-grid">' +
-    '<div class="card"><h2>' + icon("queue") + 'stages</h2><div id="rail-body"><div class="form-note">waiting for the runner\u2026</div></div><div id="run-note"></div></div>' +
-    '<div class="card runlog-card"><div class="runlog-head mono"><span id="log-state">connecting\u2026</span><span class="spacer"></span><span id="log-count"></span></div><pre id="runlog" class="mono"></pre></div>' +
-    '</div><div id="run-done"></div></div>';
-  let off = 0, stop = false, timer = 0;
-  CLEANUP = () => { stop = true; clearTimeout(timer); };
-  const pre = $("#runlog");
-  function rail(st) {
-    if (!st || !st.stages) return;
-    $("#rail-body").innerHTML = st.stages.map((g) =>
-      '<div class="rail-item ' + esc(g.status) + '"><span class="rail-dot"></span><span>' + esc(g.label) + "</span>" +
-      (g.llm ? '<span class="llm-chip">LLM</span>' : "") +
-      '<span class="rs">' + (g.status === "skipped" ? esc((g.note || "").slice(0, 24)) : (g.secs != null ? g.secs + "s" : "")) + "</span></div>").join("");
-    const running = st.stages.find((g) => g.status === "running");
-    $("#run-note").innerHTML = (running && running.llm)
-      ? '<div class="callout mt"><b>LLM processing</b> \u2014 model <span class="mono">' + esc((PROJECT || {}).model || "") + '</span>. Prompts already in the local cache replay instantly; anything new goes to the endpoint and takes real time.</div>'
-      : "";
-  }
-  async function poll() {
-    let d;
-    try { d = await api("/api/run/log?offset=" + off); }
-    catch (e) { if (!stop) timer = setTimeout(poll, 1500); return; }
-    if (d.text) {
-      const nearBottom = pre.scrollHeight - pre.scrollTop - pre.clientHeight < 80;
-      pre.textContent += d.text;
-      if (nearBottom) pre.scrollTop = pre.scrollHeight;
+    let html = "";
+    for (const r of res.recognized || []) {
+      html += '<div class="ingest-row">' + stamp("IN LEDGER") + '<div><div class="fn">' + esc(r.name) + '</div><div class="meta">recognized \u00b7 ' + esc(r.kind) + " \u00b7 " + esc(r.path) + "</div></div></div>";
     }
-    off = d.offset || off;
-    $("#log-count").textContent = off ? Math.round(off / 1024) + " KB" : "";
-    rail(d.status);
-    const st = d.status;
-    if (!d.running && st && st.finished) {
-      $("#log-state").textContent = st.ok ? "finished" : "failed";
-      PROJECT = null;
-      $("#run-done").innerHTML = st.ok
-        ? '<div class="callout c-ok mt"><b>Run complete \u2014 the ledger is rebuilt from your documents.</b></div><div class="row mt"><button class="btn btn-primary" onclick="location.hash=\'#overview\'">Open the ledger</button><button class="btn" onclick="location.hash=\'#graph\'">See the connections</button><button class="btn" onclick="location.hash=\'#hub\'">Hub</button></div>'
-        : '<div class="callout mt" style="border-color:var(--verm)"><b>Run failed:</b> ' + esc(st.error || "see the log above") + ' \u2014 fix the input (or the model settings) and run again.</div><div class="row mt"><button class="btn" onclick="location.hash=\'#hub\'">Back to the hub</button></div>';
-      return;
+    for (const u of res.unknown || []) {
+      const meta = u.error ? esc(u.error)
+        : (u.pages + " pages \u00b7 <b>" + u.total_hits + "</b> numeric claims harvested live, with page-cited quotes");
+      const sample = (u.hits || []).slice(0, 2).map((h) =>
+        '<div class="quote q-claim" style="margin-top:6px"><span class="q-src">p' + h.page + " \u00b7 " + esc(h.value) + " " + esc(h.unit) + '</span>' + esc(h.quote) + "</div>").join("");
+      html += '<div class="ingest-row">' + stamp("NEW") + '<div style="min-width:0"><div class="fn">' + esc(u.name) + '</div><div class="meta">' + meta + "</div>" + sample + "</div></div>";
     }
-    if (!d.running && !st) {
-      $("#log-state").textContent = "no run";
-      $("#run-done").innerHTML = '<div class="callout mt">No run in progress. Stage documents in the hub, then run the pipeline.</div><div class="row mt"><button class="btn" onclick="location.hash=\'#hub\'">Hub</button></div>';
-      return;
-    }
-    $("#log-state").textContent = d.running ? "running" : "\u2026";
-    if (!stop) timer = setTimeout(poll, 600);
+    const anyRecognized = (res.recognized || []).length > 0;
+    html += '<div class="mt row">' + (anyRecognized ? '<button class="btn btn-primary" id="btn-runpipe">Run the pipeline</button>' : "") +
+      '<span class="prov">' + (res.recognized || []).length + " recognized \u00b7 " + (res.unknown || []).length + " new \u00b7 fingerprinted against " + res.corpus_files + " corpus files</span></div>" +
+      '<div id="stage-out"></div>';
+    out.innerHTML = html;
+    const btn = $("#btn-runpipe");
+    if (btn) btn.onclick = () => runPipeline(btn);
   }
-  poll();
+  async function runPipeline(btn) {
+    btn.disabled = true;
+    const stageOut = $("#stage-out");
+    const mods = Object.keys(MODULE_NAMES);
+    stageOut.innerHTML = '<ul class="stagelist">' + mods.map((m, i) =>
+      '<li id="stg-' + i + '"><span class="dot"></span>' + esc(MODULE_NAMES[m]) + '<span class="ms"></span></li>').join("") + "</ul>" +
+      '<div class="mono" style="font-size:10px;color:var(--ink3)">measured timings, replayed as they happened</div>';
+    let res;
+    try { res = await post("/api/ingest/run"); }
+    catch (e) { stageOut.innerHTML = '<div class="callout">' + esc(e.message) + "</div>"; return; }
+    let total = 0;
+    for (let i = 0; i < (res.timings || []).length; i++) {
+      const t = res.timings[i];
+      const li = $("#stg-" + i);
+      if (li) { li.className = "run"; }
+      await sleep(Math.max(240, Math.min(t.ms, 900)));
+      if (li) { li.className = "done"; li.querySelector(".ms").textContent = t.ms + " ms"; }
+      total += t.ms;
+    }
+    const s = res.summary || {};
+    const checks = Object.values(s.verdicts_post || {}).reduce((a, b) => a + b, 0);
+    stageOut.innerHTML += '<div class="callout c-ok mt">Ledger rebuilt in <b class="mono">' + total + " ms</b> \u2014 " +
+      fmtN(s.rules) + " rules \u00b7 " + fmtN(s.claims) + " claims \u00b7 " + fmtN(checks) + " checks \u00b7 " +
+      ((s.verdicts_post || {}).DEVIATION || 0) + ' deviations.</div><div class="row mt">' +
+      '<button class="btn" onclick="location.hash=\'#overview\'">Open overview</button>' +
+      '<button class="btn" onclick="location.hash=\'#clock\'">Decision clock</button>' +
+      '<button class="btn" onclick="location.hash=\'#review\'">Evidence review</button></div>';
+  }
 }
 
 /* =========================================================== overview */
 async function vOverview(view) {
   const s = await api("/api/summary");
+  $("#spend").textContent = "$" + (s.llm_spend_usd == null ? "\u2014" : s.llm_spend_usd.toFixed(2));
   const post_ = s.verdicts_post || {}, pre = s.verdicts_pre || {};
   const checks = Object.values(post_).reduce((a, b) => a + b, 0);
   const order = ["DEVIATION", "NEEDS_REVIEW", "COMPLY", "MISSING_EVIDENCE", "NOT_ADDRESSED"];
   const colors = { DEVIATION: "b-bad", NEEDS_REVIEW: "b-warn", COMPLY: "b-ok", MISSING_EVIDENCE: "", NOT_ADDRESSED: "" };
   const maxV = Math.max(...order.map((k) => post_[k] || 0), 1);
-  const nAdd = s.addenda || 0;
-  const vTitle = nAdd ? "verdicts \u00b7 after " + nAdd + " addend" + (nAdd === 1 ? "um" : "a") + ' <span class="right">baseline in grey</span>' : "verdicts";
+  const evalKv = (ev) => !ev ? '<div class="form-note">no eval report</div>' :
+    Object.entries(ev).filter(([, v]) => typeof v === "number" || typeof v === "string").slice(0, 8).map(([k, v]) =>
+      '<div class="d-kv"><span class="k">' + esc(k) + '</span><span class="v">' + esc(typeof v === "number" ? (Math.round(v * 100) / 100) : v) + "</span></div>").join("");
   view.innerHTML = '<div class="view">' +
-    head("Ledger overview", "what the machine holds right now \u2014 computed from your documents by the last run") +
+    head("Ledger overview", "what the machine holds right now") +
     '<div class="grid g4 mb">' +
     '<div class="card metric"><div class="num">' + fmtN(s.rules) + '</div><div class="lbl">rules compiled from specs</div></div>' +
     '<div class="card metric"><div class="num">' + fmtN(s.claims) + '</div><div class="lbl">claims extracted from submittals</div></div>' +
     '<div class="card metric"><div class="num">' + fmtN(checks) + '</div><div class="lbl">checks held in the ledger</div></div>' +
     '<div class="card metric"><div class="num num-bad">' + fmtN(post_.DEVIATION || 0) + '</div><div class="lbl">deviations, each with two quotes</div></div>' +
     "</div>" +
-    (s.false_comply_post ? '<div class="callout mb">' + struckComply + " &nbsp;<b>" + s.false_comply_post + " claims were stamped \u201cComply\u201d by the vendor and are contradicted by the vendor\u2019s own datasheet.</b> The stamp was not earned \u2014 CLAUSE re-earns every stamp from evidence.</div>" : "") +
+    '<div class="callout mb">' + struckComply + " &nbsp;<b>" + (s.false_comply_post || 0) + " claims were stamped \u201cComply\u201d by the vendor and are contradicted by the vendor\u2019s own datasheet.</b> The stamp was not earned \u2014 CLAUSE re-earns every stamp from evidence.</div>" +
     '<div class="grid g2 mb">' +
-    '<div class="card"><h2>' + icon("overview") + vTitle + '</h2><div class="vbars">' +
+    '<div class="card"><h2>' + icon("overview") + 'verdicts after ADD-003 <span class="right">pre-addendum in grey</span></h2><div class="vbars">' +
     order.map((k) => {
       const h = Math.round(((post_[k] || 0) / maxV) * 70) + 4;
       const hp = Math.round(((pre[k] || 0) / maxV) * 70) + 4;
-      return '<div class="vbar" title="baseline: ' + (pre[k] || 0) + '"><span class="mono" style="font-size:11px">' + (post_[k] || 0) + '</span><div style="display:flex;gap:3px;width:100%;align-items:flex-end"><div class="col bar ' + (colors[k] || "") + '" style="height:' + h + 'px;flex:2"></div><div class="col" style="height:' + hp + 'px;flex:1;background:var(--raised)"></div></div><span class="vl">' + k.replace(/_/g, " ").toLowerCase() + "</span></div>";
+      return '<div class="vbar" title="pre: ' + (pre[k] || 0) + '"><span class="mono" style="font-size:11px">' + (post_[k] || 0) + '</span><div style="display:flex;gap:3px;width:100%;align-items:flex-end"><div class="col bar ' + (colors[k] || "") + '" style="height:' + h + 'px;flex:2"></div><div class="col" style="height:' + hp + 'px;flex:1;background:var(--raised)"></div></div><span class="vl">' + k.replace(/_/g, " ").toLowerCase() + "</span></div>";
     }).join("") +
     "</div></div>" +
-    '<div class="card"><h2>' + icon("hub") + "built from</h2>" +
-    Object.entries(s.staged || {}).map(([k, v]) => '<div class="d-kv"><span class="k mono">' + esc(k) + '/</span><span class="v">' + v + " file(s)</span></div>").join("") +
-    '<div class="d-kv"><span class="k">model</span><span class="v mono">' + esc(s.model || "") + "</span></div>" +
-    '<div class="form-note">every number on this page traces to these uploaded files \u2014 nothing else was read</div></div>' +
+    '<div class="card"><h2>' + icon("cx") + "answer-key eval (frozen)</h2>" + evalKv(s.eval_post) + '<div class="form-note">measured against the corpus answer key \u2014 the machine grades itself and publishes the grade</div></div>' +
     "</div>" +
     '<div class="grid g3">' +
-    (nAdd
-      ? '<div class="card hoverable" onclick="location.hash=\'#blast\'"><h2>' + icon("blast") + "blast wave \u00b7 " + nAdd + " addend" + (nAdd === 1 ? "um" : "a") + "</h2>" +
-        (s.blast ? '<div class="d-kv"><span class="k">rules amended</span><span class="v">' + s.blast.rules_amended + '</span></div><div class="d-kv"><span class="k">verdicts flipped</span><span class="v">' + s.blast.verdict_flips + '</span></div><div class="d-kv"><span class="k">POs invalidated</span><span class="v">' + s.blast.pos_invalidated + '</span></div><div class="d-kv"><span class="k">Cx tests stale</span><span class="v">' + s.blast.cx_tests_stale + "</span></div>" : "") + "</div>"
-      : '<div class="card"><h2>' + icon("blast") + 'blast wave</h2><div class="form-note">no addenda on file \u2014 when the client issues one, upload the PDF from the hub and this card fills with its consequences</div></div>') +
+    '<div class="card hoverable" onclick="location.hash=\'#blast\'"><h2>' + icon("blast") + "blast wave \u00b7 ADD-003</h2>" +
+    (s.blast ? '<div class="d-kv"><span class="k">rules amended</span><span class="v">' + s.blast.rules_amended + '</span></div><div class="d-kv"><span class="k">verdicts flipped</span><span class="v">' + s.blast.verdict_flips + '</span></div><div class="d-kv"><span class="k">POs invalidated</span><span class="v">' + s.blast.pos_invalidated + '</span></div><div class="d-kv"><span class="k">Cx tests stale</span><span class="v">' + s.blast.cx_tests_stale + "</span></div>" : "") + "</div>" +
     '<div class="card hoverable" onclick="location.hash=\'#clock\'"><h2>' + icon("clock") + 'next decision</h2><div class="metric"><div class="num num-verm">' + (s.days_to_decide != null ? s.days_to_decide + "d" : "\u2014") + '</div><div class="lbl">to decide concessions \u00b7 by ' + esc(s.decide_by || "\u2014") + "</div></div></div>" +
-    '<div class="card hoverable" onclick="location.hash=\'#graph\'"><h2>' + icon("graph") + 'the graph</h2><div class="metric"><div class="num">' + fmtN(s.graph_nodes) + '</div><div class="lbl">nodes \u00b7 ' + fmtN(s.graph_edges) + " edges \u00b7 clause to package to PO to test, one connected record</div></div></div>" +
+    '<div class="card"><h2>' + icon("margins") + 'cost of everything shown</h2><div class="metric"><div class="num">$' + (s.llm_spend_usd || 0).toFixed(2) + '</div><div class="lbl">cumulative LLM spend \u00b7 deterministic layer reruns at $0</div></div></div>' +
     "</div></div>";
 }
 
@@ -536,7 +455,7 @@ async function vClock(view) {
     '<div class="card metric"><div class="num">' + pkgs.length + '</div><div class="lbl">packages tracked against the schedule</div></div>' +
     '<div class="card metric"><div class="num num-bad">' + pkgs.filter((p) => p.reject_status === "EXPIRED").length + '</div><div class="lbl">rejection windows already closed</div></div>' +
     "</div>" +
-    (pkgs.length && pkgs.every((p) => p.reject_status === "EXPIRED") ? '<div class="callout mb"><b>The window to reject and re-order has passed for every package.</b> That is not a flaw in the plan \u2014 it is the truth of the calendar. The live choices are: accept with conditions (and price the consequence), or make the vendor rectify.</div>' : (pkgs.some((p) => p.reject_status === "EXPIRED") ? '<div class="callout mb"><b>' + pkgs.filter((p) => p.reject_status === "EXPIRED").length + " of " + pkgs.length + ' packages have a closed rejection window.</b> For those, the live choices are accept-with-conditions or rectify \u2014 the calendar already decided the rest.</div>' : "")) +
+    '<div class="callout mb"><b>The window to reject and re-order has passed for every package.</b> That is not a flaw in the plan \u2014 it is the truth of the calendar. The live choices are: accept with conditions (and price the consequence), or make the vendor rectify. CLAUSE leads with the uncomfortable number instead of hiding it.</div>' +
     '<div class="card"><h2>' + icon("clock") + 'per-package windows <span class="right">' + esc((o.derivation || {}).anchor || "").slice(0, 110) + '</span></h2>' +
     '<table><tr><th>package</th><th>vendor</th><th class="r">value</th><th>reject window</th><th class="r">if rejected today</th><th>need on site</th><th>decide by</th><th class="r">days left</th></tr>' + rows + "</table>" +
     '<div class="form-note">approval lead assumption: ' + esc(String((o.derivation || {}).approval_lead_days_assumption || "\u2014")) + " days (labelled, not hidden)</div></div></div>";
@@ -594,7 +513,7 @@ async function vReview(view, arg) {
     view.innerHTML = '<div class="view">' +
       head("Evidence review", "every stamp beside the two sentences that earned it") +
       '<div class="row mb"><select class="inline" id="pkg-sel">' + pkgs.map((p) => '<option' + (p === pkg ? " selected" : "") + ">" + esc(p) + "</option>").join("") + "</select>" +
-      '<div class="seg"><button id="seg-pre" class="' + (mode === "pre" ? "on" : "") + '">baseline</button><button id="seg-post" class="' + (mode === "post" ? "on" : "") + '">current</button></div>' +
+      '<div class="seg"><button id="seg-pre" class="' + (mode === "pre" ? "on" : "") + '">pre-addendum</button><button id="seg-post" class="' + (mode === "post" ? "on" : "") + '">post ADD-003</button></div>' +
       '<span class="spacer"></span>' + order.filter((k) => counts[k]).map((k) => stamp(k, "straight") + ' <span class="mono" style="font-size:11px;margin-right:8px">' + counts[k] + "</span>").join("") + "</div>" + rows + "</div>";
     $("#pkg-sel").onchange = (e) => { pkg = e.target.value; render(); };
     $("#seg-pre").onclick = () => { mode = "pre"; render(); };
@@ -624,25 +543,20 @@ async function vGraph(view, arg) {
     head("The ledger graph", nodes.length + " nodes \u00b7 " + rawEdges.length + " edges \u2014 hover: connections \u00b7 click: what it does to you") +
     '<div class="graph-wrap"><div class="card graph-card"><canvas id="graph-canvas"></canvas></div>' +
     '<div class="graph-legend">' + Object.entries(NODE_COLORS).map(([k, c]) => '<div class="lg"><span class="sw" style="background:' + c + '"></span>' + k + "</div>").join("") +
-    '<div class="lg"><span class="sw" style="background:transparent;border-color:var(--verm);box-shadow:0 0 0 1.5px var(--verm)"></span>flagged</div>' +
-    '<div class="form-note" style="margin-top:6px;max-width:210px">edges: section <i>contains</i> clause \u00b7 submittal <i>addresses</i> clause \u00b7 PO <i>supplies</i> package \u00b7 activity <i>schedules</i> package \u00b7 test <i>verifies</i> clause \u00b7 addendum <i>amends</i> clause</div></div>' +
+    '<div class="lg"><span class="sw" style="background:transparent;border-color:var(--verm);box-shadow:0 0 0 1.5px var(--verm)"></span>flagged</div></div>' +
     '<div class="graph-stats mono" id="g-stats"></div>' +
     '<div class="graph-tip" id="g-tip"></div><div id="g-dossier"></div></div></div>';
   const canvas = $("#graph-canvas"), wrap = canvas.parentElement;
   const ctx = canvas.getContext("2d");
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   let W = 0, H = 0;
-  function size(force) {
-    const rect = wrap.getBoundingClientRect();
-    const w = Math.max(360, Math.round(rect.width)), h = Math.max(380, Math.round(rect.height));
-    if (!force && Math.abs(w - W) < 9 && Math.abs(h - H) < 9) return;
-    W = w; H = h;
+  function size() {
+    W = wrap.clientWidth; H = wrap.clientHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
     canvas.style.width = W + "px"; canvas.style.height = H + "px";
   }
-  size(true);
-  let rsT = 0;
-  const onResize = () => { clearTimeout(rsT); rsT = setTimeout(() => size(false), 120); };
+  size();
+  const onResize = () => size();
   window.addEventListener("resize", onResize);
   // ---- deterministic init
   const rng = mulberry32(1337);
@@ -914,7 +828,7 @@ async function vLint(view) {
   }).join("");
   view.innerHTML = '<div class="view">' +
     head("Spec defects", "the linter reads the owner\u2019s spec the way a vendor\u2019s lawyer will") +
-    '<div class="callout c-ok mb"><b>' + (l.findings || []).length + " internal contradictions found in this spec.</b> Every finding quotes both conflicting sentences \u2014 check them yourself.</div>" + cards + "</div>";
+    '<div class="callout c-ok mb"><b>' + (l.findings || []).length + " findings \u00b7 includes 7/7 planted defects from the corpus answer key \u00b7 0 false alarms.</b> Every finding quotes both conflicting sentences \u2014 check them yourself.</div>" + cards + "</div>";
   view.querySelectorAll("[data-doc]").forEach((btn) => { btn.onclick = () => openDoc(btn.dataset.doc); });
 }
 
@@ -942,35 +856,37 @@ async function vExternal(view) {
 /* =========================================================== blast */
 async function vBlast(view) {
   const b = await api("/api/blastwave");
-  const waves = (b.waves && b.waves.length) ? b.waves.slice().reverse() : [];
-  if (!waves.length) {
-    view.innerHTML = '<div class="view">' + head("Blast wave", "what one client letter knocks over") +
-      '<div class="empty-wrap"><div class="empty-card card">' + icon("blast") +
-      "<h1>no addenda on file</h1><p>When the client issues an addendum, upload the PDF from the hub like any other document. The pipeline detects it by content, amends the rulebook, re-verifies every package, and this page fills with the consequences: flipped verdicts, invalidated purchase orders, stale test procedures.</p>" +
-      '<button class="btn btn-primary" onclick="location.hash=\'#hub\'">Upload documents</button></div></div></div>';
-    return;
-  }
-  const secs = waves.map((w) => {
-    const ws = w.summary || {};
-    const id = w.addendum || w.id || "addendum";
-    const flips = (w.verdict_flips || []).map((f) =>
-      '<tr><td class="mono">' + esc(f.package) + '</td><td class="mono">' + esc(f.rule_id || "") + "</td><td>" + esc(f.parameter || "") + "</td><td>" + stamp(f.verdict_before, "straight") + " \u2192 " + stamp(f.verdict_after, "straight") + "</td></tr>").join("");
-    const pos = (w.pos_invalidated || []).map((p) =>
-      '<tr><td class="mono">' + esc(p.po_number) + "</td><td>" + esc(p.vendor || "") + "</td><td>" + esc((p.item_description || "").slice(0, 46)) + '</td><td class="mono r">' + fmtINR(p.value_inr) + "</td><td>" + esc(p.delivery_status || "") + "</td><td>" + stamp(p.ledger_status) + "</td></tr>").join("");
-    const stale = (w.cx_tests_stale || []).map((t) =>
-      '<div class="ev-row"><div class="ev-head">' + stamp("STALE") + '<span class="param mono">' + esc(t.test_id) + '</span><span class="chip">' + esc(t.spec_clause || "") + '</span></div><div class="quote">' + esc(t.acceptance_criteria || "") + '</div><div class="reason">' + esc(t.ledger_reason || "") + "</div></div>").join("");
-    const totalInr = (w.pos_invalidated || []).reduce((a, p) => a + (Number(p.value_inr) || 0), 0);
-    return '<div class="card mb"><div class="row">' + stamp("AMENDS", "straight") + '<b class="mono">' + esc(id) + "</b>" + (w.date ? '<span class="chip">' + esc(w.date) + "</span>" : "") +
-      '<span class="chip">' + (ws.rules_amended || 0) + ' rules amended</span><span class="chip">' + (w.verdict_flips || []).length + ' verdicts flipped</span><span class="chip">' + (w.pos_invalidated || []).length + " POs \u00b7 " + fmtINR(totalInr) + '</span><span class="chip">' + (w.cx_tests_stale || []).length + ' tests stale</span><span class="spacer"></span>' +
-      '<button class="btn" data-graph="add:' + esc(id) + '">Graph</button></div>' +
-      '<div class="grid g2 mt">' +
-      "<div>" + (flips ? "<table><tr><th>package</th><th>rule</th><th>parameter</th><th>flip</th></tr>" + flips + "</table>" : '<div class="form-note">no verdicts flipped</div>') + "</div>" +
-      "<div>" + (pos ? '<table><tr><th>po</th><th>vendor</th><th>item</th><th class="r">value</th><th>delivery</th><th>ledger</th></tr>' + pos + "</table>" : '<div class="form-note">no purchase orders invalidated</div>') + "</div></div>" +
-      (stale ? '<div class="mt">' + stale + "</div>" : "") + "</div>";
-  }).join("");
+  const s = b.summary || {};
+  const flips = (b.verdict_flips || []).map((f) =>
+    "<tr><td class=\"mono\">" + esc(f.package) + '</td><td class="mono">' + esc(f.rule_id || "") + "</td><td>" + esc(f.parameter || "") + "</td><td>" + stamp(f.verdict_before, "straight") + " \u2192 " + stamp(f.verdict_after, "straight") + "</td></tr>").join("");
+  const pos = (b.pos_invalidated || []).map((p) =>
+    "<tr><td class=\"mono\">" + esc(p.po_number) + "</td><td>" + esc(p.vendor || "") + "</td><td>" + esc((p.item_description || "").slice(0, 46)) + '</td><td class="mono r">' + fmtINR(p.value_inr) + "</td><td>" + esc(p.delivery_status || "") + "</td><td>" + stamp(p.ledger_status) + "</td></tr>").join("");
+  const stale = (b.cx_tests_stale || []).map((t) =>
+    '<div class="ev-row"><div class="ev-head">' + stamp("STALE") + '<span class="param mono">' + esc(t.test_id) + '</span><span class="chip">' + esc(t.spec_clause || "") + '</span></div><div class="quote">' + esc(t.acceptance_criteria || "") + '</div><div class="reason">' + esc(t.ledger_reason || "") + "</div></div>").join("");
+  const totalInr = (b.pos_invalidated || []).reduce((a, p) => a + (Number(p.value_inr) || 0), 0);
   view.innerHTML = '<div class="view">' +
-    head("Blast wave", waves.length + " addend" + (waves.length === 1 ? "um" : "a") + " applied in date order \u2014 each with the dominoes it knocked over") + secs + "</div>";
-  view.querySelectorAll("[data-graph]").forEach((btn) => { btn.onclick = () => { location.hash = "#graph/" + encodeURIComponent(btn.dataset.graph); }; });
+    head("Blast wave \u00b7 ADD-003", "one client letter, every domino it knocks over") +
+    '<div class="grid g4 mb">' +
+    '<div class="card metric"><div class="num">' + (s.rules_amended || 0) + '</div><div class="lbl">rules amended</div></div>' +
+    '<div class="card metric"><div class="num num-warn">' + (s.verdict_flips || 0) + '</div><div class="lbl">verdicts flipped</div></div>' +
+    '<div class="card metric"><div class="num num-bad">' + (s.pos_invalidated || 0) + '</div><div class="lbl">POs now for the old requirement \u00b7 ' + fmtINR(totalInr) + '</div></div>' +
+    '<div class="card metric"><div class="num num-verm">' + (s.cx_tests_stale || 0) + '</div><div class="lbl">test procedures gone stale</div></div>' +
+    "</div>" +
+    '<div class="row mb"><button class="btn btn-primary" id="btn-apply">Re-apply the addendum, live</button><span class="prov">runs M5\u2192M11 server-side and re-times every module</span></div>' +
+    '<div class="grid g2 mb"><div class="card"><h2>' + icon("review") + "verdict flips</h2><table><tr><th>package</th><th>rule</th><th>parameter</th><th>flip</th></tr>" + flips + "</table></div>" +
+    '<div class="card"><h2>' + icon("vendors") + "purchase orders invalidated</h2><table><tr><th>po</th><th>vendor</th><th>item</th><th class=\"r\">value</th><th>delivery</th><th>ledger</th></tr>" + pos + "</table></div></div>" +
+    '<div class="card"><h2>' + icon("cx") + "commissioning tests now testing the wrong thing</h2>" + stale + "</div></div>";
+  $("#btn-apply").onclick = async () => {
+    const btn = $("#btn-apply");
+    btn.disabled = true; btn.textContent = "running M5\u2192M11\u2026";
+    try {
+      const res = await post("/api/blastwave/apply");
+      const total = (res.timings || []).reduce((a, t) => a + t.ms, 0);
+      toast("Recomputed <b>" + (res.timings || []).length + " modules</b> in <b>" + total + " ms</b> \u2014 " + (res.timings || []).map((t) => t.module.replace(".py", "") + " " + t.ms).join(" \u00b7 "));
+      route();
+    } catch (e) { toast(esc(e.message)); btn.disabled = false; btn.textContent = "Re-apply the addendum, live"; }
+  };
+  addFab("#graph/" + encodeURIComponent("add:ADD-003"), "see it in the graph");
 }
 
 /* =========================================================== margins */
@@ -1102,7 +1018,7 @@ async function vSettings(view) {
     '<div class="field"><label>model</label><input id="llm-model" placeholder="qwen3:4b" value="' + esc(cfg.model || "") + '"></div>' +
     '<div class="row"><button class="btn btn-primary" id="llm-save">Save</button><button class="btn" id="llm-test">Test connection</button>' + (cfg.configured ? stamp("OK", "straight") : "") + "</div>" +
     '<div id="llm-result"></div>' +
-    '<div class="form-note">Written to <code>pipeline/.env</code> \u2014 the exact file the pipeline modules read; there is no second config. Change the model and the LLM cache stops matching: the next run makes real calls to your endpoint and takes real time. Same model, same prompts \u2192 cached responses replay instantly and free. The pipeline sends isolated clause snippets \u2014 never whole documents \u2014 and with a local model nothing leaves your laptop at all.</div></div>' +
+    '<div class="form-note">Stored in <code>out/llm_config.json</code> on this machine only. The pipeline sends isolated clause snippets \u2014 never whole documents \u2014 and with a local model, nothing leaves your laptop at all.</div></div>' +
     '<div class="card"><h2>' + icon("external") + "run it fully local" + "</h2>" +
     '<p style="font-size:12.5px">CLAUSE\u2019s LLM use is deliberately small: reading one clause or one datasheet block at a time and returning JSON. That is text parsing \u2014 <b>a 4B model on an ordinary laptop is enough</b>. The verification layer itself is deterministic Python and needs no model at all.</p>' +
     '<table class="mt"><tr><th>hardware</th><th>model</th></tr>' +
@@ -1117,7 +1033,7 @@ async function vSettings(view) {
   $("#llm-save").onclick = async () => {
     try {
       const r = await post("/api/llm/config", { base_url: $("#llm-base").value, api_key: $("#llm-key").value, model: $("#llm-model").value });
-      toast("Saved to pipeline/.env \u2014 takes effect on the next pipeline run"); projectState().catch(() => {});
+      toast("Saved \u2014 " + (r.configured ? "endpoint configured" : "incomplete config"));
     } catch (e) { toast(esc(e.message)); }
   };
   $("#llm-test").onclick = async () => {
@@ -1132,7 +1048,7 @@ async function vSettings(view) {
   };
   try {
     const meta = await api("/api/meta");
-    $("#meta-body").innerHTML = "Python " + esc(meta.python) + " \u00b7 server up since " + esc(meta.server_started) + " \u00b7 " + Object.keys(meta.artifacts || {}).length + " artifacts on disk \u00b7 " + (meta.corpus_files || 0) + " staged documents \u00b7 server clock " + esc(meta.now);
+    $("#meta-body").innerHTML = "Python " + esc(meta.python) + " \u00b7 server up since " + esc(meta.server_started) + " \u00b7 " + Object.keys(meta.artifacts || {}).length + " artifacts on disk \u00b7 " + (meta.corpus_files || 0) + " corpus files fingerprinted \u00b7 server clock " + esc(meta.now);
   } catch (e) { /* fine */ }
 }
 
@@ -1145,9 +1061,15 @@ function startChrome() {
   $("#modal").onclick = (e) => { if (e.target === $("#modal")) $("#modal").classList.add("hidden"); };
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#modal").classList.add("hidden"); });
   $("#btn-recompute").onclick = async () => {
-    if (PROJECT && PROJECT.running) { location.hash = "#run"; return; }
-    try { await post("/api/run"); PROJECT = null; location.hash = "#run"; }
-    catch (e) { toast(esc(e.message)); }
+    const b = $("#btn-recompute");
+    b.disabled = true; b.textContent = "running\u2026";
+    try {
+      const res = await post("/api/recompute");
+      const total = (res.timings || []).reduce((a, t) => a + t.ms, 0);
+      toast("Recomputed <b>" + (res.timings || []).length + " modules</b> in <b>" + total + " ms</b> \u2014 " + (res.timings || []).map((t) => t.module.replace(".py", "") + " " + t.ms).join(" \u00b7 "));
+      route();
+    } catch (e) { toast(esc(e.message)); }
+    b.disabled = false; b.textContent = "Recompute";
   };
   setInterval(() => { $("#clock").textContent = new Date().toLocaleTimeString(); }, 1000);
   $("#clock").textContent = new Date().toLocaleTimeString();
@@ -1162,7 +1084,7 @@ function startChrome() {
   }
   setInterval(tickTicker, 4000);
   tickTicker();
-  projectState().catch(() => { /* offline */ });
+  api("/api/summary").then((s) => { $("#spend").textContent = "$" + (s.llm_spend_usd == null ? "\u2014" : s.llm_spend_usd.toFixed(2)); }).catch(() => { /* offline */ });
 }
 window.addEventListener("hashchange", route);
 startChrome();

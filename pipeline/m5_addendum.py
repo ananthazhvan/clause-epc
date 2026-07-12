@@ -1,42 +1,41 @@
-"""M5 - Addendum precedence layer + blast wave.
+#!/usr/bin/env python3
+"""M5 - Addendum precedence layer + blast wave. Project-agnostic.
 
-Deterministic by design, like M4: an addendum is a legal instrument, so
-applying it must not involve guessing. ADD-003 uses structured actions
-(DELETE 'x' and INSERT 'y'); this parser handles that contract language
-directly. An unstructured addendum would route through the M2 LLM
-extractor + verbatim-quote checker instead (same machinery, same audit
-trail) - that path exists in m2_rules.py and is not duplicated here.
+An addendum is a legal instrument, so applying it must not involve
+guessing: the deterministic change grammar is
 
-Pipeline:
-  1. Parse out/doc_addendum_3.json -> change orders (with page provenance).
-  2. Amend matching rules -> out/post/rulebook_*.json (original value kept,
-     amended_by recorded - the rulebook is a ledger, not a mutation).
-  3. Re-run the deterministic verifier (M4) against amended rulebooks
-     -> out/post/verdicts_*.json.
-  4. Diff pre vs post verdicts -> verdict flips.
-  5. Walk the registers: POs ordered before the addendum against amended
-     sections -> INVALID; Cx tests whose acceptance criteria still test
-     the deleted value -> STALE.
-  6. Write out/blast_wave.json. Zero LLM calls.
+    Reference: Section NN NN NN, Part X.Y.Z
+    Action: DELETE '<old>' and INSERT '<new>'
+    Clause: <one-sentence description ending with a period.>
+
+Any parsed document whose opening lines announce ADDENDUM and which
+carries at least one structured action is treated as an addendum -
+discovery is by content, never by filename or hardcoded ID. Multiple
+addenda are applied cumulatively in date order; each produces its own
+wave (rule amendments, verdict flips, invalidated POs, stale Cx tests).
+An unstructured addendum routes through the M2 LLM path instead.
+
+Zero LLM calls. The rulebook is a ledger, not a mutation: original
+values are kept and amended_by/amended_on are recorded.
 """
 import csv
+import glob
 import json
 import os
 import re
-import shutil
 
 import m4_verify
 
-ADDENDUM_ID = "ADD-003"
-ADDENDUM_DOC = "out/doc_addendum_3.json"
-REGISTERS = "../clause_corpus/registers"
+OUT = "out"
+REGISTERS = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "registers")
 
 CHANGE_RE = re.compile(
     r"Reference: Section (\d{2} \d{2} \d{2}), Part ([\d.A-Z]+)\s*\n"
     r"Action: DELETE '([^']+)' and INSERT '([^']+)'\s*\n"
-    r"Clause: (.*?)(?=\nReference:|\nMeridian|\Z)",
+    r"Clause: (.*?)(?=\nReference:|\Z)",
     re.S,
 )
+ADD_HEAD_RE = re.compile(r"\bADDENDUM\b\s*(?:NO\.?\s*)?([A-Za-z0-9-]*)", re.I)
 NUM_RE = re.compile(r"-?\d+(?:\.\d+)?")
 
 
@@ -45,115 +44,152 @@ def first_num(s):
     return float(m.group()) if m else None
 
 
-def nums_in(s):
-    return [float(x) for x in NUM_RE.findall(s)]
+def clean_desc(s):
+    """Trim print furniture: keep description lines up to the last one that
+    ends like a sentence (headers/footers don't)."""
+    lines = [l.strip() for l in s.strip().split("\n") if l.strip()]
+    while len(lines) > 1 and not re.search(r"[.:;]$", lines[-1]):
+        lines.pop()
+    return " ".join(" ".join(lines).split())
 
 
-def parse_addendum():
-    doc = json.load(open(ADDENDUM_DOC))
-    date = None
-    changes = []
-    for page in doc["pages"]:
-        text = page["text"]
-        m = re.search(r"Date:\s*(\d{2}-\d{2}-\d{4})", text)
-        if m and not date:
-            d, mo, y = m.group(1).split("-")
-            date = f"{y}-{mo}-{d}"
-        for sec, part, dele, ins, desc in CHANGE_RE.findall(text):
-            changes.append({
-                "addendum": ADDENDUM_ID,
-                "section": sec,
-                "clause": f"{sec} Part {part}",
-                "delete": dele,
-                "insert": ins,
-                "description": " ".join(desc.split()),
-                "page": page.get("page"),
-            })
-    if not changes:
-        raise SystemExit("M5: no structured changes parsed from addendum - "
-                         "route this document through the M2 LLM path.")
-    return date, changes
-
-
-def amend_rulebooks(changes, date):
-    os.makedirs("out/post", exist_ok=True)
-    amendments = []
-    for path in sorted(os.listdir("out")):
-        if not (path.startswith("rulebook_") and path.endswith(".json")):
+def discover_addenda():
+    adds = []
+    for path in sorted(glob.glob(os.path.join(OUT, "doc_*.json"))):
+        doc = json.load(open(path))
+        pages = doc.get("pages", [])
+        if not pages or doc.get("transmittal"):
             continue
-        rb = json.load(open(f"out/{path}"))
+        head = "\n".join(pages[0].get("text", "").split("\n")[:6])
+        hm = ADD_HEAD_RE.search(head)
+        if not hm:
+            continue
+        changes, date = [], None
+        for page in pages:
+            text = page.get("text", "")
+            dm = re.search(r"Date:\s*(\d{2})-(\d{2})-(\d{4})", text)
+            if dm and not date:
+                date = f"{dm.group(3)}-{dm.group(2)}-{dm.group(1)}"
+            dm2 = re.search(r"Date:\s*(\d{4}-\d{2}-\d{2})", text)
+            if dm2 and not date:
+                date = dm2.group(1)
+            for sec, part, dele, ins, desc in CHANGE_RE.findall(text):
+                changes.append({
+                    "section": sec,
+                    "clause": f"{sec} Part {part}",
+                    "delete": dele,
+                    "insert": ins,
+                    "description": clean_desc(desc),
+                    "page": page.get("page"),
+                })
+        if not changes:
+            print(f"M5: {doc.get('doc')} announces an addendum but carries no "
+                  "structured actions - route it through the M2 LLM path.")
+            continue
+        token = hm.group(1).strip("-")
+        if token.isdigit():
+            aid = f"ADD-{int(token):03d}"
+        elif token:
+            aid = token.upper() if token.upper().startswith("ADD") else f"ADD-{token.upper()}"
+        else:
+            aid = os.path.basename(path)[4:-5].upper()
+        for c in changes:
+            c["addendum"] = aid
+        adds.append({"id": aid, "date": date or "9999-12-31",
+                     "doc": doc.get("doc"), "changes": changes})
+    adds.sort(key=lambda a: (a["date"], a["id"]))
+    return adds
+
+
+def read_register(name):
+    p = os.path.join(REGISTERS, name)
+    if not os.path.exists(p):
+        return None
+    return list(csv.DictReader(open(p)))
+
+
+def load_rulebooks():
+    rbs = {}
+    for path in sorted(glob.glob(os.path.join(OUT, "rulebook_*.json"))):
+        rbs[os.path.basename(path)] = json.load(open(path))
+    return rbs
+
+
+def write_rulebooks(rbs):
+    os.makedirs(f"{OUT}/post", exist_ok=True)
+    for name, rb in rbs.items():
+        with open(f"{OUT}/post/{name}", "w") as f:
+            json.dump(rb, f, indent=1)
+
+
+def amend(rbs, changes, aid, date):
+    amendments = []
+    for name, rb in rbs.items():
         for rule in rb["rules"]:
             for ch in changes:
                 if not rule["source_clause"].startswith(ch["clause"]):
                     continue
                 old, new = first_num(ch["delete"]), first_num(ch["insert"])
                 rv = m4_verify.parse_number(rule.get("value"))
+                before = rule.get("value")
                 applied = False
                 if old is not None and rv is not None and abs(rv - old) < 1e-9:
-                    rule["original_value"], rule["value"] = rule["value"], new
+                    rule.setdefault("original_value", rule["value"])
+                    rule["value"] = new
                     applied = True
                 elif isinstance(rule.get("value"), str) and ch["delete"] in rule["value"]:
-                    rule["original_value"] = rule["value"]
+                    rule.setdefault("original_value", rule["value"])
                     rule["value"] = rule["value"].replace(ch["delete"], ch["insert"])
                     applied = True
                 if applied:
-                    rule["amended_by"] = ADDENDUM_ID
+                    rule["amended_by"] = aid
                     rule["amended_on"] = date
                     amendments.append({
                         "rule_id": rule["rule_id"],
                         "parameter": rule["parameter"],
-                        "from": rule["original_value"],
+                        "from": before,
                         "to": rule["value"],
                         "clause": ch["clause"],
-                        "addendum": ADDENDUM_ID,
+                        "addendum": aid,
                     })
-        with open(f"out/post/{path}", "w") as f:
-            json.dump(rb, f, indent=1)
     return amendments
 
 
+def verdicts_map(dirpath):
+    out = {}
+    for path in sorted(glob.glob(os.path.join(dirpath, "verdicts_*.json"))):
+        v = json.load(open(path))
+        for r in v["results"]:
+            out[(v["package"], r["rule_id"])] = r
+    return out
+
+
 def rerun_verifier():
-    for path in sorted(os.listdir("out")):
-        if path.startswith("claims_") and path.endswith(".json"):
-            m4_verify.verify_package(f"out/{path}", "out/post")
+    for path in sorted(glob.glob(os.path.join(OUT, "claims_*.json"))):
+        m4_verify.verify_package(path, f"{OUT}/post")
 
 
-def diff_verdicts():
-    flips = []
-    for path in sorted(os.listdir("out/post")):
-        if not (path.startswith("verdicts_") and path.endswith(".json")):
-            continue
-        post = json.load(open(f"out/post/{path}"))
-        pre = json.load(open(f"out/{path}"))
-        pre_map = {r["rule_id"]: r for r in pre["results"]}
-        for r in post["results"]:
-            p = pre_map.get(r["rule_id"])
-            if p and p["verdict"] != r["verdict"]:
-                flips.append({
-                    "package": post["package"],
-                    "rule_id": r["rule_id"],
-                    "parameter": r["requirement"]["parameter"],
-                    "verdict_before": p["verdict"],
-                    "verdict_after": r["verdict"],
-                    "reason_after": r["reason"],
-                })
-    return flips
-
-
-def walk_registers(changes, date):
+def walk_registers(changes, date, aid):
     sections = {c["section"] for c in changes}
-    pos = []
-    for row in csv.DictReader(open(f"{REGISTERS}/po_register.csv")):
-        if row["spec_section"] in sections and row["order_date"] < date:
+    pos, stale = [], []
+    po_rows = read_register("po_register.csv")
+    if po_rows is None:
+        print("M5: note - po_register.csv not uploaded; PO impact not assessed")
+        po_rows = []
+    for row in po_rows:
+        if row.get("spec_section") in sections and row.get("order_date", "") < date:
             pos.append({**row, "ledger_status": "INVALID",
                         "ledger_reason": f"ordered {row['order_date']} against a "
-                                          f"requirement amended by {ADDENDUM_ID} on {date}"})
-    stale = []
-    for row in csv.DictReader(open(f"{REGISTERS}/cx_test_register.csv")):
-        sec = row["spec_clause"][:8]
+                                          f"requirement amended by {aid} on {date}"})
+    cx_rows = read_register("cx_test_register.csv")
+    if cx_rows is None:
+        print("M5: note - cx_test_register.csv not uploaded; Cx impact not assessed")
+        cx_rows = []
+    for row in cx_rows:
+        sec = row.get("spec_clause", "")[:8]
         if sec not in sections:
             continue
-        crit = row["acceptance_criteria"]
+        crit = row.get("acceptance_criteria", "")
         for ch in (c for c in changes if c["section"] == sec):
             m = re.search(r"(-?\d+(?:\.\d+)?)\s*([%\u00b0A-Za-z]*)", ch["delete"])
             if not m:
@@ -169,41 +205,101 @@ def walk_registers(changes, date):
             if hit:
                 stale.append({**row, "ledger_status": "STALE",
                               "ledger_reason": f"acceptance criteria still tests "
-                                                f"'{ch['delete']}' superseded by {ADDENDUM_ID}"})
+                                                f"'{ch['delete']}' superseded by {aid}"})
                 break
     return pos, stale
 
 
 def main():
-    date, changes = parse_addendum()
-    print(f"M5: parsed {len(changes)} change(s) from {ADDENDUM_ID} dated {date}")
-    amendments = amend_rulebooks(changes, date)
-    print(f"M5: amended {len(amendments)} rule(s):")
-    for a in amendments:
-        print(f"   {a['rule_id']}: {a['from']} -> {a['to']}")
-    rerun_verifier()
-    flips = diff_verdicts()
-    pos, stale = walk_registers(changes, date)
+    adds = discover_addenda()
+    rbs = load_rulebooks()
+    os.makedirs(f"{OUT}/post", exist_ok=True)
+
+    if not adds:
+        write_rulebooks(rbs)
+        rerun_verifier()
+        wave = {"addendum": None, "date": None, "changes": [],
+                "rule_amendments": [], "verdict_flips": [],
+                "pos_invalidated": [], "cx_tests_stale": [], "waves": [],
+                "summary": {"addenda": 0, "changes": 0, "rules_amended": 0,
+                             "verdict_flips": 0, "pos_invalidated": 0,
+                             "cx_tests_stale": 0}}
+        with open(f"{OUT}/blast_wave.json", "w") as f:
+            json.dump(wave, f, indent=1)
+        print("M5: no addendum found among the uploaded documents - "
+              "post-state equals pre-state. Upload the addendum PDF when one "
+              "is issued and run again.")
+        return
+
+    baseline = verdicts_map(OUT)
+    waves = []
+    for a in adds:
+        print(f"M5: applying {a['id']} dated {a['date']} "
+              f"({len(a['changes'])} change(s)) from {a['doc']}")
+        amendments = amend(rbs, a["changes"], a["id"], a["date"])
+        for am in amendments:
+            print(f"   {am['rule_id']}: {am['from']} -> {am['to']}")
+        write_rulebooks(rbs)
+        rerun_verifier()
+        post = verdicts_map(f"{OUT}/post")
+        flips = []
+        for key, r in post.items():
+            b = baseline.get(key)
+            if b and b["verdict"] != r["verdict"]:
+                flips.append({
+                    "package": key[0], "rule_id": key[1],
+                    "parameter": r["requirement"]["parameter"],
+                    "verdict_before": b["verdict"],
+                    "verdict_after": r["verdict"],
+                    "reason_after": r["reason"],
+                    "addendum": a["id"],
+                })
+        baseline = post
+        pos, stale = walk_registers(a["changes"], a["date"], a["id"])
+        waves.append({
+            "addendum": a["id"], "date": a["date"], "doc": a["doc"],
+            "changes": a["changes"], "rule_amendments": amendments,
+            "verdict_flips": flips, "pos_invalidated": pos,
+            "cx_tests_stale": stale,
+            "summary": {"changes": len(a["changes"]),
+                         "rules_amended": len(amendments),
+                         "verdict_flips": len(flips),
+                         "pos_invalidated": len(pos),
+                         "cx_tests_stale": len(stale)},
+        })
+
+    latest = waves[-1]
+
+    def allof(k):
+        return [x for w in waves for x in w[k]]
+
     wave = {
-        "addendum": ADDENDUM_ID, "date": date, "changes": changes,
-        "rule_amendments": amendments, "verdict_flips": flips,
-        "pos_invalidated": pos, "cx_tests_stale": stale,
-        "summary": {"changes": len(changes), "rules_amended": len(amendments),
-                     "verdict_flips": len(flips), "pos_invalidated": len(pos),
-                     "cx_tests_stale": len(stale)},
+        "addendum": latest["addendum"], "date": latest["date"],
+        "changes": allof("changes"),
+        "rule_amendments": allof("rule_amendments"),
+        "verdict_flips": allof("verdict_flips"),
+        "pos_invalidated": allof("pos_invalidated"),
+        "cx_tests_stale": allof("cx_tests_stale"),
+        "waves": waves,
+        "summary": {"addenda": len(waves),
+                     "changes": len(allof("changes")),
+                     "rules_amended": len(allof("rule_amendments")),
+                     "verdict_flips": len(allof("verdict_flips")),
+                     "pos_invalidated": len(allof("pos_invalidated")),
+                     "cx_tests_stale": len(allof("cx_tests_stale"))},
     }
-    with open("out/blast_wave.json", "w") as f:
+    with open(f"{OUT}/blast_wave.json", "w") as f:
         json.dump(wave, f, indent=1)
     print("\nBLAST WAVE SUMMARY")
     for k, v in wave["summary"].items():
         print(f"  {k}: {v}")
-    for fl in flips:
+    for fl in wave["verdict_flips"]:
         print(f"  FLIP {fl['package']} {fl['rule_id']}: "
               f"{fl['verdict_before']} -> {fl['verdict_after']}")
-    for p in pos:
-        print(f"  PO INVALID: {p['po_number']} ({p['item_description'][:40]})")
-    for t in stale:
-        print(f"  CX STALE: {t['test_id']} ({t['spec_clause']})")
+    for p in wave["pos_invalidated"]:
+        print(f"  PO INVALID: {p.get('po_number')} ({p.get('item_description', '')[:40]})")
+    for t in wave["cx_tests_stale"]:
+        print(f"  CX STALE: {t.get('test_id')} ({t.get('spec_clause')})")
 
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ import glob
 import json
 import os
 
-REG = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "registers")
+REG = "../clause_corpus/registers"
 SECTION_KW = {"26 33 53": "ups", "26 32 13": "generator",
               "23 81 23": "crah", "21 22 00": "fire"}
 # Labeled assumption (the only one): calendar days a concession package

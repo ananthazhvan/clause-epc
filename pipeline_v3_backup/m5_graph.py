@@ -16,7 +16,7 @@ import glob
 import json
 import os
 
-REGISTERS = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "registers")
+REGISTERS = "../clause_corpus/registers"
 SEVERITY = {"DEVIATION": 4, "NEEDS_REVIEW": 3, "MISSING_EVIDENCE": 2,
             "COMPLY": 1, "NOT_ADDRESSED": 0}
 # Deterministic keyword bridge between PO equipment and schedule activities.

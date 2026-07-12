@@ -79,12 +79,7 @@ def main():
     ap.add_argument("--out", default="out")
     a = ap.parse_args()
     if a.all:
-        for f in sorted(glob.glob(os.path.join(a.out, "doc_*.json"))):
-            try:
-                if "transmittal" not in json.load(open(f)):
-                    continue
-            except Exception:
-                continue
+        for f in sorted(glob.glob(os.path.join(a.out, "doc_SUB-*.json"))):
             extract_package(f, a.out)
     elif a.package:
         extract_package(os.path.join(a.out, f"doc_{a.package}.json"), a.out)

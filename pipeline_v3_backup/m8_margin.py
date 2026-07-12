@@ -24,7 +24,7 @@ import json
 import os
 import re
 
-REG = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "registers")
+REG = "../clause_corpus/registers"
 
 
 def signed_margin(op, req, claim):

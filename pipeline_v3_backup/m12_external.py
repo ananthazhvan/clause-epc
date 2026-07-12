@@ -38,7 +38,7 @@ import os
 import re
 import subprocess
 
-EXT = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "external")
+EXT = "../clause_corpus/external"
 OBLIGATION = r"\b(shall|must|minimum|maximum|not less than|at least|not exceed(?:ing)?|required to)\b"
 NUM_UNIT = r"(\d{1,4}(?:[.,]\d{1,3})?)\s*(\u00b0?\s?C\b|TR\b|kW\b|kVA\b|dB\s?\(?A\)?)"
 

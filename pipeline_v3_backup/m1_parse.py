@@ -24,7 +24,8 @@ import pypdf
 CLAUSE_RE = re.compile(r"^(\d{2} \d{2} \d{2}) Part (\d+(?:\.\d+)*(?:\.[A-Z])?)\s+(.*)$")
 ART_RE = re.compile(r"^\d\.\d+\s+[A-Za-z]")
 PART_RE = re.compile(r"^PART \d - ")
-FOOT_RE = re.compile(r"Page \d+ of \d+$")  # generic print footer
+FOOT_RE = re.compile(r"^Section \d{2} \d{2} \d{2} / Page \d+ of \d+$")
+HDR_RE = re.compile(r"^Meridian Data Centre Campus - Phase 1\b")
 SPEC_NAME_RE = re.compile(r"^(?:spec_)?(\d{2})_(\d{2})_(\d{2})\.pdf$")
 
 TRANSMITTAL_PATTERNS = [
@@ -40,28 +41,12 @@ def extract_pages(path):
     return [(p.extract_text() or "") for p in pypdf.PdfReader(path).pages]
 
 
-def boilerplate_lines(pages):
-    """Header/footer lines repeat verbatim across pages; detect them per
-    document so any project's print furniture is skipped - no hardcoded
-    project names, ever."""
-    from collections import Counter
-    cnt = Counter()
-    for text in pages:
-        for line in {raw.strip() for raw in text.split("\n") if raw.strip()}:
-            cnt[line] += 1
-    if len(pages) < 3:
-        return set()
-    thresh = max(3, len(pages) // 2 + 1)
-    return {l for l, c in cnt.items() if c >= thresh and not CLAUSE_RE.match(l)}
-
-
 def parse_spec_clauses(pages):
-    boiler = boilerplate_lines(pages)
     clauses, cur = [], None
     for pageno, text in enumerate(pages, 1):
         for raw in text.split("\n"):
             line = raw.strip()
-            if not line or FOOT_RE.search(line) or line in boiler:
+            if not line or FOOT_RE.match(line) or HDR_RE.match(line):
                 continue
             m = CLAUSE_RE.match(line)
             if m:
@@ -166,26 +151,10 @@ def main():
                            "parse_mode": mode, "clauses": clauses}, f, indent=1)
             print(f"{name:30s} spec: {len(clauses)} clauses ({mode})")
         else:
-            # Content-based spec detection: a document that carries clause
-            # lines is a specification whatever its filename says.
-            content_clauses = [] if doc.get("transmittal") else parse_spec_clauses(pages)
-            section = None
-            if len(content_clauses) >= 5:
-                prefixes = [c["clause_id"][:8] for c in content_clauses
-                            if re.match(r"^\d{2} \d{2} \d{2}", c["clause_id"])]
-                if prefixes:
-                    section = max(set(prefixes), key=prefixes.count)
-            if section:
-                spec_stem = section.replace(" ", "_")
-                with open(os.path.join(args.out, f"spec_{spec_stem}.json"), "w") as f:
-                    json.dump({"section": section, "source_pdf": name,
-                               "parse_mode": "deterministic", "clauses": content_clauses}, f, indent=1)
-                print(f"{name:30s} spec by content: {section}, {len(content_clauses)} clauses")
-            else:
-                extra = ""
-                if doc.get("transmittal"):
-                    extra = f"  transmittal: {doc['transmittal']}"
-                print(f"{name:30s} {len(pages)} pages{extra}")
+            extra = ""
+            if doc.get("transmittal"):
+                extra = f"  transmittal: {doc['transmittal']}"
+            print(f"{name:30s} {len(pages)} pages{extra}")
 
 
 if __name__ == "__main__":

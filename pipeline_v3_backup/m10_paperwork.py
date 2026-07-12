@@ -28,8 +28,8 @@ import json
 import os
 import re
 
-REG = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "registers")
-SPECS = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "specs")
+REG = "../clause_corpus/registers"
+SPECS = "../clause_corpus/specs"
 
 # Small, citable domain tables (a linter is allowed to know things).
 WITHDRAWN_STANDARDS = [
