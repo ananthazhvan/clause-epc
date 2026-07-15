@@ -1,0 +1,48 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 4 0 R ] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 3 0 R >> >> /MediaBox [0 0 595 842] /Contents 5 0 R >>
+endobj
+5 0 obj
+<< /Length 829 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+50 790 Td
+(SECTION 26 33 53) Tj T*
+(STATIC UNINTERRUPTIBLE POWER SUPPLY) Tj T*
+(PART 1 - GENERAL) Tj T*
+(1.1 SUMMARY) Tj T*
+(  This section covers the requirements for the Static Uninterruptible Power Supply.) Tj T*
+(PART 2 - PRODUCTS) Tj T*
+(26 33 53 Part 2.1.2.A The UPS system shall be configured with N+2 redundancy.) Tj T*
+(26 33 53 Part 2.3.4 Inverter efficiency shall be not less than 96.0 percent at full load.) Tj T*
+(26 33 53 Part 2.3.1.E Battery runtime at full load shall be a minimum of 10.0 minutes.) Tj T*
+(26 33 53 Part 3.4.2.C Battery runtime at full load shall be a minimum of 12 minutes.) Tj T*
+(26 33 53 Part 2.2.4.C The UPS system shall achieve a minimum COP of 5.2.) Tj T*
+(26 33 53 Part 1.5.1.A The contractor shall provide adequate warranty coverage for all system components.) Tj T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000117 00000 n 
+0000000185 00000 n 
+0000000311 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1191
+%%EOF

@@ -7,7 +7,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import llm, schemas  # noqa: E402
+from common import llm, pool, schemas  # noqa: E402
 
 SECTION_PREFIX = {
     "26 33 53": "ups.",
@@ -52,10 +52,19 @@ def compile_section(spec_path, out_dir):
     section = spec["section"]
     prefix = SECTION_PREFIX.get(section, "misc.")
     rules = []
-    for cl in spec["clauses"]:
+
+    def _compile_clause(cl):
         user = USER_TMPL.format(section=section, clause_id=cl["clause_id"],
                                 page=cl["page"], text=cl["text"], prefix=prefix)
-        items, dropped = llm.get_checked_items(SYSTEM, user, "rules", schemas.RULE_FIELDS, cl["clause_id"], cl["text"])
+        return llm.get_checked_items(SYSTEM, user, "rules", schemas.RULE_FIELDS, cl["clause_id"], cl["text"])
+
+    # scale-out: one independent LLM call per clause -> parallel map over the
+    # key pool. Results come back in input order, so rule numbering is stable.
+    w = pool.worker_count()
+    if w > 1:
+        print(f"  [scale-out: {w} parallel workers over {len(llm.keys())} API key(s)]")
+    outs = pool.pmap(_compile_clause, spec["clauses"])
+    for cl, (items, dropped) in zip(spec["clauses"], outs):
         if dropped:
             _quarantine(out_dir, cl["clause_id"], dropped)
         for n, r in enumerate(items, 1):

@@ -18,7 +18,7 @@ your_project/
 ├── addenda/          client addendum letters (PDF)
 ├── registers/        CSV registers (see schemas below)
 ├── project_docs/     minutes, change orders, reports (PDF/HTML/MD)
-└── external/         real-world vendor datasheets (PDF) — treated as reference
+└── external/         third-party reference PDFs — kept on file, not analysed
 ```
 
 Subfolder names do not matter except `external/`: anything under a folder named
@@ -132,3 +132,69 @@ verdicts, no page data. Every run re-parses your documents and re-verifies every
 claim from zero; only the LLM responses replay. Change the model in Settings
 (written to `pipeline/.env`) and the keys stop matching: the next run makes real
 calls to your endpoint and takes real time.
+
+## Where these formats come from (industry reality)
+
+- **Schedules** live in Primavera P6 / MS Project; teams exchange XER / XML /
+  XLSX exports. `schedule.csv` is a flattened export of exactly the fields the
+  pipeline uses (activity, duration, predecessors, float). **P6 XML import is
+  implemented** — see “Connector formats” below. Native XER is roadmap — same
+  slot, different reader.
+- **Procurement**: expediting reports (Procore, SAP, 4castplus) track each PO
+  through vendor documentation → fabrication → shipment → site delivery.
+  `po_register.csv` is the core of that report. **SAP OData purchase-order
+  JSON import is implemented** — see “Connector formats” below. Extra columns
+  (e.g. `dispatch_date`, `eta`, `current_location`) are accepted and preserved.
+- **Change orders / addenda** are issued as documents (letters, forms, PDFs) —
+  never as CSV — which is why CLAUSE ingests addenda as PDFs and computes the
+  blast wave from their text.
+- **Commissioning** follows the 5-level convention (L1 factory tests → L5
+  integrated systems test); `cx_test_register.csv` mirrors a standard Cx log.
+- **Header names need not match exactly.** If a CSV's headers don't match a
+  canonical schema and an API key is configured, the model maps the columns
+  onto the canonical names (cached, shown in the staging note) and the file is
+  staged with canonical headers. Without a key you get an honest error and
+  this document.
+
+## Connector formats (implemented — deterministic, zero LLM)
+
+The upload screen auto-detects three system-of-record export formats and
+converts them to canonical registers on the spot. The staging note always
+says exactly what was read and what was computed.
+
+### Primavera P6 XML → `registers/schedule.csv`
+
+An `APIBusinessObjects` export (any P6 namespace version). Read per activity:
+`Id`, `Name`, `PlannedDuration` (hours ÷ 8 → days; falls back to
+planned start/finish dates), `TotalFloat` (hours ÷ 8). `Relationship`
+elements become the `predecessors` column (`;`-joined); `Lag` is honoured.
+If the export carries no `TotalFloat`, float is computed with a CPM
+forward/backward pass over finish-to-start logic — and the note says so.
+Non-FS link types are treated as FS for float and counted in the note.
+`ResourceAssignment`/`Resource` elements become an extra `resources` column
+(preserved, not required by the pipeline).
+
+### SAP OData purchase orders → `registers/po_register.csv`
+
+Accepts OData v2 (`{"d":{"results":[…]}}`), v4 (`{"value":[…]}`) or a bare
+list of PO objects, with items under `to_PurchaseOrderItem(.results)` /
+`Items`. Dates may be `/Date(ms)/` or ISO. Mapping: `PurchaseOrder` →
+`po_number`, `Material` → `equipment_tag`, `SupplierName` → `vendor`,
+`PurchaseOrderItemText` → `item_description`, `NetPrice × OrderQuantity` →
+`value_inr`, `CreationDate` → `order_date`, `ScheduleLineDeliveryDate −
+order_date` → `lead_time_weeks`. `spec_section` is read from a custom field
+(SAP convention `YY1_*`, e.g. `YY1_SpecSection_PDH`, or any `*spec*section*`
+key) — rows without one are staged with the field EMPTY and counted in the
+note; CLAUSE never guesses a spec section. Non-INR currencies are flagged,
+not converted.
+
+### Shipment-visibility JSON → merged into `po_register.csv`
+
+FourKites/project44-style feeds (`{"shipments":[…]}` etc., keyed by
+`purchaseOrderNumber`). Matching rows get `delivery_status`,
+`current_location`, `eta` updated; unmatched shipment POs are listed in the
+note. Requires a staged `po_register.csv` first (CSV or SAP JSON).
+
+Sample exports of all three — generated from this corpus's own registers, so
+they roundtrip exactly — live in `clause_corpus/connectors/`. CLI version:
+`python3 connectors/convert.py <file> [--po po_register.csv]`.

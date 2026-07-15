@@ -406,3 +406,63 @@ pre#runlog { margin: 0; padding: 12px 14px; height: calc(100vh - 330px); min-hei
 .up-row { display: flex; gap: 10px; align-items: baseline; padding: 5px 0; border-bottom: 1px dashed var(--ink3); font-size: 12px; }
 .up-row .fn { font-family: var(--mono); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .up-row .note { color: var(--ink3); font-size: 11px; margin-left: auto; text-align: right; flex: 0 0 auto; max-width: 46%; }
+
+
+/* ------------------------------------------------------------- v6 ---- */
+/* key/value rows everywhere (the old rule was scoped to .dossier only,
+   so hub and overview rows rendered inline: "Project documents46 files") */
+.d-kv { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 2px 0; }
+.d-kv .k { color: var(--ink2); }
+.d-kv .v { text-align: right; }
+
+#ticker { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+#ticker-credit { color: var(--ink3); white-space: nowrap; font-size: 10.5px; }
+
+/* facility tier plate */
+.tier-plate .tp-big { font-family: var(--serif); font-size: 42px; letter-spacing: 4px; color: var(--verm); border: 2px solid var(--verm); display: inline-block; padding: 3px 16px; transform: rotate(-1.4deg); margin: 4px 0 10px; }
+
+/* copilot - core feature: prominent pill launcher + full-height drawer */
+#cp-fab { position: fixed; right: 20px; bottom: 66px; z-index: 60; height: 48px; padding: 0 18px 0 14px; display: flex; align-items: center; gap: 9px; border: 2px solid var(--verm); color: var(--verm); background: var(--panel); box-shadow: 4px 4px 0 var(--raised); cursor: pointer; font-family: var(--serif); font-size: 15px; letter-spacing: .4px; }
+#cp-fab:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--raised); }
+#cp-fab svg { width: 22px; height: 22px; }
+#cp-fab.hidden, #cp-panel.hidden { display: none; }
+#cp-panel { position: fixed; right: 0; top: 0; bottom: 0; z-index: 70; width: min(640px, 100vw); background: var(--panel); border-left: var(--key); box-shadow: -5px 0 0 var(--raised); display: flex; flex-direction: column; }
+#cp-panel.wide { width: min(960px, 97vw); }
+.cp-head { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: var(--key); }
+.cp-head .btn { padding: 2px 8px; line-height: 1.4; }
+.cp-head #cp-wide { margin-left: auto; }
+.cp-head .btn svg { width: 13px; height: 13px; display: block; }
+.cp-sub { font-size: 11px; color: var(--ink3); }
+#cp-log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.cp-msg { border: 1.5px solid var(--ink); padding: 9px 12px; font-size: 13px; line-height: 1.55; max-width: 94%; background: var(--paper); }
+.cp-user { align-self: flex-end; background: var(--inset); }
+.cp-ai { align-self: flex-start; }
+.cp-err { align-self: flex-start; color: var(--bad); }
+.cp-wait { align-self: flex-start; color: var(--ink3); border-style: dashed; }
+/* live tool-call relay */
+.cp-steps { align-self: flex-start; display: flex; flex-direction: column; gap: 3px; padding: 2px 0 2px 4px; max-width: 94%; }
+.cp-step { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ink2); font-family: var(--mono); }
+.cp-step .cp-note { color: var(--ink3); }
+.cp-step.done { color: var(--ink3); }
+.cp-tick { color: var(--ok); font-weight: 700; width: 12px; text-align: center; flex: none; }
+.cp-spin { width: 10px; height: 10px; flex: none; border: 2px solid var(--verm); border-top-color: transparent; border-radius: 50%; animation: cp-rot .7s linear infinite; }
+@keyframes cp-rot { to { transform: rotate(360deg); } }
+/* rendered markdown answers */
+.cp-md h1, .cp-md h2, .cp-md h3, .cp-md h4 { font-family: var(--serif); margin: 10px 0 5px; line-height: 1.25; }
+.cp-md h1 { font-size: 17px; } .cp-md h2 { font-size: 15px; } .cp-md h3, .cp-md h4 { font-size: 13.5px; }
+.cp-md p { margin: 5px 0; }
+.cp-md ul, .cp-md ol { margin: 5px 0 5px 18px; padding: 0; }
+.cp-md li { margin: 2px 0; }
+.cp-md table { border-collapse: collapse; margin: 7px 0; width: 100%; font-size: 12px; }
+.cp-md th, .cp-md td { border: 1px solid var(--ink); padding: 3px 7px; text-align: left; }
+.cp-md th { background: var(--inset); font-family: var(--mono); font-size: 11px; }
+.cp-md code { font-family: var(--mono); font-size: 11.5px; background: var(--inset); padding: 0 3px; }
+.cp-md pre { background: var(--inset); border: 1px solid var(--ink); padding: 8px 10px; overflow-x: auto; font-size: 11.5px; margin: 7px 0; }
+.cp-md pre code { background: none; padding: 0; }
+.cp-md blockquote { border-left: 3px solid var(--verm); margin: 6px 0; padding: 2px 10px; color: var(--ink2); }
+.cp-md hr { border: none; border-top: 1.5px solid var(--ink); margin: 9px 0; }
+#cp-form { display: flex; gap: 8px; padding: 12px 14px; border-top: var(--key); }
+#cp-form input { flex: 1; }
+/* copilot as a first-class tab */
+.tab-copilot { color: var(--verm); }
+.tab-copilot .tab-label { font-weight: 600; }

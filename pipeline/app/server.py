@@ -63,11 +63,11 @@ ACTIVITY = deque(maxlen=200)
 ACT_LOCK = threading.Lock()
 RUN = {"proc": None}
 GUIDES = {"LOCAL_LLM.md", "CORPUS_FORMAT.md", "README.md", "DESIGN_SPEC.md",
-          "M7_M12_NOTES.md"}
+          "M7_M12_NOTES.md", "SCALABILITY.md"}
 
 # Data endpoints that require a loaded project (top path segment).
 GATED = {"summary", "graph", "blastwave", "queue", "options", "margins",
-         "vendors", "lint", "paperwork", "cx", "external", "node",
+         "vendors", "lint", "paperwork", "cx", "facility", "node",
          "packages", "verdicts", "ncr"}
 
 # Ground truth is never read by the pipeline (contamination rule).
@@ -86,7 +86,17 @@ def read_env():
     return vals
 
 
-def write_env(base_url, model, api_key):
+def split_keys(raw):
+    """Accept keys as a list, or a string separated by commas/newlines."""
+    if isinstance(raw, list):
+        return [str(k).strip() for k in raw if str(k).strip()]
+    return [k.strip() for k in re.split(r"[,\s]+", str(raw or "")) if k.strip()]
+
+
+def write_env(base_url, model, api_keys, workers=0):
+    """api_keys: list of keys. The first is also written as DEEPSEEK_API_KEY
+    for backward compatibility; the full pool goes to DEEPSEEK_API_KEYS and
+    common/llm.py rotates over it (scale-out)."""
     lines = [
         "# CLAUSE LLM configuration - written by the Settings screen,",
         "# read directly by the pipeline modules (common/llm.py) and runner.py.",
@@ -94,10 +104,17 @@ def write_env(base_url, model, api_key):
         f"DEEPSEEK_BASE_URL={base_url}",
         f"DEEPSEEK_MODEL={model}",
     ]
-    if api_key:
-        lines.append(f"DEEPSEEK_API_KEY={api_key}")
+    if api_keys:
+        lines.append(f"DEEPSEEK_API_KEY={api_keys[0]}")
+        lines.append("DEEPSEEK_API_KEYS=" + ",".join(api_keys))
+    if workers:
+        lines.append(f"CLAUSE_WORKERS={int(workers)}")
     with open(ENV_PATH, "w") as f:
         f.write("\n".join(lines) + "\n")
+
+
+def env_keys(env):
+    return split_keys(env.get("DEEPSEEK_API_KEYS", "")) or split_keys(env.get("DEEPSEEK_API_KEY", ""))
 
 
 def llm_config(masked=True):
@@ -106,11 +123,19 @@ def llm_config(masked=True):
            "model": env.get("DEEPSEEK_MODEL", ""),
            "configured": bool(env.get("DEEPSEEK_MODEL")),
            "source": ".env"}
-    key = env.get("DEEPSEEK_API_KEY", "")
+    keys = env_keys(env)
+    out["keys_count"] = len(keys)
+    try:
+        out["workers"] = int(env.get("CLAUSE_WORKERS", "0") or 0)
+    except ValueError:
+        out["workers"] = 0
     if masked:
-        out["api_key_masked"] = (key[:4] + "\u2026" + key[-4:]) if len(key) > 8 else ("set" if key else "")
+        out["api_keys_masked"] = [
+            (k[:4] + "\u2026" + k[-4:]) if len(k) > 8 else "set" for k in keys]
+        out["api_key_masked"] = out["api_keys_masked"][0] if keys else ""
     else:
-        out["api_key"] = key
+        out["api_keys"] = keys
+        out["api_key"] = keys[0] if keys else ""
     return out
 
 
@@ -226,6 +251,57 @@ def doc_text_head(name, ext, data):
     return text[:20000], 1, bool(text.strip())
 
 
+def llm_map_csv(text, name):
+    """Fallback for register CSVs whose headers do not match the canonical
+    schemas. Real projects export these from Primavera P6, Procore, SAP or
+    Excel with their own column names - so instead of refusing, ask the model
+    to map the columns onto one canonical register and rewrite the header row.
+    Cached like every other LLM call. Returns (canon, text, note)."""
+    try:
+        if PIPELINE not in sys.path:
+            sys.path.insert(0, PIPELINE)
+        from common import llm as _llm
+        env = read_env()  # .env may have changed since import - refresh
+        _llm.API_KEY = env.get("DEEPSEEK_API_KEY", _llm.API_KEY)
+        _llm.MODEL = env.get("DEEPSEEK_MODEL", _llm.MODEL)
+        _llm.BASE_URL = env.get("DEEPSEEK_BASE_URL", _llm.BASE_URL)
+        rows = list(csv.reader(io.StringIO(text)))
+        if len(rows) < 2:
+            return None, text, "CSV has a header but no data rows"
+        schemas = {k: sorted(v) for k, v in REGISTER_SCHEMAS.items()}
+        system = ("You map construction-project CSV exports (Primavera P6, Procore, SAP, Excel) "
+                  "onto canonical register schemas. Reply with JSON only, no prose: "
+                  '{"register": "<schema file name or none>", '
+                  '"column_map": {"<original header>": "<canonical column>"}}. '
+                  "Map only when the meaning of a column is unambiguous.")
+        user = ("Canonical schemas (register file name -> required columns):\n"
+                + json.dumps(schemas) + "\n\nCSV file '" + name + "', header + first rows:\n"
+                + "\n".join(",".join(r) for r in rows[:4]))
+        raw = _llm.call(system, user).strip()
+        raw = re.sub(r"^```(?:json)?|```$", "", raw, flags=re.M).strip()
+        out = json.loads(raw)
+        canon = str(out.get("register") or "").strip().lower()
+        if canon and canon != "none" and not canon.endswith(".csv"):
+            canon += ".csv"  # models sometimes drop the file extension
+        cmap = {str(k).strip().lower(): str(v).strip().lower()
+                for k, v in (out.get("column_map") or {}).items()}
+        if canon not in REGISTER_SCHEMAS:
+            return None, text, "columns do not correspond to any register schema (model checked)"
+        hdr = [cmap.get(h.strip().lower(), h.strip().lower()) for h in rows[0]]
+        if not set(REGISTER_SCHEMAS[canon]) <= set(hdr):
+            return None, text, f"model mapped this to {canon} but required columns are still missing"
+        buf = io.StringIO()
+        w = csv.writer(buf)
+        w.writerow(hdr)
+        w.writerows(rows[1:])
+        note = f"columns mapped onto {canon} by {_llm.MODEL} (cached)"
+        return canon, buf.getvalue(), note
+    except Exception as e:  # noqa: BLE001 - includes the no-API-key case
+        return None, text, ("unrecognized CSV columns - see CORPUS_FORMAT.md for the four register "
+                            "schemas, or add an API key in Settings and CLAUSE maps unfamiliar "
+                            "export headers automatically (" + str(e)[:90] + ")")
+
+
 def stage_file(rel, name, data):
     """Classify one uploaded file by content and stage it. Returns a result row."""
     ext = os.path.splitext(name)[1].lower()
@@ -235,22 +311,77 @@ def stage_file(rel, name, data):
         return {"name": name, "kind": "refused",
                 "note": "evaluation ground truth - the pipeline never reads this (contamination rule)"}
     if ext == ".csv":
-        canon = classify_csv(data.decode("utf-8", errors="ignore"))
+        text = data.decode("utf-8", errors="ignore")
+        canon, note = classify_csv(text), None
         if not canon:
-            return {"name": name, "kind": "error",
-                    "note": "unrecognized CSV columns - see CORPUS_FORMAT.md for the four register schemas"}
+            canon, text, note = llm_map_csv(text, name)
+        if not canon:
+            return {"name": name, "kind": "error", "note": note}
         d = os.path.join(STAGE, "registers")
         os.makedirs(d, exist_ok=True)
-        open(os.path.join(d, canon), "wb").write(data)
-        return {"name": name, "kind": "register", "note": f"columns match {canon}", "stored_as": f"registers/{canon}"}
+        open(os.path.join(d, canon), "wb").write(text.encode("utf-8"))
+        return {"name": name, "kind": "register", "note": note or f"columns match {canon}", "stored_as": f"registers/{canon}"}
+    if ext == ".xml":
+        # Primavera P6 connector: deterministic XML -> canonical schedule.csv, zero LLM
+        if PIPELINE not in sys.path:
+            sys.path.insert(0, PIPELINE)
+        from connectors import p6xml
+        if not p6xml.sniff(data):
+            return {"name": name, "kind": "error",
+                    "note": "XML, but not a recognizable Primavera P6 export (expected APIBusinessObjects / Project / Activity elements) - see CORPUS_FORMAT.md"}
+        try:
+            text, cnote = p6xml.convert(data)
+        except Exception as e:  # noqa: BLE001
+            return {"name": name, "kind": "error", "note": "P6 XML parse failed: " + str(e)[:120]}
+        d = os.path.join(STAGE, "registers")
+        os.makedirs(d, exist_ok=True)
+        open(os.path.join(d, "schedule.csv"), "wb").write(text.encode("utf-8"))
+        return {"name": name, "kind": "register",
+                "note": "Primavera P6 XML -> schedule.csv - " + cnote,
+                "stored_as": "registers/schedule.csv"}
+    if ext == ".json":
+        # SAP OData / logistics-visibility connectors: deterministic JSON -> registers
+        if PIPELINE not in sys.path:
+            sys.path.insert(0, PIPELINE)
+        from connectors import logistics, sap_odata
+        try:
+            obj = json.loads(data.decode("utf-8", errors="ignore"))
+        except ValueError:
+            return {"name": name, "kind": "error", "note": "file is not valid JSON"}
+        if sap_odata.sniff(obj):
+            try:
+                text, cnote = sap_odata.convert(obj)
+            except Exception as e:  # noqa: BLE001
+                return {"name": name, "kind": "error", "note": "SAP OData parse failed: " + str(e)[:120]}
+            d = os.path.join(STAGE, "registers")
+            os.makedirs(d, exist_ok=True)
+            open(os.path.join(d, "po_register.csv"), "wb").write(text.encode("utf-8"))
+            return {"name": name, "kind": "register",
+                    "note": "SAP OData purchase orders -> po_register.csv - " + cnote,
+                    "stored_as": "registers/po_register.csv"}
+        if logistics.sniff(obj):
+            po_path = os.path.join(STAGE, "registers", "po_register.csv")
+            if not os.path.exists(po_path):
+                return {"name": name, "kind": "error",
+                        "note": "shipment feed recognized, but no po_register.csv staged yet - upload the PO register (CSV or SAP OData JSON) first, then this feed"}
+            try:
+                merged, cnote = logistics.merge(open(po_path).read(), obj)
+            except Exception as e:  # noqa: BLE001
+                return {"name": name, "kind": "error", "note": "logistics feed parse failed: " + str(e)[:120]}
+            open(po_path, "w").write(merged)
+            return {"name": name, "kind": "register",
+                    "note": "logistics feed merged into po_register.csv - " + cnote,
+                    "stored_as": "registers/po_register.csv"}
+        return {"name": name, "kind": "error",
+                "note": "JSON, but neither an SAP OData purchase-order payload nor a shipment-visibility feed - see CORPUS_FORMAT.md"}
     if ext not in (".pdf", ".html", ".htm", ".txt", ".md"):
-        return {"name": name, "kind": "skipped", "note": "not a project document type (pdf/html/csv/txt/md)"}
+        return {"name": name, "kind": "skipped", "note": "not a project document type (pdf/html/csv/xml/json/txt/md)"}
     # anything the user files under external/ is third-party reference
     if "external/" in rel.replace(os.sep, "/").lower():
         d = os.path.join(STAGE, "external")
         os.makedirs(d, exist_ok=True)
         open(os.path.join(d, name), "wb").write(data)
-        return {"name": name, "kind": "reference", "note": "third-party reference (M12 checks)", "stored_as": f"external/{name}"}
+        return {"name": name, "kind": "reference", "note": "third-party reference - kept on file, not analysed", "stored_as": f"external/{name}"}
     head, npages, has_text = doc_text_head(name, ext, data)
     if not has_text:
         return {"name": name, "kind": "error",
@@ -349,7 +480,7 @@ def summary():
     claims = sum(len(json.load(open(p))["claims"])
                  for p in glob.glob(os.path.join(OUT, "claims_*.json")))
     lint = load("lint.json") or {"findings": []}
-    ext = load("external.json") or {}
+    fac = load("facility.json") or {}
     opts = load("options.json") or {}
     g = load("graph.json") or {"nodes": [], "edges": []}
     types = {}
@@ -364,7 +495,7 @@ def summary():
         "blast": (load("blast_wave.json") or {}).get("summary"),
         "addenda": len((load("blast_wave.json") or {}).get("waves", []) or []),
         "lint_findings": len(lint["findings"]),
-        "external_checks": len(ext.get("checks", [])),
+        "facility_rating": (fac.get("tier") or {}).get("declared"),
         "decide_by": min([p.get("decide_concessions_by") for p in opts.get("packages", [])
                           if p.get("decide_concessions_by")], default=None),
         "days_to_decide": min([p.get("days_to_decide") for p in opts.get("packages", [])
@@ -533,7 +664,7 @@ class Handler(BaseHTTPRequestHandler):
             ("lint",): lambda: load("lint.json") or {"findings": []},
             ("paperwork",): lambda: load("paperwork_index.json") or {"documents": []},
             ("cx",): lambda: load("cx_packs.json") or {"tests": []},
-            ("external",): lambda: load("external.json") or {},
+            ("facility",): lambda: load("facility.json") or {},
             ("project",): project_state,
         }
         key = tuple(parts)
@@ -634,8 +765,18 @@ class Handler(BaseHTTPRequestHandler):
             cur = llm_config(masked=False)
             base = (body.get("base_url") or cur["base_url"]).strip()
             model = (body.get("model") or cur["model"]).strip()
-            key = (body.get("api_key") or cur.get("api_key", "")).strip()
-            write_env(base, model, key)
+            if body.get("api_keys") is not None:
+                keys = split_keys(body.get("api_keys"))
+            elif body.get("api_key"):
+                keys = split_keys(body.get("api_key"))
+            else:
+                keys = cur.get("api_keys") or []
+            workers = body.get("workers", cur.get("workers", 0))
+            try:
+                workers = max(0, min(64, int(workers or 0)))
+            except (TypeError, ValueError):
+                workers = 0
+            write_env(base, model, keys, workers)
             return self._send(200, llm_config())
         if path == "/api/llm/test":
             body = self._body()
@@ -644,6 +785,52 @@ class Handler(BaseHTTPRequestHandler):
                 if body.get(k):
                     cfg[k] = body[k]
             return self._send(200, llm_test(cfg))
+        if path in ("/api/agent", "/api/agent/stream"):
+            if not os.path.exists(os.path.join(OUT, "project.json")):
+                return self._send(409, {"error": "no_project",
+                                        "hint": "upload documents and run the pipeline first - the copilot only speaks about a loaded project"})
+            body = self._body()
+            env = read_env()
+            keys = env_keys(env)
+            cfg = {"base_url": env.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
+                   "model": env.get("DEEPSEEK_MODEL", "deepseek-chat"),
+                   "api_key": keys[0] if keys else ""}
+            import agent as _agent
+            if path == "/api/agent/stream":
+                # NDJSON stream: one JSON object per line, flushed per event, so
+                # the UI can relay every tool call live (server stays HTTP/1.0 -
+                # the closed connection marks the end of the stream).
+                self.send_response(200)
+                self.send_header("Content-Type", "application/x-ndjson")
+                self.send_header("Cache-Control", "no-cache")
+                self.end_headers()
+
+                def _emit(ev):
+                    self.wfile.write((json.dumps(ev) + "\n").encode())
+                    self.wfile.flush()
+
+                try:
+                    res = _agent.run_agent(str(body.get("message", ""))[:2000],
+                                           body.get("history"), cfg, emit=_emit)
+                    _emit({"event": "reply", **res})
+                except _agent.AgentError as e:
+                    try:
+                        _emit({"event": "error", "error": str(e)})
+                    except Exception:  # noqa: BLE001 - client went away
+                        pass
+                except Exception as e:  # noqa: BLE001
+                    try:
+                        _emit({"event": "error", "error": "copilot error: " + str(e)[:240]})
+                    except Exception:  # noqa: BLE001
+                        pass
+                return
+            try:
+                res = _agent.run_agent(str(body.get("message", ""))[:2000], body.get("history"), cfg)
+                return self._send(200, res)
+            except _agent.AgentError as e:
+                return self._send(400, {"error": str(e)})
+            except Exception as e:  # noqa: BLE001
+                return self._send(500, {"error": "copilot error: " + str(e)[:240]})
         self._send(404, {"error": "unknown endpoint"})
 
 

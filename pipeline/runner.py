@@ -95,10 +95,6 @@ def main():
     def registers_all():
         return have("schedule.csv") and have("po_register.csv") and have("cx_test_register.csv")
 
-    def external_docs():
-        d = os.path.join(corpus, "external")
-        return os.path.isdir(d) and bool(glob.glob(os.path.join(d, "*.pdf")))
-
     stages = [
         dict(id="M1", label="parse every uploaded document", llm=False, core=True,
              cmd=[py, "-u", "m1_parse.py", "--corpus", corpus, "--out", out, "--allow-llm"],
@@ -135,9 +131,8 @@ def main():
         dict(id="M11", label="commissioning readiness packs", llm=False, core=False,
              cmd=[py, "-u", "m11_cx.py"], need=lambda: have("cx_test_register.csv"),
              why="cx_test_register.csv not uploaded"),
-        dict(id="M12", label="external real-world document checks", llm=False, core=False,
-             cmd=[py, "-u", "m12_external.py"], need=external_docs,
-             why="no external documents uploaded"),
+        dict(id="M13", label="data-centre facility profile (Tier / TIA-942 / redundancy)", llm=False, core=False,
+             cmd=[py, "-u", "m13_facility.py", "--corpus", corpus], need=lambda: True, why=""),
     ]
 
     status = Status(os.path.join(out, "run_status.json"), stages)

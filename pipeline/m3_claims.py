@@ -7,7 +7,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import llm, schemas  # noqa: E402
+from common import llm, pool, schemas  # noqa: E402
 
 SYSTEM = (
     "You extract vendor claims from equipment submittal pages. "
@@ -56,10 +56,19 @@ def extract_package(doc_path, out_dir):
     params = sorted(json.load(open(onto_path)).keys())
     claims = []
     total = len(doc["pages"])
-    for p in doc["pages"]:
+
+    def _extract_page(p):
         user = USER_TMPL.format(package=pkg, page=p["page"], total=total, section=section,
                                 param_list="\n".join("- " + x for x in params), text=p["text"])
-        items, dropped = llm.get_checked_items(SYSTEM, user, "claims", schemas.CLAIM_FIELDS, f"{pkg} p{p['page']}", p["text"])
+        return llm.get_checked_items(SYSTEM, user, "claims", schemas.CLAIM_FIELDS, f"{pkg} p{p['page']}", p["text"])
+
+    # scale-out: one independent LLM call per page -> parallel map over the
+    # key pool. Input-ordered results keep claims_*.json byte-stable.
+    w = pool.worker_count()
+    if w > 1:
+        print(f"  [scale-out: {w} parallel workers over {len(llm.keys())} API key(s)]")
+    outs = pool.pmap(_extract_page, doc["pages"])
+    for p, (items, dropped) in zip(doc["pages"], outs):
         if dropped:
             _quarantine(out_dir, f"{pkg_label} p{p['page']}", dropped)
         for c in items:

@@ -131,7 +131,7 @@ const ROUTES = [
   { id: "review", label: "Review", icon: "review", fn: vReview, group: 2 },
   { id: "graph", label: "Graph", icon: "graph", fn: vGraph, group: 2 },
   { id: "lint", label: "Defects", icon: "lint", fn: vLint, group: 2 },
-  { id: "external", label: "External", icon: "external", fn: vExternal, group: 2 },
+  { id: "facility", label: "Facility", icon: "facility", fn: vFacility, group: 2 },
   { id: "blast", label: "Blast", icon: "blast", fn: vBlast, group: 3 },
   { id: "margins", label: "Margins", icon: "margins", fn: vMargins, group: 3 },
   { id: "vendors", label: "Vendors", icon: "vendors", fn: vVendors, group: 3 },
@@ -146,8 +146,11 @@ function renderTabs(activeId) {
     if (r.group !== lastGroup) { html += '<span class="tab-sep"></span>'; lastGroup = r.group; }
     html += '<div class="tab' + (r.id === activeId ? " active" : "") + '" data-r="' + r.id + '">' + icon(r.icon) + '<span class="tab-label">' + r.label + "</span></div>";
   }
+  html += '<span class="tab-sep"></span><div class="tab tab-copilot" id="tab-copilot" title="CLAUSE copilot - ask the ledger">' + icon("copilot") + '<span class="tab-label">Copilot</span></div>';
   nav.innerHTML = html;
   nav.querySelectorAll(".tab").forEach((t) => { t.onclick = () => { location.hash = "#" + t.dataset.r; }; });
+  const ct = $("#tab-copilot");
+  if (ct) ct.onclick = () => { if (window.openCopilot) window.openCopilot(); };
 }
 let CLEANUP = null;
 function skeleton() {
@@ -197,6 +200,8 @@ async function projectState() {
   PROJECT = await api("/api/project");
   const chip = $("#model-chip");
   if (chip) chip.textContent = (PROJECT.model || "no model") + (PROJECT.has_key ? "" : " \u00b7 no key");
+  const fab = $("#cp-fab");
+  if (fab) fab.classList.toggle("hidden", !PROJECT.loaded);
   return PROJECT;
 }
 const SOURCES = [
@@ -205,6 +210,7 @@ const SOURCES = [
   { key: "schedule", label: "Schedule", route: "#clock", count: (s) => ((s.node_types || {}).activity || 0) + " activities" },
   { key: "procurement", label: "Procurement", route: "#vendors", count: (s) => ((s.node_types || {}).po || 0) + " POs" },
   { key: "quality", label: "Quality records", route: "#cx", count: (s) => (((s.node_types || {}).cx || 0)) + " tests \u00b7 " + (s.ncrs || 0) + " NCRs" },
+  { key: "facility", label: "Facility profile", route: "#facility", count: (s) => (s.facility_rating ? s.facility_rating + " declared" : "Tier / TIA-942 scan") },
 ];
 function kstamp(kind) {
   const m = { specification: "st-ok", submittal: "st-ok", addendum: "st-warn", register: "st-ok", reference: "", "project document": "", refused: "st-bad", error: "st-bad", skipped: "" };
@@ -224,7 +230,7 @@ function uploadCardHtml(big) {
     "<h2>" + icon("doc") + (big ? "upload your project documents" : "feed it more documents") + "</h2>" +
     '<div class="dropzone' + (big ? " dz-big" : "") + '" id="dz">' + icon("doc") +
     "<div><b>Drop files or a whole folder here</b>" +
-    '<div class="form-note">specs \u00b7 vendor submittals \u00b7 client addenda \u00b7 registers (CSV) \u00b7 minutes, reports, correspondence</div></div>' +
+    '<div class="form-note">specs \u00b7 vendor submittals \u00b7 client addenda \u00b7 registers (CSV) \u00b7 Primavera P6 schedules (XML) \u00b7 SAP purchase orders (OData JSON) \u00b7 shipment feeds (JSON) \u00b7 minutes, reports, correspondence</div></div>' +
     '<div class="row mt" style="justify-content:center"><button class="btn" id="pick-files">Choose files</button><button class="btn" id="pick-folder">Choose a folder</button></div></div>' +
     '<input id="dz-files" type="file" multiple style="display:none">' +
     '<input id="dz-folder" type="file" webkitdirectory style="display:none">' +
@@ -235,7 +241,7 @@ function renderStaged(p) {
   const el = $("#staged-body");
   if (!el) return;
   el.innerHTML = !p.staged_total
-    ? '<div class="form-note">nothing staged yet \u2014 the ledger is empty until you feed it</div>'
+    ? '<div class="form-note">nothing staged yet</div>'
     : Object.entries(p.staged || {}).map(([k, v]) => '<div class="d-kv"><span class="k mono">' + esc(k) + '/</span><span class="v">' + v + " file(s)</span></div>").join("");
   const run = $("#btn-run"), clr = $("#btn-clear");
   if (run) run.disabled = !p.staged_total;
@@ -286,7 +292,7 @@ function wireUploader(afterUpload) {
 
 function hubEmpty(view, p) {
   view.innerHTML = '<div class="view">' +
-    head("Feed the ledger", "this site starts empty \u2014 every screen is computed from what you upload, by the real pipeline") +
+    head("Load the project", "upload the project documents \u2014 every screen is computed from them by the pipeline") +
     '<div class="hub">' +
     uploadCardHtml(true) +
     "<div>" +
@@ -312,7 +318,7 @@ function hubEmpty(view, p) {
 async function hubLoaded(view, p) {
   const s = await api("/api/summary");
   view.innerHTML = '<div class="view">' +
-    head("The intelligence layer", "every count on this screen was computed by the last real run \u2014 nothing is pre-loaded") +
+    head("The intelligence layer", "data-centre EPC delivery, one connected ledger \u2014 computed by the last run") +
     '<div class="hub">' +
     '<div class="card hub-canvas-card" style="min-height:460px"><canvas id="hub-canvas"></canvas>' +
     '<div class="hub-cap">one-line diagram \u00b7 click a source to open its ledger view \u00b7 ' + s.graph_nodes + " nodes / " + s.graph_edges + " edges in the full graph</div></div>" +
@@ -491,7 +497,7 @@ async function vOverview(view) {
   const nAdd = s.addenda || 0;
   const vTitle = nAdd ? "verdicts \u00b7 after " + nAdd + " addend" + (nAdd === 1 ? "um" : "a") + ' <span class="right">baseline in grey</span>' : "verdicts";
   view.innerHTML = '<div class="view">' +
-    head("Ledger overview", "what the machine holds right now \u2014 computed from your documents by the last run") +
+    head("Ledger overview", "computed from your documents by the last run") +
     '<div class="grid g4 mb">' +
     '<div class="card metric"><div class="num">' + fmtN(s.rules) + '</div><div class="lbl">rules compiled from specs</div></div>' +
     '<div class="card metric"><div class="num">' + fmtN(s.claims) + '</div><div class="lbl">claims extracted from submittals</div></div>' +
@@ -588,7 +594,7 @@ async function vReview(view, arg) {
         '<span class="spacer"></span></div>' +
         '<div class="ev-pair"><div class="quote q-req"><span class="q-src">spec \u00b7 ' + esc(req.source_clause || "") + (req.page ? " \u00b7 p" + req.page : "") + "</span>" + esc(req.quote || "") + "</div>" +
         (cl ? '<div class="quote q-claim"><span class="q-src">submittal' + (cl.page ? " \u00b7 p" + cl.page : "") + (cl.location ? " \u00b7 " + esc(cl.location) : "") + "</span>" + esc(cl.quote || "") + "</div>"
-            : '<div class="quote"><span class="q-src">submittal</span><i>no governing evidence \u2014 the machine does not guess</i></div>') + "</div>" +
+            : '<div class="quote"><span class="q-src">submittal</span><i>no governing evidence found for this parameter</i></div>') + "</div>" +
         (r.reason ? '<div class="reason">' + esc(r.reason) + "</div>" : "") + "</div>";
     }).join("");
     view.innerHTML = '<div class="view">' +
@@ -644,12 +650,12 @@ async function vGraph(view, arg) {
   let rsT = 0;
   const onResize = () => { clearTimeout(rsT); rsT = setTimeout(() => size(false), 120); };
   window.addEventListener("resize", onResize);
-  // ---- deterministic init
+  // ---- deterministic init (seeded rings, then a d3-style force layout)
   const rng = mulberry32(1337);
-  const RING = { section: 60, addendum: 110, clause: 190, package: 300, po: 380, activity: 450, cx: 520 };
+  const RING = { section: 120, addendum: 200, clause: 340, package: 520, po: 660, activity: 800, cx: 940 };
   const byId = new Map();
   nodes.forEach((n) => {
-    const r = (RING[n.type] || 400) * (0.85 + rng() * 0.3);
+    const r = (RING[n.type] || 700) * (0.85 + rng() * 0.3);
     const a = rng() * Math.PI * 2;
     n.x = Math.cos(a) * r; n.y = Math.sin(a) * r;
     n.vx = 0; n.vy = 0;
@@ -659,60 +665,60 @@ async function vGraph(view, arg) {
   const adj = new Map();
   nodes.forEach((n) => adj.set(n.id, []));
   edges.forEach((e) => { adj.get(e.s).push({ id: e.t, type: e.type }); adj.get(e.t).push({ id: e.s, type: e.type }); });
-  // ---- physics (bounded everywhere; the blank-screen bug is structurally impossible)
-  const SPRING_LEN = 46, MAX_FORCE = 0.9, MAX_VEL = 3.5, CELL = 70, SETTLE = 900;
-  let alpha = 1, tick = 0, raf = 0;
+  nodes.forEach((n) => {
+    n.deg = adj.get(n.id).length;
+    n.r = 2.4 + Math.sqrt(n.deg) * 1.05;        // radius grows with connectivity
+    n.mass = 1 + Math.min(n.deg, 30) * 0.28;    // hubs push harder, their fans get room
+  });
+  edges.forEach((e) => {
+    const da = byId.get(e.s).deg, db = byId.get(e.t).deg;
+    e.k = 1 / Math.max(1, Math.min(da, db));    // d3 link-strength rule: weak springs on hubs
+    e.bias = da / (da + db);                    // the heavier end moves less
+  });
+  // ---- physics. The old build capped repulsion below the spring force and
+  // only looked one grid cell around, so springs + centering always won and
+  // the layout slowly imploded. This is the plain d3-force model instead:
+  // many-body repulsion, degree-normalised springs, gentle centering, all
+  // scaled by a decaying alpha so the graph settles and then holds still.
+  const SPRING_LEN = 84, MAX_VEL = 14, SETTLE = 2600, CHARGE = 160;
+  let alpha = 1, tick = 0, raf = 0, fitted = false;
   const clamp = (v, m) => (v > m ? m : v < -m ? -m : v);
   function physics() {
-    if (alpha < 0.02 || tick > SETTLE) return;
+    if (alpha < 0.004 || tick > SETTLE) return;
     tick++;
-    const gridMap = new Map();
-    nodes.forEach((n, i) => {
-      const k = Math.floor(n.x / CELL) + ":" + Math.floor(n.y / CELL);
-      (gridMap.get(k) || gridMap.set(k, []).get(k)).push(i);
-    });
+    alpha += (0.003 - alpha) * 0.02;
     for (let i = 0; i < nodes.length; i++) {
       const n = nodes[i];
-      const gx = Math.floor(n.x / CELL), gy = Math.floor(n.y / CELL);
-      let fx = 0, fy = 0;
-      for (let ox = -1; ox <= 1; ox++) for (let oy = -1; oy <= 1; oy++) {
-        const cell = gridMap.get((gx + ox) + ":" + (gy + oy));
-        if (!cell) continue;
-        for (const j of cell) {
-          if (j === i) continue;
-          const m = nodes[j];
-          let dx = n.x - m.x, dy = n.y - m.y;
-          let d2 = dx * dx + dy * dy;
-          if (d2 < 1) { dx = (rng() - 0.5); dy = (rng() - 0.5); d2 = 1; }
-          const f = Math.min(1400 / d2, MAX_FORCE);
-          const d = Math.sqrt(d2);
-          fx += (dx / d) * f; fy += (dy / d) * f;
-        }
+      for (let j = i + 1; j < nodes.length; j++) {
+        const m = nodes[j];
+        let dx = n.x - m.x, dy = n.y - m.y;
+        let d2 = dx * dx + dy * dy;
+        if (d2 < 1) { dx = rng() - 0.5; dy = rng() - 0.5; d2 = dx * dx + dy * dy + 0.01; }
+        if (d2 > 1e6) continue;
+        const w = (CHARGE * alpha) / d2;
+        n.vx += dx * w * m.mass; n.vy += dy * w * m.mass;
+        m.vx -= dx * w * n.mass; m.vy -= dy * w * n.mass;
       }
-      n.vx = clamp(n.vx + clamp(fx, MAX_FORCE) * alpha, MAX_VEL);
-      n.vy = clamp(n.vy + clamp(fy, MAX_FORCE) * alpha, MAX_VEL);
     }
     for (const e of edges) {
       const a = byId.get(e.s), b = byId.get(e.t);
-      const dx = b.x - a.x, dy = b.y - a.y;
+      let dx = (b.x + b.vx) - (a.x + a.vx), dy = (b.y + b.vy) - (a.y + a.vy);
       const d = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
-      const f = clamp((d - SPRING_LEN) * 0.004, 0.9);
-      const ux = dx / d, uy = dy / d;
-      a.vx = clamp(a.vx + ux * f * alpha, MAX_VEL); a.vy = clamp(a.vy + uy * f * alpha, MAX_VEL);
-      b.vx = clamp(b.vx - ux * f * alpha, MAX_VEL); b.vy = clamp(b.vy - uy * f * alpha, MAX_VEL);
+      const f = ((d - SPRING_LEN) / d) * e.k * alpha;
+      dx *= f; dy *= f;
+      b.vx -= dx * e.bias; b.vy -= dy * e.bias;
+      a.vx += dx * (1 - e.bias); a.vy += dy * (1 - e.bias);
     }
     for (const n of nodes) {
-      if (n === dragNode) continue;
-      n.vx = clamp(n.vx - n.x * 0.0009, MAX_VEL);
-      n.vy = clamp(n.vy - n.y * 0.0009, MAX_VEL);
+      if (n === dragNode) { n.vx = 0; n.vy = 0; continue; }
+      n.vx -= n.x * 0.018 * alpha; n.vy -= n.y * 0.018 * alpha;
+      n.vx = clamp(n.vx * 0.6, MAX_VEL); n.vy = clamp(n.vy * 0.6, MAX_VEL);
       n.x += n.vx; n.y += n.vy;
-      n.vx *= 0.82; n.vy *= 0.82;
-      if (!isFinite(n.x) || !isFinite(n.y)) { n.x = (rng() - 0.5) * 200; n.y = (rng() - 0.5) * 200; n.vx = n.vy = 0; }
+      if (!isFinite(n.x) || !isFinite(n.y)) { n.x = (rng() - 0.5) * 400; n.y = (rng() - 0.5) * 400; n.vx = n.vy = 0; }
     }
-    alpha *= 0.996;
   }
   // ---- camera + interaction
-  const cam = { s: 0.9, tx: 0, ty: 0 };
+  const cam = { s: 0.35, tx: 0, ty: 0 };
   cam.tx = W / 2; cam.ty = H / 2;
   let dragNode = null, panning = false, moved = false, lastX = 0, lastY = 0;
   let hoverId = null, selId = null;
@@ -741,7 +747,7 @@ async function vGraph(view, arg) {
     if (dragNode) {
       const w = toWorld(px, py);
       dragNode.x = w.x; dragNode.y = w.y; dragNode.vx = dragNode.vy = 0;
-      moved = true; alpha = Math.max(alpha, 0.12); tick = Math.min(tick, SETTLE - 60);
+      moved = true; alpha = Math.max(alpha, 0.35); tick = Math.min(tick, SETTLE - 900);
     } else if (panning) {
       cam.tx += px - lastX; cam.ty += py - lastY; moved = true;
     } else {
@@ -769,7 +775,7 @@ async function vGraph(view, arg) {
     const r = canvas.getBoundingClientRect();
     const px = e.clientX - r.left, py = e.clientY - r.top;
     const w = toWorld(px, py);
-    cam.s = Math.min(5, Math.max(0.25, cam.s * (e.deltaY < 0 ? 1.12 : 0.89)));
+    cam.s = Math.min(5, Math.max(0.08, cam.s * (e.deltaY < 0 ? 1.12 : 0.89)));
     cam.tx = px - w.x * cam.s; cam.ty = py - w.y * cam.s;
   };
   function focusNode(id) {
@@ -780,6 +786,16 @@ async function vGraph(view, arg) {
     cam.tx = W / 2 - n.x * cam.s; cam.ty = H / 2 - n.y * cam.s;
     openDossier(id);
   }
+  function fitView() {
+    if (!nodes.length) return;
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    for (const n of nodes) { if (n.x < x0) x0 = n.x; if (n.x > x1) x1 = n.x; if (n.y < y0) y0 = n.y; if (n.y > y1) y1 = n.y; }
+    const bw = Math.max(x1 - x0, 60), bh = Math.max(y1 - y0, 60);
+    cam.s = Math.min(2.2, Math.max(0.1, Math.min(W / (bw + 140), H / (bh + 140)) * 0.94));
+    cam.tx = W / 2 - ((x0 + x1) / 2) * cam.s;
+    cam.ty = H / 2 - ((y0 + y1) / 2) * cam.s;
+  }
+  canvas.ondblclick = (e) => { e.preventDefault(); fitView(); };
   // ---- draw
   function activeSet() {
     const focus = hoverId || selId;
@@ -792,6 +808,12 @@ async function vGraph(view, arg) {
     physics();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "rgba(33,28,20,.055)";
+    const gs = 26;
+    for (let gx = ((cam.tx % gs) + gs) % gs; gx < W; gx += gs)
+      for (let gy = ((cam.ty % gs) + gs) % gs; gy < H; gy += gs)
+        ctx.fillRect(gx - 0.7, gy - 0.7, 1.4, 1.4);
+    if (!fitted && tick > 90) { fitted = true; fitView(); }
     ctx.translate(cam.tx * 1, cam.ty * 1);
     ctx.scale(cam.s, cam.s);
     const act = activeSet();
@@ -805,7 +827,7 @@ async function vGraph(view, arg) {
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
     }
     for (const n of nodes) {
-      const rBase = n.type === "section" ? 7 : n.type === "addendum" ? 7 : n.type === "package" ? 6 : n.type === "po" ? 4.5 : n.type === "activity" ? 4 : n.type === "cx" ? 3.5 : 3;
+      const rBase = n.r || 3;
       const inAct = !act || act.has(n.id);
       ctx.globalAlpha = inAct ? 1 : 0.13;
       ctx.fillStyle = NODE_COLORS[n.type] || "#888";
@@ -816,16 +838,29 @@ async function vGraph(view, arg) {
         ctx.strokeStyle = "#c9442a"; ctx.lineWidth = 1.6 / cam.s;
         ctx.beginPath(); ctx.arc(n.x, n.y, rBase + 2.4 / cam.s, 0, 7); ctx.stroke();
       }
-      const showLabel = n.type === "section" || n.type === "addendum" || n.type === "package" || cam.s > 1.7 || (act && act.has(n.id) && cam.s > 0.7);
-      if (showLabel && inAct) {
-        ctx.fillStyle = "rgba(33,28,20,.86)";
-        ctx.font = (10.5 / cam.s) + "px ui-monospace, Menlo, monospace";
+      if (n.id === focus) {
+        ctx.strokeStyle = "rgba(201,68,42,.85)"; ctx.lineWidth = 1.5 / cam.s;
+        ctx.beginPath(); ctx.arc(n.x, n.y, rBase + 3.2 / cam.s, 0, 7); ctx.stroke();
+      }
+      const isHub = n.type === "section" || n.type === "addendum" || n.type === "package";
+      const fade = isHub ? (cam.s - 0.3) * 2.2 : (cam.s - 0.85) * 1.7;
+      const lblA = act && act.has(n.id) ? 0.92 : Math.min(0.85, fade);
+      if (lblA > 0.04 && inAct) {
+        ctx.globalAlpha = lblA;
+        ctx.fillStyle = "#211c14";
+        ctx.font = ((isHub ? 11 : 10) / cam.s) + "px ui-monospace, Menlo, monospace";
         ctx.textAlign = "center";
-        ctx.fillText(n.label.length > 26 ? n.label.slice(0, 25) + "\u2026" : n.label, n.x, n.y - rBase - 4 / cam.s);
+        ctx.fillText(n.label.length > 26 ? n.label.slice(0, 25) + "\u2026" : n.label, n.x, n.y - rBase - 4.5 / cam.s);
       }
       ctx.globalAlpha = 1;
     }
-    $("#g-stats").textContent = nodes.length + " nodes \u00b7 " + edges.length + " edges \u00b7 " + (tick >= SETTLE || alpha < 0.02 ? "settled" : "settling " + tick);
+    if ((tick & 15) === 0 || tick >= SETTLE) {
+      let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      for (const n of nodes) { if (n.x < x0) x0 = n.x; if (n.x > x1) x1 = n.x; if (n.y < y0) y0 = n.y; if (n.y > y1) y1 = n.y; }
+      const liveCanvas = document.getElementById("graph-canvas");
+      if (liveCanvas) liveCanvas.dataset.spread = String(Math.round(Math.max(x1 - x0, y1 - y0)));
+    }
+    $("#g-stats").textContent = nodes.length + " nodes \u00b7 " + edges.length + " edges \u00b7 " + (tick >= SETTLE || alpha < 0.004 ? "settled" : "settling") + " \u00b7 drag nodes \u00b7 double-click to fit" + (document.getElementById("graph-canvas") && document.getElementById("graph-canvas").dataset.spread ? " [sp=" + document.getElementById("graph-canvas").dataset.spread + "]" : "");
     raf = requestAnimationFrame(draw);
   }
   raf = requestAnimationFrame(draw);
@@ -918,25 +953,38 @@ async function vLint(view) {
   view.querySelectorAll("[data-doc]").forEach((btn) => { btn.onclick = () => openDoc(btn.dataset.doc); });
 }
 
-/* =========================================================== external */
-async function vExternal(view) {
-  const e = await api("/api/external");
-  const docs = [e.spec, e.submittal].concat(e.documents_extra || []).filter(Boolean);
-  const docCards = docs.map((doc) => '<div class="card"><h2>' + icon("doc") + esc((doc.title || doc.file || "").slice(0, 60)) + '</h2><div class="d-kv"><span class="k mono">' + esc(doc.file || "") + '</span></div><div class="d-kv"><span class="k">pages</span><span class="v">' + (doc.pages || "\u2014") + "</span></div>" +
-    (doc.requirements_harvested ? '<div class="d-kv"><span class="k">requirements harvested</span><span class="v">' + doc.requirements_harvested + "</span></div>" : "") +
-    (doc.claims_harvested ? '<div class="d-kv"><span class="k">claims harvested</span><span class="v">' + doc.claims_harvested + "</span></div>" : "") + "</div>").join("");
-  const checks = (e.checks || []).map((c) => {
-    const rq = c.requirement || {}, cq = c.claim || {};
-    return '<div class="ev-row"><div class="ev-head">' + stamp(c.verdict) + '<span class="param">' + esc((c.family || "").replace(/_/g, " ")) + "</span>" +
-      '<span class="chip">' + esc(String(rq.operator || "")) + " " + esc(String(rq.value == null ? "" : rq.value)) + " " + esc(rq.unit || "") + '</span><span class="spacer"></span></div>' +
-      '<div class="ev-pair"><div class="quote q-req"><span class="q-src">tender \u00b7 p' + (rq.page || "?") + "</span>" + esc((rq.quote || "").slice(0, 340)) + "</div>" +
-      '<div class="quote q-claim"><span class="q-src">brochure \u00b7 p' + (cq.page || "?") + "</span>" + esc((cq.quote || "").slice(0, 340)) + "</div></div>" +
-      (c.note || c.reason ? '<div class="reason">' + esc(c.note || c.reason) + "</div>" : "") + "</div>";
-  }).join("");
+/* =========================================================== facility */
+async function vFacility(view) {
+  const f = await api("/api/facility");
+  const t = f.tier || {};
+  const stds = f.standards || [], red = f.redundancy || [], mets = f.metrics || [], chk = f.checklist || [];
+  if (!t.declared && !stds.length && !red.length) {
+    view.innerHTML = '<div class="view">' + head("Facility profile", "the data-centre-specific declarations in this corpus") +
+      '<div class="empty-wrap"><div class="empty-card card">' + icon("facility") +
+      "<h2>nothing data-centre-specific found</h2><p>no Tier / TIA-942 rating, redundancy topology (N+1, 2N) or DC standard reference was found in the uploaded documents. If this is a data-centre project, upload the electrical, cooling and telecom spec sections.</p></div></div></div>";
+    return;
+  }
+  const plate = t.declared
+    ? '<div class="card tier-plate"><div class="tp-big">' + esc(String(t.declared).toUpperCase()) + '</div>' +
+      '<div class="lbl">declared availability rating \u00b7 ' + (t.all_mentions || 0) + ' mention(s) in the documents</div>' +
+      (t.basis || []).slice(0, 2).map((b) => '<div class="quote q-req" style="margin-top:6px"><span class="q-src">' + esc(b.doc) + ' \u00b7 p' + b.page + '</span>' + esc(b.quote) + '</div>').join("") + '</div>'
+    : '<div class="card tier-plate"><div class="tp-big">\u2014</div><div class="lbl">no Tier / Rated level declared in the uploaded documents</div></div>';
+  const stdRows = stds.map((s) => '<div class="d-kv"><span class="k">' + esc(s.std) + '</span><span class="v mono">' + s.mentions + '\u00d7 \u00b7 ' + esc((s.sources || [])[0] || "") + '</span></div>').join("");
+  const metRows = mets.map((m) => '<div class="d-kv"><span class="k">' + esc(m.name) + '</span><span class="v mono">' + esc(m.value) + ' \u00b7 ' + esc(m.doc) + ' p' + m.page + '</span></div>').join("");
+  const redRows = red.map((r) => '<div class="ev-row"><div class="ev-head"><span class="chip mono">' + esc(r.topology) + '</span><span class="param">' + esc(r.system) + '</span><span class="spacer"></span><span class="mono" style="font-size:11px">' + esc(r.doc) + ' \u00b7 p' + r.page + (r.occurrences > 1 ? ' \u00b7 \u00d7' + r.occurrences : '') + '</span></div>' +
+    '<div class="quote q-req">' + esc(r.quote) + '</div>' +
+    (r.corroboration ? '<div class="reason">' + esc(r.corroboration) + '</div>' : '') + '</div>').join("");
+  const chkRows = chk.map((c) => '<div class="d-kv"><span class="k">' + (c.status === "declared" ? '<span class="mono" style="color:var(--ok)">\u25a0 declared</span>' : '<span class="mono" style="color:var(--warn)">\u25a1 not found</span>') + ' \u00b7 ' + esc(c.item) + '</span><span class="v" style="max-width:46%">' + esc(String(c.detail || "")) + '</span></div>').join("");
   view.innerHTML = '<div class="view">' +
-    head("External reality check", "real public documents the pipeline had never seen") +
-    '<div class="callout mb">' + esc(e.method || "") + "</div>" +
-    '<div class="grid g3 mb">' + docCards + "</div>" + checks + "</div>";
+    head("Facility profile", "what makes this a data centre \u2014 rating, redundancy and standards, quoted from the documents") +
+    '<div class="grid g3 mb">' + plate +
+    '<div class="card"><h2>' + icon("facility") + 'standards invoked</h2>' + (stdRows || '<div class="form-note">none found</div>') + '</div>' +
+    '<div class="card"><h2>' + icon("margins") + 'declared metrics</h2>' + (metRows || '<div class="form-note">none found</div>') + '</div>' +
+    '</div>' +
+    '<div class="card mb"><h2>' + icon("graph") + 'redundancy topology, by system</h2>' + (redRows || '<div class="form-note">no N+1 / 2N / 2N+1 language found</div>') + '</div>' +
+    '<div class="card"><h2>' + icon("cx") + 'data-centre scorecard</h2>' + chkRows +
+    '<div class="form-note">declared = stated in the uploaded documents, with the quote to prove it \u00b7 not found = the scan found no such declaration</div></div>' +
+    '</div>';
 }
 
 /* =========================================================== blast */
@@ -1048,7 +1096,7 @@ async function vPaperwork(view) {
     '<div class="card mb"><h2>' + icon("paperwork") + esc(titles[type] || type) + ' <span class="right">' + list.length + "</span></h2>" +
     list.map((doc) => '<div class="neigh" data-doc="' + esc(doc.file) + '">' + stamp("DRAFT", "straight") + '<span class="mono" style="font-size:11px">' + esc(doc.id || "") + "</span><span>" + esc((doc.title || "").slice(0, 90)) + "</span></div>").join("") + "</div>").join("");
   view.innerHTML = '<div class="view">' +
-    head("Paperwork", "drafted from ledger evidence \u2014 the machine never signs") +
+    head("Paperwork", "drafts grounded in ledger evidence \u2014 review before issuing") +
     '<div class="callout mb">Every document below quotes its evidence and is stamped ' + stamp("DRAFT", "straight") + " until an engineer signs it. CLAUSE drafts; humans decide.</div>" + cards + "</div>";
   view.querySelectorAll("[data-doc]").forEach((r) => { r.onclick = () => openDoc(r.dataset.doc); });
 }
@@ -1062,7 +1110,7 @@ async function vCx(view) {
   const pw = await api("/api/paperwork");
   const procs = (pw.documents || []).filter((x) => x.type === "cx");
   view.innerHTML = '<div class="view">' +
-    head("Commissioning packs", "tests generated from the ledger \u2014 and kept honest by it") +
+    head("Commissioning packs", "test readiness, tracked against the ledger") +
     '<div class="grid g4 mb">' +
     '<div class="card metric"><div class="num">' + (d.tests || []).length + '</div><div class="lbl">tests generated</div></div>' +
     '<div class="card metric"><div class="num num-ok">' + (d.ready || 0) + '</div><div class="lbl">ready to execute</div></div>' +
@@ -1091,18 +1139,19 @@ async function vNcr(view) {
 
 /* =========================================================== settings */
 async function vSettings(view) {
-  let cfg = { base_url: "", model: "", api_key_masked: "", configured: false };
+  let cfg = { base_url: "", model: "", api_key_masked: "", configured: false, keys_count: 0, workers: 0 };
   try { cfg = await api("/api/llm/config"); } catch (e) { /* server offline for config */ }
   view.innerHTML = '<div class="view">' +
     head("Settings", "own the whole chain \u2014 bring any OpenAI-compatible model, or run one on this laptop") +
     '<div class="grid g2">' +
     '<div class="card"><h2>' + icon("chip") + "bring your own model</h2>" +
     '<div class="field"><label>base URL (OpenAI-compatible)</label><input id="llm-base" placeholder="http://localhost:11434/v1" value="' + esc(cfg.base_url || "") + '"></div>' +
-    '<div class="field"><label>API key ' + (cfg.api_key_masked ? "(saved: " + esc(cfg.api_key_masked) + ")" : "") + '</label><input id="llm-key" type="password" placeholder="' + (cfg.api_key_masked ? "leave blank to keep saved key" : "sk-\u2026 or any string for local models") + '"></div>' +
+    '<div class="field"><label>API key(s) \u2014 one per line' + (cfg.keys_count ? " (saved: " + cfg.keys_count + " key" + (cfg.keys_count > 1 ? "s" : "") + ", " + esc(cfg.api_key_masked || "") + (cfg.keys_count > 1 ? " \u2026" : "") + ")" : "") + '</label><textarea id="llm-keys" rows="3" placeholder="' + (cfg.keys_count ? "leave blank to keep the saved key pool" : "sk-\u2026 or any string for local models\u000aadd more keys, one per line, to fan out") + '"></textarea></div>' +
+    '<div class="field"><label>parallel workers (0 = one per key)</label><input id="llm-workers" type="number" min="0" max="64" value="' + (cfg.workers || 0) + '" style="width:110px"></div>' +
     '<div class="field"><label>model</label><input id="llm-model" placeholder="qwen3:4b" value="' + esc(cfg.model || "") + '"></div>' +
     '<div class="row"><button class="btn btn-primary" id="llm-save">Save</button><button class="btn" id="llm-test">Test connection</button>' + (cfg.configured ? stamp("OK", "straight") : "") + "</div>" +
     '<div id="llm-result"></div>' +
-    '<div class="form-note">Written to <code>pipeline/.env</code> \u2014 the exact file the pipeline modules read; there is no second config. Change the model and the LLM cache stops matching: the next run makes real calls to your endpoint and takes real time. Same model, same prompts \u2192 cached responses replay instantly and free. The pipeline sends isolated clause snippets \u2014 never whole documents \u2014 and with a local model nothing leaves your laptop at all.</div></div>' +
+    '<div class="form-note">Written to <code>pipeline/.env</code> \u2014 the exact file the pipeline modules read; there is no second config. <b>Scale-out:</b> paste N API keys (one per line) and the LLM stages fan out across N parallel workers, round-robin over the keys \u2014 N keys \u2248 N\u00d7 throughput on rule compilation and claim extraction, because every call is one independent clause or page. Output artifacts stay byte-identical regardless of worker count. Change the model and the LLM cache stops matching: the next run makes real calls to your endpoint and takes real time. Same model, same prompts \u2192 cached responses replay instantly and free. The pipeline sends isolated clause snippets \u2014 never whole documents \u2014 and with a local model nothing leaves your laptop at all.</div></div>' +
     '<div class="card"><h2>' + icon("external") + "run it fully local" + "</h2>" +
     '<p style="font-size:12.5px">CLAUSE\u2019s LLM use is deliberately small: reading one clause or one datasheet block at a time and returning JSON. That is text parsing \u2014 <b>a 4B model on an ordinary laptop is enough</b>. The verification layer itself is deterministic Python and needs no model at all.</p>' +
     '<table class="mt"><tr><th>hardware</th><th>model</th></tr>' +
@@ -1116,7 +1165,9 @@ async function vSettings(view) {
   $("#open-guide").onclick = () => openGuide("LOCAL_LLM.md");
   $("#llm-save").onclick = async () => {
     try {
-      const r = await post("/api/llm/config", { base_url: $("#llm-base").value, api_key: $("#llm-key").value, model: $("#llm-model").value });
+      const body = { base_url: $("#llm-base").value, model: $("#llm-model").value, workers: parseInt($("#llm-workers").value || "0", 10) || 0 };
+      if ($("#llm-keys").value.trim()) body.api_keys = $("#llm-keys").value;
+      const r = await post("/api/llm/config", body);
       toast("Saved to pipeline/.env \u2014 takes effect on the next pipeline run"); projectState().catch(() => {});
     } catch (e) { toast(esc(e.message)); }
   };
@@ -1124,7 +1175,8 @@ async function vSettings(view) {
     const out = $("#llm-result");
     out.innerHTML = '<div class="test-result">testing round-trip\u2026</div>';
     try {
-      const r = await post("/api/llm/test", { base_url: $("#llm-base").value, api_key: $("#llm-key").value, model: $("#llm-model").value });
+      const firstKey = ($("#llm-keys").value.trim().split(/[\s,]+/)[0]) || "";
+      const r = await post("/api/llm/test", { base_url: $("#llm-base").value, api_key: firstKey, model: $("#llm-model").value });
       out.innerHTML = r.ok
         ? '<div class="test-result ok">\u2713 ' + r.ms + " ms \u00b7 " + esc(r.model || "") + " \u00b7 reply: \u201c" + esc(r.reply || "") + "\u201d</div>"
         : '<div class="test-result err">\u2717 ' + esc(r.error || "failed") + "</div>";
@@ -1167,3 +1219,127 @@ function startChrome() {
 window.addEventListener("hashchange", route);
 startChrome();
 route();
+
+/* =========================================================== copilot */
+/* Core feature: full-height drawer, every tool call relayed live (NDJSON
+   stream from /api/agent/stream), answers rendered as real markdown via the
+   same md2html used for the guides. Falls back to POST /api/agent if the
+   stream cannot be read. */
+function wireCopilot() {
+  const fab = $("#cp-fab"), panel = $("#cp-panel"), log = $("#cp-log");
+  if (!fab || !panel) return;
+  $("#cp-fab-ic").innerHTML = icon("copilot");
+  $("#cp-close").innerHTML = icon("x");
+  window.openCopilot = () => { panel.classList.remove("hidden"); $("#cp-in").focus(); };
+  fab.onclick = () => { panel.classList.toggle("hidden"); if (!panel.classList.contains("hidden")) $("#cp-in").focus(); };
+  $("#cp-close").onclick = () => panel.classList.add("hidden");
+  $("#cp-wide").onclick = () => panel.classList.toggle("wide");
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") panel.classList.add("hidden"); });
+  const hist = [];
+  const scroll = () => { log.scrollTop = log.scrollHeight; };
+
+  function stepRow(box, ev) {
+    const row = document.createElement("div");
+    row.className = "cp-step";
+    row.innerHTML = '<span class="cp-spin"></span><span class="cp-lbl"></span><span class="cp-note"></span>';
+    row.querySelector(".cp-lbl").textContent = ev.label || ev.tool;
+    box.appendChild(row);
+    scroll();
+    return row;
+  }
+  function finishRow(row, ev) {
+    if (!row) return;
+    const sp = row.querySelector(".cp-spin");
+    if (sp) sp.outerHTML = '<span class="cp-tick">\u2713</span>';
+    row.classList.add("done");
+    const note = [ev.note, ev.cached ? "cached" : ""].filter(Boolean).join(" \u00b7 ");
+    if (note) row.querySelector(".cp-note").textContent = "\u00b7 " + note;
+  }
+
+  async function askStream(q, onEvent) {
+    const r = await fetch("/api/agent/stream", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: q, history: hist.slice(-8) }),
+    });
+    if (!r.ok) {
+      const j = await r.json().catch(() => ({}));
+      throw new Error(j.error === "no_project" ? (j.hint || j.error) : (j.error || j.hint || "HTTP " + r.status));
+    }
+    if (!r.body || !r.body.getReader) throw new Error("__no_stream__");
+    const reader = r.body.getReader();
+    const dec = new TextDecoder();
+    let buf = "", got = false;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let i;
+      while ((i = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, i).trim();
+        buf = buf.slice(i + 1);
+        if (!line) continue;
+        try { onEvent(JSON.parse(line)); got = true; } catch (e) { /* partial line noise */ }
+      }
+    }
+    if (!got) throw new Error("__no_stream__");
+  }
+
+  async function askPlain(q) {
+    const r = await fetch("/api/agent", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: q, history: hist.slice(-8) }),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || j.hint || "HTTP " + r.status);
+    return j;
+  }
+
+  $("#cp-form").onsubmit = async (e) => {
+    e.preventDefault();
+    const inp = $("#cp-in"), q = inp.value.trim();
+    if (!q) return;
+    inp.value = "";
+    log.insertAdjacentHTML("beforeend", '<div class="cp-msg cp-user"></div>');
+    log.lastElementChild.textContent = q;
+    const steps = document.createElement("div");
+    steps.className = "cp-steps";
+    log.appendChild(steps);
+    const think = stepRow(steps, { label: "reading the ledger\u2026" });
+    scroll();
+    let cur = null, replied = false;
+    const showReply = (r) => {
+      replied = true;
+      finishRow(think, {});
+      think.remove();
+      if (!steps.children.length) steps.remove();
+      log.insertAdjacentHTML("beforeend", '<div class="cp-msg cp-ai cp-md">' + md2html(r.reply || "") + "</div>");
+      hist.push({ role: "user", content: q }, { role: "assistant", content: r.reply || "" });
+      scroll();
+    };
+    const showErr = (msg) => {
+      think.remove();
+      if (!steps.children.length) steps.remove();
+      log.insertAdjacentHTML("beforeend", '<div class="cp-msg cp-err"></div>');
+      log.lastElementChild.textContent = msg;
+      scroll();
+    };
+    try {
+      await askStream(q, (ev) => {
+        if (ev.event === "thinking") { think.querySelector(".cp-lbl").textContent = steps.children.length > 1 ? "composing\u2026" : "reading the ledger\u2026"; steps.appendChild(think); scroll(); }
+        else if (ev.event === "step_start") { cur = stepRow(steps, ev); steps.appendChild(think); }
+        else if (ev.event === "step_done") { finishRow(cur, ev); cur = null; }
+        else if (ev.event === "reply") showReply(ev);
+        else if (ev.event === "error") showErr(ev.error || "copilot error");
+      });
+      if (!replied && !cur) { /* stream ended without reply event */ }
+    } catch (err) {
+      if (String(err.message) === "__no_stream__") {
+        try { showReply(await askPlain(q)); }
+        catch (e2) { showErr(e2.message || String(e2)); }
+      } else if (!replied) {
+        showErr(err.message || String(err));
+      }
+    }
+  };
+}
+wireCopilot();

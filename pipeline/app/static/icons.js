@@ -33,4 +33,6 @@ const ICONS = {
   x: _svg('<path d="M6 6l12 12M18 6L6 18"/>'),
   doc: _svg('<path d="M6.5 3.5h8l3 3v14h-11z"/><path d="M14.5 3.5V7h3"/>'),
   chip: _svg('<rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9.5 2.5v3M14.5 2.5v3M9.5 18.5v3M14.5 18.5v3M2.5 9.5h3M2.5 14.5h3M18.5 9.5h3M18.5 14.5h3"/>'),
+  facility: _svg('<path d="M3.5 20.5h17"/><rect x="5" y="13" width="3.6" height="7.5"/><rect x="10.2" y="9" width="3.6" height="11.5"/><rect x="15.4" y="5" width="3.6" height="15.5"/>'),
+  copilot: _svg('<path d="M4.5 5h15v10.5H10l-4.5 4v-4h-1z"/><path d="M8.5 9h7M8.5 11.5h4.5"/>'),
 };

@@ -12,7 +12,7 @@
     <div class="brand">
       <span class="seal" aria-hidden="true">C</span>
       <span class="brand-name">CLAUSE</span>
-      <span class="brand-sub">requirement ledger</span>
+      <span class="brand-sub">data-centre EPC requirement ledger</span>
     </div>
     <div class="top-right">
       <span class="net" title="last API round-trip"><span class="net-dot" id="net-dot"></span><span id="net-ms" class="mono">—</span></span>
@@ -24,7 +24,13 @@
   </header>
   <main id="view" tabindex="-1"></main>
   <nav id="tabs" aria-label="sections"></nav>
-  <footer id="ticker" title="live server activity — every request, timed"><span id="ticker-inner" class="mono"></span></footer>
+  <footer id="ticker" title="live server activity — every request, timed"><span id="ticker-inner" class="mono"></span><span id="ticker-credit" class="mono">ET AI Hackathon 2026 · PS4 · data-centre EPC</span></footer>
+</div>
+<button id="cp-fab" class="hidden" title="CLAUSE copilot — ask the ledger" aria-label="Open copilot"><span id="cp-fab-ic"></span><span class="cp-fab-label">Ask CLAUSE</span></button>
+<div id="cp-panel" class="hidden">
+  <div class="cp-head"><span class="mono"><b>CLAUSE copilot</b></span><span class="cp-sub">tool-calling agent · every answer cites doc + page</span><button id="cp-wide" class="btn" title="toggle panel width" aria-label="Toggle width">⇔</button><button id="cp-close" class="btn" aria-label="Close copilot"></button></div>
+  <div id="cp-log"><div class="cp-msg cp-ai cp-md">Ask the ledger anything — try “why is the UPS package flagged?” or “what does the addendum change?”. Every tool call is relayed live — searching, reading pages, looking up IDs — then the answer arrives with document + page citations.</div></div>
+  <form id="cp-form"><input id="cp-in" placeholder="ask about any clause, package, PO, test…" autocomplete="off"><button class="btn" type="submit">Ask</button></form>
 </div>
 <div id="toast" class="hidden"></div>
 <div id="modal" class="hidden" role="dialog" aria-modal="true">

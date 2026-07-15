@@ -3,12 +3,21 @@
 - temperature 0, JSON output mode, 3 retries with backoff
 - every call disk-cached by sha256(model+system+user) => reruns are free
 - token usage appended to pipeline/cost_log.jsonl
-- reads DEEPSEEK_API_KEY / DEEPSEEK_BASE_URL / DEEPSEEK_MODEL from pipeline/.env
-- the API key is never printed and never written to any output file
+- reads DEEPSEEK_API_KEY / DEEPSEEK_API_KEYS / DEEPSEEK_BASE_URL / DEEPSEEK_MODEL
+  from pipeline/.env
+- MULTI-KEY SCALE-OUT: DEEPSEEK_API_KEYS may hold N keys (comma/newline
+  separated). Calls rotate round-robin across keys, and common/pool.py fans
+  map-stage work across N parallel workers. The cache key does NOT include the
+  API key, so cached replays work regardless of key count.
+- thread-safe: key rotation and cost-log writes are locked; cache writes are
+  atomic (tmp + rename)
+- API keys are never printed and never written to any output file
 """
 import hashlib
 import json
 import os
+import re
+import threading
 import time
 import urllib.request
 
@@ -29,10 +38,35 @@ def _load_env():
                     os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 
 
+def _split_keys(raw):
+    return [k.strip() for k in re.split(r"[,\s]+", raw or "") if k.strip()]
+
+
 _load_env()
 API_KEY = os.environ.get("DEEPSEEK_API_KEY")
+API_KEYS = _split_keys(os.environ.get("DEEPSEEK_API_KEYS", ""))
 BASE_URL = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
 MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+
+_LOCK = threading.Lock()
+_ROUND = {"i": 0}
+
+
+def keys():
+    """All configured API keys (DEEPSEEK_API_KEYS pool, else the single key)."""
+    return API_KEYS or ([API_KEY] if API_KEY else [])
+
+
+def _next_key():
+    """Round-robin over the key pool - each concurrent worker lands on a
+    different key, so N keys => N independent rate-limit budgets."""
+    ks = keys()
+    if not ks:
+        return None
+    with _LOCK:
+        i = _ROUND["i"]
+        _ROUND["i"] = (i + 1) % len(ks)
+    return ks[i % len(ks)]
 
 
 def _http_post(url, payload, headers, timeout=180):
@@ -43,6 +77,14 @@ def _http_post(url, payload, headers, timeout=180):
         return json.loads(resp.read().decode())
 
 
+def _write_cache(cpath, obj):
+    """Atomic write: concurrent workers never leave a torn cache file."""
+    tmp = cpath + f".tmp{os.getpid()}_{threading.get_ident()}"
+    with open(tmp, "w") as f:
+        json.dump(obj, f)
+    os.replace(tmp, cpath)
+
+
 def call(system, user):
     """Returns the assistant message content string. Disk-cached."""
     os.makedirs(CACHE_DIR, exist_ok=True)
@@ -51,7 +93,8 @@ def call(system, user):
     if os.path.exists(cpath):
         with open(cpath) as f:
             return json.load(f)["content"]
-    if not API_KEY:
+    api_key = _next_key()
+    if not api_key:
         raise RuntimeError(
             "DEEPSEEK_API_KEY not set. Copy .env.example to pipeline/.env and add your key."
         )
@@ -66,7 +109,7 @@ def call(system, user):
     }
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + API_KEY,
+        "Authorization": "Bearer " + api_key,
     }
     last_err = None
     for attempt in range(3):
@@ -74,19 +117,23 @@ def call(system, user):
             data = _http_post(BASE_URL.rstrip("/") + "/chat/completions", payload, headers)
             content = data["choices"][0]["message"]["content"]
             usage = data.get("usage", {})
-            with open(COST_LOG, "a") as f:
-                f.write(json.dumps({
-                    "ts": time.time(),
-                    "model": MODEL,
-                    "prompt_tokens": usage.get("prompt_tokens"),
-                    "completion_tokens": usage.get("completion_tokens"),
-                }) + "\n")
-            with open(cpath, "w") as f:
-                json.dump({"content": content}, f)
+            with _LOCK:
+                with open(COST_LOG, "a") as f:
+                    f.write(json.dumps({
+                        "ts": time.time(),
+                        "model": MODEL,
+                        "prompt_tokens": usage.get("prompt_tokens"),
+                        "completion_tokens": usage.get("completion_tokens"),
+                    }) + "\n")
+            _write_cache(cpath, {"content": content})
             return content
         except Exception as e:  # noqa: BLE001
             last_err = e
             time.sleep(2 ** attempt * 2)
+            # retry on a different key when a pool is configured
+            nk = _next_key()
+            if nk:
+                headers["Authorization"] = "Bearer " + nk
     raise RuntimeError(f"DeepSeek call failed after 3 attempts: {last_err}")
 
 

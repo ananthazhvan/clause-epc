@@ -43,3 +43,9 @@ pause on hidden tab, error overlay. Verified headless: 353 nodes / 711 edges,
 - POST blastwave/apply: ok
 - Headless Chromium renders #overview (real metrics: 424/185/591/32) and
   #graph (353·711, settled) with zero error overlays
+
+---
+
+**2026-07-13 (v6):** the M12 external-checks page was removed — demo-only value,
+not part of the product story. M13 (data-centre facility profile) replaces it in
+the run. This file stays as historical run notes.

@@ -1,0 +1,6 @@
+activity_id,name,duration_days,predecessors,float_days,critical_path
+ACT-CIV-01,Civil Works Phase 1,15,,0,True
+ACT-ELE-GEN-01,Procure and Deliver Generators,40,ACT-CIV-01,0,True
+ACT-ELE-GEN-INSTALL,Install Generator,20,ACT-ELE-GEN-01,0,True
+ACT-ELE-UPS-INSTALL,Install UPS,20,ACT-ELE-GEN-01,10,False
+ACT-COM-01,Commissioning Stage 1,15,ACT-ELE-GEN-INSTALL,0,True
