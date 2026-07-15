@@ -68,7 +68,7 @@ GUIDES = {"LOCAL_LLM.md", "CORPUS_FORMAT.md", "README.md", "DESIGN_SPEC.md",
 # Data endpoints that require a loaded project (top path segment).
 GATED = {"summary", "graph", "blastwave", "queue", "options", "margins",
          "vendors", "lint", "paperwork", "cx", "facility", "node",
-         "packages", "verdicts", "ncr", "intel", "supply"}
+         "packages", "verdicts", "ncr"}
 
 # Ground truth is never read by the pipeline (contamination rule).
 BANNED = ("project_bible", "labels.json", "curves_data", "answer_key")
@@ -665,8 +665,6 @@ class Handler(BaseHTTPRequestHandler):
             ("paperwork",): lambda: load("paperwork_index.json") or {"documents": []},
             ("cx",): lambda: load("cx_packs.json") or {"tests": []},
             ("facility",): lambda: load("facility.json") or {},
-            ("intel",): lambda: load("intel.json") or {"findings": []},
-            ("supply",): lambda: load("supply_risk.json") or {},
             ("project",): project_state,
         }
         key = tuple(parts)

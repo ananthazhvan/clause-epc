@@ -147,26 +147,3 @@ one per key). Results return in input order, so artifacts are byte-identical
 at any worker count. N keys ≈ N× throughput on the only expensive stages.
 Benchmark the deterministic core with `python3 bench_scale.py`. The full
 argument (and its honest limits): `SCALABILITY.md`.
-
-## The intelligence layers
-
-CLAUSE is not one AI call and a pile of scripts. Verification runs in layers,
-each with a deterministic guard on the AI above it:
-
-1. **M1 parse** - content-based classification of every dropped file (PDF,
-   HTML, CSV, P6 XML, SAP OData JSON, logistics feeds).
-2. **M2/M3 compile & extract** - AI compiles the spec into checkable rules and
-   reads every submittal page into claims, in parallel across API keys.
-3. **M4 verify** - deterministic rule x claim join. Whatever it cannot
-   resolve is not guessed at - it is handed up.
-4. **M4b adjudicate** - a second, independent AI pass re-reads the ENTIRE
-   submittal package per unresolved rule. A verdict only changes when the
-   model produces a verbatim quote that provably exists in the package text
-   (whitespace-normalised substring check). The model proposes, the code
-   disposes.
-5. **M15 supply risk** - forward-passes the schedule and joins every PO
-   (lead time, order date, live ETA if a logistics feed is present) to the
-   activity that needs it: LATE / AT_RISK / WATCH with days-left-to-act.
-6. **M14 intelligence** - reads the joined digest (verdicts x vendors x POs x
-   schedule x commissioning coverage) and surfaces cross-source findings. AI
-   findings are kept only if every entity they cite exists in the project.

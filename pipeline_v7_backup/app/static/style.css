@@ -56,7 +56,7 @@ body::before {
 .mono, code, pre { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .hidden { display: none !important; }
 
-#app { display: grid; grid-template-rows: 50px 1fr 58px; height: 100vh; }
+#app { display: grid; grid-template-rows: 50px 1fr 58px 24px; height: 100vh; }
 
 /* ================= topbar ================= */
 header {
@@ -124,6 +124,13 @@ nav#tabs {
 .tab-sep { width: 1.5px; background: var(--line); margin: 6px 6px; }
 
 /* ================= ticker ================= */
+footer#ticker {
+  overflow: hidden; white-space: nowrap; background: var(--ink); color: rgba(243,236,223,.75);
+  font-size: 10.5px; line-height: 24px; padding: 0 12px;
+}
+#ticker-inner { display: inline-block; }
+#ticker .tick-ok { color: #9fd0a8; }
+#ticker .tick-slow { color: #e8c66e; }
 
 /* ================= main / views ================= */
 main#view { overflow-y: auto; padding: 18px 20px 26px; }
@@ -408,16 +415,18 @@ pre#runlog { margin: 0; padding: 12px 14px; height: calc(100vh - 330px); min-hei
 .d-kv .k { color: var(--ink2); }
 .d-kv .v { text-align: right; }
 
+#ticker { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+#ticker-credit { color: var(--ink3); white-space: nowrap; font-size: 10.5px; }
 
 /* facility tier plate */
 .tier-plate .tp-big { font-family: var(--serif); font-size: 42px; letter-spacing: 4px; color: var(--verm); border: 2px solid var(--verm); display: inline-block; padding: 3px 16px; transform: rotate(-1.4deg); margin: 4px 0 10px; }
 
 /* copilot - core feature: prominent pill launcher + full-height drawer */
-#cp-fab { position: fixed; left: 20px; bottom: 66px; z-index: 60; height: 48px; padding: 0 18px 0 14px; display: flex; align-items: center; gap: 9px; border: 2px solid var(--verm); color: var(--verm); background: var(--panel); box-shadow: 4px 4px 0 var(--raised); cursor: pointer; font-family: var(--serif); font-size: 15px; letter-spacing: .4px; }
+#cp-fab { position: fixed; right: 20px; bottom: 66px; z-index: 60; height: 48px; padding: 0 18px 0 14px; display: flex; align-items: center; gap: 9px; border: 2px solid var(--verm); color: var(--verm); background: var(--panel); box-shadow: 4px 4px 0 var(--raised); cursor: pointer; font-family: var(--serif); font-size: 15px; letter-spacing: .4px; }
 #cp-fab:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--raised); }
 #cp-fab svg { width: 22px; height: 22px; }
 #cp-fab.hidden, #cp-panel.hidden { display: none; }
-#cp-panel { position: fixed; left: 0; top: 0; bottom: 0; z-index: 70; width: min(640px, 100vw); background: var(--panel); border-right: var(--key); box-shadow: 5px 0 0 var(--raised); display: flex; flex-direction: column; }
+#cp-panel { position: fixed; right: 0; top: 0; bottom: 0; z-index: 70; width: min(640px, 100vw); background: var(--panel); border-left: var(--key); box-shadow: -5px 0 0 var(--raised); display: flex; flex-direction: column; }
 #cp-panel.wide { width: min(960px, 97vw); }
 .cp-head { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: var(--key); }
 .cp-head .btn { padding: 2px 8px; line-height: 1.4; }

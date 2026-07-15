@@ -15,19 +15,21 @@
       <span class="brand-sub">data-centre EPC requirement ledger</span>
     </div>
     <div class="top-right">
-            <span id="model-chip" class="mono" title="model">—</span>
+      <span class="net" title="last API round-trip"><span class="net-dot" id="net-dot"></span><span id="net-ms" class="mono">—</span></span>
+      <span id="model-chip" class="mono" title="model wired to pipeline/.env — cached prompts replay free, new prompts hit this endpoint">—</span>
       <span id="clock" class="mono"></span>
-      <button id="btn-recompute" class="btn btn-primary" title="analyse the uploaded documents">Run</button>
+      <button id="btn-recompute" class="btn btn-primary" title="re-run the full pipeline on the staged documents">Run</button>
       <button id="btn-settings" class="iconbtn" title="Settings · bring your own model"></button>
     </div>
   </header>
   <main id="view" tabindex="-1"></main>
   <nav id="tabs" aria-label="sections"></nav>
-  </div>
+  <footer id="ticker" title="live server activity — every request, timed"><span id="ticker-inner" class="mono"></span><span id="ticker-credit" class="mono">ET AI Hackathon 2026 · PS4 · data-centre EPC</span></footer>
+</div>
 <button id="cp-fab" class="hidden" title="CLAUSE copilot — ask the ledger" aria-label="Open copilot"><span id="cp-fab-ic"></span><span class="cp-fab-label">Ask CLAUSE</span></button>
 <div id="cp-panel" class="hidden">
-  <div class="cp-head"><span class="mono"><b>CLAUSE copilot</b></span><span class="cp-sub">project copilot</span><button id="cp-wide" class="btn" title="toggle panel width" aria-label="Toggle width">⇔</button><button id="cp-close" class="btn" aria-label="Close copilot"></button></div>
-  <div id="cp-log"><div class="cp-msg cp-ai cp-md">Ask anything about this project — “why is the UPS package flagged?”, “which deliveries put the schedule at risk?”, “what does the addendum change?” Answers cite the exact document and page.</div></div>
+  <div class="cp-head"><span class="mono"><b>CLAUSE copilot</b></span><span class="cp-sub">tool-calling agent · every answer cites doc + page</span><button id="cp-wide" class="btn" title="toggle panel width" aria-label="Toggle width">⇔</button><button id="cp-close" class="btn" aria-label="Close copilot"></button></div>
+  <div id="cp-log"><div class="cp-msg cp-ai cp-md">Ask the ledger anything — try “why is the UPS package flagged?” or “what does the addendum change?”. Every tool call is relayed live — searching, reading pages, looking up IDs — then the answer arrives with document + page citations.</div></div>
   <form id="cp-form"><input id="cp-in" placeholder="ask about any clause, package, PO, test…" autocomplete="off"><button class="btn" type="submit">Ask</button></form>
 </div>
 <div id="toast" class="hidden"></div>

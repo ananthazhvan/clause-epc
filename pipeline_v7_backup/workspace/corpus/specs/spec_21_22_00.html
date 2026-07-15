@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page { size: A4; margin: 0; }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #1d2b38;
+        }
+        .page {
+            width: 210mm;
+            height: 297mm;
+            box-sizing: border-box;
+            padding: 20mm;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+            background: white;
+        }
+        .header {
+            position: absolute;
+            top: 15mm;
+            left: 20mm;
+            right: 20mm;
+            border-bottom: 2.5px solid #16324f;
+            padding-bottom: 3mm;
+            font-size: 9pt;
+            color: #16324f;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #b9c6d2;
+            font-size: 9pt;
+            color: #5c6b7a;
+            text-align: right;
+            padding-top: 3mm;
+            letter-spacing: 0.3px;
+        }
+        .footnotes {
+            position: absolute;
+            bottom: 25mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #b9c6d2;
+            padding-top: 2mm;
+            font-size: 8pt;
+            color: #44525f;
+        }
+        h1, h2, h3, h4 { color: #16324f; margin-top: 0; }
+        h2 {
+            border-bottom: 1px solid #d6dee6;
+            padding-bottom: 1.5mm;
+            letter-spacing: 0.5px;
+        }
+        h3 { letter-spacing: 0.3px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5mm; font-size: 9pt; }
+        th, td { border: 1px solid #c9d4de; padding: 6px; text-align: left; vertical-align: top; }
+        th {
+            background-color: #16324f;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            border: 1px solid #16324f;
+        }
+        tr:nth-child(even) td { background-color: #f3f6f9; }
+        .clause { margin-bottom: 4mm; text-align: justify; }
+        .clause-id { font-weight: bold; color: #16324f; }
+
+        /* Vendor styles */
+        .vendor-VoltEdge { border-top: 4mm solid #0056b3; }
+        .vendor-Deccan { border-top: 4mm solid #b8860b; }
+        .vendor-CryoCore { border-top: 4mm solid #008080; }
+        .vendor-Trident { border-top: 4mm solid #708090; }
+        .vendor-AegisFire { border-top: 4mm solid #cc0000; }
+
+        .logo-text { font-size: 18pt; font-weight: bold; letter-spacing: 1px; }
+        .VoltEdge .logo-text { color: #0056b3; }
+        .Deccan .logo-text { color: #b8860b; }
+        .CryoCore .logo-text { color: #008080; }
+        .Trident .logo-text { color: #708090; }
+        .AegisFire .logo-text { color: #cc0000; }
+
+        .cover-title {
+            font-size: 24pt;
+            margin-top: 40mm;
+            text-align: center;
+            letter-spacing: 2px;
+            border-top: 1px solid #16324f;
+            border-bottom: 1px solid #16324f;
+            padding: 6mm 0;
+        }
+        .cover-meta { margin-top: 20mm; font-size: 12pt; }
+        .cover-meta p { margin: 2.5mm 0; }
+        .status-badge {
+            display: inline-block;
+            padding: 2mm 5mm;
+            border-radius: 2mm;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+        .status-ACTIVE { background: #d4edda; color: #155724; border: 1px solid #9fd3ab; }
+        .status-SUPERSEDED { background: #f8d7da; color: #721c24; border: 1px solid #e3a5ac; }
+    </style>
+</head>
+<body>
+    
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 21 22 00 - Clean Agent Fire Suppression Systems</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <h2>PART 1 - GENERAL</h2>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.1 Summary</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.1.1.A</span>
+                    This section specifies the requirements for clean agent fire suppression systems using FK-5-1-12 (Dodecafluoro-2-methylpentan-3-one) for server rooms and critical electrical rooms at the Meridian Data Centre Campus, Phase 1.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.1.1.B</span>
+                    The clean agent system shall provide total flooding fire suppression for Class A (ordinary combustibles) and Class C (energised electrical equipment) hazards. The system shall be safe for use in occupied spaces.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.2 References</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.2.1</span>
+                    The clean agent fire suppression system shall be designed, installed, and tested in accordance with NFPA 2001 (2008 Edition) - Standard on Clean Agent Fire Extinguishing Systems. All system components shall comply with the requirements of this standard.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.2.2.A</span>
+                    Additional applicable standards include: IS 15493 (Clean Agent Fire Extinguishing Systems), NBC Part 4 (Fire and Life Safety), and the local fire department regulations of Navi Mumbai Municipal Corporation.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.2.3</span>
+                    All clean agent storage cylinders and discharge valve assemblies shall be tested, listed, and labeled in accordance with UL 2166 (Halocarbon Clean Agent Extinguishing System Units) and FM 5600 (Clean Agent Extinguishing Systems). Cylinders certified only to ISO 9809-1 without UL and FM listing shall not be accepted.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.3 Submittal Requirements</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.3.1.A</span>
+                    Submittals shall include system design calculations, agent quantity calculations, hydraulic flow calculations, nozzle layout drawings, detection zone drawings, and control panel wiring diagrams.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.3.2.A</span>
+                    A room integrity (door fan) test report shall be submitted for each protected enclosure, demonstrating the required agent hold time.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 21 22 00 / Page 1 of 4
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 21 22 00 - Clean Agent Fire Suppression Systems</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.3.3</span>
+                    Factory test and compliance certificates issued by UL and FM for all clean agent storage cylinder valve assemblies shall be submitted as part of the vendor submittal package. Submittals without these certificates shall be considered incomplete.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.4 Quality Assurance</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 1.4.1.A</span>
+                    System designer shall be a licensed fire protection engineer registered with the relevant statutory authority. The designer shall have a minimum of 5 installations of clean agent systems in data centre environments.
+                </div>
+            
+        
+            
+                <h2>PART 2 - PRODUCTS</h2>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">2.1 Clean Agent System</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.1.1</span>
+                    The clean agent shall be FK-5-1-12 (Dodecafluoro-2-methylpentan-3-one), chemically identified as CF3CF2C(O)CF(CF3)2. The agent shall have zero ozone depletion potential (ODP) and a global warming potential (GWP) of 1. No alternative agents shall be substituted without written approval.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">2.2 System Performance Requirements</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.2.1</span>
+                    Design concentration shall be 4.7% by volume (v/v) for Class A and Class C fire hazards. The design concentration shall be maintained uniformly throughout the protected enclosure volume within the agent hold time period.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.2.2</span>
+                    The No Observed Adverse Effect Level (NOAEL) for FK-5-1-12 is 10.0% by volume (v/v). The design concentration of 4.7% provides a safety margin well below the NOAEL, ensuring the system is safe for occupied spaces without pre-discharge personnel evacuation.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.2.3.A</span>
+                    Clean agent discharge time shall not exceed 10 seconds from the moment the discharge valve opens until 95% of the design agent quantity has been released into the protected enclosure, per NFPA 2001 requirements.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.2.3.B</span>
+                    Agent hold time (retention) shall be a minimum of 10 minutes (600 seconds) to prevent re-ignition. Hold time shall be verified by a room integrity (door fan) test conducted per NFPA 2001 Annex C.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 21 22 00 / Page 2 of 4
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 21 22 00 - Clean Agent Fire Suppression Systems</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.2.4.A</span>
+                    System shall include automatic detection using cross-zoned smoke detectors (two detectors in alarm required for discharge). Manual pull stations shall be provided at each exit.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.2.5</span>
+                    Minimum total clean agent quantity for the campus shall be 12,500 kg of FK-5-1-12. Agent quantity per zone shall be determined by the design concentration, protected volume, and altitude correction factors per NFPA 2001 calculation methodology.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">2.3 System Components</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.1.A</span>
+                    Clean agent storage cylinders shall be pressurised to 500 psi (34.5 bar) with nitrogen super-pressurisation. The system configuration shall be ECS-500 type with high-pressure distribution for optimal nozzle coverage and discharge performance.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.1.B</span>
+                    Cylinder valve assemblies shall be UL listed and FM approved. Valves shall include a manual safety pin, pressure gauge, and electric solenoid actuator.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.2.A</span>
+                    Distribution piping shall be Schedule 40 galvanised steel per ASTM A53. Pipe sizing shall be per NFPA 2001 hydraulic calculations to achieve the required discharge time.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.3.A</span>
+                    Discharge nozzles shall be 360-degree pattern type designed specifically for FK-5-1-12 agent. Nozzle coverage shall be as per manufacturer's approved layout based on ceiling height and room geometry.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.4.A</span>
+                    Control panel shall be UL/FM listed, with zone identification, alarm history, and supervisory signal monitoring capabilities.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.4.B</span>
+                    Pre-discharge audible and visual alarm devices shall be installed inside each protected space. Alarm shall provide a minimum of 30 seconds warning prior to agent discharge.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.4.C</span>
+                    Post-discharge exhaust fan system shall be provided to evacuate agent and combustion byproducts from the protected space. Exhaust rate shall achieve 6 air changes per hour minimum.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.4.D</span>
+                    Pressure relief venting shall be provided in each protected enclosure to prevent structural damage during rapid agent discharge. Vent area shall be calculated per NFPA 2001 guidelines.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.4.E</span>
+                    System shall include abort switches at each exit door allowing personnel to delay agent discharge during the pre-discharge alarm period.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 21 22 00 / Page 3 of 4
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 21 22 00 - Clean Agent Fire Suppression Systems</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 2.3.4.F</span>
+                    The vendor shall submit a NOAEL safety margin calculation demonstrating that the actual maximum agent concentration in the protected space does not exceed the NOAEL limit of 10.0% (v/v) under worst-case conditions including altitude and temperature corrections.
+                </div>
+            
+        
+            
+                <h2>PART 3 - EXECUTION</h2>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">3.1 Examination and Preparation</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 3.1.1.A</span>
+                    Verify that all room envelope penetrations are sealed and room integrity is maintained prior to system installation. Coordinate with architectural and mechanical trades.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">3.2 Installation</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 3.2.1.A</span>
+                    Clean agent piping shall be installed with adequate supports and expansion provisions. All piping joints shall be threaded or groove-coupled as specified by the system manufacturer.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">3.3 Field Quality Control</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 3.3.1.A</span>
+                    Pneumatic pressure test all agent distribution piping at 1.5 times the maximum storage cylinder pressure. Hold time shall be 24 hours with no measurable pressure drop.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">3.4 Commissioning and Acceptance</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 3.4.1</span>
+                    Perform system functional test verifying agent discharge completion within 10 seconds of system activation. Test shall be conducted using a simulated discharge (nitrogen blow-through) or full live discharge per the approved commissioning test plan.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">21 22 00 Part 3.4.2.A</span>
+                    Conduct a room integrity (door fan) test to verify the agent hold time meets the minimum requirement. Test report shall be prepared by a qualified fire protection technician.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 21 22 00 / Page 4 of 4
+    </div>
+</div>
+
+
+</body>
+</html>

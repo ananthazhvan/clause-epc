@@ -49,7 +49,9 @@ async function api(path, opts) {
   return r.json();
 }
 const post = (path, body) => api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body || {}) });
-function prov() { return ""; }
+function prov(extra) {
+  return '<span class="prov">fetched in <b>' + LAST_MS + " ms</b> \u00b7 " + new Date().toLocaleTimeString() + (extra ? " \u00b7 " + esc(extra) : "") + "</span>";
+}
 
 /* ---------------- toast / modal / errors ---------------- */
 let toastTimer = null;
@@ -128,12 +130,10 @@ const ROUTES = [
   { id: "queue", label: "Queue", icon: "queue", fn: vQueue, group: 1 },
   { id: "review", label: "Review", icon: "review", fn: vReview, group: 2 },
   { id: "graph", label: "Graph", icon: "graph", fn: vGraph, group: 2 },
-  { id: "intel", label: "Intel", icon: "blast", fn: vIntel, group: 2 },
   { id: "lint", label: "Defects", icon: "lint", fn: vLint, group: 2 },
   { id: "facility", label: "Facility", icon: "facility", fn: vFacility, group: 2 },
   { id: "blast", label: "Blast", icon: "blast", fn: vBlast, group: 3 },
   { id: "margins", label: "Margins", icon: "margins", fn: vMargins, group: 3 },
-  { id: "supply", label: "Supply", icon: "clock", fn: vSupply, group: 3 },
   { id: "vendors", label: "Vendors", icon: "vendors", fn: vVendors, group: 3 },
   { id: "paperwork", label: "Paperwork", icon: "paperwork", fn: vPaperwork, group: 4 },
   { id: "cx", label: "Cx", icon: "cx", fn: vCx, group: 4 },
@@ -241,7 +241,7 @@ function renderStaged(p) {
   const el = $("#staged-body");
   if (!el) return;
   el.innerHTML = !p.staged_total
-    ? '<div class="form-note">no documents yet</div>'
+    ? '<div class="form-note">nothing staged yet</div>'
     : Object.entries(p.staged || {}).map(([k, v]) => '<div class="d-kv"><span class="k mono">' + esc(k) + '/</span><span class="v">' + v + " file(s)</span></div>").join("");
   const run = $("#btn-run"), clr = $("#btn-clear");
   if (run) run.disabled = !p.staged_total;
@@ -282,7 +282,7 @@ function wireUploader(afterUpload) {
       '<div class="up-row">' + kstamp(r.kind) + '<span class="fn">' + esc(r.name) + '</span><span class="note">' + esc(r.note || "") + "</span></div>").join("");
     const bad = (res.results || []).filter((r) => r.kind === "error").length;
     out.innerHTML = '<div class="mt">' + rows + "</div>" +
-      '<div class="row mt"><span class="prov">' + (res.staged_total || 0) + " file(s) received" + (bad ? " \u00b7 <b>" + bad + " rejected</b>" : "") + "</span></div>";
+      '<div class="row mt"><span class="prov">' + (res.staged_total || 0) + " file(s) staged \u00b7 classified by content, not filename" + (bad ? " \u00b7 <b>" + bad + " rejected</b>" : "") + "</span></div>";
     PROJECT = null;
     const np = await projectState();
     renderStaged(np);
@@ -296,7 +296,7 @@ function hubEmpty(view, p) {
     '<div class="hub">' +
     uploadCardHtml(true) +
     "<div>" +
-    '<div class="card mb"><h2>' + icon("queue") + 'documents ready</h2><div id="staged-body"></div>' +
+    '<div class="card mb"><h2>' + icon("queue") + 'staged, waiting for a run</h2><div id="staged-body"></div>' +
     '<div class="row mt"><button class="btn btn-primary" id="btn-run">Run the pipeline</button><button class="btn" id="btn-clear">Clear</button></div>' +
     '<div class="form-note">the run streams live: parsing, rule compilation, claim extraction, verification, consequences. LLM stages use the model in Settings \u2014 prompts already in the local cache replay instantly and free; new prompts hit the endpoint and take real time.</div></div>' +
     '<div class="card"><h2>' + icon("paperwork") + "what it eats</h2>" +
@@ -310,7 +310,7 @@ function hubEmpty(view, p) {
     "</div></div></div>";
   renderStaged(p);
   $("#btn-run").onclick = async () => { try { await post("/api/run"); PROJECT = null; location.hash = "#run"; } catch (e) { toast(esc(e.message)); } };
-  $("#btn-clear").onclick = async () => { try { await post("/api/project/reset"); PROJECT = null; toast("Project cleared"); route(); } catch (e) { toast(esc(e.message)); } };
+  $("#btn-clear").onclick = async () => { try { await post("/api/project/reset"); PROJECT = null; toast("Cleared \u2014 staged documents and artifacts removed"); route(); } catch (e) { toast(esc(e.message)); } };
   $("#open-format").onclick = () => openGuide("CORPUS_FORMAT.md");
   wireUploader();
 }
@@ -624,15 +624,6 @@ function mulberry32(a) {
 }
 async function vGraph(view, arg) {
   const g = await api("/api/graph");
-  (g.nodes || []).forEach((n) => { if (n.label == null) n.label = String(n.id || ""); });
-  if ((g.nodes || []).length > 900) {
-    const risky = new Set(["DEVIATION", "MISSING_EVIDENCE", "NEEDS_REVIEW", "CRITICAL", "INVALID", "STALE", "PENDING"]);
-    const hot = new Set(g.nodes.filter((n) => risky.has(n.status)).map((n) => n.id));
-    const keep = new Set(g.nodes.filter((n) => n.type === "section" || n.type === "package" || n.type === "addendum" || hot.has(n.id)).map((n) => n.id));
-    g.edges.forEach((e) => { if (hot.has(e.s) || hot.has(e.t)) { keep.add(e.s); keep.add(e.t); } });
-    g.nodes = g.nodes.filter((n) => keep.has(n.id));
-    g.edges = g.edges.filter((e) => keep.has(e.s) && keep.has(e.t));
-  }
   const nodes = (g.nodes || []).map((n) => Object.assign({}, n));
   const rawEdges = (g.edges || []).map((e) => ({ s: e.s || e.source, t: e.t || e.target, type: e.type }));
   view.innerHTML = '<div class="view" style="max-width:none">' +
@@ -863,7 +854,13 @@ async function vGraph(view, arg) {
       }
       ctx.globalAlpha = 1;
     }
-    $("#g-stats").textContent = nodes.length + " nodes \u00b7 " + edges.length + " edges \u00b7 drag nodes \u00b7 double-click to fit";
+    if ((tick & 15) === 0 || tick >= SETTLE) {
+      let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      for (const n of nodes) { if (n.x < x0) x0 = n.x; if (n.x > x1) x1 = n.x; if (n.y < y0) y0 = n.y; if (n.y > y1) y1 = n.y; }
+      const liveCanvas = document.getElementById("graph-canvas");
+      if (liveCanvas) liveCanvas.dataset.spread = String(Math.round(Math.max(x1 - x0, y1 - y0)));
+    }
+    $("#g-stats").textContent = nodes.length + " nodes \u00b7 " + edges.length + " edges \u00b7 " + (tick >= SETTLE || alpha < 0.004 ? "settled" : "settling") + " \u00b7 drag nodes \u00b7 double-click to fit" + (document.getElementById("graph-canvas") && document.getElementById("graph-canvas").dataset.spread ? " [sp=" + document.getElementById("graph-canvas").dataset.spread + "]" : "");
     raf = requestAnimationFrame(draw);
   }
   raf = requestAnimationFrame(draw);
@@ -1206,6 +1203,17 @@ function startChrome() {
   };
   setInterval(() => { $("#clock").textContent = new Date().toLocaleTimeString(); }, 1000);
   $("#clock").textContent = new Date().toLocaleTimeString();
+  async function tickTicker() {
+    try {
+      const r = await fetch("/api/activity");
+      const d = await r.json();
+      const ev = (d.events || []).slice(-12).reverse();
+      $("#ticker-inner").innerHTML = ev.map((e) =>
+        '<span class="' + (e.ms > 300 ? "tick-slow" : "tick-ok") + '">' + e.method + " " + esc(e.path) + " " + e.status + " \u00b7 " + e.ms + "ms</span>").join('<span style="opacity:.4"> \u2500\u2500 </span>') || "waiting for traffic\u2026";
+    } catch (e) { $("#ticker-inner").textContent = "server unreachable"; }
+  }
+  setInterval(tickTicker, 4000);
+  tickTicker();
   projectState().catch(() => { /* offline */ });
 }
 window.addEventListener("hashchange", route);
@@ -1251,7 +1259,7 @@ function wireCopilot() {
   async function askStream(q, onEvent) {
     const r = await fetch("/api/agent/stream", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: q, history: hist.slice(-8), page: (location.hash || "#hub").slice(1) }),
+      body: JSON.stringify({ message: q, history: hist.slice(-8) }),
     });
     if (!r.ok) {
       const j = await r.json().catch(() => ({}));
@@ -1279,7 +1287,7 @@ function wireCopilot() {
   async function askPlain(q) {
     const r = await fetch("/api/agent", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: q, history: hist.slice(-8), page: (location.hash || "#hub").slice(1) }),
+      body: JSON.stringify({ message: q, history: hist.slice(-8) }),
     });
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(j.error || j.hint || "HTTP " + r.status);
@@ -1335,41 +1343,3 @@ function wireCopilot() {
   };
 }
 wireCopilot();
-
-/* =========================================================== intel */
-async function vIntel(view) {
-  const d = await api("/api/intel");
-  const fs = d.findings || [];
-  const cards = fs.map((f) => '<div class="ev-row"><div class="ev-head">' +
-    '<span class="chip">' + esc(f.severity || "") + '</span>' +
-    '<span class="param">' + esc(f.title || "") + '</span><span class="spacer"></span>' +
-    '<span class="chip">' + (f.ai ? "read across sources" : "computed") + '</span></div>' +
-    '<div class="quote">' + esc(f.narrative || "") + '</div>' +
-    '<div class="row mt">' + (f.entities || []).slice(0, 12).map((e) => '<span class="chip mono">' + esc(e) + '</span>').join(" ") + '</div></div>').join("");
-  view.innerHTML = '<div class="view">' +
-    head("Intelligence", "what the documents say when read together") +
-    (fs.length ? cards : '<div class="callout c-ok mb">no cross-document findings yet \u2014 run the pipeline first.</div>') + '</div>';
-}
-
-/* =========================================================== supply */
-async function vSupply(view) {
-  const s = await api("/api/supply");
-  const items = s.items || [], alerts = s.alerts || [], un = s.unlinked || [];
-  const n = (k) => (s.summary || {})[k] || 0;
-  const alertCards = alerts.map((a) => '<div class="ev-row"><div class="ev-head">' +
-    '<span class="chip">' + esc(a.severity || "") + '</span>' +
-    '<span class="param">' + esc((a.po || "") + " \u00b7 " + (a.item || "")) + '</span><span class="spacer"></span>' +
-    '<span class="chip mono">' + esc(a.activity || "") + '</span></div>' +
-    '<div class="quote">' + esc(a.vendor || "") + ' \u00b7 needed on site ' + esc(a.needed_on_site || "") +
-    ' \u00b7 projected arrival ' + esc(a.projected_arrival || "") + ' \u00b7 margin ' + a.margin_days +
-    'd \u00b7 days left to act: ' + a.days_to_act + (a.schedule_float_absorbs ? ' \u00b7 schedule float absorbs it' : '') + '</div></div>').join("");
-  const rows = items.map((r) => '<div class="d-kv"><span class="k mono">' + esc(r.po || "") + '</span><span class="v">' +
-    esc(((r.item || "").slice(0, 64)) + " \u00b7 " + (r.vendor || "") + " \u00b7 " + (r.status || "")) +
-    (r.margin_days != null ? " \u00b7 margin " + r.margin_days + "d" : "") + '</span></div>').join("");
-  view.innerHTML = '<div class="view">' +
-    head("Supply chain", "every purchase order joined to the schedule activity that needs it") +
-    '<div class="callout c-ok mb"><b>' + items.length + ' POs joined to the schedule \u00b7 ' + n("LATE") + ' late \u00b7 ' +
-    n("AT_RISK") + ' at risk \u00b7 ' + n("WATCH") + ' on watch' + (un.length ? ' \u00b7 ' + un.length + ' not linkable' : '') + '.</b></div>' +
-    (s.brief_md ? '<div class="card mb cp-md">' + md2html(s.brief_md) + '</div>' : '') +
-    alertCards + '<div class="card mt">' + (rows || '<div class="form-note">no purchase orders found</div>') + '</div></div>';
-}
