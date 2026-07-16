@@ -1,0 +1,46 @@
+activity_id,name,duration_days,predecessors,float_days,critical_path
+ACT-CIV-01,Civil Works Structure Phase 1,20,,0,True
+ACT-CIV-02,Civil Works Structure Phase 2,20,ACT-CIV-01,0,True
+ACT-CIV-03,Civil Works Structure Phase 3,20,ACT-CIV-02,0,True
+ACT-CIV-04,Civil Works Structure Phase 4,20,ACT-CIV-03,0,True
+ACT-CIV-05,Civil Works Structure Phase 5,20,ACT-CIV-04,0,True
+ACT-CIV-06,Civil Works Finish Phase 6,15,ACT-CIV-05,25,False
+ACT-CIV-07,Civil Works Finish Phase 7,15,ACT-CIV-06,25,False
+ACT-CIV-08,Civil Works Finish Phase 8,15,ACT-CIV-07,25,False
+ACT-ELE-GEN-01,Procure & Deliver Generators,300,ACT-CIV-05,0,True
+ACT-ELE-GEN-02,Install Generators,21,ACT-ELE-GEN-01,0,True
+ACT-ELE-GEN-03,Generator Fuel & Cabling,14,ACT-ELE-GEN-02,20,False
+ACT-ELE-UPS-01,Procure & Deliver UPS Systems,180,ACT-CIV-05,45,False
+ACT-ELE-UPS-02,Install UPS Systems,21,ACT-ELE-UPS-01,45,False
+ACT-ELE-UPS-03,UPS Battery Installation,14,ACT-ELE-UPS-02,45,False
+ACT-MEC-CRAH-01,Procure & Deliver CRAH Units,120,ACT-CIV-05,60,False
+ACT-MEC-CRAH-02,Install CRAH Units,21,ACT-MEC-CRAH-01,60,False
+ACT-MEC-CRAH-03,CRAH Piping & Connections,14,ACT-MEC-CRAH-02,60,False
+ACT-MEC-CHILL-01,Procure & Deliver Chillers,240,ACT-CIV-05,30,False
+ACT-MEC-CHILL-02,Install Chillers,28,ACT-MEC-CHILL-01,30,False
+ACT-MEC-CHILL-03,Chiller Piping & Connections,21,ACT-MEC-CHILL-02,30,False
+ACT-MEC-FIRE-01,Procure Fire Suppression,90,ACT-CIV-05,80,False
+ACT-MEC-FIRE-02,Install Fire Suppression Piping,21,ACT-MEC-FIRE-01,80,False
+ACT-MEC-FIRE-03,Fire Detection & Alarm Installation,14,ACT-MEC-FIRE-02,80,False
+ACT-ELE-SWB-01,Procure Switchboards,180,ACT-CIV-05,35,False
+ACT-ELE-SWB-02,Install Switchboards,21,ACT-ELE-SWB-01,35,False
+ACT-ELE-CAB-01,Cable Tray Installation,30,ACT-CIV-05,50,False
+ACT-ELE-CAB-02,Power Cable Pulling,30,ACT-ELE-CAB-01,50,False
+ACT-ELE-CAB-03,Cable Terminations,21,ACT-ELE-CAB-02,50,False
+ACT-IT-RACK-01,Install Server Racks,21,ACT-CIV-05,90,False
+ACT-IT-RACK-02,Install Containment,14,ACT-IT-RACK-01,90,False
+ACT-IT-CAB-01,Structured Cabling Installation,30,ACT-IT-RACK-01,90,False
+ACT-IT-CAB-02,Fibre Optic Cabling,14,ACT-IT-CAB-01,90,False
+ACT-SEC-ACS-01,Access Control Installation,21,ACT-CIV-05,110,False
+ACT-SEC-CCTV-01,CCTV Installation,21,ACT-CIV-05,110,False
+ACT-BMS-01,BMS/EPMS Installation,30,ACT-CIV-05,100,False
+ACT-BMS-02,BMS Integration & Testing,14,ACT-BMS-01,100,False
+ACT-EARTH-01,Earthing Grid Installation,21,ACT-CIV-05,120,False
+ACT-COM-01,Commissioning L1 FAT,14,ACT-CIV-05,35,False
+ACT-COM-02,Commissioning L2 Pre-Functional,14,ACT-COM-01,35,False
+ACT-COM-03,Commissioning L3 Equipment Startup,21,ACT-COM-02,35,False
+ACT-COM-04,Commissioning L4 Functional Testing,28,ACT-ELE-GEN-02;ACT-ELE-UPS-02;ACT-MEC-CHILL-02,0,True
+ACT-COM-05,Commissioning L5 Integrated Test,21,ACT-COM-04,0,True
+ACT-COM-06,Campus Handover Phase 1,7,ACT-COM-05,0,True
+ACT-COM-07,Campus Handover Phase 2,7,ACT-COM-06,0,True
+ACT-COM-08,Campus Handover Phase 3,7,ACT-COM-07,0,True

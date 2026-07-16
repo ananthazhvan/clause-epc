@@ -25,7 +25,10 @@ CLAUSE_RE = re.compile(r"^(\d{2} \d{2} \d{2}) Part (\d+(?:\.\d+)*(?:\.[A-Z])?)\s
 ART_RE = re.compile(r"^\d\.\d+\s+[A-Za-z]")
 PART_RE = re.compile(r"^PART \d - ")
 FOOT_RE = re.compile(r"Page \d+ of \d+$")  # generic print footer
-SPEC_NAME_RE = re.compile(r"^(?:spec_)?(\d{2})_(\d{2})_(\d{2})\.pdf$")
+SPEC_NAME_RE = re.compile(r"^(?:spec_)?(\d{2})_(\d{2})_(\d{2})\.(?:pdf|html?|txt|md)$")
+SPEC_HINT_RE = re.compile(r"(?:^|[^0-9])(\d{2})[_ ]?(\d{2})[_ ]?(\d{2})(?:[^0-9]|$)")
+SHORT_CLAUSE_RE = re.compile(r"^(\d+\.\d+(?:\.\d+)*(?:\.[A-Z])?)[ .:\u2014-]+(\S.*)$")
+SECTION_HEAD_RE = re.compile(r"SECTION\s+(\d{2})\s(\d{2})\s(\d{2})")
 
 TRANSMITTAL_PATTERNS = [
     (r"^Reference Section:\s*(\d{2} \d{2} \d{2})", "reference_section"),
@@ -37,7 +40,20 @@ TRANSMITTAL_PATTERNS = [
 
 
 def extract_pages(path):
-    return [(p.extract_text() or "") for p in pypdf.PdfReader(path).pages]
+    ext = os.path.splitext(path)[1].lower()
+    if ext == ".pdf":
+        return [(p.extract_text() or "") for p in pypdf.PdfReader(path).pages]
+    raw = open(path, encoding="utf-8", errors="replace").read()
+    if ext in (".html", ".htm"):
+        import html as _h
+        raw = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", raw, flags=re.S | re.I)
+        raw = re.sub(r"</(p|h1|h2|h3|h4|tr|table|li|div)>", "\n", raw, flags=re.I)
+        raw = re.sub(r"</t[dh]>", " | ", raw, flags=re.I)
+        raw = re.sub(r"<[^>]+>", "", raw)
+        raw = _h.unescape(raw)
+        raw = "\n".join(l.strip() for l in raw.split("\n"))
+    pages = [pg.strip() for pg in raw.split("\f") if pg.strip()]
+    return pages or [raw]
 
 
 def boilerplate_lines(pages):
@@ -55,7 +71,7 @@ def boilerplate_lines(pages):
     return {l for l, c in cnt.items() if c >= thresh and not CLAUSE_RE.match(l)}
 
 
-def parse_spec_clauses(pages):
+def parse_spec_clauses(pages, section_hint=None):
     boiler = boilerplate_lines(pages)
     clauses, cur = [], None
     for pageno, text in enumerate(pages, 1):
@@ -72,6 +88,16 @@ def parse_spec_clauses(pages):
                 }
                 clauses.append(cur)
                 continue
+            if section_hint:
+                m2 = SHORT_CLAUSE_RE.match(line)
+                if m2:
+                    cur = {
+                        "clause_id": f"{section_hint} Part {m2.group(1)}",
+                        "page": pageno,
+                        "text": m2.group(2).strip(),
+                    }
+                    clauses.append(cur)
+                    continue
             if PART_RE.match(line) or ART_RE.match(line):
                 cur = None
                 continue
@@ -130,15 +156,18 @@ def main():
     os.makedirs(args.out, exist_ok=True)
 
     banned = ["project_bible", "labels.json", "curves_data"]
-    pdfs = sorted(glob.glob(os.path.join(args.corpus, "**", "*.pdf"), recursive=True))
+    pdfs = sorted(
+        p for ext in ("pdf", "html", "htm", "txt", "md")
+        for p in glob.glob(os.path.join(args.corpus, "**", f"*.{ext}"), recursive=True)
+        if os.path.basename(p).lower() not in ("readme.md", "master_content.txt"))
     if not pdfs:
-        sys.exit(f"no PDFs found in {args.corpus}")
+        sys.exit(f"no parseable documents (pdf/html/txt/md) found in {args.corpus}")
 
     for path in pdfs:
         name = os.path.basename(path)
         if any(b in name for b in banned) or "_answer_key" in path:
             continue
-        stem = name[:-4]
+        stem = os.path.splitext(name)[0]
         pages = extract_pages(path)
         doc = {"doc": name, "pages": [{"page": i + 1, "text": t} for i, t in enumerate(pages)]}
         tm = parse_transmittal(pages[0])
@@ -149,9 +178,15 @@ def main():
             json.dump(doc, f, indent=1)
 
         m = SPEC_NAME_RE.match(name)
-        if m:
-            section = f"{m.group(1)} {m.group(2)} {m.group(3)}"
-            clauses = parse_spec_clauses(pages)
+        hint = None
+        if not m and not doc.get("transmittal"):
+            mh = SPEC_HINT_RE.search(os.path.splitext(name)[0]) if re.match(r"(?i)^spec", name) else None
+            mh = mh or SECTION_HEAD_RE.search(pages[0] if pages else "")
+            if mh:
+                hint = f"{mh.group(1)} {mh.group(2)} {mh.group(3)}"
+        if m or hint:
+            section = f"{m.group(1)} {m.group(2)} {m.group(3)}" if m else hint
+            clauses = parse_spec_clauses(pages, section_hint=hint or section)
             mode = "deterministic"
             if not clauses:
                 if args.allow_llm:

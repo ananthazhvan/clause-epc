@@ -123,21 +123,14 @@ function md2html(md) {
 /* ---------------- routes / tabs ---------------- */
 const ROUTES = [
   { id: "hub", label: "Hub", icon: "hub", fn: vHub, group: 0 },
-  { id: "overview", label: "Overview", icon: "overview", fn: vOverview, group: 1 },
-  { id: "clock", label: "Clock", icon: "clock", fn: vClock, group: 1 },
-  { id: "queue", label: "Queue", icon: "queue", fn: vQueue, group: 1 },
-  { id: "review", label: "Review", icon: "review", fn: vReview, group: 2 },
-  { id: "graph", label: "Graph", icon: "graph", fn: vGraph, group: 2 },
-  { id: "intel", label: "Intel", icon: "blast", fn: vIntel, group: 2 },
-  { id: "lint", label: "Defects", icon: "lint", fn: vLint, group: 2 },
-  { id: "facility", label: "Facility", icon: "facility", fn: vFacility, group: 2 },
-  { id: "blast", label: "Blast", icon: "blast", fn: vBlast, group: 3 },
-  { id: "margins", label: "Margins", icon: "margins", fn: vMargins, group: 3 },
-  { id: "supply", label: "Supply", icon: "clock", fn: vSupply, group: 3 },
-  { id: "vendors", label: "Vendors", icon: "vendors", fn: vVendors, group: 3 },
-  { id: "paperwork", label: "Paperwork", icon: "paperwork", fn: vPaperwork, group: 4 },
-  { id: "cx", label: "Cx", icon: "cx", fn: vCx, group: 4 },
-  { id: "ncr", label: "NCR", icon: "ncr", fn: vNcr, group: 4 },
+  { id: "objects", label: "Objects", icon: "overview", fn: vObjects, group: 1 },
+  { id: "graph", label: "Graph", icon: "graph", fn: vGraph, group: 1 },
+  { id: "globe", label: "Globe", icon: "facility", fn: vGlobe, group: 1 },
+  { id: "review", label: "Ledger", icon: "review", fn: vReview, group: 2 },
+  { id: "queue", label: "Queue", icon: "queue", fn: vQueue, group: 2 },
+  { id: "cx", label: "Cx", icon: "cx", fn: vCx, group: 3 },
+  { id: "ncr", label: "NCR", icon: "ncr", fn: vNcr, group: 3 },
+  { id: "paperwork", label: "Paperwork", icon: "paperwork", fn: vPaperwork, group: 3 },
 ];
 function renderTabs(activeId) {
   const nav = $("#tabs");
@@ -163,7 +156,7 @@ async function route() {
   const seg = h.split("/");
   const id = seg.shift() || "hub";
   const arg = decodeURIComponent(seg.join("/") || "");
-  const EXTRA = { settings: { id: "settings", fn: vSettings }, run: { id: "run", icon: "queue", fn: vRun } };
+  const EXTRA = { settings: { id: "settings", fn: vSettings }, run: { id: "run", icon: "queue", fn: vRun }, object: { id: "objects", fn: vObject360 } };
   const r = ROUTES.find((x) => x.id === id) || EXTRA[id] || ROUTES[0];
   renderTabs(r.id);
   const view = $("#view");
@@ -612,7 +605,7 @@ async function vReview(view, arg) {
 }
 
 /* =========================================================== graph */
-const NODE_COLORS = { section: "#355e8d", clause: "#7d8fae", package: "#a07416", po: "#3f7d4e", activity: "#6d5f92", cx: "#b0567f", addendum: "#c9442a" };
+const NODE_COLORS = { section: "#355e8d", clause: "#7d8fae", package: "#a07416", po: "#3f7d4e", activity: "#6d5f92", cx: "#b0567f", addendum: "#c9442a", vendor: "#8a6d3b", shipment: "#2e7d84", quality: "#a04b3f" };
 const BAD_STATUS = new Set(["DEVIATION", "INVALID", "STALE", "AMENDS", "CRITICAL", "EXPIRED", "NEGATIVE"]);
 function mulberry32(a) {
   return function () {
@@ -623,7 +616,16 @@ function mulberry32(a) {
   };
 }
 async function vGraph(view, arg) {
-  const g = await api("/api/graph");
+  let g = null;
+  try {
+    const _o = await api("/api/ontology");
+    if ((_o.objects || []).length) {
+      g = { nodes: _o.objects.map((x) => ({ id: x.id, type: x.type, label: x.name, status: x.status || "", meta: x.props || {} })),
+            edges: (_o.links || []).map((l) => ({ s: l.s, t: l.t, type: l.rel })) };
+      window.__ONTO_IDS = new Set(g.nodes.map((n) => n.id));
+    }
+  } catch (e) { window.__ONTO_IDS = null; }
+  if (!g) { window.__ONTO_IDS = null; g = await api("/api/graph"); }
   (g.nodes || []).forEach((n) => { if (n.label == null) n.label = String(n.id || ""); });
   if ((g.nodes || []).length > 900) {
     const risky = new Set(["DEVIATION", "MISSING_EVIDENCE", "NEEDS_REVIEW", "CRITICAL", "INVALID", "STALE", "PENDING"]);
@@ -636,11 +638,11 @@ async function vGraph(view, arg) {
   const nodes = (g.nodes || []).map((n) => Object.assign({}, n));
   const rawEdges = (g.edges || []).map((e) => ({ s: e.s || e.source, t: e.t || e.target, type: e.type }));
   view.innerHTML = '<div class="view" style="max-width:none">' +
-    head("The ledger graph", nodes.length + " nodes \u00b7 " + rawEdges.length + " edges \u2014 hover: connections \u00b7 click: what it does to you") +
+    head("The ontology graph", nodes.length + " objects \u00b7 " + rawEdges.length + " typed relationships \u2014 every node is a real-world object \u00b7 click: open the object") +
     '<div class="graph-wrap"><div class="card graph-card"><canvas id="graph-canvas"></canvas></div>' +
     '<div class="graph-legend">' + Object.entries(NODE_COLORS).map(([k, c]) => '<div class="lg"><span class="sw" style="background:' + c + '"></span>' + k + "</div>").join("") +
     '<div class="lg"><span class="sw" style="background:transparent;border-color:var(--verm);box-shadow:0 0 0 1.5px var(--verm)"></span>flagged</div>' +
-    '<div class="form-note" style="margin-top:6px;max-width:210px">edges: section <i>contains</i> clause \u00b7 submittal <i>addresses</i> clause \u00b7 PO <i>supplies</i> package \u00b7 activity <i>schedules</i> package \u00b7 test <i>verifies</i> clause \u00b7 addendum <i>amends</i> clause</div></div>' +
+    '<div class="form-note" style="margin-top:6px;max-width:210px">typed relationships: <i>complies_with / deviates_from</i> \u00b7 vendor <i>supplies</i> PO \u00b7 shipment <i>delivers</i> PO \u00b7 PO <i>feeds</i> activity \u00b7 test <i>verifies</i> section \u00b7 addendum <i>amends</i> section \u00b7 quality issue <i>blocks</i></div></div>' +
     '<div class="graph-stats mono" id="g-stats"></div>' +
     '<div class="graph-tip" id="g-tip"></div><div id="g-dossier"></div></div></div>';
   const canvas = $("#graph-canvas"), wrap = canvas.parentElement;
@@ -661,7 +663,7 @@ async function vGraph(view, arg) {
   window.addEventListener("resize", onResize);
   // ---- deterministic init (seeded rings, then a d3-style force layout)
   const rng = mulberry32(1337);
-  const RING = { section: 120, addendum: 200, clause: 340, package: 520, po: 660, activity: 800, cx: 940 };
+  const RING = { section: 120, addendum: 200, clause: 340, vendor: 430, package: 520, po: 660, shipment: 760, activity: 800, quality: 880, cx: 940 };
   const byId = new Map();
   nodes.forEach((n) => {
     const r = (RING[n.type] || 700) * (0.85 + rng() * 0.3);
@@ -873,6 +875,7 @@ async function vGraph(view, arg) {
     const box = $("#g-dossier");
     box.innerHTML = '<div class="dossier"><div class="skel" style="height:20px;width:200px"></div><div class="skel mt" style="height:120px"></div></div>';
     let d;
+    if (window.__ONTO_IDS && window.__ONTO_IDS.has(id)) { location.hash = "#object/" + encodeURIComponent(id); return; }
     try { d = await api("/api/node?id=" + encodeURIComponent(id)); }
     catch (e) { box.innerHTML = '<div class="dossier">' + esc(e.message) + "</div>"; return; }
     const kv = (k, v) => (v == null || v === "") ? "" : '<div class="d-kv"><span class="k">' + esc(k) + '</span><span class="v">' + v + "</span></div>";

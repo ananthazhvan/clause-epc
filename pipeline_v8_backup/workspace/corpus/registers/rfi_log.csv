@@ -1,0 +1,6 @@
+rfi_id,subject,query,response,status
+RFI-263353-01,Clarification on Specification Revision,Section 26 33 53 Part 1.3.1 references Rev 2024 but the design basis report uses Rev 2020. Please confirm which revision governs.,The active specification revision is Rev 2024. All submittals shall reference Rev 2024.,RESOLVED
+RFI-212200-01,Fire Suppression Hold Time,Section 21 22 00 Part 3.4.2.B requires 10 minutes hold time but NFPA 2001 allows 9 minutes for FK-5-1-12. Please clarify.,The hold time of 10 minutes is the project requirement and exceeds the NFPA 2001 minimum.,RESOLVED
+RFI-236426-01,Chiller Efficiency Rating,Section 23 64 26 Part 2.2.3.A requires 95.0% efficiency but AHRI 550/590 testing allows tolerance. Is the spec value at nominal or minimum conditions?,The efficiency value shall be achieved at nominal rating conditions per AHRI 550/590.,RESOLVED
+RFI-263213-01,Generator Fuel Tank Capacity,Section 26 32 13 requires 1040 L day tank but local fire code caps indoor tanks at 990 L. Which governs?,Day tank capacity shall be 990 L to comply with local fire code. Specification will be amended.,RESOLVED
+RFI-271500-01,Cat6A Channel Length,Section 27 15 00 requires Class EA channel performance. What is the maximum horizontal cable length assumed?,Maximum horizontal cable length is 90 m per TIA-568.2-D with 10 m allowance for patch cords.,RESOLVED

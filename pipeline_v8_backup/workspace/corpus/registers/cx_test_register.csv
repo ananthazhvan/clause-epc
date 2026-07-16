@@ -1,0 +1,178 @@
+test_id,level,system,spec_clause,acceptance_criteria,status
+CX-212200-01-L1,L1,21 22 00,21 22 00 Part 3.4.1.A,Verify functional performance of AegisFire CleanAgent ECS-500 per specification clause 21 22 00 Part 3.4.1.A,PENDING
+CX-212200-01-L2,L2,21 22 00,21 22 00 Part 3.4.2.A,Verify functional performance of AegisFire CleanAgent ECS-500 per specification clause 21 22 00 Part 3.4.2.A,PENDING
+CX-212200-01-L3,L3,21 22 00,21 22 00 Part 3.4.3.A,Verify functional performance of AegisFire CleanAgent ECS-500 per specification clause 21 22 00 Part 3.4.3.A,PENDING
+CX-212200-02-L1,L1,21 22 00,21 22 00 Part 3.4.1.A,Verify functional performance of AegisFire Detection AFC-4000 per specification clause 21 22 00 Part 3.4.1.A,PENDING
+CX-212200-02-L2,L2,21 22 00,21 22 00 Part 3.4.2.A,Verify functional performance of AegisFire Detection AFC-4000 per specification clause 21 22 00 Part 3.4.2.A,PENDING
+CX-212200-02-L3,L3,21 22 00,21 22 00 Part 3.4.3.A,Verify functional performance of AegisFire Detection AFC-4000 per specification clause 21 22 00 Part 3.4.3.A,PENDING
+CX-212200-03-L1,L1,21 22 00,21 22 00 Part 3.4.1.A,Verify functional performance of PyroTech PT-500 Suppression per specification clause 21 22 00 Part 3.4.1.A,PENDING
+CX-212200-03-L2,L2,21 22 00,21 22 00 Part 3.4.2.A,Verify functional performance of PyroTech PT-500 Suppression per specification clause 21 22 00 Part 3.4.2.A,PENDING
+CX-212200-03-L3,L3,21 22 00,21 22 00 Part 3.4.3.A,Verify functional performance of PyroTech PT-500 Suppression per specification clause 21 22 00 Part 3.4.3.A,PENDING
+CX-212200-04-L1,L1,21 22 00,21 22 00 Part 3.4.1.A,Verify functional performance of SafeGuard FK-5-1-12 Agent per specification clause 21 22 00 Part 3.4.1.A,PENDING
+CX-212200-04-L2,L2,21 22 00,21 22 00 Part 3.4.2.A,Verify functional performance of SafeGuard FK-5-1-12 Agent per specification clause 21 22 00 Part 3.4.2.A,PENDING
+CX-212200-04-L3,L3,21 22 00,21 22 00 Part 3.4.3.A,Verify functional performance of SafeGuard FK-5-1-12 Agent per specification clause 21 22 00 Part 3.4.3.A,PENDING
+CX-211000-01-L1,L1,21 10 00,21 10 00 Part 3.4.1.A,Verify functional performance of FireLite VESDA-E VEP-A10 per specification clause 21 10 00 Part 3.4.1.A,PENDING
+CX-211000-01-L2,L2,21 10 00,21 10 00 Part 3.4.2.A,Verify functional performance of FireLite VESDA-E VEP-A10 per specification clause 21 10 00 Part 3.4.2.A,PENDING
+CX-211000-01-L3,L3,21 10 00,21 10 00 Part 3.4.3.A,Verify functional performance of FireLite VESDA-E VEP-A10 per specification clause 21 10 00 Part 3.4.3.A,PENDING
+CX-211000-02-L1,L1,21 10 00,21 10 00 Part 3.4.1.A,Verify functional performance of FireLite Addressable Panel per specification clause 21 10 00 Part 3.4.1.A,PENDING
+CX-211000-02-L2,L2,21 10 00,21 10 00 Part 3.4.2.A,Verify functional performance of FireLite Addressable Panel per specification clause 21 10 00 Part 3.4.2.A,PENDING
+CX-211000-02-L3,L3,21 10 00,21 10 00 Part 3.4.3.A,Verify functional performance of FireLite Addressable Panel per specification clause 21 10 00 Part 3.4.3.A,PENDING
+CX-211000-03-L1,L1,21 10 00,21 10 00 Part 3.4.1.A,Verify functional performance of AegisFire Aspirating ASD per specification clause 21 10 00 Part 3.4.1.A,PENDING
+CX-211000-03-L2,L2,21 10 00,21 10 00 Part 3.4.2.A,Verify functional performance of AegisFire Aspirating ASD per specification clause 21 10 00 Part 3.4.2.A,PENDING
+CX-211000-03-L3,L3,21 10 00,21 10 00 Part 3.4.3.A,Verify functional performance of AegisFire Aspirating ASD per specification clause 21 10 00 Part 3.4.3.A,PENDING
+CX-236426-01-L1,L1,23 64 26,23 64 26 Part 3.4.1.A,Verify functional performance of CoolWave CW-500 Chiller per specification clause 23 64 26 Part 3.4.1.A,PENDING
+CX-236426-01-L2,L2,23 64 26,23 64 26 Part 3.4.2.A,Verify functional performance of CoolWave CW-500 Chiller per specification clause 23 64 26 Part 3.4.2.A,PENDING
+CX-236426-01-L3,L3,23 64 26,23 64 26 Part 3.4.3.A,Verify functional performance of CoolWave CW-500 Chiller per specification clause 23 64 26 Part 3.4.3.A,PENDING
+CX-236426-02-L1,L1,23 64 26,23 64 26 Part 3.4.1.A,Verify functional performance of CoolWave CW-350 Chiller per specification clause 23 64 26 Part 3.4.1.A,PENDING
+CX-236426-02-L2,L2,23 64 26,23 64 26 Part 3.4.2.A,Verify functional performance of CoolWave CW-350 Chiller per specification clause 23 64 26 Part 3.4.2.A,PENDING
+CX-236426-02-L3,L3,23 64 26,23 64 26 Part 3.4.3.A,Verify functional performance of CoolWave CW-350 Chiller per specification clause 23 64 26 Part 3.4.3.A,PENDING
+CX-236426-03-L1,L1,23 64 26,23 64 26 Part 3.4.1.A,Verify functional performance of CryoCore CC-400 Chiller per specification clause 23 64 26 Part 3.4.1.A,PENDING
+CX-236426-03-L2,L2,23 64 26,23 64 26 Part 3.4.2.A,Verify functional performance of CryoCore CC-400 Chiller per specification clause 23 64 26 Part 3.4.2.A,PENDING
+CX-236426-03-L3,L3,23 64 26,23 64 26 Part 3.4.3.A,Verify functional performance of CryoCore CC-400 Chiller per specification clause 23 64 26 Part 3.4.3.A,PENDING
+CX-236426-04-L1,L1,23 64 26,23 64 26 Part 3.4.1.A,Verify functional performance of Deccan DC-450 Chiller per specification clause 23 64 26 Part 3.4.1.A,PENDING
+CX-236426-04-L2,L2,23 64 26,23 64 26 Part 3.4.2.A,Verify functional performance of Deccan DC-450 Chiller per specification clause 23 64 26 Part 3.4.2.A,PENDING
+CX-236426-04-L3,L3,23 64 26,23 64 26 Part 3.4.3.A,Verify functional performance of Deccan DC-450 Chiller per specification clause 23 64 26 Part 3.4.3.A,PENDING
+CX-238123-01-L1,L1,23 81 23,23 81 23 Part 3.4.1.A,Verify functional performance of CryoCore CR-250 CRAH Unit per specification clause 23 81 23 Part 3.4.1.A,PENDING
+CX-238123-01-L2,L2,23 81 23,23 81 23 Part 3.4.2.A,Verify functional performance of CryoCore CR-250 CRAH Unit per specification clause 23 81 23 Part 3.4.2.A,PENDING
+CX-238123-01-L3,L3,23 81 23,23 81 23 Part 3.4.3.A,Verify functional performance of CryoCore CR-250 CRAH Unit per specification clause 23 81 23 Part 3.4.3.A,PENDING
+CX-238123-02-L1,L1,23 81 23,23 81 23 Part 3.4.1.A,Verify functional performance of CryoCore CR-180 CRAH Unit per specification clause 23 81 23 Part 3.4.1.A,PENDING
+CX-238123-02-L2,L2,23 81 23,23 81 23 Part 3.4.2.A,Verify functional performance of CryoCore CR-180 CRAH Unit per specification clause 23 81 23 Part 3.4.2.A,PENDING
+CX-238123-02-L3,L3,23 81 23,23 81 23 Part 3.4.3.A,Verify functional performance of CryoCore CR-180 CRAH Unit per specification clause 23 81 23 Part 3.4.3.A,PENDING
+CX-238123-03-L1,L1,23 81 23,23 81 23 Part 3.4.1.A,Verify functional performance of CoolWave IRC-200 InRow per specification clause 23 81 23 Part 3.4.1.A,PENDING
+CX-238123-03-L2,L2,23 81 23,23 81 23 Part 3.4.2.A,Verify functional performance of CoolWave IRC-200 InRow per specification clause 23 81 23 Part 3.4.2.A,PENDING
+CX-238123-03-L3,L3,23 81 23,23 81 23 Part 3.4.3.A,Verify functional performance of CoolWave IRC-200 InRow per specification clause 23 81 23 Part 3.4.3.A,PENDING
+CX-238123-04-L1,L1,23 81 23,23 81 23 Part 3.4.1.A,Verify functional performance of CoolWave IRC-150 InRow per specification clause 23 81 23 Part 3.4.1.A,PENDING
+CX-238123-04-L2,L2,23 81 23,23 81 23 Part 3.4.2.A,Verify functional performance of CoolWave IRC-150 InRow per specification clause 23 81 23 Part 3.4.2.A,PENDING
+CX-238123-04-L3,L3,23 81 23,23 81 23 Part 3.4.3.A,Verify functional performance of CoolWave IRC-150 InRow per specification clause 23 81 23 Part 3.4.3.A,PENDING
+CX-238123-05-L1,L1,23 81 23,23 81 23 Part 3.4.1.A,Verify functional performance of Trident TC-220 CRAH per specification clause 23 81 23 Part 3.4.1.A,PENDING
+CX-238123-05-L2,L2,23 81 23,23 81 23 Part 3.4.2.A,Verify functional performance of Trident TC-220 CRAH per specification clause 23 81 23 Part 3.4.2.A,PENDING
+CX-238123-05-L3,L3,23 81 23,23 81 23 Part 3.4.3.A,Verify functional performance of Trident TC-220 CRAH per specification clause 23 81 23 Part 3.4.3.A,PENDING
+CX-230900-01-L1,L1,23 09 00,23 09 00 Part 3.4.1.A,Verify functional performance of OmniLink BMS-5000 Controller per specification clause 23 09 00 Part 3.4.1.A,PENDING
+CX-230900-01-L2,L2,23 09 00,23 09 00 Part 3.4.2.A,Verify functional performance of OmniLink BMS-5000 Controller per specification clause 23 09 00 Part 3.4.2.A,PENDING
+CX-230900-01-L3,L3,23 09 00,23 09 00 Part 3.4.3.A,Verify functional performance of OmniLink BMS-5000 Controller per specification clause 23 09 00 Part 3.4.3.A,PENDING
+CX-230900-02-L1,L1,23 09 00,23 09 00 Part 3.4.1.A,Verify functional performance of OmniLink EPMS-3000 Gateway per specification clause 23 09 00 Part 3.4.1.A,PENDING
+CX-230900-02-L2,L2,23 09 00,23 09 00 Part 3.4.2.A,Verify functional performance of OmniLink EPMS-3000 Gateway per specification clause 23 09 00 Part 3.4.2.A,PENDING
+CX-230900-02-L3,L3,23 09 00,23 09 00 Part 3.4.3.A,Verify functional performance of OmniLink EPMS-3000 Gateway per specification clause 23 09 00 Part 3.4.3.A,PENDING
+CX-230900-03-L1,L1,23 09 00,23 09 00 Part 3.4.1.A,Verify functional performance of CryoCore BMS Interface Module per specification clause 23 09 00 Part 3.4.1.A,PENDING
+CX-230900-03-L2,L2,23 09 00,23 09 00 Part 3.4.2.A,Verify functional performance of CryoCore BMS Interface Module per specification clause 23 09 00 Part 3.4.2.A,PENDING
+CX-230900-03-L3,L3,23 09 00,23 09 00 Part 3.4.3.A,Verify functional performance of CryoCore BMS Interface Module per specification clause 23 09 00 Part 3.4.3.A,PENDING
+CX-230900-04-L1,L1,23 09 00,23 09 00 Part 3.4.1.A,Verify functional performance of CryoCore Sensors Suite per specification clause 23 09 00 Part 3.4.1.A,PENDING
+CX-230900-04-L2,L2,23 09 00,23 09 00 Part 3.4.2.A,Verify functional performance of CryoCore Sensors Suite per specification clause 23 09 00 Part 3.4.2.A,PENDING
+CX-230900-04-L3,L3,23 09 00,23 09 00 Part 3.4.3.A,Verify functional performance of CryoCore Sensors Suite per specification clause 23 09 00 Part 3.4.3.A,PENDING
+CX-263213-01-L1,L1,26 32 13,26 32 13 Part 3.4.1.A,Verify functional performance of Deccan DD-2500 Generator 2500kVA per specification clause 26 32 13 Part 3.4.1.A,PENDING
+CX-263213-01-L2,L2,26 32 13,26 32 13 Part 3.4.2.A,Verify functional performance of Deccan DD-2500 Generator 2500kVA per specification clause 26 32 13 Part 3.4.2.A,PENDING
+CX-263213-01-L3,L3,26 32 13,26 32 13 Part 3.4.3.A,Verify functional performance of Deccan DD-2500 Generator 2500kVA per specification clause 26 32 13 Part 3.4.3.A,PENDING
+CX-263213-02-L1,L1,26 32 13,26 32 13 Part 3.4.1.A,Verify functional performance of Deccan DD-2000 Generator 2000kVA per specification clause 26 32 13 Part 3.4.1.A,PENDING
+CX-263213-02-L2,L2,26 32 13,26 32 13 Part 3.4.2.A,Verify functional performance of Deccan DD-2000 Generator 2000kVA per specification clause 26 32 13 Part 3.4.2.A,PENDING
+CX-263213-02-L3,L3,26 32 13,26 32 13 Part 3.4.3.A,Verify functional performance of Deccan DD-2000 Generator 2000kVA per specification clause 26 32 13 Part 3.4.3.A,PENDING
+CX-263213-03-L1,L1,26 32 13,26 32 13 Part 3.4.1.A,Verify functional performance of VoltEdge VG-1800 Generator per specification clause 26 32 13 Part 3.4.1.A,PENDING
+CX-263213-03-L2,L2,26 32 13,26 32 13 Part 3.4.2.A,Verify functional performance of VoltEdge VG-1800 Generator per specification clause 26 32 13 Part 3.4.2.A,PENDING
+CX-263213-03-L3,L3,26 32 13,26 32 13 Part 3.4.3.A,Verify functional performance of VoltEdge VG-1800 Generator per specification clause 26 32 13 Part 3.4.3.A,PENDING
+CX-263213-04-L1,L1,26 32 13,26 32 13 Part 3.4.1.A,Verify functional performance of VoltEdge ATS-3200 Panel per specification clause 26 32 13 Part 3.4.1.A,PENDING
+CX-263213-04-L2,L2,26 32 13,26 32 13 Part 3.4.2.A,Verify functional performance of VoltEdge ATS-3200 Panel per specification clause 26 32 13 Part 3.4.2.A,PENDING
+CX-263213-04-L3,L3,26 32 13,26 32 13 Part 3.4.3.A,Verify functional performance of VoltEdge ATS-3200 Panel per specification clause 26 32 13 Part 3.4.3.A,PENDING
+CX-263353-01-L1,L1,26 33 53,26 33 53 Part 3.4.1.A,Verify functional performance of VoltEdge PX-1200 UPS Module per specification clause 26 33 53 Part 3.4.1.A,PENDING
+CX-263353-01-L2,L2,26 33 53,26 33 53 Part 3.4.2.A,Verify functional performance of VoltEdge PX-1200 UPS Module per specification clause 26 33 53 Part 3.4.2.A,PENDING
+CX-263353-01-L3,L3,26 33 53,26 33 53 Part 3.4.3.A,Verify functional performance of VoltEdge PX-1200 UPS Module per specification clause 26 33 53 Part 3.4.3.A,PENDING
+CX-263353-02-L1,L1,26 33 53,26 33 53 Part 3.4.1.A,Verify functional performance of VoltEdge Battery Cabinet 576kWh per specification clause 26 33 53 Part 3.4.1.A,PENDING
+CX-263353-02-L2,L2,26 33 53,26 33 53 Part 3.4.2.A,Verify functional performance of VoltEdge Battery Cabinet 576kWh per specification clause 26 33 53 Part 3.4.2.A,PENDING
+CX-263353-02-L3,L3,26 33 53,26 33 53 Part 3.4.3.A,Verify functional performance of VoltEdge Battery Cabinet 576kWh per specification clause 26 33 53 Part 3.4.3.A,PENDING
+CX-263353-03-L1,L1,26 33 53,26 33 53 Part 3.4.1.A,Verify functional performance of VoltEdge PX-800 UPS Module per specification clause 26 33 53 Part 3.4.1.A,PENDING
+CX-263353-03-L2,L2,26 33 53,26 33 53 Part 3.4.2.A,Verify functional performance of VoltEdge PX-800 UPS Module per specification clause 26 33 53 Part 3.4.2.A,PENDING
+CX-263353-03-L3,L3,26 33 53,26 33 53 Part 3.4.3.A,Verify functional performance of VoltEdge PX-800 UPS Module per specification clause 26 33 53 Part 3.4.3.A,PENDING
+CX-263353-04-L1,L1,26 33 53,26 33 53 Part 3.4.1.A,Verify functional performance of VoltEdge Battery Cabinet 400kWh per specification clause 26 33 53 Part 3.4.1.A,PENDING
+CX-263353-04-L2,L2,26 33 53,26 33 53 Part 3.4.2.A,Verify functional performance of VoltEdge Battery Cabinet 400kWh per specification clause 26 33 53 Part 3.4.2.A,PENDING
+CX-263353-04-L3,L3,26 33 53,26 33 53 Part 3.4.3.A,Verify functional performance of VoltEdge Battery Cabinet 400kWh per specification clause 26 33 53 Part 3.4.3.A,PENDING
+CX-263353-05-L1,L1,26 33 53,26 33 53 Part 3.4.1.A,Verify functional performance of GreenCell GC-1000 UPS per specification clause 26 33 53 Part 3.4.1.A,PENDING
+CX-263353-05-L2,L2,26 33 53,26 33 53 Part 3.4.2.A,Verify functional performance of GreenCell GC-1000 UPS per specification clause 26 33 53 Part 3.4.2.A,PENDING
+CX-263353-05-L3,L3,26 33 53,26 33 53 Part 3.4.3.A,Verify functional performance of GreenCell GC-1000 UPS per specification clause 26 33 53 Part 3.4.3.A,PENDING
+CX-263353-06-L1,L1,26 33 53,26 33 53 Part 3.4.1.A,Verify functional performance of GreenCell Battery Bank 500kWh per specification clause 26 33 53 Part 3.4.1.A,PENDING
+CX-263353-06-L2,L2,26 33 53,26 33 53 Part 3.4.2.A,Verify functional performance of GreenCell Battery Bank 500kWh per specification clause 26 33 53 Part 3.4.2.A,PENDING
+CX-263353-06-L3,L3,26 33 53,26 33 53 Part 3.4.3.A,Verify functional performance of GreenCell Battery Bank 500kWh per specification clause 26 33 53 Part 3.4.3.A,PENDING
+CX-262413-01-L1,L1,26 24 13,26 24 13 Part 3.4.1.A,Verify functional performance of Trident T-3200 Switchboard per specification clause 26 24 13 Part 3.4.1.A,PENDING
+CX-262413-01-L2,L2,26 24 13,26 24 13 Part 3.4.2.A,Verify functional performance of Trident T-3200 Switchboard per specification clause 26 24 13 Part 3.4.2.A,PENDING
+CX-262413-01-L3,L3,26 24 13,26 24 13 Part 3.4.3.A,Verify functional performance of Trident T-3200 Switchboard per specification clause 26 24 13 Part 3.4.3.A,PENDING
+CX-262413-02-L1,L1,26 24 13,26 24 13 Part 3.4.1.A,Verify functional performance of Trident T-2000 Switchboard per specification clause 26 24 13 Part 3.4.1.A,PENDING
+CX-262413-02-L2,L2,26 24 13,26 24 13 Part 3.4.2.A,Verify functional performance of Trident T-2000 Switchboard per specification clause 26 24 13 Part 3.4.2.A,PENDING
+CX-262413-02-L3,L3,26 24 13,26 24 13 Part 3.4.3.A,Verify functional performance of Trident T-2000 Switchboard per specification clause 26 24 13 Part 3.4.3.A,PENDING
+CX-262413-03-L1,L1,26 24 13,26 24 13 Part 3.4.1.A,Verify functional performance of VoltEdge VS-2500 Switchboard per specification clause 26 24 13 Part 3.4.1.A,PENDING
+CX-262413-03-L2,L2,26 24 13,26 24 13 Part 3.4.2.A,Verify functional performance of VoltEdge VS-2500 Switchboard per specification clause 26 24 13 Part 3.4.2.A,PENDING
+CX-262413-03-L3,L3,26 24 13,26 24 13 Part 3.4.3.A,Verify functional performance of VoltEdge VS-2500 Switchboard per specification clause 26 24 13 Part 3.4.3.A,PENDING
+CX-262413-04-L1,L1,26 24 13,26 24 13 Part 3.4.1.A,Verify functional performance of VoltEdge VS-1600 Switchboard per specification clause 26 24 13 Part 3.4.1.A,PENDING
+CX-262413-04-L2,L2,26 24 13,26 24 13 Part 3.4.2.A,Verify functional performance of VoltEdge VS-1600 Switchboard per specification clause 26 24 13 Part 3.4.2.A,PENDING
+CX-262413-04-L3,L3,26 24 13,26 24 13 Part 3.4.3.A,Verify functional performance of VoltEdge VS-1600 Switchboard per specification clause 26 24 13 Part 3.4.3.A,PENDING
+CX-260519-01-L1,L1,26 05 19,26 05 19 Part 3.4.1.A,Verify functional performance of VoltEdge FRLS Cable 1Cx300sqmm per specification clause 26 05 19 Part 3.4.1.A,PENDING
+CX-260519-01-L2,L2,26 05 19,26 05 19 Part 3.4.2.A,Verify functional performance of VoltEdge FRLS Cable 1Cx300sqmm per specification clause 26 05 19 Part 3.4.2.A,PENDING
+CX-260519-01-L3,L3,26 05 19,26 05 19 Part 3.4.3.A,Verify functional performance of VoltEdge FRLS Cable 1Cx300sqmm per specification clause 26 05 19 Part 3.4.3.A,PENDING
+CX-260519-02-L1,L1,26 05 19,26 05 19 Part 3.4.1.A,Verify functional performance of VoltEdge LSZH Cable 4Cx185sqmm per specification clause 26 05 19 Part 3.4.1.A,PENDING
+CX-260519-02-L2,L2,26 05 19,26 05 19 Part 3.4.2.A,Verify functional performance of VoltEdge LSZH Cable 4Cx185sqmm per specification clause 26 05 19 Part 3.4.2.A,PENDING
+CX-260519-02-L3,L3,26 05 19,26 05 19 Part 3.4.3.A,Verify functional performance of VoltEdge LSZH Cable 4Cx185sqmm per specification clause 26 05 19 Part 3.4.3.A,PENDING
+CX-260519-03-L1,L1,26 05 19,26 05 19 Part 3.4.1.A,Verify functional performance of OmniLink Power Cable 1Cx500sqmm per specification clause 26 05 19 Part 3.4.1.A,PENDING
+CX-260519-03-L2,L2,26 05 19,26 05 19 Part 3.4.2.A,Verify functional performance of OmniLink Power Cable 1Cx500sqmm per specification clause 26 05 19 Part 3.4.2.A,PENDING
+CX-260519-03-L3,L3,26 05 19,26 05 19 Part 3.4.3.A,Verify functional performance of OmniLink Power Cable 1Cx500sqmm per specification clause 26 05 19 Part 3.4.3.A,PENDING
+CX-260519-04-L1,L1,26 05 19,26 05 19 Part 3.4.1.A,Verify functional performance of OmniLink Control Cable 12Cx2.5sqmm per specification clause 26 05 19 Part 3.4.1.A,PENDING
+CX-260519-04-L2,L2,26 05 19,26 05 19 Part 3.4.2.A,Verify functional performance of OmniLink Control Cable 12Cx2.5sqmm per specification clause 26 05 19 Part 3.4.2.A,PENDING
+CX-260519-04-L3,L3,26 05 19,26 05 19 Part 3.4.3.A,Verify functional performance of OmniLink Control Cable 12Cx2.5sqmm per specification clause 26 05 19 Part 3.4.3.A,PENDING
+CX-260519-05-L1,L1,26 05 19,26 05 19 Part 3.4.1.A,Verify functional performance of Trident TC-FRLS 3Cx400sqmm per specification clause 26 05 19 Part 3.4.1.A,PENDING
+CX-260519-05-L2,L2,26 05 19,26 05 19 Part 3.4.2.A,Verify functional performance of Trident TC-FRLS 3Cx400sqmm per specification clause 26 05 19 Part 3.4.2.A,PENDING
+CX-260519-05-L3,L3,26 05 19,26 05 19 Part 3.4.3.A,Verify functional performance of Trident TC-FRLS 3Cx400sqmm per specification clause 26 05 19 Part 3.4.3.A,PENDING
+CX-260526-01-L1,L1,26 05 26,26 05 26 Part 3.4.1.A,Verify functional performance of GreenCell Earthing Grid Kit per specification clause 26 05 26 Part 3.4.1.A,PENDING
+CX-260526-01-L2,L2,26 05 26,26 05 26 Part 3.4.2.A,Verify functional performance of GreenCell Earthing Grid Kit per specification clause 26 05 26 Part 3.4.2.A,PENDING
+CX-260526-01-L3,L3,26 05 26,26 05 26 Part 3.4.3.A,Verify functional performance of GreenCell Earthing Grid Kit per specification clause 26 05 26 Part 3.4.3.A,PENDING
+CX-260526-02-L1,L1,26 05 26,26 05 26 Part 3.4.1.A,Verify functional performance of GreenCell Lightning Protection per specification clause 26 05 26 Part 3.4.1.A,PENDING
+CX-260526-02-L2,L2,26 05 26,26 05 26 Part 3.4.2.A,Verify functional performance of GreenCell Lightning Protection per specification clause 26 05 26 Part 3.4.2.A,PENDING
+CX-260526-02-L3,L3,26 05 26,26 05 26 Part 3.4.3.A,Verify functional performance of GreenCell Lightning Protection per specification clause 26 05 26 Part 3.4.3.A,PENDING
+CX-271500-01-L1,L1,27 15 00,27 15 00 Part 3.4.1.A,Verify functional performance of OmniLink Cat6A Copper Cable per specification clause 27 15 00 Part 3.4.1.A,PENDING
+CX-271500-01-L2,L2,27 15 00,27 15 00 Part 3.4.2.A,Verify functional performance of OmniLink Cat6A Copper Cable per specification clause 27 15 00 Part 3.4.2.A,PENDING
+CX-271500-01-L3,L3,27 15 00,27 15 00 Part 3.4.3.A,Verify functional performance of OmniLink Cat6A Copper Cable per specification clause 27 15 00 Part 3.4.3.A,PENDING
+CX-271500-02-L1,L1,27 15 00,27 15 00 Part 3.4.1.A,Verify functional performance of OmniLink OM4 Fiber Assembly per specification clause 27 15 00 Part 3.4.1.A,PENDING
+CX-271500-02-L2,L2,27 15 00,27 15 00 Part 3.4.2.A,Verify functional performance of OmniLink OM4 Fiber Assembly per specification clause 27 15 00 Part 3.4.2.A,PENDING
+CX-271500-02-L3,L3,27 15 00,27 15 00 Part 3.4.3.A,Verify functional performance of OmniLink OM4 Fiber Assembly per specification clause 27 15 00 Part 3.4.3.A,PENDING
+CX-271500-03-L1,L1,27 15 00,27 15 00 Part 3.4.1.A,Verify functional performance of PrecisionRack Patch Panel Cat6A per specification clause 27 15 00 Part 3.4.1.A,PENDING
+CX-271500-03-L2,L2,27 15 00,27 15 00 Part 3.4.2.A,Verify functional performance of PrecisionRack Patch Panel Cat6A per specification clause 27 15 00 Part 3.4.2.A,PENDING
+CX-271500-03-L3,L3,27 15 00,27 15 00 Part 3.4.3.A,Verify functional performance of PrecisionRack Patch Panel Cat6A per specification clause 27 15 00 Part 3.4.3.A,PENDING
+CX-271500-04-L1,L1,27 15 00,27 15 00 Part 3.4.1.A,Verify functional performance of PrecisionRack Fiber Enclosure per specification clause 27 15 00 Part 3.4.1.A,PENDING
+CX-271500-04-L2,L2,27 15 00,27 15 00 Part 3.4.2.A,Verify functional performance of PrecisionRack Fiber Enclosure per specification clause 27 15 00 Part 3.4.2.A,PENDING
+CX-271500-04-L3,L3,27 15 00,27 15 00 Part 3.4.3.A,Verify functional performance of PrecisionRack Fiber Enclosure per specification clause 27 15 00 Part 3.4.3.A,PENDING
+CX-271500-05-L1,L1,27 15 00,27 15 00 Part 3.4.1.A,Verify functional performance of SecureEntry Structured Cabling Kit per specification clause 27 15 00 Part 3.4.1.A,PENDING
+CX-271500-05-L2,L2,27 15 00,27 15 00 Part 3.4.2.A,Verify functional performance of SecureEntry Structured Cabling Kit per specification clause 27 15 00 Part 3.4.2.A,PENDING
+CX-271500-05-L3,L3,27 15 00,27 15 00 Part 3.4.3.A,Verify functional performance of SecureEntry Structured Cabling Kit per specification clause 27 15 00 Part 3.4.3.A,PENDING
+CX-281000-01-L1,L1,28 10 00,28 10 00 Part 3.4.1.A,Verify functional performance of SecureEntry SE-7000 Controller per specification clause 28 10 00 Part 3.4.1.A,PENDING
+CX-281000-01-L2,L2,28 10 00,28 10 00 Part 3.4.2.A,Verify functional performance of SecureEntry SE-7000 Controller per specification clause 28 10 00 Part 3.4.2.A,PENDING
+CX-281000-01-L3,L3,28 10 00,28 10 00 Part 3.4.3.A,Verify functional performance of SecureEntry SE-7000 Controller per specification clause 28 10 00 Part 3.4.3.A,PENDING
+CX-281000-02-L1,L1,28 10 00,28 10 00 Part 3.4.1.A,Verify functional performance of SecureEntry Biometric Reader Bio-400 per specification clause 28 10 00 Part 3.4.1.A,PENDING
+CX-281000-02-L2,L2,28 10 00,28 10 00 Part 3.4.2.A,Verify functional performance of SecureEntry Biometric Reader Bio-400 per specification clause 28 10 00 Part 3.4.2.A,PENDING
+CX-281000-02-L3,L3,28 10 00,28 10 00 Part 3.4.3.A,Verify functional performance of SecureEntry Biometric Reader Bio-400 per specification clause 28 10 00 Part 3.4.3.A,PENDING
+CX-281000-03-L1,L1,28 10 00,28 10 00 Part 3.4.1.A,Verify functional performance of OmniLink Door Controller DC-200 per specification clause 28 10 00 Part 3.4.1.A,PENDING
+CX-281000-03-L2,L2,28 10 00,28 10 00 Part 3.4.2.A,Verify functional performance of OmniLink Door Controller DC-200 per specification clause 28 10 00 Part 3.4.2.A,PENDING
+CX-281000-03-L3,L3,28 10 00,28 10 00 Part 3.4.3.A,Verify functional performance of OmniLink Door Controller DC-200 per specification clause 28 10 00 Part 3.4.3.A,PENDING
+CX-281000-04-L1,L1,28 10 00,28 10 00 Part 3.4.1.A,Verify functional performance of VisionPro Prox Card Reader per specification clause 28 10 00 Part 3.4.1.A,PENDING
+CX-281000-04-L2,L2,28 10 00,28 10 00 Part 3.4.2.A,Verify functional performance of VisionPro Prox Card Reader per specification clause 28 10 00 Part 3.4.2.A,PENDING
+CX-281000-04-L3,L3,28 10 00,28 10 00 Part 3.4.3.A,Verify functional performance of VisionPro Prox Card Reader per specification clause 28 10 00 Part 3.4.3.A,PENDING
+CX-282300-01-L1,L1,28 23 00,28 23 00 Part 3.4.1.A,Verify functional performance of VisionPro VP-4MP Camera per specification clause 28 23 00 Part 3.4.1.A,PENDING
+CX-282300-01-L2,L2,28 23 00,28 23 00 Part 3.4.2.A,Verify functional performance of VisionPro VP-4MP Camera per specification clause 28 23 00 Part 3.4.2.A,PENDING
+CX-282300-01-L3,L3,28 23 00,28 23 00 Part 3.4.3.A,Verify functional performance of VisionPro VP-4MP Camera per specification clause 28 23 00 Part 3.4.3.A,PENDING
+CX-282300-02-L1,L1,28 23 00,28 23 00 Part 3.4.1.A,Verify functional performance of VisionPro VP-8MP Camera per specification clause 28 23 00 Part 3.4.1.A,PENDING
+CX-282300-02-L2,L2,28 23 00,28 23 00 Part 3.4.2.A,Verify functional performance of VisionPro VP-8MP Camera per specification clause 28 23 00 Part 3.4.2.A,PENDING
+CX-282300-02-L3,L3,28 23 00,28 23 00 Part 3.4.3.A,Verify functional performance of VisionPro VP-8MP Camera per specification clause 28 23 00 Part 3.4.3.A,PENDING
+CX-282300-03-L1,L1,28 23 00,28 23 00 Part 3.4.1.A,Verify functional performance of VisionPro NVR-48 Server per specification clause 28 23 00 Part 3.4.1.A,PENDING
+CX-282300-03-L2,L2,28 23 00,28 23 00 Part 3.4.2.A,Verify functional performance of VisionPro NVR-48 Server per specification clause 28 23 00 Part 3.4.2.A,PENDING
+CX-282300-03-L3,L3,28 23 00,28 23 00 Part 3.4.3.A,Verify functional performance of VisionPro NVR-48 Server per specification clause 28 23 00 Part 3.4.3.A,PENDING
+CX-282300-04-L1,L1,28 23 00,28 23 00 Part 3.4.1.A,Verify functional performance of OmniLink Video Analytics Suite per specification clause 28 23 00 Part 3.4.1.A,PENDING
+CX-282300-04-L2,L2,28 23 00,28 23 00 Part 3.4.2.A,Verify functional performance of OmniLink Video Analytics Suite per specification clause 28 23 00 Part 3.4.2.A,PENDING
+CX-282300-04-L3,L3,28 23 00,28 23 00 Part 3.4.3.A,Verify functional performance of OmniLink Video Analytics Suite per specification clause 28 23 00 Part 3.4.3.A,PENDING
+CX-115300-01-L1,L1,11 53 00,11 53 00 Part 3.4.1.A,Verify functional performance of PrecisionRack PR-42U Server Rack per specification clause 11 53 00 Part 3.4.1.A,PENDING
+CX-115300-01-L2,L2,11 53 00,11 53 00 Part 3.4.2.A,Verify functional performance of PrecisionRack PR-42U Server Rack per specification clause 11 53 00 Part 3.4.2.A,PENDING
+CX-115300-01-L3,L3,11 53 00,11 53 00 Part 3.4.3.A,Verify functional performance of PrecisionRack PR-42U Server Rack per specification clause 11 53 00 Part 3.4.3.A,PENDING
+CX-115300-02-L1,L1,11 53 00,11 53 00 Part 3.4.1.A,Verify functional performance of PrecisionRack PR-48U Server Rack per specification clause 11 53 00 Part 3.4.1.A,PENDING
+CX-115300-02-L2,L2,11 53 00,11 53 00 Part 3.4.2.A,Verify functional performance of PrecisionRack PR-48U Server Rack per specification clause 11 53 00 Part 3.4.2.A,PENDING
+CX-115300-02-L3,L3,11 53 00,11 53 00 Part 3.4.3.A,Verify functional performance of PrecisionRack PR-48U Server Rack per specification clause 11 53 00 Part 3.4.3.A,PENDING
+CX-115300-03-L1,L1,11 53 00,11 53 00 Part 3.4.1.A,Verify functional performance of PrecisionRack Hot Aisle Kit per specification clause 11 53 00 Part 3.4.1.A,PENDING
+CX-115300-03-L2,L2,11 53 00,11 53 00 Part 3.4.2.A,Verify functional performance of PrecisionRack Hot Aisle Kit per specification clause 11 53 00 Part 3.4.2.A,PENDING
+CX-115300-03-L3,L3,11 53 00,11 53 00 Part 3.4.3.A,Verify functional performance of PrecisionRack Hot Aisle Kit per specification clause 11 53 00 Part 3.4.3.A,PENDING
+CX-115300-04-L1,L1,11 53 00,11 53 00 Part 3.4.1.A,Verify functional performance of CryoCore Cold Aisle Containment per specification clause 11 53 00 Part 3.4.1.A,PENDING
+CX-115300-04-L2,L2,11 53 00,11 53 00 Part 3.4.2.A,Verify functional performance of CryoCore Cold Aisle Containment per specification clause 11 53 00 Part 3.4.2.A,PENDING
+CX-115300-04-L3,L3,11 53 00,11 53 00 Part 3.4.3.A,Verify functional performance of CryoCore Cold Aisle Containment per specification clause 11 53 00 Part 3.4.3.A,PENDING
+CX-115300-05-L1,L1,11 53 00,11 53 00 Part 3.4.1.A,Verify functional performance of CryoCore Overhead Tray System per specification clause 11 53 00 Part 3.4.1.A,PENDING
+CX-115300-05-L2,L2,11 53 00,11 53 00 Part 3.4.2.A,Verify functional performance of CryoCore Overhead Tray System per specification clause 11 53 00 Part 3.4.2.A,PENDING
+CX-115300-05-L3,L3,11 53 00,11 53 00 Part 3.4.3.A,Verify functional performance of CryoCore Overhead Tray System per specification clause 11 53 00 Part 3.4.3.A,PENDING

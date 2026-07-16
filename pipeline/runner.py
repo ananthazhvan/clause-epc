@@ -123,9 +123,6 @@ def main():
              cmd=[py, "-u", "m7_options.py"],
              need=lambda: have("schedule.csv") and have("po_register.csv"),
              why="schedule.csv / po_register.csv not uploaded"),
-        dict(id="M8", label="margin-of-compliance sweep", llm=False, core=False,
-             cmd=[py, "-u", "m8_margin.py"], need=lambda: have("po_register.csv"),
-             why="po_register.csv not uploaded"),
         dict(id="M9", label="vendor trust ledger", llm=False, core=False,
              cmd=[py, "-u", "m9_vendor.py"], need=lambda: have("po_register.csv"),
              why="po_register.csv not uploaded"),
@@ -133,7 +130,7 @@ def main():
              cmd=[py, "-u", "m15_supply.py", "--corpus", corpus, "--out", out],
              need=lambda: have("schedule.csv") and have("po_register.csv"),
              why="schedule/PO register CSVs not uploaded"),
-        dict(id="M14", label="cross-document intelligence findings", llm=True, core=False,
+        dict(id="M14", label="cross-source object insights (entity-verified)", llm=True, core=False,
              cmd=[py, "-u", "m14_intel.py", "--corpus", corpus, "--out", out],
              need=lambda: True, why=""),
         dict(id="M10", label="paperwork drafts + specification self-lint", llm=False, core=False,
@@ -141,8 +138,9 @@ def main():
         dict(id="M11", label="commissioning readiness packs", llm=False, core=False,
              cmd=[py, "-u", "m11_cx.py"], need=lambda: have("cx_test_register.csv"),
              why="cx_test_register.csv not uploaded"),
-        dict(id="M13", label="data-centre facility profile (Tier / TIA-942 / redundancy)", llm=False, core=False,
-             cmd=[py, "-u", "m13_facility.py", "--corpus", corpus], need=lambda: True, why=""),
+        dict(id="M16", label="compile the ontology - objects, links, money, rollups, certification evidence", llm=False, core=False,
+             cmd=[py, "-u", "m16_ontology.py", "--corpus", corpus, "--out", out],
+             need=lambda: True, why=""),
     ]
 
     status = Status(os.path.join(out, "run_status.json"), stages)

@@ -162,6 +162,8 @@ TOOL_IMPL = {
     "read_document": lambda args: t_read_document(args.get("doc", ""), args.get("page", 1)),
     "lookup_id": lambda args: t_lookup_id(args.get("id", "")),
     "get_page_data": lambda args: t_get_page_data(args.get("page", "")),
+    "get_object": lambda args: t_get_object(args.get("id", "")),
+    "list_objects": lambda args: t_list_objects(args.get("type", "")),
 }
 
 TOOLS = [
@@ -169,18 +171,64 @@ TOOLS = [
     {"type": "function", "function": {"name": "search_documents", "description": "Keyword (grep-style) search across every parsed page of the uploaded documents. Use precise project vocabulary; all terms must co-occur.", "parameters": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}}},
     {"type": "function", "function": {"name": "read_document", "description": "Read one page of a parsed document verbatim.", "parameters": {"type": "object", "properties": {"doc": {"type": "string"}, "page": {"type": "integer"}}, "required": ["doc"]}}},
     {"type": "function", "function": {"name": "lookup_id", "description": "Exact lookup of a rule ID, package ID, PO number, activity, test ID, or graph node.", "parameters": {"type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}}},
-    {"type": "function", "function": {"name": "get_page_data", "description": "The exact JSON a site page renders (queue, clock, margins, vendors, blast, cx, lint, paperwork, facility).", "parameters": {"type": "object", "properties": {"page": {"type": "string"}}, "required": ["page"]}}},
+    {"type": "function", "function": {"name": "get_page_data", "description": "The exact JSON a site page renders (queue, cx, paperwork, supply).", "parameters": {"type": "object", "properties": {"page": {"type": "string"}}, "required": ["page"]}}},
+    {"type": "function", "function": {"name": "get_object", "description": "Open one ontology object (section, submittal package, PO, vendor, shipment, activity, cx test, quality issue, addendum) with all its properties, money, insights, and typed links to other objects. Pass an id like 'po:PO-4500012304' or any unique name fragment like 'CH-A2' or 'CryoCore'.", "parameters": {"type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}}},
+    {"type": "function", "function": {"name": "list_objects", "description": "List ontology objects, optionally filtered by type: section, package, po, vendor, shipment, activity, cx, quality, addendum. Returns ids, statuses, money, and insight counts plus project totals.", "parameters": {"type": "object", "properties": {"type": {"type": "string"}}}}},
 ]
 
 SYSTEM = (
-    "You are the CLAUSE copilot - the AI layer over a data-centre EPC requirement ledger "
-    "built ONLY from the user's uploaded project documents (specifications, vendor submittals, "
-    "addenda, registers). Answer by calling tools. Never state a project fact a tool did not "
-    "return; if the ledger has nothing, say so plainly. Cite sources inline like "
-    "(spec_26_33_53 p.2) or by ID (R-26-33-53-07, PO-0113, CX-L4-012). When a site page shows "
-    "the answer, name it (e.g. 'the margins page ranks these'). Engineering tone: short, "
-    "concrete, no filler, no hedging. Prefer bullets. Currency is INR."
+    "You are the CLAUSE copilot - the AI layer over a project ontology compiled ONLY from "
+    "the user's uploaded documents and connected feeds (specifications, vendor submittals, "
+    "addenda, registers, ERP purchase orders, logistics tracking, QMS issues). Every "
+    "real-world thing is an object with typed links: spec sections, submittal packages, POs, "
+    "vendors, shipments, schedule activities, commissioning tests, quality issues. For "
+    "questions about a thing (where is it, does it comply, what does it cost, who supplies "
+    "it, what does it affect), prefer get_object / list_objects and walk the links. Use "
+    "search_documents / read_document for verbatim clause text. Never state a project fact a "
+    "tool did not return; if the ontology has nothing, say so plainly. Cite object ids "
+    "(po:PO-0113, ship:SHP-88121, package:SUB-263353-01-R0) and doc pages like "
+    "(spec_26_33_53 p.2). Engineering tone: short, concrete, no filler, no hedging. "
+    "Prefer bullets. Currency is INR."
 )
+
+
+def t_get_object(oid):
+    onto = _load("ontology.json") or {}
+    objs = onto.get("objects", [])
+    ql = str(oid).strip().lower()
+    if not ql:
+        return {"error": "pass an object id or name fragment"}
+    hits = ([o for o in objs if o["id"].lower() == ql]
+            or [o for o in objs if ql in o["id"].lower() or ql in str(o.get("name", "")).lower()])
+    if not hits:
+        return {"error": f"no ontology object matches '{oid}' - try list_objects"}
+    x = json.loads(json.dumps(hits[0]))
+    byid = {o["id"]: o for o in objs}
+    x["links"] = []
+    for l in onto.get("links", []):
+        if l["s"] == x["id"] or l["t"] == x["id"]:
+            other = l["t"] if l["s"] == x["id"] else l["s"]
+            n = byid.get(other, {})
+            x["links"].append({"rel": l["rel"], "dir": "out" if l["s"] == x["id"] else "in",
+                               "id": other, "name": n.get("name"), "status": n.get("status")})
+    if len(hits) > 1:
+        x["other_matches"] = [o["id"] for o in hits[1:6]]
+    return _trunc(x, list_cap=60)
+
+
+def t_list_objects(otype=""):
+    onto = _load("ontology.json") or {}
+    objs = onto.get("objects", [])
+    if otype:
+        objs = [o for o in objs if o.get("type") == str(otype).strip()]
+    return _trunc({"count": len(objs), "types": onto.get("types"),
+                   "totals": (onto.get("project") or {}).get("totals"),
+                   "cert": onto.get("cert"),
+                   "objects": [{"id": o["id"], "name": o.get("name"), "status": o.get("status"),
+                                "value_inr": (o.get("money") or {}).get("value_inr"),
+                                "at_risk_inr": (o.get("money") or {}).get("at_risk_inr"),
+                                "insights": len(o.get("insights") or [])} for o in objs]},
+                  list_cap=150)
 
 
 # ------------------------------------------------------------------- loop
@@ -223,6 +271,10 @@ def _step_label(name, args):
         return f"Looking up \u201c{str(args.get('id', ''))[:40]}\u201d in the ledger"
     if name == "get_page_data":
         return f"Pulling the {args.get('page', '?')} page data"
+    if name == "get_object":
+        return f"Opening object \u201c{str(args.get('id', ''))[:40]}\u201d"
+    if name == "list_objects":
+        return f"Listing {args.get('type') or 'all'} objects"
     return name
 
 

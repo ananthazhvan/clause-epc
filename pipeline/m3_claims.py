@@ -52,7 +52,9 @@ def extract_package(doc_path, out_dir):
     stem = section.replace(" ", "_")
     onto_path = os.path.join(out_dir, f"ontology_{stem}.json")
     if not os.path.exists(onto_path):
-        sys.exit(f'{pkg}: run m2_rules.py --spec "{section}" first (missing {onto_path})')
+        print(f"  {pkg}: no rulebook for section {section} - package skipped "
+              f"(upload the {section} specification to check it)")
+        return None
     params = sorted(json.load(open(onto_path)).keys())
     claims = []
     total = len(doc["pages"])
