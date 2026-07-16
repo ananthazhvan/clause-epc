@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page { size: A4; margin: 0; }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #1d2b38;
+        }
+        .page {
+            width: 210mm;
+            height: 297mm;
+            box-sizing: border-box;
+            padding: 20mm;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+            background: white;
+        }
+        .header {
+            position: absolute;
+            top: 15mm;
+            left: 20mm;
+            right: 20mm;
+            border-bottom: 2.5px solid #16324f;
+            padding-bottom: 3mm;
+            font-size: 9pt;
+            color: #16324f;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #b9c6d2;
+            font-size: 9pt;
+            color: #5c6b7a;
+            text-align: right;
+            padding-top: 3mm;
+            letter-spacing: 0.3px;
+        }
+        .footnotes {
+            position: absolute;
+            bottom: 25mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #b9c6d2;
+            padding-top: 2mm;
+            font-size: 8pt;
+            color: #44525f;
+        }
+        h1, h2, h3, h4 { color: #16324f; margin-top: 0; }
+        h2 {
+            border-bottom: 1px solid #d6dee6;
+            padding-bottom: 1.5mm;
+            letter-spacing: 0.5px;
+        }
+        h3 { letter-spacing: 0.3px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5mm; font-size: 9pt; }
+        th, td { border: 1px solid #c9d4de; padding: 6px; text-align: left; vertical-align: top; }
+        th {
+            background-color: #16324f;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            border: 1px solid #16324f;
+        }
+        tr:nth-child(even) td { background-color: #f3f6f9; }
+        .clause { margin-bottom: 4mm; text-align: justify; }
+        .clause-id { font-weight: bold; color: #16324f; }
+
+        /* Vendor styles */
+        .vendor-VoltEdge { border-top: 4mm solid #0056b3; }
+        .vendor-Deccan { border-top: 4mm solid #b8860b; }
+        .vendor-CryoCore { border-top: 4mm solid #008080; }
+        .vendor-Trident { border-top: 4mm solid #708090; }
+        .vendor-AegisFire { border-top: 4mm solid #cc0000; }
+
+        .logo-text { font-size: 18pt; font-weight: bold; letter-spacing: 1px; }
+        .VoltEdge .logo-text { color: #0056b3; }
+        .Deccan .logo-text { color: #b8860b; }
+        .CryoCore .logo-text { color: #008080; }
+        .Trident .logo-text { color: #708090; }
+        .AegisFire .logo-text { color: #cc0000; }
+
+        .cover-title {
+            font-size: 24pt;
+            margin-top: 40mm;
+            text-align: center;
+            letter-spacing: 2px;
+            border-top: 1px solid #16324f;
+            border-bottom: 1px solid #16324f;
+            padding: 6mm 0;
+        }
+        .cover-meta { margin-top: 20mm; font-size: 12pt; }
+        .cover-meta p { margin: 2.5mm 0; }
+        .status-badge {
+            display: inline-block;
+            padding: 2mm 5mm;
+            border-radius: 2mm;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+        .status-ACTIVE { background: #d4edda; color: #155724; border: 1px solid #9fd3ab; }
+        .status-SUPERSEDED { background: #f8d7da; color: #721c24; border: 1px solid #e3a5ac; }
+    </style>
+</head>
+<body>
+    
+<div class="page AegisFire">
+    <div class="header">
+        <span class="logo-text">AegisFire Systems</span>
+        <span>Submittal Package SUB-212200-01-R0</span>
+    </div>
+    
+    <div class="content" style="margin-top: 20mm; text-align: center;">
+        <h1 class="cover-title">EQUIPMENT SUBMITTAL</h1>
+        <h2>Clean Agent System</h2>
+        
+        <div class="cover-meta">
+            <p><strong>Project:</strong> Meridian Data Centre Campus - Phase 1</p>
+            <p><strong>Reference Section:</strong> 21 22 00</p>
+            <p><strong>Package ID:</strong> SUB-212200-01-R0</p>
+            <p><strong>Revision:</strong> R0</p>
+            <p><strong>Reviewed Spec Revision:</strong> Rev 2024</p>
+            <p><strong>Date:</strong> 01-01-2025</p>
+            
+            <div style="margin-top: 10mm;">
+                <span class="status-badge status-ACTIVE">ACTIVE</span>
+            </div>
+        </div>
+        
+        <table style="width: 80%; margin: 20mm auto;">
+            <tr>
+                <th>Rev</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>R0</td>
+                <td>01-01-2025</td>
+                <td>Initial / Updated Submittal</td>
+            </tr>
+        </table>
+    </div>
+    <div class="footer">Page 1 of 4</div>
+</div>
+
+<div class="page AegisFire">
+    <div class="header">
+        <span class="logo-text">AegisFire Systems</span>
+        <span>Technical Datasheet</span>
+    </div>
+    <div class="content" style="margin-top: 10mm;">
+        <h3>Technical Parameters</h3>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Claimed Value</th>
+            </tr>
+            
+            <tr>
+                <td>Suppressant Agent Type</td>
+                <td>FK-5-1-12</td>
+            </tr>
+            
+            <tr>
+                <td>Total Clean Agent Agent Quantity</td>
+                <td>11800 kg</td>
+            </tr>
+            
+            <tr>
+                <td>Cylinder Operating Pressure</td>
+                <td>360 psi</td>
+            </tr>
+            
+            <tr>
+                <td>Design Concentration</td>
+                <td>4.7%</td>
+            </tr>
+            
+            <tr>
+                <td>NOAEL Safety Limit</td>
+                <td>10%</td>
+            </tr>
+            
+            <tr>
+                <td>Standards Reference</td>
+                <td>NFPA 2001-2008</td>
+            </tr>
+            
+        </table>
+        
+        
+        <div class="footnotes">
+            
+            <div><sup>1</sup> discharge time extends to 11.0 seconds when piping runs exceed 45 meters</div>
+            
+            <div><sup>2</sup> Discharge Time is 9.2 s (standard pipe configuration)</div>
+            
+        </div>
+        
+    </div>
+    <div class="footer">Page 2 of 4</div>
+</div>
+
+
+
+
+<div class="page AegisFire">
+    <div class="header">
+        <span class="logo-text">AegisFire Systems</span>
+        <span>Compliance Matrix</span>
+    </div>
+    <div class="content" style="margin-top: 10mm;">
+        <table>
+            <tr>
+                <th style="width: 25%">Clause ID</th>
+                <th style="width: 55%">Requirement Summary</th>
+                <th style="width: 20%">Response</th>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 1.3.3</td>
+                <td>Factory test and compliance certificates issued by UL and FM for all clean agent storage cylinder va...</td>
+                <td>Comply</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 1.2.1</td>
+                <td>The clean agent fire suppression system shall be designed, installed, and tested in accordance with ...</td>
+                <td>NFPA 2001 (2008 Edition)</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.2.3.A</td>
+                <td>Clean agent discharge time shall not exceed 10 seconds from the moment the discharge valve opens unt...</td>
+                <td>Comply</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.2.3.B</td>
+                <td>Agent hold time (retention) shall be a minimum of 10 minutes (600 seconds) to prevent re-ignition. H...</td>
+                <td>9 minutes</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.3.4.F</td>
+                <td>The vendor shall submit a NOAEL safety margin calculation demonstrating that the actual maximum agen...</td>
+                <td>Comply</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.3.1.A</td>
+                <td>Clean agent storage cylinders shall be pressurised to 500 psi (34.5 bar) with nitrogen super-pressur...</td>
+                <td>Comply</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.2.5</td>
+                <td>Minimum total clean agent quantity for the campus shall be 12,500 kg of FK-5-1-12. Agent quantity pe...</td>
+                <td>Comply</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 1.2.3</td>
+                <td>All clean agent storage cylinders and discharge valve assemblies shall be tested, listed, and labele...</td>
+                <td>ISO 9809-1</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.1.1</td>
+                <td>The clean agent shall be FK-5-1-12 (Dodecafluoro-2-methylpentan-3-one), chemically identified as CF3...</td>
+                <td>Comply</td>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.2.1</td>
+                <td>Design concentration shall be 4.7% by volume (v/v) for Class A and Class C fire hazards. The design ...</td>
+                <td>Comply</td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="footer">Page 3 of 4</div>
+</div>
+
+<div class="page AegisFire">
+    <div class="header">
+        <span class="logo-text">AegisFire Systems</span>
+        <span>Compliance Matrix</span>
+    </div>
+    <div class="content" style="margin-top: 10mm;">
+        <table>
+            <tr>
+                <th style="width: 25%">Clause ID</th>
+                <th style="width: 55%">Requirement Summary</th>
+                <th style="width: 20%">Response</th>
+            </tr>
+            
+            <tr>
+                <td>21 22 00 Part 2.2.2</td>
+                <td>The No Observed Adverse Effect Level (NOAEL) for FK-5-1-12 is 10.0% by volume (v/v). The design conc...</td>
+                <td>Comply</td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="footer">Page 4 of 4</div>
+</div>
+
+
+
+
+</body>
+</html>

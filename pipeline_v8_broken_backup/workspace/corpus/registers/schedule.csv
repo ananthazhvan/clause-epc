@@ -1,0 +1,70 @@
+activity_id,name,duration_days,predecessors,float_days,critical_path
+ACT-CIV-01,Civil Works - Main Structure Phase 1,15,,0,True
+ACT-CIV-02,Civil Works - Main Structure Phase 2,15,ACT-CIV-01,0,True
+ACT-CIV-03,Civil Works - Main Structure Phase 3,15,ACT-CIV-02,0,True
+ACT-CIV-04,Civil Works - Main Structure Phase 4,15,ACT-CIV-03,0,True
+ACT-CIV-05,Civil Works - Main Structure Phase 5,15,ACT-CIV-04,0,True
+ACT-CIV-06,Civil/Site Ancillary Phase 6,10,ACT-CIV-05,20,False
+ACT-CIV-07,Civil/Site Ancillary Phase 7,10,ACT-CIV-06,20,False
+ACT-CIV-08,Civil/Site Ancillary Phase 8,10,ACT-CIV-07,20,False
+ACT-CIV-09,Civil/Site Ancillary Phase 9,10,ACT-CIV-08,20,False
+ACT-CIV-10,Civil/Site Ancillary Phase 10,10,ACT-CIV-09,20,False
+ACT-CIV-11,Civil/Site Ancillary Phase 11,10,ACT-CIV-10,20,False
+ACT-CIV-12,Civil/Site Ancillary Phase 12,10,ACT-CIV-11,20,False
+ACT-CIV-13,Civil/Site Ancillary Phase 13,10,ACT-CIV-12,20,False
+ACT-CIV-14,Civil/Site Ancillary Phase 14,10,ACT-CIV-13,20,False
+ACT-CIV-15,Civil/Site Ancillary Phase 15,10,ACT-CIV-14,20,False
+ACT-CIV-16,Civil/Site Ancillary Phase 16,10,ACT-CIV-15,20,False
+ACT-CIV-17,Civil/Site Ancillary Phase 17,10,ACT-CIV-16,20,False
+ACT-CIV-18,Civil/Site Ancillary Phase 18,10,ACT-CIV-17,20,False
+ACT-CIV-19,Civil/Site Ancillary Phase 19,10,ACT-CIV-18,20,False
+ACT-CIV-20,Civil/Site Ancillary Phase 20,10,ACT-CIV-19,20,False
+ACT-ELE-GEN-01,Procure and Deliver Deccan Standby Generators,280,ACT-CIV-05,0,True
+ACT-ELE-GEN-02,Install and Mount Standby Generators,14,ACT-ELE-GEN-01,0,True
+ACT-ELE-GEN-03,Generator Aux Cabling & Fuel Line Phase 3,10,ACT-ELE-GEN-02,15,False
+ACT-ELE-GEN-04,Generator Aux Cabling & Fuel Line Phase 4,10,ACT-ELE-GEN-03,15,False
+ACT-ELE-GEN-05,Generator Aux Cabling & Fuel Line Phase 5,10,ACT-ELE-GEN-04,15,False
+ACT-ELE-GEN-06,Generator Aux Cabling & Fuel Line Phase 6,10,ACT-ELE-GEN-05,15,False
+ACT-ELE-GEN-07,Generator Aux Cabling & Fuel Line Phase 7,10,ACT-ELE-GEN-06,15,False
+ACT-ELE-GEN-08,Generator Aux Cabling & Fuel Line Phase 8,10,ACT-ELE-GEN-07,15,False
+ACT-ELE-GEN-09,Generator Aux Cabling & Fuel Line Phase 9,10,ACT-ELE-GEN-08,15,False
+ACT-ELE-GEN-10,Generator Aux Cabling & Fuel Line Phase 10,10,ACT-ELE-GEN-09,15,False
+ACT-ELE-GEN-11,Generator Aux Cabling & Fuel Line Phase 11,10,ACT-ELE-GEN-10,15,False
+ACT-ELE-GEN-12,Generator Aux Cabling & Fuel Line Phase 12,10,ACT-ELE-GEN-11,15,False
+ACT-ELE-GEN-13,Generator Aux Cabling & Fuel Line Phase 13,10,ACT-ELE-GEN-12,15,False
+ACT-ELE-GEN-14,Generator Aux Cabling & Fuel Line Phase 14,10,ACT-ELE-GEN-13,15,False
+ACT-ELE-GEN-15,Generator Aux Cabling & Fuel Line Phase 15,10,ACT-ELE-GEN-14,15,False
+ACT-ELE-UPS-01,UPS Electrical Module Phase 1,15,ACT-CIV-05,42,False
+ACT-ELE-UPS-02,UPS Electrical Module Phase 2,15,ACT-ELE-UPS-01,42,False
+ACT-ELE-UPS-03,UPS Electrical Module Phase 3,15,ACT-ELE-UPS-02,42,False
+ACT-ELE-UPS-04,UPS Electrical Module Phase 4,15,ACT-ELE-UPS-03,42,False
+ACT-ELE-UPS-05,UPS Electrical Module Phase 5,15,ACT-ELE-UPS-04,42,False
+ACT-ELE-UPS-06,UPS Electrical Module Phase 6,15,ACT-ELE-UPS-05,42,False
+ACT-ELE-UPS-07,UPS Electrical Module Phase 7,15,ACT-ELE-UPS-06,42,False
+ACT-ELE-UPS-08,UPS Electrical Module Phase 8,15,ACT-ELE-UPS-07,42,False
+ACT-ELE-UPS-09,UPS Electrical Module Phase 9,15,ACT-ELE-UPS-08,42,False
+ACT-ELE-UPS-10,UPS Electrical Module Phase 10,15,ACT-ELE-UPS-09,42,False
+ACT-MEC-CRAH-01,CRAH Cooling Unit Placement Phase 1,14,ACT-CIV-05,75,False
+ACT-MEC-CRAH-02,CRAH Cooling Unit Placement Phase 2,14,ACT-MEC-CRAH-01,75,False
+ACT-MEC-CRAH-03,CRAH Cooling Unit Placement Phase 3,14,ACT-MEC-CRAH-02,75,False
+ACT-MEC-CRAH-04,CRAH Cooling Unit Placement Phase 4,14,ACT-MEC-CRAH-03,75,False
+ACT-MEC-CRAH-05,CRAH Cooling Unit Placement Phase 5,14,ACT-MEC-CRAH-04,75,False
+ACT-MEC-CRAH-06,CRAH Cooling Unit Placement Phase 6,14,ACT-MEC-CRAH-05,75,False
+ACT-MEC-CRAH-07,CRAH Cooling Unit Placement Phase 7,14,ACT-MEC-CRAH-06,75,False
+ACT-MEC-CRAH-08,CRAH Cooling Unit Placement Phase 8,14,ACT-MEC-CRAH-07,75,False
+ACT-MEC-CRAH-09,CRAH Cooling Unit Placement Phase 9,14,ACT-MEC-CRAH-08,75,False
+ACT-MEC-CRAH-10,CRAH Cooling Unit Placement Phase 10,14,ACT-MEC-CRAH-09,75,False
+ACT-MEC-FIRE-01,Clean Agent Piping installation Zone 1,12,ACT-CIV-05,80,False
+ACT-MEC-FIRE-02,Clean Agent Piping installation Zone 2,12,ACT-MEC-FIRE-01,80,False
+ACT-MEC-FIRE-03,Clean Agent Piping installation Zone 3,12,ACT-MEC-FIRE-02,80,False
+ACT-COM-01,Commissioning Level L1 FAT & Audits,10,ACT-CIV-05,35,False
+ACT-COM-02,Commissioning Level L2 Pre-functional inspection,12,ACT-COM-01,35,False
+ACT-COM-03,Commissioning Level L3 Equipment Startup,12,ACT-COM-02,35,False
+ACT-COM-04,Commissioning Level L4 Functional testing,15,ACT-ELE-GEN-02,0,True
+ACT-COM-05,Commissioning Level L5 Integrated Systems test,15,ACT-COM-04,0,True
+ACT-COM-06,Campus Handover and Closeout Phase 1,5,ACT-COM-05,0,True
+ACT-COM-07,Campus Handover and Closeout Phase 2,5,ACT-COM-06,0,True
+ACT-COM-08,Campus Handover and Closeout Phase 3,5,ACT-COM-07,0,True
+ACT-COM-09,Campus Handover and Closeout Phase 4,5,ACT-COM-08,0,True
+ACT-COM-10,Campus Handover and Closeout Phase 5,5,ACT-COM-09,0,True
+ACT-COM-11,Campus Handover and Closeout Phase 6,5,ACT-COM-10,0,True

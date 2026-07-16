@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page { size: A4; margin: 0; }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #1d2b38;
+        }
+        .page {
+            width: 210mm;
+            height: 297mm;
+            box-sizing: border-box;
+            padding: 20mm;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+            background: white;
+        }
+        .header {
+            position: absolute;
+            top: 15mm;
+            left: 20mm;
+            right: 20mm;
+            border-bottom: 2.5px solid #16324f;
+            padding-bottom: 3mm;
+            font-size: 9pt;
+            color: #16324f;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #b9c6d2;
+            font-size: 9pt;
+            color: #5c6b7a;
+            text-align: right;
+            padding-top: 3mm;
+            letter-spacing: 0.3px;
+        }
+        .footnotes {
+            position: absolute;
+            bottom: 25mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #b9c6d2;
+            padding-top: 2mm;
+            font-size: 8pt;
+            color: #44525f;
+        }
+        h1, h2, h3, h4 { color: #16324f; margin-top: 0; }
+        h2 {
+            border-bottom: 1px solid #d6dee6;
+            padding-bottom: 1.5mm;
+            letter-spacing: 0.5px;
+        }
+        h3 { letter-spacing: 0.3px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5mm; font-size: 9pt; }
+        th, td { border: 1px solid #c9d4de; padding: 6px; text-align: left; vertical-align: top; }
+        th {
+            background-color: #16324f;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            border: 1px solid #16324f;
+        }
+        tr:nth-child(even) td { background-color: #f3f6f9; }
+        .clause { margin-bottom: 4mm; text-align: justify; }
+        .clause-id { font-weight: bold; color: #16324f; }
+
+        /* Vendor styles */
+        .vendor-VoltEdge { border-top: 4mm solid #0056b3; }
+        .vendor-Deccan { border-top: 4mm solid #b8860b; }
+        .vendor-CryoCore { border-top: 4mm solid #008080; }
+        .vendor-Trident { border-top: 4mm solid #708090; }
+        .vendor-AegisFire { border-top: 4mm solid #cc0000; }
+
+        .logo-text { font-size: 18pt; font-weight: bold; letter-spacing: 1px; }
+        .VoltEdge .logo-text { color: #0056b3; }
+        .Deccan .logo-text { color: #b8860b; }
+        .CryoCore .logo-text { color: #008080; }
+        .Trident .logo-text { color: #708090; }
+        .AegisFire .logo-text { color: #cc0000; }
+
+        .cover-title {
+            font-size: 24pt;
+            margin-top: 40mm;
+            text-align: center;
+            letter-spacing: 2px;
+            border-top: 1px solid #16324f;
+            border-bottom: 1px solid #16324f;
+            padding: 6mm 0;
+        }
+        .cover-meta { margin-top: 20mm; font-size: 12pt; }
+        .cover-meta p { margin: 2.5mm 0; }
+        .status-badge {
+            display: inline-block;
+            padding: 2mm 5mm;
+            border-radius: 2mm;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+        .status-ACTIVE { background: #d4edda; color: #155724; border: 1px solid #9fd3ab; }
+        .status-SUPERSEDED { background: #f8d7da; color: #721c24; border: 1px solid #e3a5ac; }
+    </style>
+</head>
+<body>
+    
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 26 05 00 - Common Work Results for Electrical</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <h2>PART 1 - GENERAL</h2>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.1 Summary</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.1.1.A</span>
+                    This section specifies the general electrical requirements common to all electrical specification sections for the Meridian Data Centre Campus, Phase 1, located in Navi Mumbai, India. All electrical work shall comply with the requirements of this section and the applicable individual equipment sections.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.1.1.B</span>
+                    Related specification sections include but are not limited to: Section 26 33 53 Static Uninterruptible Power Supply, Section 26 32 13 Engine Generators, Section 26 13 26 Medium Voltage Switchgear, Section 23 81 23 Computer Room Air Handling Units, and Section 21 22 00 Clean Agent Fire Suppression Systems.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.2 References</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.2.1.A</span>
+                    The following Indian and International standards form part of this specification to the extent referenced herein: IS 732 (Code of Practice for Electrical Wiring Installations), IS 3043 (Code of Practice for Earthing), IS 694 (PVC Insulated Cables), IEC 60364 (Low Voltage Electrical Installations), IEC 61439 (Low-Voltage Switchgear and Controlgear Assemblies).
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.2.1.B</span>
+                    All electrical installations shall comply with the National Electrical Code (NEC) of India, the National Building Code (NBC) of India Part 8 Building Services Section 2 Electrical and Allied Installations, and the local regulations of the Maharashtra State Electricity Distribution Company (MSEDCL).
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.3 Submittal Requirements</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.3.1.A</span>
+                    The Contractor shall submit equipment shop drawings, product data sheets, and compliance statements for each electrical equipment item specified in the individual equipment sections. Submittals shall be transmitted using the project standard transmittal form with a unique submittal identification number.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.3.1.B</span>
+                    Each equipment submittal shall include manufacturer's published product data, certified performance test reports, dimensional drawings, wiring diagrams, and a clause-by-clause compliance matrix referencing the applicable spec section.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.3.1.C</span>
+                    Submittal review turnaround time is 14 calendar days from receipt of the complete package. Incomplete submittals will be returned without review.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 26 05 00 / Page 1 of 4
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 26 05 00 - Common Work Results for Electrical</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.4 Quality Assurance</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.1.A</span>
+                    Equipment manufacturers shall have a minimum of 10 years demonstrated experience in the design and manufacture of the specified equipment type, with verifiable installations in mission-critical data centre facilities.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.1.B</span>
+                    Equipment manufacturers shall hold current ISO 9001 quality management system certification from an accredited certification body for all manufacturing facilities producing equipment for this project.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.2.A</span>
+                    The installing contractor shall be licensed by the appropriate state regulatory authority and shall have a minimum of 5 years experience in installing similar equipment in mission-critical or Tier III and above data centre environments.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.A</span>
+                    All factory-assembled electrical equipment shall be subjected to routine tests at the manufacturer's facility prior to shipment. Factory test certificates shall be submitted as part of the equipment submittal package.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.B</span>
+                    All medium voltage equipment and switchgear assemblies shall be type tested and certified in accordance with the applicable IEC standards. IEC type test certificates from an accredited third-party laboratory (ASTA, KEMA, or equivalent NABL-accredited body) shall be provided for each equipment type.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.C</span>
+                    Low voltage switchgear and controlgear assemblies shall be type tested in accordance with IEC 61439-1 and IEC 61439-2. Design verification reports shall be submitted for Consultant review.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.D</span>
+                    Power cables rated above 1.1 kV shall be type tested to IS 7098 Part 2 or IEC 60502-2 as applicable. Cable test certificates shall include conductor resistance, insulation resistance, and high voltage withstand test results.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.E</span>
+                    Current transformers and voltage transformers shall be type tested in accordance with IEC 61869-2 and IEC 61869-3 respectively. Accuracy class certificates shall be submitted.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.F</span>
+                    Protective relays and metering equipment shall be factory-calibrated and supplied with calibration certificates traceable to national standards. Relay settings shall be submitted for Consultant approval prior to dispatch.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.G</span>
+                    Earthing and lightning protection system components shall comply with IS 3043 and IEC 62305. Material test certificates for copper earthing conductors and earth electrodes shall be submitted.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.H</span>
+                    Emergency lighting and exit signs shall be tested to IS 10118 and IS 6665. Battery backup duration and illumination level test reports shall be submitted.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 26 05 00 / Page 2 of 4
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 26 05 00 - Common Work Results for Electrical</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.I</span>
+                    Fire detection and alarm system components shall be tested and listed to IS 2189 or UL 268 / UL 864 as applicable. Third-party listing certificates shall be submitted.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.4.3.J</span>
+                    Diesel generator auxiliary systems including fuel transfer pumps, day tank level controls, and exhaust treatment systems shall be factory tested per the applicable IS or IEC standards. Test records shall be submitted.
+                </div>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">1.5 Warranty</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 1.5.1.A</span>
+                    The Contractor shall provide a minimum warranty period of 24 months from the date of substantial completion or 30 months from the date of delivery, whichever occurs first, for all electrical equipment and installations.
+                </div>
+            
+        
+            
+                <h2>PART 2 - PRODUCTS</h2>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">2.1 General Electrical Requirements</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 2.1.1.A</span>
+                    The campus electrical distribution system shall be designed for a nominal medium voltage of 11 kV, 3-phase, 50 Hz from the utility incoming feed and standby generator plant. Secondary distribution shall be at 415 V, 3-phase, 4-wire plus ground, 50 Hz.
+                </div>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 2.1.1.B</span>
+                    Power factor at the point of common coupling shall be maintained at a minimum of 0.95 lagging. Automatic power factor correction equipment shall be provided where required.
+                </div>
+            
+        
+            
+                <h2>PART 3 - EXECUTION</h2>
+            
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">3.1 Examination and Preparation</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 3.1.1.A</span>
+                    Prior to installation, the Contractor shall examine all areas and conditions under which electrical equipment is to be installed and notify the Consultant in writing of any conditions that may adversely affect the installation.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 26 05 00 / Page 3 of 4
+    </div>
+</div>
+
+<div class="page">
+    <div class="header">
+        <span>Meridian Data Centre Campus - Phase 1</span>
+        <span>Section 26 05 00 - Common Work Results for Electrical</span>
+    </div>
+    
+    <div class="content" style="margin-top: 10mm;">
+        
+            
+                <h3 style="margin-top: 6mm; margin-bottom: 2mm;">3.2 Installation</h3>
+            
+        
+            
+                <div class="clause">
+                    <span class="clause-id">26 05 00 Part 3.2.1.A</span>
+                    All electrical equipment shall be installed in strict accordance with the manufacturer's written installation instructions, approved shop drawings, and the requirements of this specification.
+                </div>
+            
+        
+    </div>
+    
+    <div class="footer">
+        Section 26 05 00 / Page 4 of 4
+    </div>
+</div>
+
+
+</body>
+</html>
