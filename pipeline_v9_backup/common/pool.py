@@ -14,9 +14,7 @@ DEEPSEEK_API_KEYS pool (N keys = N separate rate-limit budgets).
 - pure stdlib (concurrent.futures), like everything else in the pipeline
 """
 import os
-import threading
-import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 
 from common import llm
 
@@ -34,35 +32,11 @@ def worker_count():
 
 
 def pmap(fn, items, workers=None):
-    """Ordered parallel map with live progress, so long LLM calls never look
-    like a hang: every completion prints, and a heartbeat reports what is
-    still in flight while nothing is completing."""
+    """Ordered parallel map. Falls back to a plain loop when workers == 1,
+    so single-key setups behave exactly as before."""
     items = list(items)
     w = min(workers or worker_count(), max(1, len(items)))
-    if w <= 1 or len(items) <= 1:
+    if w <= 1:
         return [fn(x) for x in items]
-    state = {"done": 0, "stop": False}
-    lock = threading.Lock()
-
-    def heartbeat():
-        while True:
-            time.sleep(12)
-            with lock:
-                if state["stop"]:
-                    return
-                print(f"    ... waiting on the model: {state['done']}/{len(items)} "
-                      f"call(s) answered, {len(items) - state['done']} in flight", flush=True)
-
-    threading.Thread(target=heartbeat, daemon=True).start()
-    res = [None] * len(items)
-    try:
-        with ThreadPoolExecutor(max_workers=w) as ex:
-            futs = {ex.submit(fn, x): i for i, x in enumerate(items)}
-            for f in as_completed(futs):
-                res[futs[f]] = f.result()
-                with lock:
-                    state["done"] += 1
-    finally:
-        with lock:
-            state["stop"] = True
-    return res
+    with ThreadPoolExecutor(max_workers=w) as ex:
+        return list(ex.map(fn, items))

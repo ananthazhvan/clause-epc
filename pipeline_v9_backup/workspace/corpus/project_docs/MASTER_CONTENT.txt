@@ -1,0 +1,277 @@
+==============================================================================
+FILE: addenda/ADD-001.html
+==============================================================================
+ADDENDUM NO. 1
+MERIDIAN-1 DATA CENTRE, HALL A — ADDENDUM NO. 1 (ADD-001)
+
+Date: 2026-03-02 · Issued by the Engineer. This Addendum forms part of the Contract Documents and modifies the Issued-for-Construction specifications as noted. Submittals reviewed against superseded requirements shall be revised and resubmitted.
+
+Item 1 — Section 23 64 26, Clause 2.1 PERFORMANCE
+
+Delete "not less than 6.0" and substitute "not less than 6.3". Revised clause reads: Coefficient of performance (COP) at AHRI 550/590 standard rating conditions shall be not less than 6.3 at 100 percent load.
+
+Item 2 — Section 26 33 53, Clause 2.7 EFFICIENCY VERIFICATION
+
+The referenced test method is amended to IEC 62040-3:2021, with efficiency verified at unity output power factor.
+
+==============================================================================
+FILE: specs/SPEC_212200_FIRE.html
+==============================================================================
+SECTION 21 22 00 - CLEAN-AGENT FIRE SUPPRESSION
+MERIDIAN-1 DATA CENTRE, HALL A
+
+Project No. MER-1-2026 · Issued for Construction · Revision 0 · 2026-01-15
+
+SECTION 21 22 00 — CLEAN-AGENT FIRE SUPPRESSION
+
+21 22 00 Part 1 — GENERAL
+
+1.1 SUMMARY. Total-flooding clean-agent suppression for the Hall A data hall, UPS rooms, and battery rooms.
+
+1.2 REFERENCES. NFPA 2001, UL 2166, IS 15493.
+
+1.3 SUBMITTALS. Hydraulic calculations, nozzle listing data, agent quantity calculations, room integrity test procedure.
+
+21 22 00 Part 2 — PRODUCTS
+
+2.1 AGENT. FK-5-1-12 (fluoroketone). Recycled or reclaimed agent is not permitted.
+
+2.2 DISCHARGE TIME. Agent discharge to 95 percent of design concentration shall complete within 10 seconds per NFPA 2001. [3]
+
+2.3 DESIGN CONCENTRATION. Minimum design concentration 5.6 percent for Class C hazards at the protected enclosure's minimum ambient temperature.
+
+2.4 ENCLOSURE INTEGRITY. Peak positive pressure during discharge shall not exceed 25 Pa with venting as designed. A door-fan integrity test per NFPA 2001 Annex C is required for each protected enclosure prior to acceptance; retention time not less than 10 minutes.
+
+2.5 STORAGE. Cylinder charging pressure 24.8 bar (360 psi) at 21 degrees C, super-pressurised with nitrogen.
+
+Footnote [3]: For protected volumes exceeding 2,000 cubic metres, a discharge time not exceeding 12 seconds is acceptable where extended-discharge nozzles covered by the manufacturer's UL 2166 listing are provided and hydraulic calculations demonstrate 95 percent concentration within 12 seconds.
+
+21 22 00 Part 3 — EXECUTION
+
+3.1 TESTS. Room integrity door-fan test results and puff test records are quality records and prerequisites to Level 4 testing.
+
+==============================================================================
+FILE: specs/SPEC_236426_CHILLERS.html
+==============================================================================
+SECTION 23 64 26 - WATER-COOLED CENTRIFUGAL CHILLERS
+MERIDIAN-1 DATA CENTRE, HALL A
+
+Project No. MER-1-2026 · Issued for Construction · Revision 0 · 2026-01-15
+
+SECTION 23 64 26 — WATER-COOLED CENTRIFUGAL CHILLERS
+
+23 64 26 Part 1 — GENERAL
+
+1.1 SUMMARY. Water-cooled centrifugal chillers CH-A1 and CH-A2 serving the Hall A chilled water plant, N+1.
+
+1.2 REFERENCES. AHRI 550/590, ASME B31.9, ASHRAE 15, ISO 10816-3.
+
+1.3 SUBMITTALS. Selection data at AHRI conditions, sound data per AHRI 575, refrigerant declaration, and weld inspection plan for chilled water piping connections.
+
+23 64 26 Part 2 — PRODUCTS
+
+2.1 PERFORMANCE. Coefficient of performance (COP) at AHRI 550/590 standard rating conditions shall be not less than 6.0 at 100 percent load.
+
+2.2 CAPACITY. Each chiller shall deliver not less than 1200 TR at design conditions with zero fouling allowance deducted.
+
+2.3 SOUND. Sound pressure level shall not exceed 85 dBA at 1 metre per AHRI 575.
+
+2.4 REFRIGERANT. R-1233zd(E) or approved low-GWP equivalent; GWP shall not exceed 5.
+
+2.5 PIPING WELDS. Chilled water piping welds at chiller connections: 10 percent radiographic examination per ASME B31.9; acceptance criteria zero porosity in any examined joint. Weld maps and RT reports are quality records.
+
+2.6 VIBRATION. Peak-to-peak shaft vibration shall not exceed 4 mils at any load point, measured per ISO 10816-3 during commissioning.
+
+23 64 26 Part 3 — EXECUTION
+
+3.1 START-UP. Manufacturer-supervised start-up; trend logs at 25/50/75/100 percent load steps submitted to the Commissioning Authority.
+
+3.2 COMMISSIONING. Participation in Level 3 pre-functional and Level 4 functional performance tests per Section 01 91 13.
+
+==============================================================================
+FILE: specs/SPEC_263353_UPS.html
+==============================================================================
+SECTION 26 33 53 - STATIC UNINTERRUPTIBLE POWER SUPPLY
+MERIDIAN-1 DATA CENTRE, HALL A
+
+Project No. MER-1-2026 · Issued for Construction · Revision 0 · 2026-01-15
+
+SECTION 26 33 53 — STATIC UNINTERRUPTIBLE POWER SUPPLY (UPS)
+
+26 33 53 Part 1 — GENERAL
+
+1.1 SUMMARY. This Section specifies double-conversion static UPS systems serving the Hall A critical bus, including battery systems, battery cabinets, and accessories. Equipment tags UPS-A1 through UPS-A4.
+
+1.2 REFERENCES. IEC 62040-3, IEEE 485, IS 1893 (Part 4), NFPA 70E.
+
+1.3 SUBMITTALS. Product data, factory test reports, seismic anchorage calculations, and battery sizing calculations per IEEE 485. The Contractor shall identify any deviation from this Section on the transmittal; undeclared deviations discovered during review shall be grounds for rejection without further evaluation.
+
+26 33 53 Part 2 — PRODUCTS
+
+2.1 EFFICIENCY. UPS efficiency in double-conversion (VFI) mode shall be not less than 97.0 percent at 100 percent rated load, verified per IEC 62040-3. Eco-mode or bypass-mode efficiency figures shall not be substituted for VFI figures.
+
+2.2 BATTERY AUTONOMY. The battery system shall provide not less than 10 minutes autonomy at full rated UPS load, at end-of-life capacity, at 25 degrees C.
+
+2.3 INPUT HARMONICS. Input current total harmonic distortion (THDi) shall not exceed 5 percent at 100 percent load. Compliance shall be achieved by the UPS rectifier alone, without external or optional harmonic filter modules.
+
+2.4 OVERLOAD. The inverter shall sustain 125 percent load for 10 minutes and 150 percent load for 60 seconds.
+
+2.5 PARALLELING. Units shall be capable of paralleling in systems of not less than six units in N+1 configuration without a centralised static switch.
+
+2.6 BATTERY CABINETS. Battery cabinets shall be seismically anchored per IS 1893 (Part 4). Anchor bolt torque records shall be submitted as a quality record prior to energisation.
+
+2.7 EFFICIENCY VERIFICATION. Factory witness test per IEC 62040-3; see also any Addendum modifying the referenced edition.
+
+26 33 53 Part 3 — EXECUTION
+
+3.1 FACTORY TESTS. Full-load heat run, efficiency verification at 25/50/75/100 percent load, transfer tests, and battery discharge test witnessed by the Owner's representative.
+
+3.2 SITE ACCEPTANCE. Level 4 component verification and Level 5 integrated systems test participation per Section 01 91 13.
+
+==============================================================================
+FILE: submittals/SUB-212200-01-R0.html
+==============================================================================
+SUB-212200-01-R0 - Clean-Agent System
+SUBMITTAL TRANSMITTAL
+
+Package ID: SUB-212200-01 · Revision: R0 · Date: 2026-03-20
+Reference Section: 21 22 00 — Clean-Agent Fire Suppression
+Reviewed Spec Revision: Issued for Construction Rev 0
+Vendor: AegisFire Systems Pvt Ltd · Equipment: FK-5-1-12 Total Flooding System, Hall A
+Declared deviations: NONE
+
+AegisFire AF-5112 System — Design Summary
+
+Parameter | Value | 
+
+Agent | FK-5-1-12, virgin agent, UL 2166 listed hardware | 
+
+Protected volume (data hall enclosure) | 2,450 cubic metres | 
+
+Discharge time to 95% design concentration | 11 seconds, using AF-EDN-40 extended-discharge nozzles per UL 2166 listing; hydraulic calculation AF-HC-118 attached | 
+
+Design concentration (Class C) | 5.8% | 
+
+Predicted peak enclosure pressure | 22 Pa with relief venting as designed | 
+
+Cylinder charging pressure | 24.8 bar at 21 °C | 
+
+Room integrity: door-fan test procedure per NFPA 2001 Annex C included, target retention 10 minutes.
+
+==============================================================================
+FILE: submittals/SUB-236426-01-R0.html
+==============================================================================
+SUB-236426-01-R0 - Centrifugal Chillers
+SUBMITTAL TRANSMITTAL
+
+Package ID: SUB-236426-01 · Revision: R0 · Date: 2026-03-10
+Reference Section: 23 64 26 — Water-Cooled Centrifugal Chillers
+Reviewed Spec Revision: Issued for Construction Rev 0
+Vendor: CryoCore Climate Pvt Ltd · Equipment: CC-1200 Chillers (CH-A1, CH-A2)
+Declared deviations: NONE
+
+CryoCore CC-1200 — Selection Data at AHRI 550/590 Conditions
+
+Parameter | Value | 
+
+Cooling capacity | 1210 TR, zero fouling allowance deducted | 
+
+COP at 100% load | 6.1 | 
+
+Sound pressure at 1 m (AHRI 575) | 83 dBA | 
+
+Refrigerant | R-1233zd(E), GWP 1 | 
+
+Shaft vibration, all load points | 3.6 mils peak-to-peak (ISO 10816-3) | 
+
+Weld inspection plan: WPS/PQR per ASME B31.9 with 10 percent RT at chiller connections; acceptance zero porosity. Plan document CC-WIP-09 attached.
+
+==============================================================================
+FILE: submittals/SUB-236426-01-R1.html
+==============================================================================
+SUB-236426-01-R1 - Centrifugal Chillers (Revised)
+SUBMITTAL TRANSMITTAL
+
+Package ID: SUB-236426-01 · Revision: R1 · Date: 2026-04-06
+Reference Section: 23 64 26 — Water-Cooled Centrifugal Chillers
+Reviewed Spec Revision: IFC Rev 0 incorporating Addendum No. 1 (ADD-001)
+Vendor: CryoCore Climate Pvt Ltd · Equipment: CC-1200H Chillers (CH-A1, CH-A2)
+Declared deviations: NONE. Reason for revision: COP uplift to meet Addendum No. 1 Item 1 via high-efficiency impeller trim.
+
+CryoCore CC-1200H — Selection Data at AHRI 550/590 Conditions
+
+Parameter | Value | 
+
+Cooling capacity | 1205 TR, zero fouling allowance deducted | 
+
+COP at 100% load | 6.35 | 
+
+Sound pressure at 1 m (AHRI 575) | 84 dBA | 
+
+Refrigerant | R-1233zd(E), GWP 1 | 
+
+Shaft vibration, all load points | 3.8 mils peak-to-peak (ISO 10816-3) |
+
+==============================================================================
+FILE: submittals/SUB-263353-01-R0.html
+==============================================================================
+SUB-263353-01-R0 - UPS Modules
+SUBMITTAL TRANSMITTAL
+
+Package ID: SUB-263353-01 · Revision: R0 · Date: 2026-02-18
+Reference Section: 26 33 53 — Static Uninterruptible Power Supply
+Reviewed Spec Revision: Issued for Construction Rev 0
+Vendor: VoltEdge Power Systems Pvt Ltd · Equipment: PX-1200 UPS Modules (UPS-A1..A4)
+Declared deviations: NONE
+
+VoltEdge PX-1200 — Technical Datasheet (extract)
+
+Electrical Performance
+
+Parameter | Value | 
+
+Rated output | 1200 kW / 1200 kVA, unity PF | 
+
+Efficiency, double-conversion (VFI), 100% load | 96.2% | 
+
+Efficiency, eco-mode | 99.1% | 
+
+Input THDi at 100% load | 4.8% [2] | 
+
+Overload capability | 125% for 10 min; 150% for 60 s | 
+
+Paralleling | Up to 8 units, decentralised N+1 | 
+
+Battery System (supplied with Package SUB-263353-02)
+
+Autonomy at full rated load, end-of-life: 8 minutes at 25 °C. Extended autonomy available with additional cabinet strings (option E2, not included).
+
+Footnote [2]: THDi measured with optional VE-HF harmonic filter module installed. The VE-HF module is not included in the base scope of supply for this contract.
+
+Factory test: heat run and transfer tests per VoltEdge standard procedure VE-FT-11. Certificates attached.
+
+==============================================================================
+FILE: submittals/SUB-263353-02-R0.html
+==============================================================================
+SUB-263353-02-R0 - Battery System
+SUBMITTAL TRANSMITTAL
+
+Package ID: SUB-263353-02 · Revision: R0 · Date: 2026-02-25
+Reference Section: 26 33 53 — Static Uninterruptible Power Supply
+Reviewed Spec Revision: Issued for Construction Rev 0
+Vendor: VoltEdge Power Systems Pvt Ltd · Equipment: VRLA Battery Cabinets (BAT-A1..A4)
+Declared deviations: NONE
+
+VoltEdge BC-500 Battery Cabinets — Technical Datasheet (extract)
+
+Parameter | Value | 
+
+Autonomy at full rated UPS load (end-of-life, 25 °C) | 12 minutes | 
+
+Battery sizing method | IEEE 485, 1.10 ageing factor | 
+
+Seismic anchorage | IS 1893 (Part 4) Zone III; anchorage calculation VE-SC-204 attached | 
+
+Anchor torque records | To be submitted as installation quality records prior to energisation | 
+
+Cabinet construction | 2 mm CRCA, powder coated, front-access |

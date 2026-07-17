@@ -18,9 +18,7 @@ import hashlib
 import json
 import os
 import re
-import threading
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor
 
 PIPELINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(PIPELINE, "out")
@@ -63,32 +61,28 @@ def _docs():
 
 def t_project_overview():
     s = _load("project.json") or {}
-    onto = _load("ontology.json") or {}
+    fac = _load("facility.json") or {}
     docs = [name for name, _ in _docs()]
     rules = sum(len((_load(os.path.basename(p)) or {}).get("rules", []))
                 for p in glob.glob(os.path.join(OUT, "rulebook_*.json")))
     disp = (_load("dispositions.json") or {}).get("queue", [])
-    totals = (onto.get("project") or {}).get("totals") or {}
+    blast = _load("blast_wave.json") or {}
     return {
         "documents_parsed": docs,
         "rules_compiled": rules,
         "open_deviations": len(disp),
-        "ontology": {"totals": totals,
-                     "object_types": {t.get("type"): t.get("count") for t in (onto.get("types") or [])},
-                     "cert_readiness": onto.get("cert")},
+        "addendum_waves": len(blast.get("waves", [])),
+        "facility_rating_declared": (fac.get("tier") or {}).get("declared"),
         "model": s.get("model"),
         "site_pages": {
-            "hub": "upload + project state + data sources",
-            "objects": "every real-world object: sections, packages, POs, vendors, shipments, activities, cx tests, quality issues, RFIs",
-            "graph": "the ontology graph - every node is an object, every edge a typed relationship",
-            "globe": "shipments on the world globe: position, ETA, delays, addendum impact",
-            "review": "the ledger: spec vs submittal, claim by claim",
-            "queue": "deviation queue by severity",
-            "cx": "commissioning readiness",
-            "ncr": "non-conformance register",
-            "paperwork": "drafted letters/RFIs/NCRs",
+            "hub": "upload + project state", "overview": "ledger totals",
+            "queue": "deviation queue by severity", "review": "spec vs submittal, claim by claim",
+            "clock": "decision windows from schedule float", "graph": "the connected ledger graph",
+            "facility": "data-centre profile: tier, redundancy, standards",
+            "blast": "what each addendum changed", "margins": "how close each claim is to its limit",
+            "vendors": "per-vendor trust ledger", "paperwork": "drafted letters/RFIs/NCRs",
+            "cx": "commissioning readiness", "ncr": "non-conformance register",
         },
-        "note": "these are ALL the site pages; answer object questions with get_object / list_objects",
     }
 
 
@@ -146,24 +140,12 @@ def t_lookup_id(ident):
     return {"matches": found[:10] or "nothing in the ledger matches this identifier"}
 
 
-def _ncr_rows():
-    p = os.path.join(OUT, "ncr_register.csv")
-    if not os.path.exists(p):
-        return None
-    import csv as _csv
-    return {"ncrs": list(_csv.DictReader(open(p)))}
-
-
 PAGE_ARTIFACTS = {
-    "hub": lambda: t_project_overview(),
-    "queue": lambda: _load("dispositions.json"),
-    "review": lambda: _load("deviation_register.json"),
-    "cx": lambda: _load("cx_packs.json"),
-    "ncr": _ncr_rows,
-    "paperwork": lambda: _load("paperwork_index.json"),
-    "objects": lambda: _load("ontology.json"),
-    "graph": lambda: _load("ontology.json"),
-    "globe": lambda: _load("ontology.json"),
+    "overview": lambda: _load("dispositions.json"), "queue": lambda: _load("dispositions.json"),
+    "clock": lambda: _load("options.json"), "margins": lambda: _load("margins.json"),
+    "vendors": lambda: _load("vendors.json"), "blast": lambda: _load("blast_wave.json"),
+    "cx": lambda: _load("cx_packs.json"), "lint": lambda: _load("lint.json"),
+    "paperwork": lambda: _load("paperwork_index.json"), "facility": lambda: _load("facility.json"),
 }
 
 
@@ -185,14 +167,13 @@ TOOL_IMPL = {
 }
 
 TOOLS = [
-    {"type": "function", "function": {"name": "project_overview", "description": "What is loaded: documents, rule/deviation counts, ontology totals, certification readiness, and the full list of site pages with what each shows.", "parameters": {"type": "object", "properties": {}}}},
+    {"type": "function", "function": {"name": "project_overview", "description": "What is loaded: documents, rule/deviation counts, facility rating, and what every site page shows.", "parameters": {"type": "object", "properties": {}}}},
     {"type": "function", "function": {"name": "search_documents", "description": "Keyword (grep-style) search across every parsed page of the uploaded documents. Use precise project vocabulary; all terms must co-occur.", "parameters": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}}},
     {"type": "function", "function": {"name": "read_document", "description": "Read one page of a parsed document verbatim.", "parameters": {"type": "object", "properties": {"doc": {"type": "string"}, "page": {"type": "integer"}}, "required": ["doc"]}}},
     {"type": "function", "function": {"name": "lookup_id", "description": "Exact lookup of a rule ID, package ID, PO number, activity, test ID, or graph node.", "parameters": {"type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}}},
-    {"type": "function", "function": {"name": "get_page_data", "description": "The exact JSON a site page renders. Pages: hub, queue, review, cx, ncr, paperwork, objects, graph, globe.", "parameters": {"type": "object", "properties": {"page": {"type": "string"}}, "required": ["page"]}}},
+    {"type": "function", "function": {"name": "get_page_data", "description": "The exact JSON a site page renders (queue, cx, paperwork, supply).", "parameters": {"type": "object", "properties": {"page": {"type": "string"}}, "required": ["page"]}}},
     {"type": "function", "function": {"name": "get_object", "description": "Open one ontology object (section, submittal package, PO, vendor, shipment, activity, cx test, quality issue, addendum) with all its properties, money, insights, and typed links to other objects. Pass an id like 'po:PO-4500012304' or any unique name fragment like 'CH-A2' or 'CryoCore'.", "parameters": {"type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}}},
-    {"type": "function", "function": {"name": "list_objects", "description": "List ontology objects, optionally filtered by type: section, package, po, vendor, shipment, activity, cx, quality, rfi, addendum. Returns ids, statuses, money, and insight counts plus project totals.", "parameters": {"type": "object", "properties": {"type": {"type": "string"}}}}},
-    {"type": "function", "function": {"name": "investigate", "description": "Multi-agent orchestration: spawn up to 3 parallel subagents, each investigating one focused question over the ontology and documents (e.g. one per vendor, per shipment, per spec section). Use for broad questions that span several objects. Returns every agent's findings for you to merge.", "parameters": {"type": "object", "properties": {"tasks": {"type": "array", "items": {"type": "object", "properties": {"focus": {"type": "string"}, "question": {"type": "string"}}, "required": ["question"]}}}, "required": ["tasks"]}}},
+    {"type": "function", "function": {"name": "list_objects", "description": "List ontology objects, optionally filtered by type: section, package, po, vendor, shipment, activity, cx, quality, addendum. Returns ids, statuses, money, and insight counts plus project totals.", "parameters": {"type": "object", "properties": {"type": {"type": "string"}}}}},
 ]
 
 SYSTEM = (
@@ -206,9 +187,8 @@ SYSTEM = (
     "search_documents / read_document for verbatim clause text. Never state a project fact a "
     "tool did not return; if the ontology has nothing, say so plainly. Cite object ids "
     "(po:PO-0113, ship:SHP-88121, package:SUB-263353-01-R0) and doc pages like "
-    "(spec_26_33_53 p.2). For broad questions that span several objects, call investigate "
-    "to fan out up to 3 parallel subagents and merge their findings. Engineering tone: "
-    "short, concrete, no filler, no hedging. Prefer bullets. Currency is INR."
+    "(spec_26_33_53 p.2). Engineering tone: short, concrete, no filler, no hedging. "
+    "Prefer bullets. Currency is INR."
 )
 
 
@@ -260,7 +240,7 @@ def _post(url, payload, key, timeout=120):
         return json.loads(r.read().decode())
 
 
-def _cached_completion(cfg, messages, tools=None):
+def _cached_completion(cfg, messages):
     os.makedirs(CACHE, exist_ok=True)
     key = hashlib.sha256((cfg["model"] + "\x00agent\x00" + json.dumps(messages, sort_keys=True)).encode()).hexdigest()
     cpath = os.path.join(CACHE, "agent_" + key + ".json")
@@ -270,8 +250,7 @@ def _cached_completion(cfg, messages, tools=None):
         raise AgentError("The copilot makes live model calls. Add your API key in Settings "
                          "(written to pipeline/.env). Previously asked questions replay from "
                          "the local cache without a key; new ones cannot.")
-    payload = {"model": cfg["model"], "messages": messages,
-               "tools": tools if tools is not None else TOOLS, "temperature": 0}
+    payload = {"model": cfg["model"], "messages": messages, "tools": TOOLS, "temperature": 0}
     data = _post(cfg["base_url"].rstrip("/") + "/chat/completions", payload, cfg["api_key"])
     msg = data["choices"][0]["message"]
     json.dump(msg, open(cpath, "w"))
@@ -296,69 +275,10 @@ def _step_label(name, args):
         return f"Opening object \u201c{str(args.get('id', ''))[:40]}\u201d"
     if name == "list_objects":
         return f"Listing {args.get('type') or 'all'} objects"
-    if name == "investigate":
-        return f"Orchestrating {len(args.get('tasks') or [])} subagent(s)"
     return name
 
 
-# ------------------------------------------------- multi-agent orchestration
-SUB_SYSTEM = (
-    "You are a CLAUSE subagent investigating ONE focused question over the project "
-    "ontology and documents. Use tools to gather evidence, then answer in at most 6 "
-    "bullets with object ids (po:..., ship:..., package:...) and doc/page citations. "
-    "Only facts a tool returned. No filler."
-)
-SUB_TOOLS = [t for t in TOOLS if t["function"]["name"] in
-             ("get_object", "list_objects", "search_documents", "read_document", "lookup_id")]
-SUB_MAX_STEPS = 5
-
-
-def _sub_agent(idx, task, cfg, send):
-    focus = str(task.get("focus") or f"task {idx}")[:80]
-    question = str(task.get("question") or focus)[:500]
-    messages = [{"role": "system", "content": SUB_SYSTEM},
-                {"role": "user", "content": question}]
-    trace = []
-    for _ in range(SUB_MAX_STEPS):
-        try:
-            msg, _cached = _cached_completion(cfg, messages, tools=SUB_TOOLS)
-        except AgentError as e:
-            return {"agent": idx, "focus": focus, "error": str(e)}
-        calls = msg.get("tool_calls") or []
-        if not calls:
-            return {"agent": idx, "focus": focus,
-                    "findings": msg.get("content") or "(nothing found)", "steps": trace}
-        messages.append(msg)
-        for c in calls:
-            name = c.get("function", {}).get("name", "")
-            try:
-                args = json.loads(c.get("function", {}).get("arguments") or "{}")
-            except json.JSONDecodeError:
-                args = {}
-            label = f"Agent {idx} \u00b7 {_step_label(name, args)}"
-            send({"event": "step_start", "tool": "subagent", "label": label, "args": focus})
-            impl = TOOL_IMPL.get(name)
-            result = impl(args) if impl else {"error": "unknown tool"}
-            trace.append(_step_label(name, args))
-            send({"event": "step_done", "tool": "subagent", "label": label,
-                  "args": focus, "note": "", "cached": False})
-            messages.append({"role": "tool", "tool_call_id": c.get("id", ""),
-                             "content": json.dumps(result)[:9000]})
-    return {"agent": idx, "focus": focus,
-            "findings": "(subagent hit its step limit - findings above are partial)", "steps": trace}
-
-
-def _investigate(tasks, cfg, send):
-    tasks = [t if isinstance(t, dict) else {"question": str(t)} for t in (tasks or [])][:3]
-    if not tasks:
-        return {"error": "pass 1-3 tasks: [{focus, question}]"}
-    with ThreadPoolExecutor(max_workers=len(tasks)) as ex:
-        results = list(ex.map(lambda p: _sub_agent(p[0] + 1, p[1], cfg, send), enumerate(tasks)))
-    return {"subagents": results,
-            "note": "merge these findings into one answer, keeping each agent's citations"}
-
-
-def run_agent(message, history, cfg, emit=None, page=None):
+def run_agent(message, history, cfg, emit=None):
     """history: [{role, content}...] (user/assistant only). Returns reply + tool trace.
 
     emit, when provided, receives live events so the UI can relay every tool
@@ -369,16 +289,8 @@ def run_agent(message, history, cfg, emit=None, page=None):
     The return value is unchanged, so the non-streaming /api/agent endpoint
     keeps working exactly as before.
     """
-    _raw = emit or (lambda ev: None)
-    _lk = threading.Lock()
-
-    def send(ev):
-        with _lk:
-            _raw(ev)
+    send = emit or (lambda ev: None)
     messages = [{"role": "system", "content": SYSTEM}]
-    if page:
-        messages.append({"role": "system",
-                         "content": f"The user is currently looking at the '{page}' page of the site."})
     for h in (history or [])[-8:]:
         if h.get("role") in ("user", "assistant") and h.get("content"):
             messages.append({"role": h["role"], "content": str(h["content"])[:2000]})
@@ -400,11 +312,8 @@ def run_agent(message, history, cfg, emit=None, page=None):
             label = _step_label(name, args)
             arg_note = ", ".join(f"{k}={str(v)[:40]}" for k, v in args.items())
             send({"event": "step_start", "tool": name, "label": label, "args": arg_note})
-            if name == "investigate":
-                result = _investigate(args.get("tasks") or [], cfg, send)
-            else:
-                impl = TOOL_IMPL.get(name)
-                result = impl(args) if impl else {"error": "unknown tool"}
+            impl = TOOL_IMPL.get(name)
+            result = impl(args) if impl else {"error": "unknown tool"}
             note = ""
             if isinstance(result, dict):
                 if "hits" in result:

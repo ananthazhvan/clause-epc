@@ -300,31 +300,6 @@ def main():
         if msec and f"section:{msec.group(1)}" in O.objects:
             O.link(f"cx:{tid}", f"section:{msec.group(1)}", "verifies")
 
-    # ---------------- RFIs (requests for information) ----------------------
-    rfi_csv = find_file(corpus, ["rfi_register.csv"])
-    for r in read_csv(rfi_csv) if rfi_csv else []:
-        rid = (r.get("rfi_id") or "").strip()
-        if not rid:
-            continue
-        status = (r.get("status") or "").strip().upper()
-        O.obj(f"rfi:{rid}", "rfi", f"{rid} \u00b7 {str(r.get('question', ''))[:70]}",
-              status=status,
-              props={"section": r.get("section"), "clause": r.get("clause"),
-                     "question": r.get("question"), "answer": r.get("answer"),
-                     "raised_by": r.get("raised_by")})
-        sec = (r.get("section") or "").strip()
-        if sec and f"section:{sec}" in O.objects:
-            O.link(f"rfi:{rid}", f"section:{sec}", "questions")
-            if status == "OPEN":
-                O.insight(f"section:{sec}",
-                          f"Open {rid}: {str(r.get('question', ''))[:100]}", "warn")
-        pkg = (r.get("linked_package") or "").strip()
-        if pkg and f"package:{pkg}" in O.objects:
-            O.link(f"rfi:{rid}", f"package:{pkg}", "affects")
-        if status == "OPEN":
-            O.insight(f"rfi:{rid}",
-                      "Unanswered - this requirement is ambiguous until the client responds.", "warn")
-
     # ---------------- quality issues (ACC-style feed) ----------------------
     for p in glob.glob(os.path.join(corpus, "**", "*.json"), recursive=True):
         if "_answer_key" in p:

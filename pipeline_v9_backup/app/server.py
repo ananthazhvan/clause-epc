@@ -66,8 +66,9 @@ GUIDES = {"LOCAL_LLM.md", "CORPUS_FORMAT.md", "README.md", "DESIGN_SPEC.md",
           "M7_M12_NOTES.md", "SCALABILITY.md"}
 
 # Data endpoints that require a loaded project (top path segment).
-GATED = {"summary", "graph", "queue", "paperwork", "cx", "node",
-         "packages", "verdicts", "ncr", "supply", "ontology"}
+GATED = {"summary", "graph", "blastwave", "queue", "options", "margins",
+         "vendors", "lint", "paperwork", "cx", "facility", "node",
+         "packages", "verdicts", "ncr", "intel", "supply", "ontology"}
 
 # Ground truth is never read by the pipeline (contamination rule).
 BANNED = ("project_bible", "labels.json", "curves_data", "answer_key")
@@ -479,21 +480,28 @@ def summary():
     claims = sum(len(json.load(open(p))["claims"])
                  for p in glob.glob(os.path.join(OUT, "claims_*.json")))
     lint = load("lint.json") or {"findings": []}
-    onto = load("ontology.json") or {}
-    types = {t.get("type"): t.get("count") for t in (onto.get("types") or [])}
-    totals = (onto.get("project") or {}).get("totals") or {}
+    fac = load("facility.json") or {}
+    opts = load("options.json") or {}
+    g = load("graph.json") or {"nodes": [], "edges": []}
+    types = {}
+    for n in g["nodes"]:
+        types[n["type"]] = types.get(n["type"], 0) + 1
     staged, _ = staged_state()
     env = read_env()
     return {
         "rules": rules, "claims": claims,
         "verdicts_pre": pre, "verdicts_post": post,
         "false_comply_pre": fc_pre, "false_comply_post": fc_post,
+        "blast": (load("blast_wave.json") or {}).get("summary"),
+        "addenda": len((load("blast_wave.json") or {}).get("waves", []) or []),
         "lint_findings": len(lint["findings"]),
-        "graph_nodes": totals.get("objects", 0), "graph_edges": totals.get("links", 0),
+        "facility_rating": (fac.get("tier") or {}).get("declared"),
+        "decide_by": min([p.get("decide_concessions_by") for p in opts.get("packages", [])
+                          if p.get("decide_concessions_by")], default=None),
+        "days_to_decide": min([p.get("days_to_decide") for p in opts.get("packages", [])
+                               if isinstance(p.get("days_to_decide"), (int, float))], default=None),
+        "graph_nodes": len(g["nodes"]), "graph_edges": len(g["edges"]),
         "node_types": types,
-        "money": {"procurement_value_inr": totals.get("procurement_value_inr", 0),
-                  "value_at_risk_inr": totals.get("value_at_risk_inr", 0)},
-        "cert": onto.get("cert"),
         "corpus_files": sum(staged.values()),
         "staged": staged,
         "model": env.get("DEEPSEEK_MODEL", ""),
@@ -648,9 +656,16 @@ class Handler(BaseHTTPRequestHandler):
         simple = {
             ("summary",): summary,
             ("graph",): lambda: load("graph.json") or {"nodes": [], "edges": []},
+            ("blastwave",): lambda: load("blast_wave.json") or {},
             ("queue",): lambda: load("dispositions.json") or {"queue": []},
+            ("options",): lambda: load("options.json") or {},
+            ("margins",): lambda: load("margins.json") or {},
+            ("vendors",): lambda: load("vendors.json") or {},
+            ("lint",): lambda: load("lint.json") or {"findings": []},
             ("paperwork",): lambda: load("paperwork_index.json") or {"documents": []},
             ("cx",): lambda: load("cx_packs.json") or {"tests": []},
+            ("facility",): lambda: load("facility.json") or {},
+            ("intel",): lambda: load("intel.json") or {"findings": []},
             ("supply",): lambda: load("supply_risk.json") or {},
             ("ontology",): lambda: load("ontology.json") or {"objects": [], "links": []},
             ("project",): project_state,
@@ -799,8 +814,7 @@ class Handler(BaseHTTPRequestHandler):
 
                 try:
                     res = _agent.run_agent(str(body.get("message", ""))[:2000],
-                                           body.get("history"), cfg, emit=_emit,
-                                           page=str(body.get("page") or "")[:40])
+                                           body.get("history"), cfg, emit=_emit)
                     _emit({"event": "reply", **res})
                 except _agent.AgentError as e:
                     try:
@@ -814,8 +828,7 @@ class Handler(BaseHTTPRequestHandler):
                         pass
                 return
             try:
-                res = _agent.run_agent(str(body.get("message", ""))[:2000], body.get("history"), cfg,
-                                       page=str(body.get("page") or "")[:40])
+                res = _agent.run_agent(str(body.get("message", ""))[:2000], body.get("history"), cfg)
                 return self._send(200, res)
             except _agent.AgentError as e:
                 return self._send(400, {"error": str(e)})

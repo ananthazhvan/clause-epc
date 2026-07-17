@@ -1,0 +1,9 @@
+test_id,level,system,spec_clause,acceptance_criteria,status
+CX-UPS-401,L4,UPS,26 33 53 2.1,VFI efficiency >= 97.0% at 100% load witnessed on site,NOT_STARTED
+CX-UPS-402,L4,UPS,26 33 53 2.2,Battery autonomy >= 10 min at full load discharge test,NOT_STARTED
+CX-UPS-403,L4,UPS,26 33 53 2.4,Overload 125%/10min and 150%/60s transfer without alarm,NOT_STARTED
+CX-CHW-301,L3,Chilled Water,23 64 26 2.1,COP >= 6.3 at AHRI conditions trended over 4 load steps,NOT_STARTED
+CX-CHW-302,L4,Chilled Water,23 64 26 2.6,Shaft vibration <= 4 mils at all load points per ISO 10816-3,NOT_STARTED
+CX-FSS-201,L2,Fire Suppression,21 22 00 2.4,Door-fan integrity: retention >= 10 min and peak <= 25 Pa,FAILED
+CX-FSS-202,L3,Fire Suppression,21 22 00 2.2,Puff test + discharge simulation within listed discharge time,NOT_STARTED
+CX-IST-501,L5,Integrated,01 91 13,Pull-the-plug integrated systems test with full IT load bank,NOT_STARTED

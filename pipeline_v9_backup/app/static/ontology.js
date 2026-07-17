@@ -127,41 +127,23 @@ async function vObject360(view, arg) {
 }
 
 /* ============================================= Globe */
-/* Hand-traced low-res world coastlines as [lon, lat] polylines - just enough
-   to read the planet at a glance, stroked outlines only (creme atlas look). */
-const WORLD = [
-  [[-166,68],[-158,71],[-140,70],[-125,70],[-110,68],[-95,69],[-85,66],[-82,62],[-93,58],[-85,55],[-82,52],[-70,58],[-64,60],[-60,55],[-55,52],[-60,50],[-65,49],[-70,44],[-74,40],[-76,35],[-81,31],[-80,26],[-83,29],[-89,29],[-94,29],[-97,26],[-97,22],[-95,19],[-104,19],[-106,23],[-110,23],[-113,29],[-117,33],[-122,37],[-124,43],[-124,48],[-128,51],[-132,55],[-140,60],[-150,60],[-152,58],[-158,56],[-165,60],[-168,66],[-166,68]],
-  [[-97,20],[-94,16],[-88,13],[-84,10],[-80,9],[-77,8]],
-  [[-77,8],[-72,12],[-64,10],[-60,8],[-52,4],[-50,0],[-44,-3],[-37,-5],[-35,-8],[-39,-14],[-40,-20],[-48,-26],[-53,-33],[-58,-38],[-62,-40],[-65,-45],[-69,-50],[-68,-54],[-73,-52],[-73,-46],[-71,-38],[-71,-30],[-70,-22],[-72,-17],[-77,-12],[-81,-5],[-80,0],[-77,4],[-77,8]],
-  [[-6,35],[3,37],[10,37],[20,32],[30,31],[33,31],[34,28],[36,22],[38,18],[43,11],[48,11],[51,10],[45,2],[41,-2],[40,-10],[36,-18],[33,-25],[28,-33],[20,-35],[18,-32],[15,-27],[12,-18],[11,-9],[9,-1],[9,4],[4,6],[-4,5],[-8,5],[-13,8],[-17,14],[-16,21],[-13,27],[-9,31],[-6,35]],
-  [[-9,36],[-9,43],[-2,45],[0,47],[-4,48],[2,51],[4,53],[9,54],[8,56],[11,57],[10,59],[5,60],[5,62],[12,65],[16,68],[21,70],[28,71],[33,69],[40,66],[45,68],[55,69],[68,70],[73,68],[80,71],[95,76],[105,77],[113,74],[130,72],[140,72],[150,70],[160,69],[170,67],[178,66],[178,64],[170,60],[162,58],[160,53],[156,51],[150,59],[143,54],[141,52],[137,45],[131,43],[128,40],[126,38],[122,37],[121,32],[121,28],[117,23],[110,20],[108,15],[106,10],[104,2],[101,3],[98,8],[97,14],[94,17],[91,22],[88,22],[85,20],[80,16],[80,10],[77,8],[73,16],[70,21],[68,24],[66,25],[61,25],[57,26],[54,27],[50,30],[48,30],[50,26],[54,26],[57,24],[59,22],[57,19],[52,16],[48,14],[44,12],[43,16],[39,20],[36,26],[34,30],[34,33],[36,36],[30,36],[27,37],[26,39],[26,41],[23,40],[22,38],[23,36],[19,40],[16,42],[13,45],[14,42],[16,40],[17,39],[15,38],[13,41],[11,44],[9,44],[6,43],[3,42],[0,39],[-2,37],[-5,36],[-9,36]],
-  [[-5,50],[-4,53],[-6,56],[-5,58],[-3,59],[-2,57],[0,53],[1,51],[-5,50]],
-  [[-10,52],[-10,54],[-8,55],[-6,54],[-6,52],[-10,52]],
-  [[-22,64],[-18,63],[-14,65],[-18,66],[-23,65],[-22,64]],
-  [[-45,60],[-42,62],[-32,68],[-22,70],[-18,76],[-22,80],[-38,83],[-55,82],[-62,76],[-58,72],[-54,67],[-48,61],[-45,60]],
-  [[130,31],[132,33],[135,34],[140,35],[141,38],[140,41],[141,45],[145,44],[143,42],[141,40],[137,36],[133,34],[131,32],[130,31]],
-  [[120,14],[121,17],[122,18],[121,14],[120,14]],
-  [[95,5],[99,2],[103,-2],[106,-5],[104,-5],[100,0],[96,4],[95,5]],
-  [[105,-6],[110,-7],[114,-8],[112,-8],[106,-7],[105,-6]],
-  [[109,1],[112,3],[117,4],[119,1],[116,-3],[112,-3],[109,1]],
-  [[131,-1],[136,-2],[141,-3],[146,-6],[150,-9],[147,-9],[142,-8],[137,-5],[132,-2],[131,-1]],
-  [[114,-22],[113,-25],[115,-32],[118,-35],[124,-33],[130,-32],[136,-35],[140,-38],[145,-38],[147,-39],[150,-37],[153,-32],[153,-27],[151,-24],[149,-20],[146,-19],[143,-14],[142,-11],[139,-17],[136,-12],[132,-12],[129,-15],[126,-14],[122,-18],[118,-20],[114,-22]],
-  [[145,-41],[148,-41],[147,-43],[145,-42],[145,-41]],
-  [[173,-35],[176,-38],[178,-38],[176,-40],[174,-41],[172,-40],[173,-35]],
-  [[173,-41],[171,-42],[168,-44],[167,-46],[170,-46],[173,-43],[173,-41]],
-  [[44,-12],[48,-14],[50,-16],[47,-25],[45,-25],[43,-21],[44,-16],[44,-12]],
-  [[80,6],[82,7],[81,9],[80,8],[80,6]],
-  [[-84,22],[-79,21],[-75,20],[-78,22],[-84,22]],
-  [[28,41],[33,42],[41,42],[38,44],[33,45],[30,44],[28,41]],
-  [[50,37],[54,39],[53,42],[50,45],[48,42],[49,38],[50,37]],
-  [[-180,-71],[-150,-73],[-120,-72],[-90,-70],[-60,-68],[-58,-64],[-45,-72],[-20,-70],[10,-69],[40,-67],[70,-68],[100,-66],[130,-66],[160,-70],[180,-71]],
+const O_LAND = [
+  [7, 32, 68, 90], [20, 45, 95, 125], [10, 23, 98, 109], [-10, 6, 95, 141], [31, 43, 129, 145],
+  [45, 70, 60, 179], [50, 70, 28, 60], [36, 55, -9, 30], [55, 70, 4, 31], [36, 43, -9, 3],
+  [13, 36, -16, 34], [0, 13, -16, 50], [-35, 0, 10, 41], [13, 33, 34, 59],
+  [26, 49, -124, -68], [49, 70, -165, -88], [60, 82, -70, -22], [14, 26, -106, -88], [7, 12, -85, -77],
+  [-4, 11, -79, -51], [-24, -4, -75, -39], [-55, -24, -73, -56], [-38, -12, 113, 153], [-46, -34, 166, 178],
 ];
+function oLand(lat, lon) {
+  for (const r of O_LAND) if (lat >= r[0] && lat <= r[1] && lon >= r[2] && lon <= r[3]) return true;
+  return false;
+}
 async function vGlobe(view) {
   let o;
   try { o = await ontoLoad(); } catch (e) { view.innerHTML = '<div class="view"><div class="card">' + esc(e.message) + "</div></div>"; return; }
   const ships = (o.objects || []).filter((x) => x.type === "shipment" && x.geo && x.geo.lat != null);
   view.innerHTML = '<div class="view" style="max-width:none">' +
-    head("The globe", ships.length + " tracked shipments \u00b7 drag to spin \u00b7 scroll to zoom \u00b7 click a marker to open the object") +
+    head("The globe", ships.length + " tracked shipments \u00b7 drag to spin \u00b7 click a marker to open the object") +
     '<div style="display:flex;gap:14px;flex-wrap:wrap">' +
     '<div class="card" style="flex:1 1 480px;min-height:480px;position:relative"><canvas id="globe-cv" style="width:100%;height:480px;display:block;cursor:grab"></canvas>' +
     '<div id="globe-tip" class="mono form-note" style="position:absolute;left:12px;bottom:8px"></div></div>' +
@@ -178,7 +160,7 @@ async function vGlobe(view) {
       (eta ? '<div class="form-note">ETA <span class="mono"' + (slip ? ' style="color:var(--warn)"' : "") + ">" + esc(eta) + "</span>" + (slip ? " (plan " + esc(plan) + ")" : "") + "</div>" : "") +
       (s.props.delay_reason ? '<div class="form-note" style="color:var(--bad)">' + esc(s.props.delay_reason) + "</div>" : "") +
       (affected ? '<div class="form-note" style="color:var(--warn)">\u26a0 ' + esc(affected.text) + "</div>" : "") + "</div>";
-  }).join("") || '<div class="card"><b>No shipment feed in this corpus.</b><div class="form-note" style="margin-top:6px">The globe plots shipment objects from the ontology. Include a logistics feed in your uploads \u2014 e.g. <span class="mono">supply_chain/fourkites_shipments.json</span> from the test corpus \u2014 and run the pipeline again.</div></div>';
+  }).join("") || '<div class="card">No shipment feed found in the corpus.</div>';
   listEl.querySelectorAll("[data-id]").forEach((el) => {
     el.onclick = () => { location.hash = "#object/" + encodeURIComponent(el.getAttribute("data-id")); };
   });
@@ -187,7 +169,7 @@ async function vGlobe(view) {
   if (!cv) return;
   const css = getComputedStyle(document.documentElement);
   const C = (n, fb) => (css.getPropertyValue(n) || fb).trim();
-  const COL = { paper: C("--panel", "#faf7ef"), inset: C("--inset", "#ece4d2"), raised: C("--raised", "#e3d9c4"), ink: C("--ink", "#211c14"), ink3: C("--ink3", "#94886e"), ok: C("--ok", "#3f7d4e"), warn: C("--warn", "#a07416"), bad: C("--bad", "#b3382e") };
+  const COL = { paper: C("--panel", "#faf7ef"), inset: C("--inset", "#ece4d2"), raised: C("--raised", "#e3d9c4"), ink: C("--ink", "#211c14"), ink3: C("--ink3", "#94886e"), ok: C("--ok", "#3f7d4e"), warn: C("--warn", "#a07416"), bad: C("--bad", "#b3382e"), verm: C("--verm", "#c9442a") };
   const ctx = cv.getContext("2d");
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   let W = 0, H = 0;
@@ -197,109 +179,84 @@ async function vGlobe(view) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   size();
-  let lon0 = 78, lat0 = 18, zoom = 1.12;
-  if (ships.length) {
-    lon0 = ships.reduce((a, s) => a + Number(s.geo.lon || 0), 0) / ships.length;
-    lat0 = Math.max(-50, Math.min(55, ships.reduce((a, s) => a + Number(s.geo.lat || 0), 0) / ships.length));
-  }
-  let vLon = 0, vLat = 0, drag = null, hover = null, idle = 0;
+  const dots = [];
+  for (let lat = -55; lat <= 72; lat += 3)
+    for (let lon = -180; lon < 180; lon += 3)
+      if (oLand(lat, lon)) dots.push([lat, lon]);
+  const meanLon = ships.length ? ships.reduce((a, s) => a + Number(s.geo.lon || 0), 0) / ships.length : 78;
+  let lam = -meanLon * Math.PI / 180, phi = -0.32, spin = true, drag = null, hover = null;
   const D2R = Math.PI / 180;
-  let R = 0, CX = 0, CY = 0;
-  function proj(lat, lon) {
-    const f = lat * D2R, l = (lon - lon0) * D2R, f0 = lat0 * D2R;
-    const cosc = Math.sin(f0) * Math.sin(f) + Math.cos(f0) * Math.cos(f) * Math.cos(l);
-    return [CX + R * Math.cos(f) * Math.sin(l),
-            CY - R * (Math.cos(f0) * Math.sin(f) - Math.sin(f0) * Math.cos(f) * Math.cos(l)),
-            cosc];
+  function proj(lat, lon, R) {
+    const la = lat * D2R, lo = lon * D2R + lam;
+    const x1 = Math.cos(la) * Math.sin(lo);
+    const y1 = Math.sin(la);
+    const z1 = Math.cos(la) * Math.cos(lo);
+    const y2 = y1 * Math.cos(phi) - z1 * Math.sin(phi);
+    const z2 = y1 * Math.sin(phi) + z1 * Math.cos(phi);
+    return [W / 2 + R * x1, H / 2 - R * y2, z2 > 0];
   }
-  function strokeLonLat(pts) {
-    ctx.beginPath();
-    let pen = false;
-    for (const p of pts) {
-      const q = proj(p[1], p[0]);
-      if (q[2] > 0.015) { if (pen) ctx.lineTo(q[0], q[1]); else { ctx.moveTo(q[0], q[1]); pen = true; } }
-      else pen = false;
-    }
-    ctx.stroke();
-  }
-  function arc3(a, b, n) {
-    const vec = (p) => { const f = p[0] * D2R, l = p[1] * D2R; return [Math.cos(f) * Math.cos(l), Math.cos(f) * Math.sin(l), Math.sin(f)]; };
-    const A = vec(a), B = vec(b);
-    const dot = Math.max(-1, Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2]));
-    const w = Math.acos(dot) || 1e-6, sw = Math.sin(w) || 1e-6;
-    const outPts = [];
+  function slerpPts(a, b, n) {
+    const pts = [];
     for (let i = 0; i <= n; i++) {
-      const t = i / n, k1 = Math.sin((1 - t) * w) / sw, k2 = Math.sin(t * w) / sw;
-      const x = A[0] * k1 + B[0] * k2, y = A[1] * k1 + B[1] * k2, z = A[2] * k1 + B[2] * k2;
-      outPts.push([Math.asin(Math.max(-1, Math.min(1, z))) / D2R, Math.atan2(y, x) / D2R]);
+      const t = i / n;
+      pts.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t + Math.sin(t * Math.PI) * 8]);
     }
-    return outPts;
+    return pts;
   }
   const markers = [];
   function draw() {
-    R = (Math.min(W, H) / 2 - 16) * zoom; CX = W / 2; CY = H / 2;
+    const R = Math.min(W, H) / 2 - 18;
     ctx.clearRect(0, 0, W, H);
-    const gr = ctx.createRadialGradient(CX - R * 0.35, CY - R * 0.35, R * 0.15, CX, CY, R);
-    gr.addColorStop(0, COL.paper); gr.addColorStop(1, COL.inset);
-    ctx.beginPath(); ctx.arc(CX, CY, R, 0, Math.PI * 2);
-    ctx.fillStyle = gr; ctx.fill();
-    ctx.strokeStyle = COL.ink; ctx.lineWidth = 1.5; ctx.stroke();
-    ctx.strokeStyle = COL.raised; ctx.lineWidth = 0.7;
-    for (let lo = -180; lo < 180; lo += 30) { const pts = []; for (let la = -85; la <= 85; la += 5) pts.push([lo, la]); strokeLonLat(pts); }
-    for (let la = -60; la <= 60; la += 30) { const pts = []; for (let lo = -180; lo <= 180; lo += 5) pts.push([lo, la]); strokeLonLat(pts); }
-    ctx.strokeStyle = COL.ink3; ctx.lineWidth = 1.15; ctx.lineJoin = "round";
-    for (const c of WORLD) strokeLonLat(c);
+    ctx.beginPath(); ctx.arc(W / 2, H / 2, R, 0, Math.PI * 2);
+    ctx.fillStyle = COL.inset; ctx.fill();
+    ctx.strokeStyle = COL.ink; ctx.lineWidth = 1.4; ctx.stroke();
+    ctx.fillStyle = COL.ink3;
+    for (const [lat, lon] of dots) {
+      const [x, y, v] = proj(lat, lon, R);
+      if (v) { ctx.globalAlpha = 0.75; ctx.fillRect(x - 1, y - 1, 2, 2); }
+    }
+    ctx.globalAlpha = 1;
     markers.length = 0;
     for (const s of ships) {
       const g = s.geo;
       if (g.origin && g.destination && g.origin[0] != null && g.destination[0] != null) {
-        ctx.strokeStyle = COL.ink3; ctx.lineWidth = 1; ctx.setLineDash([2, 4]); ctx.globalAlpha = 0.8;
+        ctx.strokeStyle = COL.raised; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
         ctx.beginPath();
-        let pen = false;
-        for (const p of arc3(g.origin, g.destination, 48)) {
-          const q = proj(p[0], p[1]);
-          if (q[2] > 0.015) { if (pen) ctx.lineTo(q[0], q[1]); else { ctx.moveTo(q[0], q[1]); pen = true; } }
-          else pen = false;
+        let started = false;
+        for (const [la, lo] of slerpPts(g.origin, g.destination, 36)) {
+          const [x, y, v] = proj(la, lo, R);
+          if (!v) { started = false; continue; }
+          if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
         }
-        ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
-        const d = proj(g.destination[0], g.destination[1]);
-        if (d[2] > 0.015) { ctx.fillStyle = COL.ink; ctx.fillRect(d[0] - 2, d[1] - 2, 4, 4); }
+        ctx.stroke(); ctx.setLineDash([]);
+        const [dx, dy, dv] = proj(g.destination[0], g.destination[1], R);
+        if (dv) { ctx.fillStyle = COL.ink; ctx.fillRect(dx - 2, dy - 2, 4, 4); }
       }
-      const m = proj(Number(g.lat), Number(g.lon));
-      if (m[2] <= 0.015) continue;
+      const [x, y, v] = proj(Number(g.lat), Number(g.lon), R);
+      if (!v) continue;
       const st = (s.status || "").toUpperCase();
       const col = /DELAY|HOLD|EXCEPTION/.test(st) ? COL.bad : st === "DELIVERED" ? COL.ok : COL.warn;
-      ctx.beginPath(); ctx.arc(m[0], m[1], 4.5, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(x, y, 4.5, 0, Math.PI * 2);
       ctx.fillStyle = col; ctx.fill();
       ctx.strokeStyle = COL.paper; ctx.lineWidth = 1.2; ctx.stroke();
-      if (st !== "DELIVERED") { ctx.beginPath(); ctx.arc(m[0], m[1], 8.5, 0, Math.PI * 2); ctx.strokeStyle = col; ctx.globalAlpha = 0.45; ctx.stroke(); ctx.globalAlpha = 1; }
+      if (st !== "DELIVERED") { ctx.beginPath(); ctx.arc(x, y, 8.5, 0, Math.PI * 2); ctx.strokeStyle = col; ctx.globalAlpha = 0.45; ctx.stroke(); ctx.globalAlpha = 1; }
       ctx.fillStyle = COL.ink; ctx.font = "10px ui-monospace, monospace";
-      ctx.fillText((s.name || s.id).split(" \u00b7")[0].replace("ship:", ""), m[0] + 8, m[1] + 3);
-      markers.push({ x: m[0], y: m[1], id: s.id, s: s });
+      ctx.fillText((s.name || s.id).split(" \u00b7")[0].replace("ship:", ""), x + 8, y + 3);
+      markers.push({ x: x, y: y, id: s.id, s: s });
     }
   }
   function frame() {
     if (!document.body.contains(cv)) return;
-    if (!drag) {
-      /* inertia - a thrown globe keeps spinning and eases out, google-earth feel */
-      lon0 += vLon; lat0 = Math.max(-85, Math.min(85, lat0 + vLat));
-      vLon *= 0.94; vLat *= 0.94;
-      if (Math.abs(vLon) < 0.002 && Math.abs(vLat) < 0.002) { vLon = 0; vLat = 0; idle++; } else idle = 0;
-      if (idle > 260 && !hover) lon0 += 0.04;
-    }
+    if (spin && !drag && !hover) lam += 0.0016;
     if (cv.clientWidth !== W || cv.clientHeight !== H) size();
     draw();
     requestAnimationFrame(frame);
   }
-  cv.onmousedown = (e) => { drag = { x: e.clientX, y: e.clientY }; vLon = 0; vLat = 0; cv.style.cursor = "grabbing"; e.preventDefault(); };
+  cv.onmousedown = (e) => { drag = { x: e.clientX, y: e.clientY, lam: lam, phi: phi }; cv.style.cursor = "grabbing"; };
   window.addEventListener("mousemove", (e) => {
     if (drag) {
-      const k = 50 / R;
-      const dLon = -(e.clientX - drag.x) * k;
-      const dLat = (e.clientY - drag.y) * k;
-      lon0 += dLon; lat0 = Math.max(-85, Math.min(85, lat0 + dLat));
-      vLon = vLon * 0.4 + dLon * 0.6; vLat = vLat * 0.4 + dLat * 0.6;
-      drag = { x: e.clientX, y: e.clientY };
+      lam = drag.lam + (e.clientX - drag.x) * 0.006;
+      phi = Math.max(-1.2, Math.min(1.2, drag.phi - (e.clientY - drag.y) * 0.006));
       return;
     }
     const r = cv.getBoundingClientRect();
@@ -310,8 +267,7 @@ async function vGlobe(view) {
     const tip = $("#globe-tip");
     if (tip) tip.textContent = hover ? (hover.s.name + " \u00b7 " + (hover.s.status || "") + " \u00b7 " + (hover.s.props.last_position || "")) : "";
   });
-  window.addEventListener("mouseup", () => { if (drag) { drag = null; cv.style.cursor = "grab"; } });
-  cv.addEventListener("wheel", (e) => { e.preventDefault(); zoom = Math.max(0.9, Math.min(2.8, zoom * (e.deltaY < 0 ? 1.08 : 0.925))); }, { passive: false });
+  window.addEventListener("mouseup", () => { drag = null; cv.style.cursor = "grab"; });
   cv.onclick = () => { if (hover) location.hash = "#object/" + encodeURIComponent(hover.id); };
-  requestAnimationFrame(frame);
+  frame();
 }

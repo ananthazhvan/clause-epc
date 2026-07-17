@@ -199,11 +199,11 @@ async function projectState() {
 }
 const SOURCES = [
   { key: "documents", label: "Project documents", route: "#review", count: (s) => (s.corpus_files || 0) + " files" },
-  { key: "specs", label: "Specifications", route: "#review", count: (s) => (s.rules || 0) + " rules \u00b7 " + ((s.node_types || {}).section || 0) + " sections" },
-  { key: "schedule", label: "Schedule", route: "#objects", count: (s) => ((s.node_types || {}).activity || 0) + " activities" },
-  { key: "procurement", label: "Procurement (ERP)", route: "#objects", count: (s) => ((s.node_types || {}).po || 0) + " POs \u00b7 " + ((s.node_types || {}).vendor || 0) + " vendors" },
-  { key: "logistics", label: "Logistics feed", route: "#globe", count: (s) => ((s.node_types || {}).shipment || 0) + " shipments" },
-  { key: "quality", label: "Quality records", route: "#cx", count: (s) => (((s.node_types || {}).cx || 0)) + " tests \u00b7 " + ((s.node_types || {}).quality || 0) + " issues \u00b7 " + ((s.node_types || {}).rfi || 0) + " RFIs" },
+  { key: "specs", label: "Specifications", route: "#lint", count: (s) => (s.rules || 0) + " rules" },
+  { key: "schedule", label: "Schedule", route: "#clock", count: (s) => ((s.node_types || {}).activity || 0) + " activities" },
+  { key: "procurement", label: "Procurement", route: "#vendors", count: (s) => ((s.node_types || {}).po || 0) + " POs" },
+  { key: "quality", label: "Quality records", route: "#cx", count: (s) => (((s.node_types || {}).cx || 0)) + " tests \u00b7 " + (s.ncrs || 0) + " NCRs" },
+  { key: "facility", label: "Facility profile", route: "#facility", count: (s) => (s.facility_rating ? s.facility_rating + " declared" : "Tier / TIA-942 scan") },
 ];
 function kstamp(kind) {
   const m = { specification: "st-ok", submittal: "st-ok", addendum: "st-warn", register: "st-ok", reference: "", "project document": "", refused: "st-bad", error: "st-bad", skipped: "" };
@@ -311,18 +311,14 @@ function hubEmpty(view, p) {
 async function hubLoaded(view, p) {
   const s = await api("/api/summary");
   view.innerHTML = '<div class="view">' +
-    head("The ontology", "every data source mapped into one object graph \u2014 computed by the last run") +
+    head("The intelligence layer", "data-centre EPC delivery, one connected ledger \u2014 computed by the last run") +
     '<div class="hub">' +
     '<div class="card hub-canvas-card" style="min-height:460px"><canvas id="hub-canvas"></canvas>' +
-    '<div class="hub-cap">one-line diagram \u00b7 click a source to open it \u00b7 ' + s.graph_nodes + " objects / " + s.graph_edges + " typed links in the ontology</div></div>" +
+    '<div class="hub-cap">one-line diagram \u00b7 click a source to open its ledger view \u00b7 ' + s.graph_nodes + " nodes / " + s.graph_edges + " edges in the full graph</div></div>" +
     "<div>" +
     '<div class="card mb"><h2>' + icon("hub") + "sources</h2>" +
     SOURCES.map((src) => '<div class="d-kv" style="cursor:pointer" data-r="' + src.route + '"><span class="k">' + esc(src.label) + '</span><span class="v mono">' + esc(src.count(s)) + "</span></div>").join("") +
-    '<div class="d-kv"><span class="k">checks in the ledger</span><span class="v mono">' + fmtN(checksTotalOf(s)) + "</span></div>" +
-    '<div class="d-kv"><span class="k">procurement mapped</span><span class="v mono">' + fmtINR((s.money || {}).procurement_value_inr || 0) + "</span></div>" +
-    '<div class="d-kv" style="cursor:pointer" data-r="#objects"><span class="k">value at risk</span><span class="v mono" style="color:var(--bad)">' + fmtINR((s.money || {}).value_at_risk_inr || 0) + "</span></div>" +
-    (function () { const cr = ((s.cert || {}).requirements || []); if (!cr.length) return ""; const gaps = cr.filter((r) => r.status === "gap").length; return '<div class="d-kv" style="cursor:pointer" data-r="#cx"><span class="k">certification evidence</span><span class="v mono">' + (cr.length - gaps) + "/" + cr.length + " lines proven</span></div>"; })() +
-    "</div>" +
+    '<div class="d-kv"><span class="k">checks in the ledger</span><span class="v mono">' + fmtN(checksTotalOf(s)) + "</span></div></div>" +
     uploadCardHtml(false) +
     '<div class="card mt"><h2>' + icon("settings") + "project</h2>" +
     '<div class="d-kv"><span class="k">loaded</span><span class="v mono">' + esc(p.loaded_at || "") + "</span></div>" +
@@ -468,7 +464,7 @@ async function vRun(view) {
       $("#log-state").textContent = st.ok ? "finished" : "failed";
       PROJECT = null;
       $("#run-done").innerHTML = st.ok
-        ? '<div class="callout c-ok mt"><b>Run complete \u2014 the ontology is rebuilt from your documents.</b></div><div class="row mt"><button class="btn btn-primary" onclick="location.hash=\'#objects\'">Open the objects</button><button class="btn" onclick="location.hash=\'#graph\'">See the graph</button><button class="btn" onclick="location.hash=\'#hub\'">Hub</button></div>'
+        ? '<div class="callout c-ok mt"><b>Run complete \u2014 the ledger is rebuilt from your documents.</b></div><div class="row mt"><button class="btn btn-primary" onclick="location.hash=\'#overview\'">Open the ledger</button><button class="btn" onclick="location.hash=\'#graph\'">See the connections</button><button class="btn" onclick="location.hash=\'#hub\'">Hub</button></div>'
         : '<div class="callout mt" style="border-color:var(--verm)"><b>Run failed:</b> ' + esc(st.error || "see the log above") + ' \u2014 fix the input (or the model settings) and run again.</div><div class="row mt"><button class="btn" onclick="location.hash=\'#hub\'">Back to the hub</button></div>';
       return;
     }
@@ -481,6 +477,70 @@ async function vRun(view) {
     if (!stop) timer = setTimeout(poll, 600);
   }
   poll();
+}
+
+/* =========================================================== overview */
+async function vOverview(view) {
+  const s = await api("/api/summary");
+  const post_ = s.verdicts_post || {}, pre = s.verdicts_pre || {};
+  const checks = Object.values(post_).reduce((a, b) => a + b, 0);
+  const order = ["DEVIATION", "NEEDS_REVIEW", "COMPLY", "MISSING_EVIDENCE", "NOT_ADDRESSED"];
+  const colors = { DEVIATION: "b-bad", NEEDS_REVIEW: "b-warn", COMPLY: "b-ok", MISSING_EVIDENCE: "", NOT_ADDRESSED: "" };
+  const maxV = Math.max(...order.map((k) => post_[k] || 0), 1);
+  const nAdd = s.addenda || 0;
+  const vTitle = nAdd ? "verdicts \u00b7 after " + nAdd + " addend" + (nAdd === 1 ? "um" : "a") + ' <span class="right">baseline in grey</span>' : "verdicts";
+  view.innerHTML = '<div class="view">' +
+    head("Ledger overview", "computed from your documents by the last run") +
+    '<div class="grid g4 mb">' +
+    '<div class="card metric"><div class="num">' + fmtN(s.rules) + '</div><div class="lbl">rules compiled from specs</div></div>' +
+    '<div class="card metric"><div class="num">' + fmtN(s.claims) + '</div><div class="lbl">claims extracted from submittals</div></div>' +
+    '<div class="card metric"><div class="num">' + fmtN(checks) + '</div><div class="lbl">checks held in the ledger</div></div>' +
+    '<div class="card metric"><div class="num num-bad">' + fmtN(post_.DEVIATION || 0) + '</div><div class="lbl">deviations, each with two quotes</div></div>' +
+    "</div>" +
+    (s.false_comply_post ? '<div class="callout mb">' + struckComply + " &nbsp;<b>" + s.false_comply_post + " claims were stamped \u201cComply\u201d by the vendor and are contradicted by the vendor\u2019s own datasheet.</b> The stamp was not earned \u2014 CLAUSE re-earns every stamp from evidence.</div>" : "") +
+    '<div class="grid g2 mb">' +
+    '<div class="card"><h2>' + icon("overview") + vTitle + '</h2><div class="vbars">' +
+    order.map((k) => {
+      const h = Math.round(((post_[k] || 0) / maxV) * 70) + 4;
+      const hp = Math.round(((pre[k] || 0) / maxV) * 70) + 4;
+      return '<div class="vbar" title="baseline: ' + (pre[k] || 0) + '"><span class="mono" style="font-size:11px">' + (post_[k] || 0) + '</span><div style="display:flex;gap:3px;width:100%;align-items:flex-end"><div class="col bar ' + (colors[k] || "") + '" style="height:' + h + 'px;flex:2"></div><div class="col" style="height:' + hp + 'px;flex:1;background:var(--raised)"></div></div><span class="vl">' + k.replace(/_/g, " ").toLowerCase() + "</span></div>";
+    }).join("") +
+    "</div></div>" +
+    '<div class="card"><h2>' + icon("hub") + "built from</h2>" +
+    Object.entries(s.staged || {}).map(([k, v]) => '<div class="d-kv"><span class="k mono">' + esc(k) + '/</span><span class="v">' + v + " file(s)</span></div>").join("") +
+    '<div class="d-kv"><span class="k">model</span><span class="v mono">' + esc(s.model || "") + "</span></div>" +
+    '<div class="form-note">every number on this page traces to these uploaded files \u2014 nothing else was read</div></div>' +
+    "</div>" +
+    '<div class="grid g3">' +
+    (nAdd
+      ? '<div class="card hoverable" onclick="location.hash=\'#blast\'"><h2>' + icon("blast") + "blast wave \u00b7 " + nAdd + " addend" + (nAdd === 1 ? "um" : "a") + "</h2>" +
+        (s.blast ? '<div class="d-kv"><span class="k">rules amended</span><span class="v">' + s.blast.rules_amended + '</span></div><div class="d-kv"><span class="k">verdicts flipped</span><span class="v">' + s.blast.verdict_flips + '</span></div><div class="d-kv"><span class="k">POs invalidated</span><span class="v">' + s.blast.pos_invalidated + '</span></div><div class="d-kv"><span class="k">Cx tests stale</span><span class="v">' + s.blast.cx_tests_stale + "</span></div>" : "") + "</div>"
+      : '<div class="card"><h2>' + icon("blast") + 'blast wave</h2><div class="form-note">no addenda on file \u2014 when the client issues one, upload the PDF from the hub and this card fills with its consequences</div></div>') +
+    '<div class="card hoverable" onclick="location.hash=\'#clock\'"><h2>' + icon("clock") + 'next decision</h2><div class="metric"><div class="num num-verm">' + (s.days_to_decide != null ? s.days_to_decide + "d" : "\u2014") + '</div><div class="lbl">to decide concessions \u00b7 by ' + esc(s.decide_by || "\u2014") + "</div></div></div>" +
+    '<div class="card hoverable" onclick="location.hash=\'#graph\'"><h2>' + icon("graph") + 'the graph</h2><div class="metric"><div class="num">' + fmtN(s.graph_nodes) + '</div><div class="lbl">nodes \u00b7 ' + fmtN(s.graph_edges) + " edges \u00b7 clause to package to PO to test, one connected record</div></div></div>" +
+    "</div></div>";
+}
+
+/* =========================================================== clock */
+async function vClock(view) {
+  const o = await api("/api/options");
+  const pkgs = o.packages || [];
+  const minDays = Math.min(...pkgs.map((p) => p.days_to_decide == null ? 1e9 : p.days_to_decide));
+  const rows = pkgs.map((p) =>
+    '<tr class="rowlink" data-pkg="' + esc(p.package) + '"><td class="mono">' + esc(p.package) + "</td><td>" + esc(p.vendor || "") + '</td><td class="mono r">' + fmtINR(p.value_inr) + "</td><td>" + stamp(p.reject_status) + '</td><td class="mono r">' + (p.slip_if_rejected_today_days != null ? "+" + p.slip_if_rejected_today_days + "d slip" : "\u2014") + '</td><td class="mono">' + esc(p.need_on_site || "") + '</td><td class="mono">' + esc(p.decide_concessions_by || "") + '</td><td class="mono r">' + (p.days_to_decide != null ? p.days_to_decide : "\u2014") + "</td></tr>").join("");
+  view.innerHTML = '<div class="view">' +
+    head("Decision clock", "true calendar consequences \u2014 including the uncomfortable ones") +
+    '<div class="grid g3 mb">' +
+    '<div class="card metric"><div class="num num-verm">' + (isFinite(minDays) && minDays < 1e9 ? minDays : "\u2014") + ' days</div><div class="lbl">to decide concessions (earliest gate)</div><div class="note mono">today: ' + esc(o.today || "") + "</div></div>" +
+    '<div class="card metric"><div class="num">' + pkgs.length + '</div><div class="lbl">packages tracked against the schedule</div></div>' +
+    '<div class="card metric"><div class="num num-bad">' + pkgs.filter((p) => p.reject_status === "EXPIRED").length + '</div><div class="lbl">rejection windows already closed</div></div>' +
+    "</div>" +
+    (pkgs.length && pkgs.every((p) => p.reject_status === "EXPIRED") ? '<div class="callout mb"><b>The window to reject and re-order has passed for every package.</b> That is not a flaw in the plan \u2014 it is the truth of the calendar. The live choices are: accept with conditions (and price the consequence), or make the vendor rectify.</div>' : (pkgs.some((p) => p.reject_status === "EXPIRED") ? '<div class="callout mb"><b>' + pkgs.filter((p) => p.reject_status === "EXPIRED").length + " of " + pkgs.length + ' packages have a closed rejection window.</b> For those, the live choices are accept-with-conditions or rectify \u2014 the calendar already decided the rest.</div>' : "")) +
+    '<div class="card"><h2>' + icon("clock") + 'per-package windows <span class="right">' + esc((o.derivation || {}).anchor || "").slice(0, 110) + '</span></h2>' +
+    '<table><tr><th>package</th><th>vendor</th><th class="r">value</th><th>reject window</th><th class="r">if rejected today</th><th>need on site</th><th>decide by</th><th class="r">days left</th></tr>' + rows + "</table>" +
+    '<div class="form-note">approval lead assumption: ' + esc(String((o.derivation || {}).approval_lead_days_assumption || "\u2014")) + " days (labelled, not hidden)</div></div></div>";
+  view.querySelectorAll("tr.rowlink").forEach((tr) => { tr.onclick = () => { location.hash = "#graph/" + encodeURIComponent("pkg:" + tr.dataset.pkg); }; });
+  addFab("#graph", "view connections");
 }
 
 /* =========================================================== queue */
@@ -545,7 +605,7 @@ async function vReview(view, arg) {
 }
 
 /* =========================================================== graph */
-const NODE_COLORS = { section: "#355e8d", clause: "#7d8fae", package: "#a07416", po: "#3f7d4e", activity: "#6d5f92", cx: "#b0567f", addendum: "#c9442a", vendor: "#8a6d3b", shipment: "#2e7d84", quality: "#a04b3f", rfi: "#5f7d63" };
+const NODE_COLORS = { section: "#355e8d", clause: "#7d8fae", package: "#a07416", po: "#3f7d4e", activity: "#6d5f92", cx: "#b0567f", addendum: "#c9442a", vendor: "#8a6d3b", shipment: "#2e7d84", quality: "#a04b3f" };
 const BAD_STATUS = new Set(["DEVIATION", "INVALID", "STALE", "AMENDS", "CRITICAL", "EXPIRED", "NEGATIVE"]);
 function mulberry32(a) {
   return function () {
@@ -603,7 +663,7 @@ async function vGraph(view, arg) {
   window.addEventListener("resize", onResize);
   // ---- deterministic init (seeded rings, then a d3-style force layout)
   const rng = mulberry32(1337);
-  const RING = { section: 120, addendum: 200, clause: 340, vendor: 430, package: 520, po: 660, shipment: 760, activity: 800, quality: 880, rfi: 910, cx: 940 };
+  const RING = { section: 120, addendum: 200, clause: 340, vendor: 430, package: 520, po: 660, shipment: 760, activity: 800, quality: 880, cx: 940 };
   const byId = new Map();
   nodes.forEach((n) => {
     const r = (RING[n.type] || 700) * (0.85 + rng() * 0.3);
@@ -845,7 +905,7 @@ async function vGraph(view, arg) {
         (d.letter ? '<button class="btn" data-act="doc" data-v="' + esc(d.letter) + '">Letter</button>' : "") + "</div>";
     } else if (d.type === "po") {
       body += '<div class="d-sec"><h4>purchase order</h4>' + kv("vendor", esc(meta.vendor || "")) + kv("value", fmtINR(meta.value_inr)) + kv("lead time", (meta.lead_time_weeks || "\u2014") + " weeks") + kv("delivery", esc(meta.delivery || meta.delivery_status || "")) + "</div>";
-      if (d.invalidation) body += '<div class="d-sec"><h4>why it is invalid</h4><div class="quote q-claim">' + esc(d.invalidation.ledger_reason || "") + '</div><div class="d-actions"><button class="btn" data-act="hash" data-v="#graph">See it on the graph</button></div></div>';
+      if (d.invalidation) body += '<div class="d-sec"><h4>why it is invalid</h4><div class="quote q-claim">' + esc(d.invalidation.ledger_reason || "") + '</div><div class="d-actions"><button class="btn" data-act="hash" data-v="#blast">See the blast wave</button></div></div>';
     } else if (d.type === "cx") {
       const t = d.test || {};
       body += '<div class="d-sec"><h4>commissioning test</h4>' + kv("level", esc(t.level || meta.level || "")) + kv("clause", esc(t.spec_clause || meta.clause || "")) + kv("status", stamp(t.ledger_status || d.status)) + "</div>" +
@@ -857,7 +917,7 @@ async function vGraph(view, arg) {
       if ((d.lint || []).length) body += '<div class="d-sec"><h4>spec defects found here</h4>' + d.lint.map((f) => '<div class="form-note">\u2022 ' + esc(f.summary || f.lint) + "</div>").join("") + "</div>";
     } else if (d.type === "addendum") {
       const w = d.wave || {};
-      body += '<div class="d-sec"><h4>what this addendum knocked over</h4>' + kv("rules amended", w.rules_amended) + kv("verdict flips", w.verdict_flips) + kv("POs invalidated", w.pos_invalidated) + kv("Cx tests stale", w.cx_tests_stale) + '</div><div class="d-actions"><button class="btn" data-act="hash" data-v="#graph">See it on the graph</button></div>';
+      body += '<div class="d-sec"><h4>blast wave</h4>' + kv("rules amended", w.rules_amended) + kv("verdict flips", w.verdict_flips) + kv("POs invalidated", w.pos_invalidated) + kv("Cx tests stale", w.cx_tests_stale) + '</div><div class="d-actions"><button class="btn" data-act="hash" data-v="#blast">Open blast wave</button></div>';
     } else if (d.type === "activity") {
       body += '<div class="d-sec"><h4>schedule activity</h4>' + kv("float", (meta.float_days != null ? meta.float_days + " days" : "\u2014")) + kv("duration", (meta.duration || "\u2014") + " days") + kv("critical path", meta.critical ? "yes" : "no") + "</div>";
     }
@@ -878,6 +938,157 @@ async function vGraph(view, arg) {
     });
   }
   if (arg) setTimeout(() => focusNode(arg), 600);
+}
+
+/* =========================================================== lint */
+async function vLint(view) {
+  const l = await api("/api/lint");
+  const pw = await api("/api/paperwork");
+  const rfiByLint = {};
+  (pw.documents || []).forEach((doc) => { if (doc.lint) rfiByLint[doc.lint] = rfiByLint[doc.lint] || doc.file; });
+  const cards = (l.findings || []).map((f) => {
+    const a = f.a || {}, b = f.b || {};
+    return '<div class="ev-row"><div class="ev-head">' + stamp("DEVIATION", "straight") + '<span class="param">' + esc(f.summary || f.lint) + '</span><span class="chip">' + esc(f.lint) + '</span><span class="spacer"></span>' +
+      (rfiByLint[f.lint] ? '<button class="btn" data-doc="' + esc(rfiByLint[f.lint]) + '">Drafted RFI</button>' : "") + "</div>" +
+      '<div class="ev-pair"><div class="quote q-req"><span class="q-src">' + esc(a.clause || "a") + (a.page ? " \u00b7 p" + a.page : "") + "</span>" + esc(a.quote || "") + "</div>" +
+      '<div class="quote q-claim"><span class="q-src">' + esc(b.clause || "b") + (b.page ? " \u00b7 p" + b.page : "") + "</span>" + esc(b.quote || "") + "</div></div></div>";
+  }).join("");
+  view.innerHTML = '<div class="view">' +
+    head("Spec defects", "the linter reads the owner\u2019s spec the way a vendor\u2019s lawyer will") +
+    '<div class="callout c-ok mb"><b>' + (l.findings || []).length + " internal contradictions found in this spec.</b> Every finding quotes both conflicting sentences \u2014 check them yourself.</div>" + cards + "</div>";
+  view.querySelectorAll("[data-doc]").forEach((btn) => { btn.onclick = () => openDoc(btn.dataset.doc); });
+}
+
+/* =========================================================== facility */
+async function vFacility(view) {
+  const f = await api("/api/facility");
+  const t = f.tier || {};
+  const stds = f.standards || [], red = f.redundancy || [], mets = f.metrics || [], chk = f.checklist || [];
+  if (!t.declared && !stds.length && !red.length) {
+    view.innerHTML = '<div class="view">' + head("Facility profile", "the data-centre-specific declarations in this corpus") +
+      '<div class="empty-wrap"><div class="empty-card card">' + icon("facility") +
+      "<h2>nothing data-centre-specific found</h2><p>no Tier / TIA-942 rating, redundancy topology (N+1, 2N) or DC standard reference was found in the uploaded documents. If this is a data-centre project, upload the electrical, cooling and telecom spec sections.</p></div></div></div>";
+    return;
+  }
+  const plate = t.declared
+    ? '<div class="card tier-plate"><div class="tp-big">' + esc(String(t.declared).toUpperCase()) + '</div>' +
+      '<div class="lbl">declared availability rating \u00b7 ' + (t.all_mentions || 0) + ' mention(s) in the documents</div>' +
+      (t.basis || []).slice(0, 2).map((b) => '<div class="quote q-req" style="margin-top:6px"><span class="q-src">' + esc(b.doc) + ' \u00b7 p' + b.page + '</span>' + esc(b.quote) + '</div>').join("") + '</div>'
+    : '<div class="card tier-plate"><div class="tp-big">\u2014</div><div class="lbl">no Tier / Rated level declared in the uploaded documents</div></div>';
+  const stdRows = stds.map((s) => '<div class="d-kv"><span class="k">' + esc(s.std) + '</span><span class="v mono">' + s.mentions + '\u00d7 \u00b7 ' + esc((s.sources || [])[0] || "") + '</span></div>').join("");
+  const metRows = mets.map((m) => '<div class="d-kv"><span class="k">' + esc(m.name) + '</span><span class="v mono">' + esc(m.value) + ' \u00b7 ' + esc(m.doc) + ' p' + m.page + '</span></div>').join("");
+  const redRows = red.map((r) => '<div class="ev-row"><div class="ev-head"><span class="chip mono">' + esc(r.topology) + '</span><span class="param">' + esc(r.system) + '</span><span class="spacer"></span><span class="mono" style="font-size:11px">' + esc(r.doc) + ' \u00b7 p' + r.page + (r.occurrences > 1 ? ' \u00b7 \u00d7' + r.occurrences : '') + '</span></div>' +
+    '<div class="quote q-req">' + esc(r.quote) + '</div>' +
+    (r.corroboration ? '<div class="reason">' + esc(r.corroboration) + '</div>' : '') + '</div>').join("");
+  const chkRows = chk.map((c) => '<div class="d-kv"><span class="k">' + (c.status === "declared" ? '<span class="mono" style="color:var(--ok)">\u25a0 declared</span>' : '<span class="mono" style="color:var(--warn)">\u25a1 not found</span>') + ' \u00b7 ' + esc(c.item) + '</span><span class="v" style="max-width:46%">' + esc(String(c.detail || "")) + '</span></div>').join("");
+  view.innerHTML = '<div class="view">' +
+    head("Facility profile", "what makes this a data centre \u2014 rating, redundancy and standards, quoted from the documents") +
+    '<div class="grid g3 mb">' + plate +
+    '<div class="card"><h2>' + icon("facility") + 'standards invoked</h2>' + (stdRows || '<div class="form-note">none found</div>') + '</div>' +
+    '<div class="card"><h2>' + icon("margins") + 'declared metrics</h2>' + (metRows || '<div class="form-note">none found</div>') + '</div>' +
+    '</div>' +
+    '<div class="card mb"><h2>' + icon("graph") + 'redundancy topology, by system</h2>' + (redRows || '<div class="form-note">no N+1 / 2N / 2N+1 language found</div>') + '</div>' +
+    '<div class="card"><h2>' + icon("cx") + 'data-centre scorecard</h2>' + chkRows +
+    '<div class="form-note">declared = stated in the uploaded documents, with the quote to prove it \u00b7 not found = the scan found no such declaration</div></div>' +
+    '</div>';
+}
+
+/* =========================================================== blast */
+async function vBlast(view) {
+  const b = await api("/api/blastwave");
+  const waves = (b.waves && b.waves.length) ? b.waves.slice().reverse() : [];
+  if (!waves.length) {
+    view.innerHTML = '<div class="view">' + head("Blast wave", "what one client letter knocks over") +
+      '<div class="empty-wrap"><div class="empty-card card">' + icon("blast") +
+      "<h1>no addenda on file</h1><p>When the client issues an addendum, upload the PDF from the hub like any other document. The pipeline detects it by content, amends the rulebook, re-verifies every package, and this page fills with the consequences: flipped verdicts, invalidated purchase orders, stale test procedures.</p>" +
+      '<button class="btn btn-primary" onclick="location.hash=\'#hub\'">Upload documents</button></div></div></div>';
+    return;
+  }
+  const secs = waves.map((w) => {
+    const ws = w.summary || {};
+    const id = w.addendum || w.id || "addendum";
+    const flips = (w.verdict_flips || []).map((f) =>
+      '<tr><td class="mono">' + esc(f.package) + '</td><td class="mono">' + esc(f.rule_id || "") + "</td><td>" + esc(f.parameter || "") + "</td><td>" + stamp(f.verdict_before, "straight") + " \u2192 " + stamp(f.verdict_after, "straight") + "</td></tr>").join("");
+    const pos = (w.pos_invalidated || []).map((p) =>
+      '<tr><td class="mono">' + esc(p.po_number) + "</td><td>" + esc(p.vendor || "") + "</td><td>" + esc((p.item_description || "").slice(0, 46)) + '</td><td class="mono r">' + fmtINR(p.value_inr) + "</td><td>" + esc(p.delivery_status || "") + "</td><td>" + stamp(p.ledger_status) + "</td></tr>").join("");
+    const stale = (w.cx_tests_stale || []).map((t) =>
+      '<div class="ev-row"><div class="ev-head">' + stamp("STALE") + '<span class="param mono">' + esc(t.test_id) + '</span><span class="chip">' + esc(t.spec_clause || "") + '</span></div><div class="quote">' + esc(t.acceptance_criteria || "") + '</div><div class="reason">' + esc(t.ledger_reason || "") + "</div></div>").join("");
+    const totalInr = (w.pos_invalidated || []).reduce((a, p) => a + (Number(p.value_inr) || 0), 0);
+    return '<div class="card mb"><div class="row">' + stamp("AMENDS", "straight") + '<b class="mono">' + esc(id) + "</b>" + (w.date ? '<span class="chip">' + esc(w.date) + "</span>" : "") +
+      '<span class="chip">' + (ws.rules_amended || 0) + ' rules amended</span><span class="chip">' + (w.verdict_flips || []).length + ' verdicts flipped</span><span class="chip">' + (w.pos_invalidated || []).length + " POs \u00b7 " + fmtINR(totalInr) + '</span><span class="chip">' + (w.cx_tests_stale || []).length + ' tests stale</span><span class="spacer"></span>' +
+      '<button class="btn" data-graph="add:' + esc(id) + '">Graph</button></div>' +
+      '<div class="grid g2 mt">' +
+      "<div>" + (flips ? "<table><tr><th>package</th><th>rule</th><th>parameter</th><th>flip</th></tr>" + flips + "</table>" : '<div class="form-note">no verdicts flipped</div>') + "</div>" +
+      "<div>" + (pos ? '<table><tr><th>po</th><th>vendor</th><th>item</th><th class="r">value</th><th>delivery</th><th>ledger</th></tr>' + pos + "</table>" : '<div class="form-note">no purchase orders invalidated</div>') + "</div></div>" +
+      (stale ? '<div class="mt">' + stale + "</div>" : "") + "</div>";
+  }).join("");
+  view.innerHTML = '<div class="view">' +
+    head("Blast wave", waves.length + " addend" + (waves.length === 1 ? "um" : "a") + " applied in date order \u2014 each with the dominoes it knocked over") + secs + "</div>";
+  view.querySelectorAll("[data-graph]").forEach((btn) => { btn.onclick = () => { location.hash = "#graph/" + encodeURIComponent(btn.dataset.graph); }; });
+}
+
+/* =========================================================== margins */
+async function vMargins(view) {
+  const m = await api("/api/margins");
+  const ledger = (m.ledger || []).slice().sort((a, b) => (a.margin_pct || 0) - (b.margin_pct || 0));
+  const rows = ledger.map((r) => {
+    const pct = r.margin_pct == null ? 0 : r.margin_pct;
+    const w = Math.min(Math.abs(pct) * 18, 100);
+    const cls = pct < 0 ? "b-bad" : pct < 2 ? "b-warn" : "b-ok";
+    return "<tr><td class=\"mono\">" + esc(r.package) + "</td><td>" + esc(r.parameter || "") + '</td><td class="mono r">' + esc(String(r.operator || "")) + " " + esc(String(r.required)) + " " + esc(r.unit || "") + '</td><td class="mono r">' + esc(String(r.offered)) + '</td><td style="min-width:120px"><div class="bar-wrap"><div class="bar ' + cls + '" style="width:' + w + '%"></div></div></td><td class="mono r">' + (pct > 0 ? "+" : "") + pct + "%</td><td>" + (r.amended_by ? '<span class="chip" style="color:var(--verm)">' + esc(r.amended_by) + "</span>" : "") + stamp(r.verdict, "straight") + "</td></tr>";
+  }).join("");
+  const en = m.energy_penalty || {};
+  const enRows = en.rows || [];
+  const kwhKey = enRows.length ? Object.keys(enRows[0]).find((k) => k.toLowerCase().includes("kwh")) : null;
+  view.innerHTML = '<div class="view">' +
+    head("Margin erosion", "how close every accepted number is to the cliff \u2014 and what \u201cclose\u201d costs") +
+    '<div class="grid g3 mb">' +
+    '<div class="card metric"><div class="num">' + (m.checked_rules || 0) + '</div><div class="lbl">numeric rules price-checked</div></div>' +
+    '<div class="card metric"><div class="num num-warn">' + (m.thin_margins || []).length + '</div><div class="lbl">thin margins (&lt; 2%)</div></div>' +
+    '<div class="card metric"><div class="num num-bad">' + (m.negative_margins || []).length + '</div><div class="lbl">negative \u2014 already past the line</div></div>' +
+    "</div>" +
+    '<div class="card mb"><h2>' + icon("margins") + 'margin ledger <span class="right">sorted worst first</span></h2><table><tr><th>package</th><th>parameter</th><th class="r">required</th><th class="r">offered</th><th>margin</th><th class="r">%</th><th></th></tr>' + rows + "</table></div>" +
+    '<div class="card"><h2>' + icon("blast") + "the price of \u201cjust accept it\u201d</h2>" +
+    '<div class="row"><span style="font-size:12px">electricity tariff</span><input type="range" id="tariff" min="4" max="14" step="0.5" value="8" style="max-width:260px"><b class="mono" id="tariff-val">\u20b98.0/kWh</b><span class="prov">recomputed in your browser as you drag</span></div>' +
+    '<table class="mt"><tr><th>package</th><th>parameter</th><th class="r">extra energy</th><th class="r">cost per year</th></tr><tbody id="en-body"></tbody></table>' +
+    '<div class="form-note">' + esc(en.note || "") + "</div></div></div>";
+  function renderEnergy() {
+    const tariff = Number($("#tariff").value);
+    $("#tariff-val").textContent = "\u20b9" + tariff.toFixed(1) + "/kWh";
+    let total = 0;
+    $("#en-body").innerHTML = enRows.map((r) => {
+      const kwh = kwhKey ? Number(r[kwhKey]) || 0 : 0;
+      const cost = kwh * tariff;
+      total += cost;
+      return "<tr><td class=\"mono\">" + esc(r.package || "") + "</td><td>" + esc(r.parameter || "") + '</td><td class="mono r">' + fmtN(Math.round(kwh)) + ' kWh/yr</td><td class="mono r num-bad">' + fmtINR(cost) + "/yr</td></tr>";
+    }).join("") + '<tr><td colspan="3" style="text-align:right"><b>every year, forever</b></td><td class="mono r"><b class="num-bad">' + fmtINR(total) + "/yr</b></td></tr>";
+  }
+  $("#tariff").oninput = renderEnergy;
+  renderEnergy();
+}
+
+/* =========================================================== vendors */
+async function vVendors(view) {
+  const d = await api("/api/vendors");
+  const vendors = (d.vendors || []).slice().sort((a, b) => (a.trust_score || 0) - (b.trust_score || 0));
+  const cards = vendors.map((v) => {
+    const cls = v.trust_score >= 90 ? "b-ok" : v.trust_score >= 85 ? "b-warn" : "b-bad";
+    return '<div class="card"><div class="row"><h3 style="font-family:var(--serif);font-size:16px">' + esc(v.vendor) + '</h3><span class="spacer"></span>' + stamp(v.review_intensity) + "</div>" +
+      '<div class="row mt"><b class="mono" style="font-size:22px">' + (v.trust_score != null ? v.trust_score : "\u2014") + '</b><div class="bar-wrap" style="flex:1"><div class="bar ' + cls + '" style="width:' + (v.trust_score || 0) + '%"></div></div></div>' +
+      '<div class="mt">' +
+      '<div class="d-kv"><span class="k">checks</span><span class="v">' + (v.checks || 0) + "</span></div>" +
+      '<div class="d-kv"><span class="k">deviations</span><span class="v">' + (v.deviations || 0) + " (" + (v.deviation_rate_pct || 0) + "%)</span></div>" +
+      '<div class="d-kv"><span class="k">unearned \u201ccomply\u201d stamps</span><span class="v">' + (v.false_comply || 0) + " (" + (v.false_comply_rate_pct || 0) + "%) " + (v.false_comply ? struckComply : "") + "</span></div>" +
+      '<div class="d-kv"><span class="k">missing evidence</span><span class="v">' + (v.missing_evidence || 0) + "</span></div>" +
+      '<div class="d-kv"><span class="k">exposure</span><span class="v">' + fmtINR(v.exposure_inr) + "</span></div></div>" +
+      '<div class="row mt">' + (v.packages || []).map((p) => '<span class="chip rowlink" data-pkg="' + esc(p) + '" style="cursor:pointer">' + esc(p) + "</span>").join("") + "</div></div>";
+  }).join("");
+  view.innerHTML = '<div class="view">' +
+    head("Vendor trust", "earned from evidence quality, not reputation \u2014 lowest first") +
+    '<div class="grid g2">' + cards + "</div>" +
+    '<div class="form-note mt">trust drives review intensity: strong evidence buys lighter sampling; unearned stamps buy a microscope.</div></div>';
+  view.querySelectorAll("[data-pkg]").forEach((c) => { c.onclick = () => { location.hash = "#review/" + encodeURIComponent(c.dataset.pkg); }; });
+  addFab("#graph", "view connections");
 }
 
 /* =========================================================== paperwork */
@@ -1128,3 +1339,40 @@ function wireCopilot() {
 }
 wireCopilot();
 
+/* =========================================================== intel */
+async function vIntel(view) {
+  const d = await api("/api/intel");
+  const fs = d.findings || [];
+  const cards = fs.map((f) => '<div class="ev-row"><div class="ev-head">' +
+    '<span class="chip">' + esc(f.severity || "") + '</span>' +
+    '<span class="param">' + esc(f.title || "") + '</span><span class="spacer"></span>' +
+    '<span class="chip">' + (f.ai ? "read across sources" : "computed") + '</span></div>' +
+    '<div class="quote">' + esc(f.narrative || "") + '</div>' +
+    '<div class="row mt">' + (f.entities || []).slice(0, 12).map((e) => '<span class="chip mono">' + esc(e) + '</span>').join(" ") + '</div></div>').join("");
+  view.innerHTML = '<div class="view">' +
+    head("Intelligence", "what the documents say when read together") +
+    (fs.length ? cards : '<div class="callout c-ok mb">no cross-document findings yet \u2014 run the pipeline first.</div>') + '</div>';
+}
+
+/* =========================================================== supply */
+async function vSupply(view) {
+  const s = await api("/api/supply");
+  const items = s.items || [], alerts = s.alerts || [], un = s.unlinked || [];
+  const n = (k) => (s.summary || {})[k] || 0;
+  const alertCards = alerts.map((a) => '<div class="ev-row"><div class="ev-head">' +
+    '<span class="chip">' + esc(a.severity || "") + '</span>' +
+    '<span class="param">' + esc((a.po || "") + " \u00b7 " + (a.item || "")) + '</span><span class="spacer"></span>' +
+    '<span class="chip mono">' + esc(a.activity || "") + '</span></div>' +
+    '<div class="quote">' + esc(a.vendor || "") + ' \u00b7 needed on site ' + esc(a.needed_on_site || "") +
+    ' \u00b7 projected arrival ' + esc(a.projected_arrival || "") + ' \u00b7 margin ' + a.margin_days +
+    'd \u00b7 days left to act: ' + a.days_to_act + (a.schedule_float_absorbs ? ' \u00b7 schedule float absorbs it' : '') + '</div></div>').join("");
+  const rows = items.map((r) => '<div class="d-kv"><span class="k mono">' + esc(r.po || "") + '</span><span class="v">' +
+    esc(((r.item || "").slice(0, 64)) + " \u00b7 " + (r.vendor || "") + " \u00b7 " + (r.status || "")) +
+    (r.margin_days != null ? " \u00b7 margin " + r.margin_days + "d" : "") + '</span></div>').join("");
+  view.innerHTML = '<div class="view">' +
+    head("Supply chain", "every purchase order joined to the schedule activity that needs it") +
+    '<div class="callout c-ok mb"><b>' + items.length + ' POs joined to the schedule \u00b7 ' + n("LATE") + ' late \u00b7 ' +
+    n("AT_RISK") + ' at risk \u00b7 ' + n("WATCH") + ' on watch' + (un.length ? ' \u00b7 ' + un.length + ' not linkable' : '') + '.</b></div>' +
+    (s.brief_md ? '<div class="card mb cp-md">' + md2html(s.brief_md) + '</div>' : '') +
+    alertCards + '<div class="card mt">' + (rows || '<div class="form-note">no purchase orders found</div>') + '</div></div>';
+}

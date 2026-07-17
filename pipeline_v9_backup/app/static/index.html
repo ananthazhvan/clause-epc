@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CLAUSE — requirement ledger</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 rx=%223%22 fill=%22%230f1115%22/%3E%3Cpath d=%22M4 11V5h2v4.5h3V11H4zm6-6h2v6h-2V5z%22 fill=%22%236ee7b7%22/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <span class="seal" aria-hidden="true">C</span>
+      <span class="brand-name">CLAUSE</span>
+      <span class="brand-sub">data-centre EPC requirement ledger</span>
+    </div>
+    <div class="top-right">
+            <span id="model-chip" class="mono" title="model">—</span>
+      <span id="clock" class="mono"></span>
+      <button id="btn-recompute" class="btn btn-primary" title="analyse the uploaded documents">Run</button>
+      <button id="btn-settings" class="iconbtn" title="Settings · bring your own model"></button>
+    </div>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <nav id="tabs" aria-label="sections"></nav>
+  </div>
+<button id="cp-fab" class="hidden" title="CLAUSE copilot — ask the ledger" aria-label="Open copilot"><span id="cp-fab-ic"></span><span class="cp-fab-label">Ask CLAUSE</span></button>
+<div id="cp-panel" class="hidden">
+  <div class="cp-head"><span class="mono"><b>CLAUSE copilot</b></span><span class="cp-sub">project copilot</span><button id="cp-wide" class="btn" title="toggle panel width" aria-label="Toggle width">⇔</button><button id="cp-close" class="btn" aria-label="Close copilot"></button></div>
+  <div id="cp-log"><div class="cp-msg cp-ai cp-md">Ask anything about this project — “why is the UPS package flagged?”, “which deliveries put the schedule at risk?”, “what does the addendum change?” Answers cite the exact document and page.</div></div>
+  <form id="cp-form"><input id="cp-in" placeholder="ask about any clause, package, PO, test…" autocomplete="off"><button class="btn" type="submit">Ask</button></form>
+</div>
+<div id="toast" class="hidden"></div>
+<div id="modal" class="hidden" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-head"><span id="modal-title" class="mono"></span><button id="modal-close" class="iconbtn"></button></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+<div id="err-overlay" class="hidden"></div>
+<script src="icons.js"></script>
+<script src="ontology.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

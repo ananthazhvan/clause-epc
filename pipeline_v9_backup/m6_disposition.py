@@ -23,14 +23,6 @@ import json
 import os
 
 REGISTERS = os.path.join(os.environ.get("CLAUSE_CORPUS", "../clause_corpus"), "registers")
-
-
-def _i(x, default=0):
-    """Tolerant int: registers exported from Excel/ERP often have blank cells."""
-    try:
-        return int(float(str(x).strip()))
-    except (TypeError, ValueError):
-        return default
 SECTION_ACTIVITY_KEYWORD = {
     "26 33 53": "ups", "26 32 13": "generator",
     "23 81 23": "crah", "21 22 00": "fire",
@@ -40,9 +32,7 @@ SECTION_ACTIVITY_KEYWORD = {
 def main(out="out"):
     pos = list(csv.DictReader(open(f"{REGISTERS}/po_register.csv")))
     acts = list(csv.DictReader(open(f"{REGISTERS}/schedule.csv")))
-    cx_path = next((p for p in (f"{REGISTERS}/cx_test_register.csv", f"{REGISTERS}/cx_register.csv")
-                    if os.path.exists(p)), None)
-    cx = list(csv.DictReader(open(cx_path))) if cx_path else []
+    cx = list(csv.DictReader(open(f"{REGISTERS}/cx_test_register.csv")))
     wave = json.load(open(f"{out}/blast_wave.json"))
     stale_cx = {t["test_id"] for t in wave.get("cx_tests_stale", [])}
     invalid_pos = {p["po_number"] for p in wave.get("pos_invalidated", [])}
@@ -55,9 +45,9 @@ def main(out="out"):
         sec_pos = [p for p in pos if p["spec_section"] == sec]
         kw = SECTION_ACTIVITY_KEYWORD.get(sec)
         sec_acts = [a for a in acts if kw and kw in a["name"].lower()]
-        min_float = min((_i(a["float_days"]) for a in sec_acts), default=None)
-        lead_weeks = max((_i(p["lead_time_weeks"]) for p in sec_pos), default=0)
-        value_inr = sum(_i(p["value_inr"]) for p in sec_pos)
+        min_float = min((int(a["float_days"]) for a in sec_acts), default=None)
+        lead_weeks = max((int(p["lead_time_weeks"]) for p in sec_pos), default=0)
+        value_inr = sum(int(p["value_inr"]) for p in sec_pos)
         delivered = all(p["delivery_status"] == "DELIVERED" for p in sec_pos) if sec_pos else False
         sec_cx = [t for t in cx if t["spec_clause"].startswith(sec)]
 
@@ -109,8 +99,8 @@ def main(out="out"):
                     "pos": [{"po": p["po_number"],
                               "status": "INVALID" if p["po_number"] in invalid_pos
                                          else p["delivery_status"],
-                              "value_inr": _i(p["value_inr"])} for p in sec_pos],
-                    "activities": [{"id": a["activity_id"], "float_days": _i(a["float_days"]),
+                              "value_inr": int(p["value_inr"])} for p in sec_pos],
+                    "activities": [{"id": a["activity_id"], "float_days": int(a["float_days"]),
                                      "critical": a["critical_path"] == "True"}
                                     for a in sec_acts[:6]],
                     "cx_tests": [{"id": t["test_id"],

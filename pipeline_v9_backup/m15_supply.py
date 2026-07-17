@@ -72,14 +72,7 @@ def main():
     starts = [parse_date(p.get("order_date")) for p in pos]
     starts = [d for d in starts if d]
     if not starts:
-        os.makedirs(args.out, exist_ok=True)
-        json.dump({"items": [], "alerts": [],
-                   "note": "po_register.csv has no parseable order_date - fill the "
-                           "order_date column (YYYY-MM-DD) to enable supply-chain risk"},
-                  open(os.path.join(args.out, "supply_risk.json"), "w"), indent=1)
-        print("  M15: no parseable order_date in po_register.csv - wrote an empty "
-              "supply_risk.json and moved on (fill order_date to enable this analysis)")
-        return
+        sys.exit("no parseable order_date in po_register.csv")
     day0 = min(starts)
 
     def iso(day):
