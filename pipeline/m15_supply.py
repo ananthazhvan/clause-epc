@@ -77,7 +77,7 @@ def main():
                    "note": "po_register.csv has no parseable order_date - fill the "
                            "order_date column (YYYY-MM-DD) to enable supply-chain risk"},
                   open(os.path.join(args.out, "supply_risk.json"), "w"), indent=1)
-        print("  M15: no parseable order_date in po_register.csv - wrote an empty "
+        print("  S9: no parseable order_date in po_register.csv - wrote an empty "
               "supply_risk.json and moved on (fill order_date to enable this analysis)")
         return
     day0 = min(starts)
@@ -85,12 +85,23 @@ def main():
     def iso(day):
         return (day0 + datetime.timedelta(days=int(round(day)))).isoformat()
 
+    po_by_act = {}
+    for _aid, _a in act_by_id.items():
+        _nm = _a.get("name") or ""
+        for _m in re.finditer(r"(\d{10})((?:/\d{2})+)?", _nm):
+            _base = _m.group(1)
+            po_by_act.setdefault(_base, _aid)
+            for _suf in re.findall(r"/(\d{2})", _m.group(2) or ""):
+                po_by_act.setdefault(_base[:-2] + _suf, _aid)
+
     items, alerts, unlinked = [], [], []
     for p in pos:
         od = parse_date(p.get("order_date"))
         lead_days = float(p.get("lead_time_weeks") or 0) * 7
         ptok = tokens(p.get("equipment_tag", "")) | tokens(p.get("item_description", ""))
         fam = next((t for t in re.split(r"[^a-z]+", (p.get("equipment_tag") or "").lower()) if len(t) >= 2), None)
+        podig = re.sub(r"\D", "", p.get("po_number") or "")[-10:]
+        direct = po_by_act.get(podig)
         best, score = None, 0
         for aid, at in act_tok.items():
             sc = len(ptok & at)
@@ -104,7 +115,7 @@ def main():
                     sc += 1
             if sc > score:
                 best, score = aid, sc
-        matched = best if score >= 2 else None
+        matched = direct or (best if score >= 2 else None)
         eta = parse_date(p.get("eta") or p.get("current_eta") or "")
         arrival = (eta - day0).days if eta else ((od - day0).days + lead_days if od else None)
         rec = {

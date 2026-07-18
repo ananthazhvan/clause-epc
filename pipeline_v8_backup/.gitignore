@@ -1,5 +1,0 @@
-.env
-.cache/
-cost_log.jsonl
-out/
-__pycache__/

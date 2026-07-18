@@ -223,10 +223,10 @@ def classify_csv(text):
 
 def classify_text(head):
     first = "\n".join(head.strip().split("\n")[:8])
-    if re.search(r"\bADDENDUM\b", first, re.I):
-        return "addendum"
     if re.search(r"Package ID:", head) and re.search(r"Reference Section:", head):
         return "submittal"
+    if re.search(r"\bADDENDUM\b", first, re.I):
+        return "addendum"
     if len(CLAUSE_LINE_RE.findall(head)) >= 2 or re.search(r"\bSECTION\s+\d{2} \d{2} \d{2}\b", head, re.I):
         return "specification"
     return "project document"
@@ -320,6 +320,44 @@ def feed_kind(obj):
     return None
 
 
+def merge_po_csv(existing_text, incoming_text, prefer_incoming=False):
+    """Merge two PO registers by digit-normalized po_number. Fills empty cells;
+    prefer_incoming=True lets the new file win on conflicts."""
+    import io
+    ex_rd = csv.DictReader(io.StringIO(existing_text))
+    cols = list(ex_rd.fieldnames or [])
+    ex = list(ex_rd)
+    inc_rd = csv.DictReader(io.StringIO(incoming_text))
+    for c in (inc_rd.fieldnames or []):
+        if c not in cols:
+            cols.append(c)
+    inc = list(inc_rd)
+
+    def dig(r):
+        return re.sub(r"\D", "", str(r.get("po_number") or ""))[-10:]
+
+    by = {dig(r): dict(r) for r in ex}
+    added = filled = 0
+    for r in inc:
+        k = dig(r)
+        if k in by:
+            tgt = by[k]
+            for c, v in r.items():
+                if v and (prefer_incoming or not (tgt.get(c) or "").strip()):
+                    if (tgt.get(c) or "").strip() != str(v).strip():
+                        filled += 1
+                    tgt[c] = v
+        else:
+            by[k] = dict(r)
+            added += 1
+    buf = io.StringIO()
+    w = csv.DictWriter(buf, fieldnames=cols, extrasaction="ignore")
+    w.writeheader()
+    for r in by.values():
+        w.writerow(r)
+    return buf.getvalue(), f"merged by PO number: {filled} cell(s) updated, {added} new PO(s)"
+
+
 def stage_file(rel, name, data):
     """Classify one uploaded file by content and stage it. Returns a result row."""
     ext = os.path.splitext(name)[1].lower()
@@ -337,7 +375,11 @@ def stage_file(rel, name, data):
             return {"name": name, "kind": "error", "note": note}
         d = os.path.join(STAGE, "registers")
         os.makedirs(d, exist_ok=True)
-        open(os.path.join(d, canon), "wb").write(text.encode("utf-8"))
+        _cpath = os.path.join(d, canon)
+        if canon == "po_register.csv" and os.path.exists(_cpath):
+            text, _mn = merge_po_csv(open(_cpath).read(), text, prefer_incoming=True)
+            note = (note or f"columns match {canon}") + "; " + _mn
+        open(_cpath, "wb").write(text.encode("utf-8"))
         return {"name": name, "kind": "register", "note": note or f"columns match {canon}", "stored_as": f"registers/{canon}"}
     if ext == ".xml":
         # Primavera P6 connector: deterministic XML -> canonical schedule.csv, zero LLM
@@ -373,7 +415,11 @@ def stage_file(rel, name, data):
                 return {"name": name, "kind": "error", "note": "SAP OData parse failed: " + str(e)[:120]}
             d = os.path.join(STAGE, "registers")
             os.makedirs(d, exist_ok=True)
-            open(os.path.join(d, "po_register.csv"), "wb").write(text.encode("utf-8"))
+            po_path = os.path.join(d, "po_register.csv")
+            if os.path.exists(po_path):
+                text, mnote = merge_po_csv(open(po_path).read(), text)
+                cnote += "; " + mnote
+            open(po_path, "wb").write(text.encode("utf-8"))
             return {"name": name, "kind": "register",
                     "note": "SAP OData purchase orders -> po_register.csv - " + cnote,
                     "stored_as": "registers/po_register.csv"}
@@ -447,6 +493,66 @@ def clear_out():
             pass
 
 
+def score_answer_key(key):
+    """EVAL ONLY - compare the finished ledger against an answer key the user
+    explicitly uploads AFTER a run. Never read by any pipeline stage."""
+    items = key if isinstance(key, list) else None
+    if items is None and isinstance(key, dict):
+        for k in ("planted", "planted_errors", "items", "checks", "labels", "deviations", "violations"):
+            if isinstance(key.get(k), list):
+                items = key[k]
+                break
+        if items is None:
+            items = [e for v in key.values() if isinstance(v, list)
+                     for e in v if isinstance(e, dict)]
+    rows = []
+    for p in glob.glob(os.path.join(OUT, "verdicts_*.json")):
+        v = json.load(open(p))
+        for r in v.get("results", []):
+            rows.append({"package": v.get("package", ""), "section": v.get("section", ""), **r})
+    if not rows:
+        raise ValueError("no verdicts in the current run - run the pipeline first")
+
+    def toks(s):
+        return set(re.findall(r"[a-z0-9.]+", str(s or "").lower()))
+
+    def row_text(r):
+        req = r.get("requirement") or {}
+        return " ".join(str(x) for x in (r.get("rule_id"), r.get("parameter"),
+                                          req.get("quote"), r.get("reason"), r.get("section")))
+
+    CAUGHT, FLAGGED = {"DEVIATION"}, {"NEEDS_REVIEW", "MISSING_EVIDENCE"}
+    tally = {"planted": 0, "caught": 0, "flagged": 0, "missed": 0}
+    detail = []
+    for it in items or []:
+        if not isinstance(it, dict):
+            continue
+        expected = str(it.get("expected_verdict") or it.get("verdict_pre_addendum")
+                       or it.get("verdict") or it.get("expected") or "").upper()
+        if expected in ("", "COMPLY", "COMPLIANT"):
+            continue
+        tally["planted"] += 1
+        want = toks(it.get("spec_clause")) | toks(it.get("parameter")) | \
+               toks(it.get("clause")) | toks(it.get("description")) | toks(it.get("explanation"))
+        best, bs = None, 0
+        for r in rows:
+            sc = len(want & toks(row_text(r)))
+            if sc > bs:
+                best, bs = r, sc
+        got = (best or {}).get("verdict", "")
+        cls = ("caught" if got in CAUGHT else "flagged" if got in FLAGGED else "missed") \
+              if best is not None and bs >= 2 else "missed"
+        tally[cls] += 1
+        detail.append({"id": it.get("check_id") or it.get("id") or it.get("parameter") or "?",
+                       "expected": expected, "result": cls,
+                       "matched_rule": (best or {}).get("rule_id") if bs >= 2 else None,
+                       "pipeline_verdict": got if bs >= 2 else None,
+                       "package": (best or {}).get("package") if bs >= 2 else None})
+    tally["found"] = tally["caught"] + tally["flagged"]
+    return {"tally": tally, "detail": detail,
+            "note": "approximate text matcher - scored after the run, never an input to it"}
+
+
 def start_run():
     if run_running():
         return False, "a run is already in progress"
@@ -515,6 +621,8 @@ def summary():
     env = read_env()
     return {
         "rules": rules, "claims": claims,
+        "sections": len(glob.glob(os.path.join(OUT, "rulebook_*.json"))),
+        "packages": len(glob.glob(os.path.join(OUT, "claims_*.json"))),
         "verdicts_pre": pre, "verdicts_post": post,
         "false_comply_pre": fc_pre, "false_comply_post": fc_post,
         "lint_findings": len(lint["findings"]),
@@ -767,6 +875,12 @@ class Handler(BaseHTTPRequestHandler):
             staged, _ = staged_state()
             return self._send(200, {"results": results, "staged": staged,
                                     "staged_total": sum(staged.values())})
+        if path == "/api/score":
+            body = self._body()
+            try:
+                return self._send(200, score_answer_key(body))
+            except Exception as e:  # noqa: BLE001
+                return self._send(400, {"error": str(e)[:300]})
         if path in ("/api/run", "/api/recompute"):
             ok, err = start_run()
             return self._send(200 if ok else 409, {"ok": ok, "error": err or None})

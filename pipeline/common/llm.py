@@ -93,6 +93,9 @@ def call(system, user):
     if os.path.exists(cpath):
         with open(cpath) as f:
             return json.load(f)["content"]
+    if os.environ.get("CLAUSE_CACHE_ONLY"):
+        print(f"  [cache-only] MISS - returning empty result for this prompt")
+        return '{"rules": [], "claims": [], "verdicts": [], "items": [], "checks": [], "answers": [], "links": [], "risks": []}'
     api_key = _next_key()
     if not api_key:
         raise RuntimeError(

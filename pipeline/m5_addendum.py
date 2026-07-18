@@ -35,6 +35,33 @@ CHANGE_RE = re.compile(
     r"Clause: (.*?)(?=\nReference:|\Z)",
     re.S,
 )
+PROSE_ITEM_RE = re.compile(
+    r"Item\s+\d+\s*[\u2014\u2013-]+\s*Section\s+(\d{2} \d{2} \d{2})\s*,\s*Clause\s+([\d.]+)", re.I)
+PROSE_DELSUB_RE = re.compile(
+    r"Delete\s+[\"\u201c](.+?)[\"\u201d]\s+and\s+(?:substitute|insert)\s+[\"\u201c](.+?)[\"\u201d]",
+    re.I | re.S)
+
+
+def prose_to_structured(text):
+    """Rewrite client-format addendum prose into the structured grammar so
+    CHANGE_RE can parse it. Deterministic - no LLM."""
+    marks = list(PROSE_ITEM_RE.finditer(text))
+    out = []
+    for i, m in enumerate(marks):
+        seg = text[m.end(): marks[i + 1].start() if i + 1 < len(marks) else len(text)]
+        ds = PROSE_DELSUB_RE.search(seg)
+        if not ds:
+            continue
+        old = " ".join(ds.group(1).split()).replace("'", "")
+        new = " ".join(ds.group(2).split()).replace("'", "")
+        dm = re.search(r"Revised clause reads:\s*(.+?)(?:\n\s*\n|\Z)", seg, re.S)
+        desc = " ".join((dm.group(1) if dm else seg[:200]).split())
+        out.append("Reference: Section %s, Part %s\n"
+                   "Action: DELETE '%s' and INSERT '%s'\n"
+                   "Clause: %s" % (m.group(1), m.group(2), old, new, desc))
+    return "\n".join(out)
+
+
 ADD_HEAD_RE = re.compile(r"\bADDENDUM\b\s*(?:NO\.?\s*)?([A-Za-z0-9-]*)", re.I)
 NUM_RE = re.compile(r"-?\d+(?:\.\d+)?")
 
@@ -73,7 +100,8 @@ def discover_addenda():
             dm2 = re.search(r"Date:\s*(\d{4}-\d{2}-\d{2})", text)
             if dm2 and not date:
                 date = dm2.group(1)
-            for sec, part, dele, ins, desc in CHANGE_RE.findall(text):
+            body = text if CHANGE_RE.search(text) else prose_to_structured(text)
+            for sec, part, dele, ins, desc in CHANGE_RE.findall(body):
                 changes.append({
                     "section": sec,
                     "clause": f"{sec} Part {part}",
@@ -83,7 +111,7 @@ def discover_addenda():
                     "page": page.get("page"),
                 })
         if not changes:
-            print(f"M5: {doc.get('doc')} announces an addendum but carries no "
+            print(f"S6: {doc.get('doc')} announces an addendum but carries no "
                   "structured actions - route it through the M2 LLM path.")
             continue
         token = hm.group(1).strip("-")
@@ -169,21 +197,22 @@ def rerun_verifier():
         m4_verify.verify_package(path, f"{OUT}/post")
 
 
+    m4_verify.apply_coverage(f"{OUT}/post")
 def walk_registers(changes, date, aid):
     sections = {c["section"] for c in changes}
     pos, stale = [], []
     po_rows = read_register("po_register.csv")
     if po_rows is None:
-        print("M5: note - po_register.csv not uploaded; PO impact not assessed")
+        print("S6: note - po_register.csv not uploaded; PO impact not assessed")
         po_rows = []
     for row in po_rows:
         if row.get("spec_section") in sections and row.get("order_date", "") < date:
             pos.append({**row, "ledger_status": "INVALID",
                         "ledger_reason": f"ordered {row['order_date']} against a "
                                           f"requirement amended by {aid} on {date}"})
-    cx_rows = read_register("cx_test_register.csv")
+    cx_rows = read_register("cx_test_register.csv") or read_register("cx_register.csv")
     if cx_rows is None:
-        print("M5: note - cx_test_register.csv not uploaded; Cx impact not assessed")
+        print("S6: note - cx_test_register.csv not uploaded; Cx impact not assessed")
         cx_rows = []
     for row in cx_rows:
         sec = row.get("spec_clause", "")[:8]
@@ -226,7 +255,7 @@ def main():
                              "cx_tests_stale": 0}}
         with open(f"{OUT}/blast_wave.json", "w") as f:
             json.dump(wave, f, indent=1)
-        print("M5: no addendum found among the uploaded documents - "
+        print("S6: no addendum found among the uploaded documents - "
               "post-state equals pre-state. Upload the addendum PDF when one "
               "is issued and run again.")
         return
@@ -234,7 +263,7 @@ def main():
     baseline = verdicts_map(OUT)
     waves = []
     for a in adds:
-        print(f"M5: applying {a['id']} dated {a['date']} "
+        print(f"S6: applying {a['id']} dated {a['date']} "
               f"({len(a['changes'])} change(s)) from {a['doc']}")
         amendments = amend(rbs, a["changes"], a["id"], a["date"])
         for am in amendments:

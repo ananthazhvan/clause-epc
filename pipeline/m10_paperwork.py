@@ -313,7 +313,7 @@ def main(out="out"):
 
     json.dump({"generated_at": today, "documents": docs},
               open(os.path.join(out, "paperwork_index.json"), "w"), indent=1)
-    print(f"M10: {len(findings)} lint findings, {len(docs)} documents -> out/paperwork/")
+    print(f"S10: {len(findings)} lint findings, {len(docs)} documents -> out/paperwork/")
 
 
 if __name__ == "__main__":

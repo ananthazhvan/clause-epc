@@ -149,7 +149,7 @@ def main(out="out"):
         w = csv.DictWriter(f, fieldnames=list(ncr_rows[0].keys()))
         w.writeheader()
         w.writerows(ncr_rows)
-    print(f"M6: {len(ncr_rows)} NCR(s) drafted -> {out}/ncr_register.csv")
+    print(f"S7: {len(ncr_rows)} NCR(s) drafted -> {out}/ncr_register.csv")
     for p in packages:
         print(f"  {p['package']}: severity {p['severity_score']}, "
               f"{p['open_ncrs']} NCR(s), {p['needs_review']} review(s)")

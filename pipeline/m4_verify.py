@@ -371,6 +371,33 @@ def verify_package(claims_path, out_dir):
     return out
 
 
+def apply_coverage(out_dir):
+    """Cross-package coverage: a rule ignored by one package but answered by a
+    sibling package of the same section is out-of-scope there, not a gap."""
+    outs = [json.load(open(p)) for p in sorted(glob.glob(os.path.join(out_dir, "verdicts_*.json")))]
+    addressed = {}
+    for o in outs:
+        for r in o["results"]:
+            if r["verdict"] not in ("NOT_ADDRESSED", "COVERED_ELSEWHERE"):
+                addressed.setdefault((o["section"], r["rule_id"]), set()).add(o["package"])
+    for o in outs:
+        changed = False
+        for r in o["results"]:
+            if r["verdict"] == "NOT_ADDRESSED":
+                sib = addressed.get((o["section"], r["rule_id"]), set()) - {o["package"]}
+                if sib:
+                    r["verdict"] = "COVERED_ELSEWHERE"
+                    r["reason"] = ("outside this package's scope - clause answered by "
+                                   + ", ".join(sorted(sib)))
+                    changed = True
+        if changed:
+            o["summary"] = {}
+            for r in o["results"]:
+                o["summary"][r["verdict"]] = o["summary"].get(r["verdict"], 0) + 1
+            with open(os.path.join(out_dir, f"verdicts_{o['package']}.json"), "w") as f:
+                json.dump(o, f, indent=1)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="out")
@@ -380,13 +407,20 @@ def main():
 
     paths = ([os.path.join(a.out, f"claims_{a.package}.json")] if a.package
              else sorted(glob.glob(os.path.join(a.out, "claims_*.json"))))
-    register = []
+    outs = []
     for p in paths:
         out = verify_package(p, a.out)
         if out:
-            for r in out["results"]:
-                if r["verdict"] not in ("COMPLY", "NOT_ADDRESSED") or r["flags"]:
-                    register.append({"package": out["package"], "section": out["section"], **r})
+            outs.append(out)
+
+    apply_coverage(a.out)
+
+    register = []
+    for out in outs:
+        out = json.load(open(os.path.join(a.out, f"verdicts_{out['package']}.json")))
+        for r in out["results"]:
+            if r["verdict"] not in ("COMPLY", "NOT_ADDRESSED", "COVERED_ELSEWHERE") or r["flags"]:
+                register.append({"package": out["package"], "section": out["section"], **r})
     reg_path = os.path.join(a.out, "deviation_register.json")
     with open(reg_path, "w") as f:
         json.dump(register, f, indent=1)

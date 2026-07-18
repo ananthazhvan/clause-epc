@@ -22,7 +22,7 @@ const STAMP_CLASS = {
   COMPLY: "st-ok", SATISFIABLE: "st-ok", CURRENT: "st-ok", READY: "st-ok", VALID: "st-ok", OK: "st-ok",
   DEVIATION: "st-bad", CHECK_FAILS: "st-bad", INVALID: "st-bad", NEGATIVE: "st-bad", EXPIRED: "st-bad", CRITICAL: "st-bad",
   NEEDS_REVIEW: "st-warn", REVIEW: "st-warn", THIN: "st-warn", TARGETED_SAMPLING: "st-warn", PENDING: "st-mut",
-  MISSING_EVIDENCE: "st-mut", NOT_ADDRESSED: "st-mut", BLOCKED: "st-mut",
+  MISSING_EVIDENCE: "st-mut", NOT_ADDRESSED: "st-mut", COVERED_ELSEWHERE: "st-mut", BLOCKED: "st-mut",
   STALE: "st-verm", AMENDS: "st-verm", DRAFT: "st-purple", NEW: "st-verm", "IN LEDGER": "st-ok",
 };
 function stamp(v, extraClass) {
@@ -308,6 +308,47 @@ function hubEmpty(view, p) {
   wireUploader();
 }
 
+function scoreboardCard(s) {
+  const vp = s.verdicts_pre || {};
+  const row = (k, v) => '<div class="d-kv"><span class="k">' + k + '</span><span class="v">' + v + "</span></div>";
+  const checks = Object.values(vp).reduce((a, b) => a + (b || 0), 0);
+  return '<div class="card mb"><h2>scoreboard</h2>' +
+    row("spec sections", s.sections || 0) + row("checkable rules", s.rules || 0) +
+    row("submittal packages", s.packages || 0) + row("vendor claims", s.claims || 0) +
+    row("checks run", checks) +
+    row("deviations", vp.DEVIATION || 0) + row("needs review", vp.NEEDS_REVIEW || 0) +
+    row("missing evidence", vp.MISSING_EVIDENCE || 0) + row("comply", vp.COMPLY || 0) +
+    row("outside package scope", (vp.COVERED_ELSEWHERE || 0) + (vp.NOT_ADDRESSED || 0)) +
+    row("NCRs raised", s.ncrs || 0) +
+    '<div class="row mt"><button class="btn" id="btn-score">Score vs answer key\u2026</button></div>' +
+    '<div id="score-out"></div>' +
+    '<div class="form-note">scoring runs AFTER the ledger is computed - the answer key is never an input to the pipeline.</div></div>';
+}
+
+function wireScore() {
+  const sc = $("#btn-score");
+  if (!sc) return;
+  sc.onclick = () => {
+    const inp = document.createElement("input");
+    inp.type = "file"; inp.accept = ".json,application/json";
+    inp.onchange = async () => {
+      const f = inp.files[0];
+      if (!f) return;
+      let key;
+      try { key = JSON.parse(await f.text()); } catch (e) { return toast("not valid JSON"); }
+      const r = await (await fetch("/api/score", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(key) })).json();
+      if (r.error) return toast(esc(r.error));
+      const t = r.tally || {};
+      const misses = (r.detail || []).filter((d) => d.result === "missed");
+      $("#score-out").innerHTML =
+        '<div class="callout mt"><b>' + t.planted + " planted problems \u2014 " + t.caught +
+        " caught as deviations, " + t.flagged + " routed to a human, " + t.missed + " missed.</b></div>" +
+        (misses.length ? '<div class="form-note">missed: ' + esc(misses.map((d) => d.id).join(", ")) + "</div>" : "");
+    };
+    inp.click();
+  };
+}
+
 async function hubLoaded(view, p) {
   const s = await api("/api/summary");
   view.innerHTML = '<div class="view">' +
@@ -315,7 +356,7 @@ async function hubLoaded(view, p) {
     '<div class="hub">' +
     '<div class="card hub-canvas-card" style="min-height:460px"><canvas id="hub-canvas"></canvas>' +
     '<div class="hub-cap">one-line diagram \u00b7 click a source to open it \u00b7 ' + s.graph_nodes + " objects / " + s.graph_edges + " typed links in the ontology</div></div>" +
-    "<div>" +
+    "<div>" + scoreboardCard(s) +
     '<div class="card mb"><h2>' + icon("hub") + "sources</h2>" +
     SOURCES.map((src) => '<div class="d-kv" style="cursor:pointer" data-r="' + src.route + '"><span class="k">' + esc(src.label) + '</span><span class="v mono">' + esc(src.count(s)) + "</span></div>").join("") +
     '<div class="d-kv"><span class="k">checks in the ledger</span><span class="v mono">' + fmtN(checksTotalOf(s)) + "</span></div>" +
@@ -514,7 +555,7 @@ async function vReview(view, arg) {
     sessionStorage.setItem("pkg", pkg); sessionStorage.setItem("mode", mode);
     const v = await api("/api/verdicts/" + encodeURIComponent(pkg) + "?mode=" + mode);
     const results = v.results || [];
-    const order = ["DEVIATION", "NEEDS_REVIEW", "COMPLY", "MISSING_EVIDENCE", "NOT_ADDRESSED"];
+    const order = ["DEVIATION", "NEEDS_REVIEW", "COMPLY", "MISSING_EVIDENCE", "NOT_ADDRESSED", "COVERED_ELSEWHERE"];
     results.sort((a, b) => order.indexOf(a.verdict) - order.indexOf(b.verdict));
     const counts = {};
     results.forEach((r) => { counts[r.verdict] = (counts[r.verdict] || 0) + 1; });
@@ -991,6 +1032,7 @@ function startChrome() {
   $("#modal-close").onclick = () => $("#modal").classList.add("hidden");
   $("#modal").onclick = (e) => { if (e.target === $("#modal")) $("#modal").classList.add("hidden"); };
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#modal").classList.add("hidden"); });
+  $("#btn-log").onclick = () => { location.hash = "#run"; };
   $("#btn-recompute").onclick = async () => {
     if (PROJECT && PROJECT.running) { location.hash = "#run"; return; }
     try { await post("/api/run"); PROJECT = null; location.hash = "#run"; }

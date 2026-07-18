@@ -34,7 +34,7 @@ def main(out="out"):
         v = json.load(open(path))
         pkg, sec = v["package"], v["section"]
         vendor = sec_vendor.get(sec, "Unknown")
-        checks = [r for r in v["results"] if r["verdict"] != "NOT_ADDRESSED"]
+        checks = [r for r in v["results"] if r["verdict"] not in ("NOT_ADDRESSED", "COVERED_ELSEWHERE")]
         dev = sum(r["verdict"] == "DEVIATION" for r in checks)
         fc = sum("false_comply" in r["flags"] for r in checks)
         nr = sum(r["verdict"] == "NEEDS_REVIEW" for r in checks)
@@ -103,7 +103,7 @@ def main(out="out"):
     }
     os.makedirs(out, exist_ok=True)
     json.dump(result, open(os.path.join(out, "vendors.json"), "w"), indent=1)
-    print(f"M9: {len(rows)} vendors scored -> out/vendors.json")
+    print(f"S8: {len(rows)} vendors scored -> out/vendors.json")
 
 
 if __name__ == "__main__":

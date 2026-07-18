@@ -27,7 +27,8 @@ SECTION_KW = {"26 33 53": "ups", "26 32 13": "generator",
 
 def main(out="out"):
     today = datetime.date.today().isoformat()
-    cx = list(csv.DictReader(open(f"{REG}/cx_test_register.csv")))
+    _cxp = next((p for p in (f"{REG}/cx_test_register.csv", f"{REG}/cx_register.csv") if os.path.exists(p)), None)
+    cx = list(csv.DictReader(open(_cxp)))
     wave = json.load(open(os.path.join(out, "blast_wave.json")))
     stale = {t["test_id"]: t for t in wave.get("cx_tests_stale", [])}
     amendments = wave.get("rule_amendments", [])
@@ -113,7 +114,7 @@ def main(out="out"):
         "ready": sum(p["ready"] for p in packs),
     }
     json.dump(result, open(os.path.join(out, "cx_packs.json"), "w"), indent=1)
-    print(f"M11: {len(packs)} Cx tests ({result['stale']} stale, "
+    print(f"S11: {len(packs)} Cx tests ({result['stale']} stale, "
           f"{result['ready']} ready) -> out/cx_packs.json, {len(drafts)} procedures drafted")
 
 
