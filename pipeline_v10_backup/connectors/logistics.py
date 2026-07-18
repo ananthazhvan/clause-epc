@@ -15,11 +15,6 @@ import io
 
 
 def _po_of(s):
-    ref = s.get("referenceNumbers")
-    if isinstance(ref, dict):
-        r = ref.get("purchaseOrder") or ref.get("purchaseOrderNumber") or ref.get("po")
-        if r:
-            return str(r)
     return s.get("purchaseOrderNumber") or s.get("poNumber") or s.get("purchase_order") or ""
 
 
@@ -35,7 +30,7 @@ def _shipments(obj):
         return []
     out = []
     for s in obj:
-        if isinstance(s, dict) and (s.get("shipmentId") or s.get("shipment_id") or s.get("loadNumber") or s.get("load_number")) and _po_of(s):
+        if isinstance(s, dict) and (s.get("shipmentId") or s.get("shipment_id")) and _po_of(s):
             out.append(s)
     return out
 
@@ -45,15 +40,6 @@ def sniff(obj):
 
 
 def _loc_of(s):
-    pos = s.get("positionUpdates")
-    if isinstance(pos, list) and pos and isinstance(pos[-1], dict):
-        p = pos[-1]
-        name = p.get("locationDescription") or ""
-        lat, lon = p.get("latitude"), p.get("longitude")
-        core = name or (f"{lat},{lon}" if lat is not None and lon is not None else "")
-        ts = p.get("dateTime") or ""
-        if core:
-            return (core + (f" @ {ts}" if ts else "")).strip()
     loc = s.get("lastUpdatedLocation") or s.get("currentLocation") or s.get("location")
     if isinstance(loc, dict):
         lat, lon = loc.get("latitude"), loc.get("longitude")
@@ -65,8 +51,7 @@ def _loc_of(s):
 
 
 def _eta_of(s):
-    for k in ("estimatedDeliveryDateTime", "actualDeliveryDateTime", "scheduledDeliveryDateTime",
-              "estimatedTimeOfArrival", "eta", "estimatedArrival", "scheduledArrival"):
+    for k in ("estimatedTimeOfArrival", "eta", "estimatedArrival", "scheduledArrival"):
         if s.get(k):
             return str(s[k])
     dest = s.get("destination")
@@ -90,19 +75,16 @@ def merge(po_csv_text, obj):
     for extra in ("delivery_status", "current_location", "eta"):
         if extra not in cols:
             cols.append(extra)
-    def _digits(v):
-        return "".join(ch for ch in str(v or "") if ch.isdigit())
     by_po = {}
     for s in ships:
-        by_po.setdefault(_digits(_po_of(s)), s)
-    by_po.pop("", None)
+        by_po.setdefault(str(_po_of(s)).strip(), s)
     matched_rows, matched_pos = 0, set()
     for r in rows:
-        s = by_po.get(_digits(r.get("po_number", "")))
+        s = by_po.get(str(r.get("po_number", "")).strip())
         if not s:
             continue
         matched_rows += 1
-        matched_pos.add(_digits(_po_of(s)))
+        matched_pos.add(str(_po_of(s)).strip())
         status = s.get("currentStatus") or s.get("status")
         if status:
             r["delivery_status"] = str(status)
@@ -112,7 +94,7 @@ def merge(po_csv_text, obj):
         eta = _eta_of(s)
         if eta:
             r["eta"] = eta
-    unmatched = sorted({str(_po_of(s)).strip() for k, s in by_po.items() if k not in matched_pos})
+    unmatched = sorted(set(by_po) - matched_pos)
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=cols)
     w.writeheader()

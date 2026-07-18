@@ -206,7 +206,7 @@ const SOURCES = [
   { key: "quality", label: "Quality records", route: "#cx", count: (s) => (((s.node_types || {}).cx || 0)) + " tests \u00b7 " + ((s.node_types || {}).quality || 0) + " issues \u00b7 " + ((s.node_types || {}).rfi || 0) + " RFIs" },
 ];
 function kstamp(kind) {
-  const m = { specification: "st-ok", submittal: "st-ok", addendum: "st-warn", register: "st-ok", feed: "st-ok", reference: "", "project document": "", refused: "st-bad", error: "st-bad", skipped: "" };
+  const m = { specification: "st-ok", submittal: "st-ok", addendum: "st-warn", register: "st-ok", reference: "", "project document": "", refused: "st-bad", error: "st-bad", skipped: "" };
   return '<span class="stamp ' + (m[kind] || "") + '">' + esc(kind) + "</span>";
 }
 function checksTotalOf(s) { return Object.values(s.verdicts_post || {}).reduce((a, b) => a + b, 0); }
@@ -545,8 +545,8 @@ async function vReview(view, arg) {
 }
 
 /* =========================================================== graph */
-const NODE_COLORS = { section: "#355e8d", clause: "#7d8fae", package: "#a07416", po: "#3f7d4e", activity: "#6d5f92", cx: "#b0567f", addendum: "#c9442a", vendor: "#8a6d3b", shipment: "#2e7d84", quality: "#a04b3f", rfi: "#5f7d63", wbs: "#8d6b34", doc: "#4e6c86", material: "#5c6e51", trade: "#996f5a", equipment: "#77685a" };
-const BAD_STATUS = new Set(["DEVIATION", "INVALID", "STALE", "AMENDS", "CRITICAL", "EXPIRED", "NEGATIVE", "OVER_BUDGET", "NONCONFORMING", "OVERDUE", "REJECTED"]);
+const NODE_COLORS = { section: "#355e8d", clause: "#7d8fae", package: "#a07416", po: "#3f7d4e", activity: "#6d5f92", cx: "#b0567f", addendum: "#c9442a", vendor: "#8a6d3b", shipment: "#2e7d84", quality: "#a04b3f", rfi: "#5f7d63" };
+const BAD_STATUS = new Set(["DEVIATION", "INVALID", "STALE", "AMENDS", "CRITICAL", "EXPIRED", "NEGATIVE"]);
 function mulberry32(a) {
   return function () {
     a |= 0; a = (a + 0x6D2B79F5) | 0;
@@ -603,7 +603,7 @@ async function vGraph(view, arg) {
   window.addEventListener("resize", onResize);
   // ---- deterministic init (seeded rings, then a d3-style force layout)
   const rng = mulberry32(1337);
-  const RING = { section: 120, addendum: 200, wbs: 260, clause: 340, vendor: 430, doc: 470, package: 520, po: 660, material: 720, shipment: 760, activity: 800, trade: 850, quality: 880, rfi: 910, cx: 940, equipment: 970 };
+  const RING = { section: 120, addendum: 200, clause: 340, vendor: 430, package: 520, po: 660, shipment: 760, activity: 800, quality: 880, rfi: 910, cx: 940 };
   const byId = new Map();
   nodes.forEach((n) => {
     const r = (RING[n.type] || 700) * (0.85 + rng() * 0.3);

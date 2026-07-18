@@ -198,20 +198,3 @@ note. Requires a staged `po_register.csv` first (CSV or SAP JSON).
 Sample exports of all three — generated from this corpus's own registers, so
 they roundtrip exactly — live in `clause_corpus/connectors/`. CLI version:
 `python3 connectors/convert.py <file> [--po po_register.csv]`.
-
-## Connector JSON payloads (auto-recognized on upload)
-
-Upload these as plain `.json` files; the staging validator sniffs the shape and files them:
-
-| Payload | Recognized by | Stored under | What it drives |
-|---|---|---|---|
-| SAP OData purchase orders | OData `d.results[]` with PO fields | `registers/po_register.csv` (converted) | PO objects, money rollups |
-| Shipment visibility (FourKites-style) | `shipments[]` with `loadNumber`/`shipmentId` + a PO reference (`referenceNumbers.purchaseOrder` accepted) | `supply_chain/<name>.json` (raw) + merges delivery columns into `po_register.csv` when present | Globe arcs, shipment objects, exception insights |
-| ACC issues export | `results[]` rows carrying `displayId` | `quality/<name>.json` | Quality issue objects linked to sections/POs/activities/Cx |
-| ACC daily logs | `worklogEntries[]` / `materialsEntries[]` / `equipmentEntries[]` | `field/<name>.json` | Trade crews, equipment, under-manning insights |
-| Hexagon Smart Materials BOM | `bomLines[]` (+ optional `pmsClasses[]`) | `materials/<name>.json` | Material lines, PMS-class conformance, mill-cert traceability |
-| Aconex document register | `documents[]` / `transmittals[]` / `workflows[]` | `documents/<name>.json` | Document objects, overdue-review insights |
-| SAP PS finance | `wbsElements[]` / `costLines[]` | `finance/<name>.json` | WBS budget vs actual+commitment, over-budget insights |
-
-CSV registers accepted by header match: `po_register.csv`, `schedule.csv`, `cx_test_register.csv`, `rfi_log.csv`, `rfi_register.csv`.
-Answer-key / ground-truth files (e.g. `violations_key.json`) are always refused - the pipeline must never read its own evaluation key.

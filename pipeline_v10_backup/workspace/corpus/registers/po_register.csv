@@ -1,0 +1,7 @@
+po_number,equipment_tag,spec_section,vendor,item_description,value_inr,order_date,lead_time_weeks,delivery_status
+4500012301,PX-1200,26 33 53,VoltEdge Power Systems Pvt Ltd,UPS Module 1200kW Hall A,128000000,,,ORDERED
+4500012302,BC-500,26 33 53,VoltEdge Power Systems Pvt Ltd,Battery Cabinet VRLA Hall A,46000000,,,ORDERED
+4500012303,CC-1200,23 64 26,CryoCore Climate Pvt Ltd,Water-Cooled Centrifugal Chiller Unit 1,58000000,,,ORDERED
+4500012304,CC-1200,23 64 26,CryoCore Climate Pvt Ltd,Water-Cooled Centrifugal Chiller Unit 2,58000000,,,ORDERED
+4500012305,AF-5112,21 22 00,AegisFire Systems Pvt Ltd,FK-5-1-12 Cylinders and AF-EDN-40 Nozzles,21000000,,,ORDERED
+4500012306,MS-LV-8,26 24 13,Meridian Switchgear Ltd,LV Switchboards Hall A,34000000,,,ORDERED

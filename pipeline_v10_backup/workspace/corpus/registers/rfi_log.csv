@@ -1,0 +1,4 @@
+rfi_id,section,clause,query,status,raised_by,linked_package,response
+RFI-101,26 33 53,2.2 / 3.1,"Part 2.2 requires not less than 10 minutes battery autonomy at end-of-life, but Part 3.1 witnesses only an 8-minute battery discharge test. Which duration governs factory and site acceptance?",OPEN,VoltEdge Power Systems Pvt Ltd,SUB-263353-01,
+RFI-102,23 64 26,2.1,"Does the ADD-001 revision of minimum COP to 6.3 apply to chiller units already released for manufacture against PO-4500012303, or only to units not yet released?",ANSWERED,CryoCore Industries,SUB-236426-01,ADD-001 governs all units not yet shipped. Resubmit performance data demonstrating COP >= 6.3 at AHRI conditions.
+RFI-103,21 22 00,2.4,CX-FSS-201 door-fan test failed with 27 Pa peak against the 25 Pa cap. The Section does not state a retest protocol after enclosure sealing remediation. Please confirm retest criteria per NFPA 2001 Annex C.,OPEN,AegisFire Protection,SUB-212200-01,

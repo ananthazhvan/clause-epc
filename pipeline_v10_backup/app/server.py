@@ -70,7 +70,7 @@ GATED = {"summary", "graph", "queue", "paperwork", "cx", "node",
          "packages", "verdicts", "ncr", "supply", "ontology"}
 
 # Ground truth is never read by the pipeline (contamination rule).
-BANNED = ("project_bible", "labels.json", "curves_data", "answer_key", "violations_key", "evaluation.md")
+BANNED = ("project_bible", "labels.json", "curves_data", "answer_key")
 
 
 # ------------------------------------------------------------------ .env
@@ -200,7 +200,6 @@ REGISTER_SCHEMAS = {
     "schedule.csv": {"activity_id", "duration_days", "predecessors", "float_days"},
     "cx_test_register.csv": {"test_id", "spec_clause", "acceptance_criteria"},
     "rfi_log.csv": {"rfi_id", "query", "response"},
-    "rfi_register.csv": {"rfi_id", "section", "question", "status"},
 }
 CLAUSE_LINE_RE = re.compile(r"^\d{2} \d{2} \d{2} Part \d", re.M)
 SEC_RE = re.compile(r"\b(\d{2}) (\d{2}) (\d{2})\b")
@@ -302,24 +301,6 @@ def llm_map_csv(text, name):
                             "export headers automatically (" + str(e)[:90] + ")")
 
 
-def feed_kind(obj):
-    """Classify a connector JSON payload by shape (deterministic, zero LLM)."""
-    if not isinstance(obj, dict):
-        return None
-    rows = obj.get("results")
-    if isinstance(rows, list) and rows and isinstance(rows[0], dict) and rows[0].get("displayId"):
-        return "quality", "ACC issues export -> quality/ (issues join the object graph)"
-    if any(isinstance(obj.get(k), list) for k in ("worklogEntries", "materialsEntries", "equipmentEntries")):
-        return "field", "ACC daily-log export -> field/ (crew and equipment insights)"
-    if isinstance(obj.get("bomLines"), list) or isinstance(obj.get("pmsClasses"), list):
-        return "materials", "Hexagon Smart Materials BOM -> materials/ (PMS-class compliance checks)"
-    if isinstance(obj.get("documents"), list) or isinstance(obj.get("transmittals"), list) or isinstance(obj.get("workflows"), list):
-        return "documents", "Aconex-style document register -> documents/ (review-cycle insights)"
-    if isinstance(obj.get("wbsElements"), list) or isinstance(obj.get("costLines"), list):
-        return "finance", "SAP PS WBS/cost export -> finance/ (budget-pressure insights)"
-    return None
-
-
 def stage_file(rel, name, data):
     """Classify one uploaded file by content and stage it. Returns a result row."""
     ext = os.path.splitext(name)[1].lower()
@@ -378,30 +359,20 @@ def stage_file(rel, name, data):
                     "note": "SAP OData purchase orders -> po_register.csv - " + cnote,
                     "stored_as": "registers/po_register.csv"}
         if logistics.sniff(obj):
-            d = os.path.join(STAGE, "supply_chain")
-            os.makedirs(d, exist_ok=True)
-            open(os.path.join(d, name), "wb").write(data)
-            note = "shipment-visibility feed -> supply_chain/ (drives the globe and the object graph)"
             po_path = os.path.join(STAGE, "registers", "po_register.csv")
-            if os.path.exists(po_path):
-                try:
-                    merged, cnote = logistics.merge(open(po_path).read(), obj)
-                    open(po_path, "w").write(merged)
-                    note += "; merged into po_register.csv - " + cnote
-                except Exception as e:  # noqa: BLE001
-                    note += "; po_register merge skipped (" + str(e)[:80] + ")"
-            else:
-                note += "; po_register merge skipped (no PO register staged yet - upload it and re-upload this feed to patch delivery columns)"
-            return {"name": name, "kind": "feed", "note": note, "stored_as": f"supply_chain/{name}"}
-        fk = feed_kind(obj)
-        if fk:
-            folder, label = fk
-            d = os.path.join(STAGE, folder)
-            os.makedirs(d, exist_ok=True)
-            open(os.path.join(d, name), "wb").write(data)
-            return {"name": name, "kind": "feed", "note": label, "stored_as": f"{folder}/{name}"}
+            if not os.path.exists(po_path):
+                return {"name": name, "kind": "error",
+                        "note": "shipment feed recognized, but no po_register.csv staged yet - upload the PO register (CSV or SAP OData JSON) first, then this feed"}
+            try:
+                merged, cnote = logistics.merge(open(po_path).read(), obj)
+            except Exception as e:  # noqa: BLE001
+                return {"name": name, "kind": "error", "note": "logistics feed parse failed: " + str(e)[:120]}
+            open(po_path, "w").write(merged)
+            return {"name": name, "kind": "register",
+                    "note": "logistics feed merged into po_register.csv - " + cnote,
+                    "stored_as": "registers/po_register.csv"}
         return {"name": name, "kind": "error",
-                "note": "JSON, but not a recognizable connector payload (SAP OData POs, shipment visibility, ACC issues or daily logs, Aconex document register, Hexagon BOM, SAP PS finance) - see CORPUS_FORMAT.md"}
+                "note": "JSON, but neither an SAP OData purchase-order payload nor a shipment-visibility feed - see CORPUS_FORMAT.md"}
     if ext not in (".pdf", ".html", ".htm", ".txt", ".md"):
         return {"name": name, "kind": "skipped", "note": "not a project document type (pdf/html/csv/xml/json/txt/md)"}
     # anything the user files under external/ is third-party reference

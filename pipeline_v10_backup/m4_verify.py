@@ -68,20 +68,6 @@ def parse_number(v):
     return None
 
 
-def extract_value_unit(v):
-    """Parse a value string that embeds its unit: '96.2%' -> (96.2, '%'),
-    '8 minutes' -> (8.0, 'min'), '60 s' -> (60.0, 's'). Whole-string match
-    only, so 'IEC 62040-3' or prose stays non-numeric. This is unit
-    EXTRACTION, never unit conversion (design rule preserved)."""
-    if not isinstance(v, str):
-        return None, None
-    s = v.replace(",", "").strip()
-    m = re.fullmatch(r"[<>=~\u2264\u2265]{0,2}\s*([-+]?\d+(?:\.\d+)?)\s*([a-zA-Z%\u00b0\u00b5][\w%\u00b0/().-]{0,15})?", s)
-    if not m:
-        return None, None
-    return float(m.group(1)), norm_unit(m.group(2))
-
-
 def norm_str(v):
     return re.sub(r"\s+", " ", str(v).strip().lower())
 
@@ -211,15 +197,10 @@ def evaluate_rule(rule, evidence, stamps, in_scope=True):
             comparable.append(c)
             continue
         val = parse_number(c.get("value"))
-        c_unit = norm_unit(c.get("unit"))
-        if val is None:
-            val, emb_unit = extract_value_unit(c.get("value"))
-            if val is not None and not c_unit:
-                c_unit = emb_unit
         if val is None:
             non_numeric.append(c)
             continue
-        c["_num"] = val
+        c_unit = norm_unit(c.get("unit"))
         if r_unit and c_unit and r_unit != c_unit:
             unit_mismatch.append(c)
             continue
@@ -230,7 +211,6 @@ def evaluate_rule(rule, evidence, stamps, in_scope=True):
             why.append(f"unit mismatch ({rule.get('unit')} vs {unit_mismatch[0].get('unit')})")
         if non_numeric:
             why.append(f"non-numeric evidence ({non_numeric[0].get('value')!r})")
-        result["governing_claim"] = (unit_mismatch + non_numeric)[0] if (unit_mismatch or non_numeric) else None
         return finish("NEEDS_REVIEW", "; ".join(why) or "no comparable evidence")
 
     # condition-matched claims govern
@@ -241,7 +221,7 @@ def evaluate_rule(rule, evidence, stamps, in_scope=True):
         result["flags"].append("condition_unverified")
 
     # conflicting evidence?
-    vals = {c.get("_num") if c.get("_num") is not None else parse_number(c.get("value")) for c in comparable}
+    vals = {parse_number(c.get("value")) for c in comparable}
     vals.discard(None)
     if len(vals) > 1:
         result["flags"].append("conflict")
@@ -255,7 +235,7 @@ def evaluate_rule(rule, evidence, stamps, in_scope=True):
             allowed = allowed if isinstance(allowed, list) else [allowed]
             ok = any(str_satisfies(c.get("value"), a) for a in allowed)
         else:
-            ok = compare(op, c.get("_num", parse_number(c.get("value"))), rule.get("value"))
+            ok = compare(op, parse_number(c.get("value")), rule.get("value"))
         verdicts.append((ok, c))
 
     if any(ok is None for ok, _ in verdicts):
