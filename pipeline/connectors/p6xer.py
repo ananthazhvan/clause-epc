@@ -39,7 +39,9 @@ def _num(v):
 
 
 def convert(data):
-    tabs = _tables(data.decode("utf-8", errors="ignore"))
+    if isinstance(data, bytes):
+        data = data.decode("utf-8", errors="ignore")
+    tabs = _tables(data)
     tasks = tabs.get("TASK") or []
     if not tasks:
         raise ValueError("no TASK table in XER")

@@ -119,7 +119,7 @@ def main():
         dict(id="S8", label="vendor trust ledger", llm=False, core=False,
              cmd=[py, "-u", "m9_vendor.py"], need=lambda: have("po_register.csv"),
              why="po_register.csv not uploaded"),
-        dict(id="S9", label="supply-chain risk: join every PO to the schedule", llm=True, core=False,
+        dict(id="S9", label="supply-chain risk: deterministic PO-to-schedule join + AI brief", llm=True, core=False,
              cmd=[py, "-u", "m15_supply.py", "--corpus", corpus, "--out", out],
              need=lambda: have("schedule.csv") and have("po_register.csv"),
              why="schedule/PO register CSVs not uploaded"),

@@ -114,22 +114,37 @@ def convert(data):
     if not activities:
         raise ValueError("no <Activity> elements found")
 
-    by_obj = {a.get("ObjectId"): (a.get("Id") or a.get("ObjectId")) for a in activities if a.get("ObjectId")}
+    def g(a, *keys):
+        for k in keys:
+            v = a.get(k)
+            if v not in (None, ""):
+                return v
+        return None
+
+    # P6 exports come in two dialects: API names (Id/Name/TotalFloat) and
+    # XER-style column names (task_code/task_name/total_float_hr_cnt).
+    # Accept both - same schedule, different serializer.
+    by_obj = {}
+    for a in activities:
+        obj = g(a, "ObjectId", "task_id")
+        if obj:
+            by_obj[obj] = g(a, "Id", "task_code") or obj
     durs, floats, names = {}, {}, {}
     for a in activities:
-        aid = a.get("Id") or a.get("ObjectId") or ""
-        names[aid] = a.get("Name", "")
-        d = _num(a.get("PlannedDuration"))
+        aid = g(a, "Id", "task_code", "ObjectId", "task_id") or ""
+        names[aid] = g(a, "Name", "task_name") or ""
+        d = _num(g(a, "PlannedDuration", "target_drtn_hr_cnt"))
         durs[aid] = (d / HOURS_PER_DAY) if d is not None else (
-            _days_from_dates(a.get("PlannedStartDate"), a.get("PlannedFinishDate")) or 0)
-        tf = _num(a.get("TotalFloat"))
+            _days_from_dates(g(a, "PlannedStartDate", "early_start_date", "act_start_date"),
+                             g(a, "PlannedFinishDate", "early_end_date", "act_end_date")) or 0)
+        tf = _num(g(a, "TotalFloat", "total_float_hr_cnt"))
         if tf is not None:
             floats[aid] = tf / HOURS_PER_DAY
 
     preds, lags, non_fs = {}, {}, 0
     for r in rels:
-        p = by_obj.get(r.get("PredecessorActivityObjectId"))
-        s = by_obj.get(r.get("SuccessorActivityObjectId"))
+        p = by_obj.get(r.get("PredecessorActivityObjectId") or r.get("pred_task_id"))
+        s = by_obj.get(r.get("SuccessorActivityObjectId") or r.get("task_id"))
         if not p or not s:
             continue
         rtype = (r.get("Type") or "Finish to Start").lower()
@@ -158,7 +173,7 @@ def convert(data):
     w = csv.writer(buf)
     w.writerow(cols)
     for a in activities:
-        aid = a.get("Id") or a.get("ObjectId") or ""
+        aid = g(a, "Id", "task_code", "ObjectId", "task_id") or ""
         fl = floats.get(aid, 0.0)
         row = [aid, names.get(aid, ""), _fmt(durs.get(aid, 0)), ";".join(preds.get(aid, [])),
                _fmt(fl), str(fl <= 1e-9)]

@@ -126,6 +126,7 @@ const ROUTES = [
   { id: "objects", label: "Objects", icon: "overview", fn: vObjects, group: 1 },
   { id: "graph", label: "Graph", icon: "graph", fn: vGraph, group: 1 },
   { id: "globe", label: "Globe", icon: "facility", fn: vGlobe, group: 1 },
+  { id: "data", label: "Data", icon: "hub", fn: vData, group: 1 },
   { id: "review", label: "Ledger", icon: "review", fn: vReview, group: 2 },
   { id: "queue", label: "Queue", icon: "queue", fn: vQueue, group: 2 },
   { id: "cx", label: "Cx", icon: "cx", fn: vCx, group: 3 },
@@ -377,6 +378,7 @@ async function hubLoaded(view, p) {
   $("#btn-rerun").onclick = async () => { try { await post("/api/run"); PROJECT = null; location.hash = "#run"; } catch (e) { toast(esc(e.message)); } };
   $("#btn-reset").onclick = async () => { try { await post("/api/project/reset"); PROJECT = null; toast("Project cleared"); route(); } catch (e) { toast(esc(e.message)); } };
   wireUploader();
+  wireScore();
   CLEANUP = initDiagram(s);
 }
 
@@ -1171,3 +1173,32 @@ function wireCopilot() {
 }
 wireCopilot();
 
+
+
+/* ---------------- data catalog ---------------- */
+async function vData(view) {
+  view.innerHTML = '<div class="view">' + head("Data sources", "loading\u2026") + "</div>";
+  let c;
+  try { c = await api("/api/catalog"); } catch (e) { c = { systems: [] }; }
+  const sys = (c && c.systems) || [];
+  if (!sys.length) {
+    view.innerHTML = '<div class="view">' + head("Data sources", "no staged corpus yet - upload project documents from the hub") + "</div>";
+    return;
+  }
+  view.innerHTML = '<div class="view">' +
+    head("Data sources", "every feed in this project - what it is, what is inside, and what CLAUSE does with it") +
+    sys.map(function (g) {
+      const items = g.items || [];
+      return '<div class="card mb"><h2>' + esc(g.name) + ' <span class="chip">' + items.length + ' feed(s)</span></h2>' +
+        '<div class="form-note">' + esc(g.blurb) + "</div>" +
+        items.map(function (t) {
+          return '<details style="margin:6px 0;border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:6px 10px">' +
+            '<summary style="cursor:pointer"><span class="mono">' + esc(t.file) + "</span>" +
+            (t.count ? ' <span class="chip">' + esc(t.count) + "</span>" : "") + "</summary>" +
+            '<div class="form-note" style="margin-top:6px"><b>What it is</b> - ' + esc(t.what) + "</div>" +
+            '<div class="form-note"><b>What CLAUSE does with it</b> - ' + esc(t.use) + "</div>" +
+            (t.fields ? '<div class="form-note mono" style="opacity:.75">' + esc(t.fields) + "</div>" : "") +
+            "</details>";
+        }).join("") + "</div>";
+    }).join("") + "</div>";
+}

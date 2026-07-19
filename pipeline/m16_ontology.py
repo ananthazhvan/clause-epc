@@ -217,7 +217,7 @@ def main():
         if "_answer_key" in p:
             continue
         d = jload(p)
-        ships = (d or {}).get("shipments") if isinstance(d, dict) else None
+        ships = (d or {}).get("shipments") if isinstance(d, dict) else (d if isinstance(d, list) else None)
         if not ships or not isinstance(ships, list) or not (ships[0] or {}).get("loadNumber"):
             continue
         for sh in ships:
@@ -674,6 +674,51 @@ def main():
             "note": ("Readiness is computed from evidence objects - commissioning tests, live "
                      "submittal verdicts, and open quality issues - never from keyword matches."),
             "requirements": reqs}
+
+    # ---------------- no orphans: anchor every object in the graph ---------
+    # An object nobody can reach is an object nobody will act on. Hook each
+    # isolated object to the equipment/section it mentions, else to a node
+    # for the source system it came from.
+    SYS_HOME = {"quality": "acc", "trade": "acc", "doc": "aconex",
+                "material": "hexagon", "shipment": "logistics"}
+    SYS_LABEL = {"p6": "Oracle Primavera P6", "sap": "SAP ERP",
+                 "acc": "Autodesk Construction Cloud", "aconex": "Oracle Aconex",
+                 "hexagon": "Hexagon Smart Materials", "logistics": "Shipment visibility",
+                 "registers": "Project registers", "source": "Source systems"}
+    linked_ids = {l["s"] for l in O.links} | {l["t"] for l in O.links}
+    secs = {o["id"].split(":", 1)[1].replace(" ", ""): o["id"]
+            for o in list(O.objects.values()) if o["type"] == "section"}
+    equips = {o["id"].split(":", 1)[1]: o["id"]
+              for o in list(O.objects.values()) if o["type"] == "equipment"}
+
+    def _sysnode(sysname):
+        sid = f"system:{sysname}"
+        if sid not in O.objects:
+            O.obj(sid, "system", SYS_LABEL.get(sysname, sysname.upper()))
+        return sid
+
+    for o in list(O.objects.values()):
+        if o["id"] in linked_ids or o["type"] == "system":
+            continue
+        blob = o["name"] + " " + json.dumps(o.get("props", {}))
+        hooked = False
+        for tag, eid in equips.items():
+            if tag and re.search(r"\b" + re.escape(tag) + r"\b", blob):
+                O.link(o["id"], eid, "concerns")
+                hooked = True
+                break
+        if not hooked:
+            mm = re.search(r"\b(\d{2})[ _-]?(\d{2})[ _-]?(\d{2})\b", blob)
+            key = "".join(mm.groups()) if mm else None
+            if key and key in secs:
+                O.link(o["id"], secs[key], "concerns")
+                hooked = True
+        if not hooked:
+            if o["type"] == "dataset":
+                sysname = o["id"].split(":")[1] if o["id"].startswith("table:") and o["id"].count(":") >= 2 else "source"
+                O.link(o["id"], _sysnode(sysname), "exported from")
+            else:
+                O.link(o["id"], _sysnode(SYS_HOME.get(o["type"], "source")), "sourced from")
 
     # ---------------- totals + write ---------------------------------------
     objs = list(O.objects.values())

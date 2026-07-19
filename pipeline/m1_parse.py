@@ -148,6 +148,21 @@ def llm_structure_pages(pages):
     return clauses
 
 
+def dedupe_clauses(clauses):
+    """A spec carrying a table of contents yields each part twice: a stub row
+    and the real body. Keep one per clause_id (the longest text) so every
+    downstream LLM call happens exactly once."""
+    best, order = {}, []
+    for c in clauses:
+        cid = c.get("clause_id")
+        if cid not in best:
+            order.append(cid)
+            best[cid] = c
+        elif len(c.get("text") or "") > len(best[cid].get("text") or ""):
+            best[cid] = c
+    return [best[c] for c in order]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--corpus", required=True, help="path to corpus/rendered")
@@ -162,6 +177,27 @@ def main():
         p for ext in ("pdf", "html", "htm", "txt", "md")
         for p in glob.glob(os.path.join(args.corpus, "**", f"*.{ext}"), recursive=True)
         if os.path.basename(p).lower() not in ("readme.md", "master_content.txt"))
+
+    # HTML files are rendering sources; the PDF is the industry record. When a
+    # PDF twin exists (same stem, or same CSI-digit signature for spec-named
+    # files), parse only the PDF - one parse, one LLM pass, half the cost.
+    def _digsig(fname):
+        d = re.sub(r"\D", "", os.path.splitext(os.path.basename(fname))[0])
+        return d[:6] if len(d) >= 6 else None
+    _pdf_stems = {os.path.splitext(os.path.basename(p))[0].lower()
+                  for p in pdfs if p.lower().endswith(".pdf")}
+    _pdf_sigs = {_digsig(p) for p in pdfs if p.lower().endswith(".pdf")} - {None}
+    _kept = []
+    for p in pdfs:
+        base = os.path.basename(p)
+        if p.lower().endswith((".html", ".htm")):
+            stem = os.path.splitext(base)[0].lower()
+            speclike = stem.startswith("spec") or stem[:1].isdigit()
+            if stem in _pdf_stems or (speclike and _digsig(p) in _pdf_sigs):
+                print(f"{base:30s} skipped - PDF twin present (HTML is the rendering source)")
+                continue
+        _kept.append(p)
+    pdfs = _kept
     if not pdfs:
         sys.exit(f"no parseable documents (pdf/html/txt/md) found in {args.corpus}")
 
@@ -188,7 +224,7 @@ def main():
                 hint = f"{mh.group(1)} {mh.group(2)} {mh.group(3)}"
         if m or hint:
             section = f"{m.group(1)} {m.group(2)} {m.group(3)}" if m else hint
-            clauses = parse_spec_clauses(pages, section_hint=hint or section)
+            clauses = dedupe_clauses(parse_spec_clauses(pages, section_hint=hint or section))
             mode = "deterministic"
             if not clauses:
                 if args.allow_llm:
@@ -205,7 +241,7 @@ def main():
         else:
             # Content-based spec detection: a document that carries clause
             # lines is a specification whatever its filename says.
-            content_clauses = [] if doc.get("transmittal") else parse_spec_clauses(pages)
+            content_clauses = [] if doc.get("transmittal") else dedupe_clauses(parse_spec_clauses(pages))
             section = None
             if len(content_clauses) >= 5:
                 prefixes = [c["clause_id"][:8] for c in content_clauses

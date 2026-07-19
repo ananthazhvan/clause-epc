@@ -590,6 +590,123 @@ def clear_out():
             pass
 
 
+CATALOG_SYSTEMS = {
+    "documents": ("Contract documents", "Specifications, vendor submittals and client addenda - the compliance core the rulebook is built from."),
+    "registers": ("Project registers (CSV)", "The canonical flat files CLAUSE computes on. Every connector below ultimately lands here or in the object graph."),
+    "tables": ("Source-system tables", "Raw ERP/field-system exports staged with this project - each becomes a dataset object in the graph."),
+    "p6": ("Oracle Primavera P6", "The planner's scheduling system. The activity network decides when every purchase must arrive - and how much float protects it."),
+    "sap": ("SAP ERP (PO + PS modules)", "The money system: purchase orders, WBS cost structure, reservations and actual postings."),
+    "acc": ("Autodesk Construction Cloud", "The field system: daily work logs, manpower, and quality issues pinned to model elements."),
+    "aconex": ("Oracle Aconex", "Document control: the register of record, transmittals, review workflows and correspondence."),
+    "hexagon": ("Hexagon Smart Materials", "Engineering materials: BOMs, piping classes, component files and the material catalogue."),
+    "logistics": ("Shipment visibility (FourKites-style)", "Live GPS/AIS tracking of purchased equipment moving from vendor works to site - drives the globe."),
+}
+CATALOG_TABLES = {
+    "task": ("p6", "Every schedule activity with dates, durations and percent complete.", "Activity names carry PO numbers; the supply stage joins each purchase order to the activity that needs it - need-by dates come from here."),
+    "taskpred": ("p6", "The logic links between activities (finish-to-start and friends).", "Feeds the CPM float calculation - float is what decides whether a late delivery is an emergency or a shrug."),
+    "taskrsrc": ("p6", "Resource assignments: which crew works which activity.", "Connects resources to activities in the object graph."),
+    "rsrc": ("p6", "The resource pool: crews, cranes, engineers.", "Gives assignments their names."),
+    "project": ("p6", "Project header: id and data date of this schedule update.", "Confirms which update of the schedule you are looking at."),
+    "projwbs": ("p6", "The work-breakdown tree the schedule hangs from.", "Places every activity in the WBS."),
+    "po_odata": ("sap", "Purchase orders exactly as SAP serves them (EBELN, BEDAT, EINDT, LIFNR...).", "Normalized into po_register.csv and merged field-by-field - one PO truth, richer columns never wiped."),
+    "proj": ("sap", "SAP PS project definition.", "Anchors the cost side of the ontology."),
+    "prps": ("sap", "WBS elements with budget structure.", "Money rolls up the WBS in the graph."),
+    "prhi": ("sap", "WBS hierarchy pointers.", "Glues the WBS rows into a tree."),
+    "aufk": ("sap", "Orders (networks) for execution work.", "Ties factory and site work to cost objects."),
+    "afvc": ("sap", "Network activities / operations.", "SAP's view of the work, cross-checkable against P6."),
+    "resb": ("sap", "Material reservations per order.", "Which materials each work order will consume."),
+    "coep": ("sap", "Cost line items - actual postings.", "Actual money spent, attached to cost objects."),
+    "issues": ("acc", "Quality issues pinned to model elements, with root-cause categories.", "Open issues attach to equipment and sections, and block certification readiness until closed."),
+    "worklogentries": ("acc", "Daily work logs: trade, headcount, hours.", "Field reality - trades become graph objects with real hours."),
+    "materialsentries": ("acc", "Materials received and consumed on site.", "Site-side material movements."),
+    "equipmententries": ("acc", "Plant and equipment hours on site.", "What machinery worked and for how long."),
+    "form_templates": ("acc", "The site form definitions (daily log, inspections...).", "Context for how field data was captured."),
+    "document_register": ("aconex", "The controlled document register - the record of what officially exists.", "Documents join the graph, linked to their spec sections and packages."),
+    "transmittal_registry": ("aconex", "Who sent what to whom, and when.", "Proves submission dates on the compliance timeline."),
+    "workflow_history": ("aconex", "Review workflows: ball-in-court, due dates, status.", "Overdue reviews raise insights on the affected documents."),
+    "mail_module": ("aconex", "Project correspondence threads.", "Searchable context for the copilot."),
+    "bom_schema": ("hexagon", "Bill of materials: part numbers, line numbers, cut lengths.", "Materials trace from BOM line to PO to site."),
+    "pms_class": ("hexagon", "Piping material specification classes.", "The engineering rules behind every pipe spec."),
+    "pcf_repository": ("hexagon", "Piping component files (isometric interchange).", "Geometry-level piping data."),
+    "material_master": ("hexagon", "The material catalogue.", "Canonical identities behind BOM rows."),
+    "po_register": ("registers", "The canonical purchase-order register.", "The spine of supply-chain risk: value, lead time, status, live location per PO."),
+    "schedule": ("registers", "The canonical activity register (from CSV, P6 XML or native XER).", "Need-by dates and float for the PO join - the supply stage runs on this."),
+    "rfi_register": ("registers", "Requests for information.", "RFIs join the graph against their spec sections."),
+    "rfi_log": ("registers", "Requests for information.", "RFIs join the graph against their spec sections."),
+    "cx_test_register": ("registers", "Commissioning tests L1-L5 with acceptance criteria.", "Readiness packs build from this; coverage gaps surface in certification evidence."),
+    "effort_baseline": ("registers", "Minutes-per-task baselines for manual document review.", "Powers the manual-review-hours number on the scoreboard - impact in hours, not percentages."),
+    "lifecycle_ledger": ("registers", "Equipment lifecycle stamps: ordered, FAT, shipped, delivered, installed.", "Each equipment object carries its lifecycle trail through the supply chain."),
+    "tier2_dependencies": ("registers", "Sub-supplier dependencies beneath the main vendors.", "Tier-2 risk: a component delay propagates up to the parent PO."),
+}
+
+
+def build_catalog():
+    """Everything staged with this project: which system it came from, what is
+    inside, and what CLAUSE does with it. Powers the Data tab."""
+    if not os.path.isdir(STAGE):
+        return {"systems": []}
+    systems = {}
+
+    def add(sysid, item):
+        nm, blurb = CATALOG_SYSTEMS.get(sysid, (sysid, "Source-system exports staged with this project."))
+        g = systems.setdefault(sysid, {"id": sysid, "name": nm, "blurb": blurb, "items": []})
+        g["items"].append(item)
+
+    for path in sorted(glob.glob(os.path.join(STAGE, "**", "*.*"), recursive=True)):
+        rel = os.path.relpath(path, STAGE).replace(os.sep, "/")
+        top = rel.split("/")[0]
+        if top in ("specs", "submittals", "addenda", "project_docs", "external"):
+            continue
+        name = os.path.basename(path)
+        stem, ext = os.path.splitext(name)[0].lower(), os.path.splitext(name)[1].lower()
+        count, fields = "", ""
+        try:
+            if ext == ".json":
+                dd = json.load(open(path))
+                rows = dd.get("rows") if isinstance(dd, dict) else (dd if isinstance(dd, list) else None)
+                if rows is None and isinstance(dd, dict):
+                    for v in dd.values():
+                        if isinstance(v, list):
+                            rows = v
+                            break
+                        if isinstance(v, dict) and isinstance(v.get("results"), list):
+                            rows = v["results"]
+                            break
+                if isinstance(rows, list):
+                    count = "%d rows" % len(rows)
+                    if rows and isinstance(rows[0], dict):
+                        fields = "fields: " + ", ".join(sorted(rows[0].keys())[:12])
+            elif ext == ".csv":
+                rdr = list(csv.reader(open(path)))
+                count = "%d rows" % max(len(rdr) - 1, 0)
+                if rdr:
+                    fields = "columns: " + ", ".join(rdr[0][:12])
+        except Exception:  # noqa: BLE001
+            pass
+        info = CATALOG_TABLES.get(stem)
+        if not info and "shipment" in stem:
+            info = ("logistics", "Live shipment tracking: position updates, ETAs, exception codes.",
+                    "Patches delivery status, location and ETA onto matching POs; position trails draw on the globe.")
+        if info:
+            add(info[0], {"file": rel, "count": count, "what": info[1], "use": info[2], "fields": fields})
+        else:
+            add(top, {"file": rel, "count": count, "what": "Source-system table export.",
+                      "use": "Folded into the ontology as a dataset object; rows link to the POs, packages and activities they reference.",
+                      "fields": fields})
+    for folder, what, use in (
+            ("specs", "Contract specifications (CSI-numbered); the PDF is the record.", "Parsed clause by clause into the checkable rulebook (S1-S2)."),
+            ("submittals", "Vendor submittal packages: datasheets, ITPs, drawings.", "Vendor claims are extracted and each one verified against the rulebook (S3-S5)."),
+            ("addenda", "Client addenda amending the specs after award.", "Applied in date order; every affected check is re-verdicted (S6)."),
+            ("project_docs", "Minutes, reports, correspondence.", "Parsed and indexed as context for the copilot.")):
+        fdir = os.path.join(STAGE, folder)
+        if os.path.isdir(fdir):
+            n = len([f for f in os.listdir(fdir) if os.path.isfile(os.path.join(fdir, f))])
+            if n:
+                add("documents", {"file": folder + "/", "count": "%d file(s)" % n, "what": what, "use": use, "fields": ""})
+    order = ["documents", "registers", "p6", "sap", "acc", "aconex", "hexagon", "logistics"]
+    return {"systems": sorted(systems.values(), key=lambda g: order.index(g["id"]) if g["id"] in order else 99)}
+
+
 def score_answer_key(key):
     """EVAL ONLY - compare the finished ledger against an answer key the user
     explicitly uploads AFTER a run. Never read by any pipeline stage."""
@@ -889,6 +1006,7 @@ class Handler(BaseHTTPRequestHandler):
             ("supply",): lambda: load("supply_risk.json") or {},
             ("ontology",): lambda: load("ontology.json") or {"objects": [], "links": []},
             ("project",): project_state,
+            ("catalog",): build_catalog,
         }
         key = tuple(parts)
         if key in simple:
