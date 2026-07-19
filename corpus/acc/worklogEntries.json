@@ -1,0 +1,317 @@
+[
+  {
+    "form_id": "411d34a2-eeae-5295-9249-310ae43f1146",
+    "headcount": 6,
+    "id": "d757e28f-254c-5330-a625-c46d9d4105d6",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "11411a94-910e-56fe-9250-7b860b8254a1",
+    "headcount": 7,
+    "id": "a4a92c6d-39f8-5d26-8e4d-35ef07f922df",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "f789cf9c-67a6-5c70-be44-4281d63643ae",
+    "headcount": 8,
+    "id": "16476c0c-709b-59a4-9572-91b49d6c763e",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "46e1bb99-fb94-54c7-a3a6-7835dec264df",
+    "headcount": 9,
+    "id": "8fc27cb0-01c8-5979-8258-7e7c07301e23",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "ed91e6fe-831d-5396-a6cd-703e79a5d27f",
+    "headcount": 10,
+    "id": "f8b09a1f-be86-5fd2-9938-d4f827bd42a4",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "9f6d197b-08cc-5b50-a639-310e86504f87",
+    "headcount": 11,
+    "id": "7f3c1d53-e80e-5a93-b85c-e8c74ae50bdc",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "955d8846-3ab0-50fc-87d7-6fbd36bb81cf",
+    "headcount": 12,
+    "id": "ff70ce0f-287d-510d-9cd1-571cf3c0241d",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "1c77d2c9-2d99-5139-b216-a47eadcecf24",
+    "headcount": 13,
+    "id": "322b8130-7ba5-5cea-919d-a132ba9da232",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "de0684b4-ae65-53fd-9186-d6b090989745",
+    "headcount": 14,
+    "id": "1c24bcd9-b836-5644-9278-dedab49fff97",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "d002c817-8d00-508e-8c63-d0b7deea54cd",
+    "headcount": 15,
+    "id": "39e474c1-fcfe-59e2-a729-ed58f3ec7551",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "ce365d25-8cbd-5ff3-a4e8-051bad25784e",
+    "headcount": 16,
+    "id": "fbea0a7c-e5d4-52b3-9162-09af23cbf85c",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "9057a34b-0c59-5ed4-aaf5-730980fb961b",
+    "headcount": 17,
+    "id": "8a1a45af-68bf-5552-9573-d5f4b70d34af",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "2759831a-d4d9-53b9-b950-7273e83a3ad9",
+    "headcount": 18,
+    "id": "874d5527-5c3d-5563-b25b-1314701ace9d",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "47d3031e-fe29-5165-ba62-667427a26a22",
+    "headcount": 19,
+    "id": "d10e7d61-8b0d-50f3-a7e6-0acbbb6e5e0c",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "78186059-6bd1-5cb3-90cb-49503e6f50ed",
+    "headcount": 20,
+    "id": "a713c41b-ab1c-5d2b-af28-b7ace13f2c95",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "a2c5395c-3022-5583-89a9-0cb9dc28695c",
+    "headcount": 21,
+    "id": "e3824bd8-cc21-5b75-8853-b8ab34434767",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "ac7bfb43-a02c-5940-918a-d4c8af525a5a",
+    "headcount": 22,
+    "id": "f08ea731-929a-54d8-833b-159c92d609bd",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "6dbf73b2-58db-508f-9ea4-c83dc1800b96",
+    "headcount": 23,
+    "id": "f33df353-2b9c-5895-897e-38584838a80b",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "a42d88a3-28b5-5bb5-9878-6a40deb2e0e7",
+    "headcount": 6,
+    "id": "6afcde58-6898-55bf-b8ca-e78de389ac48",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "a46b0386-5f48-5c74-b56d-4697b8833030",
+    "headcount": 7,
+    "id": "abdd128e-f061-5633-bbc8-0f43278e30a1",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "10af053a-4b83-540e-9cd8-954669e3acd0",
+    "headcount": 8,
+    "id": "ea59bd31-9ec3-5b21-bab5-5e2c39beb7ae",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "8a20f8d1-d05a-5eda-bef0-e195e46ce7dc",
+    "headcount": 9,
+    "id": "55c798bb-5a0b-559f-b772-6507c21172a0",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "ac4e9596-6c2e-5072-abde-acb728870dda",
+    "headcount": 10,
+    "id": "763267b4-69a5-5124-aa2b-9c7b1ca51e0e",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "d2c3102c-d0a9-58b4-ad9f-43c54e507e0e",
+    "headcount": 11,
+    "id": "2be259e5-6072-518e-b84c-7e7ffce6a5cd",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "74245a38-ee96-5e50-9a0f-0c90d49482bb",
+    "headcount": 12,
+    "id": "b805b865-63ca-5492-b7bc-b2259115871f",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "39143580-60b3-5cdc-9ef2-083178da4c1a",
+    "headcount": 13,
+    "id": "3f6fe606-fca0-5543-a892-3f244bc4a4c6",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "aa8510ad-765f-554e-a208-51e978460927",
+    "headcount": 14,
+    "id": "203ae30a-4be5-5f0e-beb0-f7338475ba54",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "358435aa-fd51-55b9-ba28-ef28ca71689e",
+    "headcount": 15,
+    "id": "22f701ae-8e36-5c04-9a7b-827b6fbe4517",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "16f648b9-9e68-582a-bf5e-6ea25d0b6c15",
+    "headcount": 16,
+    "id": "771edb27-b32a-5154-a5f7-161375b872fd",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "05fd02cb-de05-53c7-bbad-c7c31d0efb79",
+    "headcount": 17,
+    "id": "a9077f5a-8a04-5c1d-b654-f0418653c2d6",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "3e30bfa0-7e71-5e70-aaf4-dd8d5cc2d6b7",
+    "headcount": 18,
+    "id": "97c8f57f-251b-50fc-b52f-c0456eab5c62",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "e4834118-aada-5eea-8748-aa9d649c88c3",
+    "headcount": 19,
+    "id": "3918cb04-3573-5855-9470-8e965a11ee41",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "08320129-a8ee-5cbe-b884-44dc7fdc360d",
+    "headcount": 20,
+    "id": "f31a4ae8-a991-57f7-9633-07713172a52a",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "3eca303d-4f64-51ae-b6a5-a7b35979a740",
+    "headcount": 21,
+    "id": "68fa22cd-924f-5698-b75d-d4bb0f15f12b",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "e96aeaee-d125-5cc4-a56c-143e3b5b2736",
+    "headcount": 22,
+    "id": "d46822be-5b66-5785-a433-1c6866decfb5",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "2677b077-2d9a-5374-8ed1-ee87ab7027d7",
+    "headcount": 23,
+    "id": "1c56a442-c008-5759-b802-70e99f55014c",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "0b717793-5ad0-5a87-b9a1-e7442ef8c614",
+    "headcount": 6,
+    "id": "4489420d-d20f-55f2-a722-52ef0dde7ee2",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "2d89d929-0a2a-50fa-8286-392ece14537b",
+    "headcount": 7,
+    "id": "478c64d7-9725-53f0-9c65-e3a5a03c492b",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "03eecd1b-b51e-53e8-b7c5-2e62c8bf7136",
+    "headcount": 8,
+    "id": "a42d6de6-a670-5c26-86f7-c02c54685d03",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "8f1da237-bc29-51eb-9cbf-0c67ec8b3ea6",
+    "headcount": 9,
+    "id": "0f3f2dd8-c85f-5b69-9e83-14571380716d",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "ae504188-4e76-5203-a22b-df031ad7fca5",
+    "headcount": 10,
+    "id": "da6c217e-1849-51c5-a724-3ad94d977459",
+    "timespan": 28800,
+    "trade": "Electrical"
+  },
+  {
+    "form_id": "db39e8b1-79c4-5d83-bd9f-fffe6a41b5e0",
+    "headcount": 11,
+    "id": "673e7b00-1331-52f0-840d-1bdc73093fa9",
+    "timespan": 28800,
+    "trade": "Mechanical"
+  },
+  {
+    "form_id": "1a0ad2d1-83c6-50ce-bf7d-4cc1edf6b605",
+    "headcount": 12,
+    "id": "1b3007df-ae9a-52de-92a5-c1bfab8aa7ec",
+    "timespan": 28800,
+    "trade": "Controls"
+  },
+  {
+    "form_id": "ccd50c99-27ec-5553-bba0-08747a49583e",
+    "headcount": 13,
+    "id": "da5ef12e-69e6-50a4-ac55-8214928e0469",
+    "timespan": 28800,
+    "trade": "Fire"
+  },
+  {
+    "form_id": "84d6cd2d-2b86-5ab6-9e52-bdda5e67301b",
+    "headcount": 14,
+    "id": "238e3c3f-d351-563e-9765-3ecb35a3c3f8",
+    "timespan": 28800,
+    "trade": "Electrical"
+  }
+]

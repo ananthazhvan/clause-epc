@@ -1,0 +1,602 @@
+[
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.2,
+    "line_number": "1",
+    "part_number": "TF-P-00001"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.55,
+    "line_number": "2",
+    "part_number": "TF-P-00002"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.9,
+    "line_number": "3",
+    "part_number": "TF-P-00003"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.25,
+    "line_number": "4",
+    "part_number": "TF-P-00004"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.6,
+    "line_number": "5",
+    "part_number": "TF-P-00005"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.95,
+    "line_number": "6",
+    "part_number": "TF-P-00006"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.3,
+    "line_number": "7",
+    "part_number": "TF-P-00007"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.65,
+    "line_number": "8",
+    "part_number": "TF-P-00008"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.0,
+    "line_number": "9",
+    "part_number": "TF-P-00009"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.35,
+    "line_number": "10",
+    "part_number": "TF-P-00010"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.7,
+    "line_number": "11",
+    "part_number": "TF-P-00011"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.05,
+    "line_number": "12",
+    "part_number": "TF-P-00012"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.4,
+    "line_number": "13",
+    "part_number": "TF-P-00013"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.75,
+    "line_number": "14",
+    "part_number": "TF-P-00014"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.1,
+    "line_number": "15",
+    "part_number": "TF-P-00015"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.45,
+    "line_number": "16",
+    "part_number": "TF-P-00016"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.8,
+    "line_number": "17",
+    "part_number": "TF-P-00017"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.2,
+    "line_number": "18",
+    "part_number": "TF-P-00018"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.55,
+    "line_number": "19",
+    "part_number": "TF-P-00019"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.9,
+    "line_number": "20",
+    "part_number": "TF-P-00020"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.25,
+    "line_number": "21",
+    "part_number": "TF-P-00021"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.6,
+    "line_number": "22",
+    "part_number": "TF-P-00022"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.95,
+    "line_number": "23",
+    "part_number": "TF-P-00023"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.3,
+    "line_number": "24",
+    "part_number": "TF-P-00024"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.65,
+    "line_number": "25",
+    "part_number": "TF-P-00025"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.0,
+    "line_number": "26",
+    "part_number": "TF-P-00026"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.35,
+    "line_number": "27",
+    "part_number": "TF-P-00027"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.7,
+    "line_number": "28",
+    "part_number": "TF-P-00028"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.05,
+    "line_number": "29",
+    "part_number": "TF-P-00029"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.4,
+    "line_number": "30",
+    "part_number": "TF-P-00030"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.75,
+    "line_number": "31",
+    "part_number": "TF-P-00031"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.1,
+    "line_number": "32",
+    "part_number": "TF-P-00032"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.45,
+    "line_number": "33",
+    "part_number": "TF-P-00033"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.8,
+    "line_number": "34",
+    "part_number": "TF-P-00034"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.2,
+    "line_number": "35",
+    "part_number": "TF-P-00035"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.55,
+    "line_number": "36",
+    "part_number": "TF-P-00036"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.9,
+    "line_number": "37",
+    "part_number": "TF-P-00037"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.25,
+    "line_number": "38",
+    "part_number": "TF-P-00038"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.6,
+    "line_number": "39",
+    "part_number": "TF-P-00039"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.95,
+    "line_number": "40",
+    "part_number": "TF-P-00040"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.3,
+    "line_number": "41",
+    "part_number": "TF-P-00041"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.65,
+    "line_number": "42",
+    "part_number": "TF-P-00042"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.0,
+    "line_number": "43",
+    "part_number": "TF-P-00043"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.35,
+    "line_number": "44",
+    "part_number": "TF-P-00044"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.7,
+    "line_number": "45",
+    "part_number": "TF-P-00045"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.05,
+    "line_number": "46",
+    "part_number": "TF-P-00046"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.4,
+    "line_number": "47",
+    "part_number": "TF-P-00047"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.75,
+    "line_number": "48",
+    "part_number": "TF-P-00048"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.1,
+    "line_number": "49",
+    "part_number": "TF-P-00049"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.45,
+    "line_number": "50",
+    "part_number": "TF-P-00050"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.8,
+    "line_number": "51",
+    "part_number": "TF-P-00051"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.2,
+    "line_number": "52",
+    "part_number": "TF-P-00052"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.55,
+    "line_number": "53",
+    "part_number": "TF-P-00053"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.9,
+    "line_number": "54",
+    "part_number": "TF-P-00054"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.25,
+    "line_number": "55",
+    "part_number": "TF-P-00055"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.6,
+    "line_number": "56",
+    "part_number": "TF-P-00056"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.95,
+    "line_number": "57",
+    "part_number": "TF-P-00057"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.3,
+    "line_number": "58",
+    "part_number": "TF-P-00058"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.65,
+    "line_number": "59",
+    "part_number": "TF-P-00059"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.0,
+    "line_number": "60",
+    "part_number": "TF-P-00060"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.35,
+    "line_number": "61",
+    "part_number": "TF-P-00061"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.7,
+    "line_number": "62",
+    "part_number": "TF-P-00062"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.05,
+    "line_number": "63",
+    "part_number": "TF-P-00063"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.4,
+    "line_number": "64",
+    "part_number": "TF-P-00064"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.75,
+    "line_number": "65",
+    "part_number": "TF-P-00065"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.1,
+    "line_number": "66",
+    "part_number": "TF-P-00066"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.45,
+    "line_number": "67",
+    "part_number": "TF-P-00067"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.8,
+    "line_number": "68",
+    "part_number": "TF-P-00068"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.2,
+    "line_number": "69",
+    "part_number": "TF-P-00069"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.55,
+    "line_number": "70",
+    "part_number": "TF-P-00070"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.9,
+    "line_number": "71",
+    "part_number": "TF-P-00071"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.25,
+    "line_number": "72",
+    "part_number": "TF-P-00072"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.6,
+    "line_number": "73",
+    "part_number": "TF-P-00073"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.95,
+    "line_number": "74",
+    "part_number": "TF-P-00074"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.3,
+    "line_number": "75",
+    "part_number": "TF-P-00075"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.65,
+    "line_number": "76",
+    "part_number": "TF-P-00076"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.0,
+    "line_number": "77",
+    "part_number": "TF-P-00077"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.35,
+    "line_number": "78",
+    "part_number": "TF-P-00078"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.7,
+    "line_number": "79",
+    "part_number": "TF-P-00079"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.05,
+    "line_number": "80",
+    "part_number": "TF-P-00080"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.4,
+    "line_number": "81",
+    "part_number": "TF-P-00081"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.75,
+    "line_number": "82",
+    "part_number": "TF-P-00082"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.1,
+    "line_number": "83",
+    "part_number": "TF-P-00083"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.45,
+    "line_number": "84",
+    "part_number": "TF-P-00084"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.8,
+    "line_number": "85",
+    "part_number": "TF-P-00085"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.2,
+    "line_number": "86",
+    "part_number": "TF-P-00086"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.55,
+    "line_number": "87",
+    "part_number": "TF-P-00087"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 1.9,
+    "line_number": "88",
+    "part_number": "TF-P-00088"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.25,
+    "line_number": "89",
+    "part_number": "TF-P-00089"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.6,
+    "line_number": "90",
+    "part_number": "TF-P-00090"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 2.95,
+    "line_number": "91",
+    "part_number": "TF-P-00091"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.3,
+    "line_number": "92",
+    "part_number": "TF-P-00092"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 3.65,
+    "line_number": "93",
+    "part_number": "TF-P-00093"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.0,
+    "line_number": "94",
+    "part_number": "TF-P-00094"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.35,
+    "line_number": "95",
+    "part_number": "TF-P-00095"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 4.7,
+    "line_number": "96",
+    "part_number": "TF-P-00096"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.05,
+    "line_number": "97",
+    "part_number": "TF-P-00097"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.4,
+    "line_number": "98",
+    "part_number": "TF-P-00098"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 5.75,
+    "line_number": "99",
+    "part_number": "TF-P-00099"
+  },
+  {
+    "bom_id": "MER-CHW-BOM",
+    "cut_length": 6.1,
+    "line_number": "100",
+    "part_number": "TF-P-00100"
+  }
+]

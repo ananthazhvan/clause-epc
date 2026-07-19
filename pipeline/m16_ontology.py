@@ -472,6 +472,58 @@ def main():
             if late > 0:
                 O.insight(did, f"Review overdue by {late} day(s) - ball in court: {wf.get('assigned_organization') or 'unknown'} ({wf.get('status_label') or 'in review'}).", "bad" if late > 7 else "warn")
 
+    # ---------------- generic source-system table exports ------------------
+    for p in glob.glob(os.path.join(corpus, "**", "*.json"), recursive=True):
+        if "_answer_key" in p:
+            continue
+        d = jload(p)
+        if not isinstance(d, dict) or not d.get("table") or not isinstance(d.get("rows"), list):
+            continue
+        tname = str(d["table"])
+        sysname = str(d.get("system") or "source")
+        rows = [r for r in d["rows"] if isinstance(r, dict)]
+        tid = f"table:{sysname}:{tname}"
+        O.obj(tid, "dataset", f"{sysname.upper()} \u00b7 {tname} ({len(rows)} rows)")
+        linked = set()
+        for r in rows:
+            vals = " ".join(str(v) for v in r.values() if v is not None)
+            for po10 in re.findall(r"\b(45\d{8})\b", vals):
+                oid = po_by_digits.get(po10)
+                if oid and oid not in linked:
+                    O.link(tid, oid, "references")
+                    linked.add(oid)
+            msub = re.search(r"\b(SUB-\d{6}-\d{2})", vals)
+            if msub and f"package:{msub.group(1)}" in O.objects and ("package:" + msub.group(1)) not in linked:
+                O.link(tid, f"package:{msub.group(1)}", "references")
+                linked.add("package:" + msub.group(1))
+            tc = str(r.get("task_code") or "")
+            if tc and f"act:{tc}" in O.objects and ("act:" + tc) not in linked:
+                O.link(tid, f"act:{tc}", "references")
+                linked.add("act:" + tc)
+            et = str(r.get("equipment_tag") or "").strip()
+            if et:
+                O.obj(f"equip:{et}", "equipment", et)
+                if ("equip:" + et) not in linked:
+                    O.link(tid, f"equip:{et}", "references")
+                    linked.add("equip:" + et)
+            if "tier2" in tname.lower() and str(r.get("status") or "").lower() in ("late", "at_risk", "atrisk", "delayed"):
+                O.insight(tid, f"Tier-2 dependency at risk: {r.get('component')} for {et or '?'} from {r.get('supplier')} ({r.get('status')}).", "warn")
+
+    # ---------------- equipment lifecycle ledger ----------------------------
+    _lp = os.path.join(corpus, "registers", "lifecycle_ledger.csv")
+    if os.path.exists(_lp):
+        import csv as _csv
+        _last = {}
+        for r in _csv.DictReader(open(_lp)):
+            if (r.get("equipment_tag") or "").strip():
+                _last[r["equipment_tag"].strip()] = r
+        for et, r in _last.items():
+            O.obj(f"equip:{et}", "equipment", et,
+                  props={"lifecycle_stage": r.get("stage"), "lifecycle_at": r.get("timestamp"), "lifecycle_source": r.get("source")})
+            oid = po_by_digits.get(digits(r.get("po_number")))
+            if oid:
+                O.link(f"equip:{et}", oid, "procured_under")
+
     # ---------------- SAP PS finance (WBS budget vs actual + commitment) ---
     for p in glob.glob(os.path.join(corpus, "**", "*.json"), recursive=True):
         if "_answer_key" in p:

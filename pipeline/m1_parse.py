@@ -30,12 +30,14 @@ SPEC_HINT_RE = re.compile(r"(?:^|[^0-9])(\d{2})[_ ]?(\d{2})[_ ]?(\d{2})(?:[^0-9]
 SHORT_CLAUSE_RE = re.compile(r"^(\d+\.\d+(?:\.\d+)*(?:\.[A-Z])?)[ .:\u2014-]+(\S.*)$")
 SECTION_HEAD_RE = re.compile(r"SECTION\s+(\d{2})\s(\d{2})\s(\d{2})")
 
+# transmittal metadata may be "Label: value" lines or table cells
+# (rendered as "Label | value" by extract_pages) - accept both
 TRANSMITTAL_PATTERNS = [
-    (r"^Reference Section:\s*(\d{2} \d{2} \d{2})", "reference_section"),
-    (r"^Package ID:\s*(\S+)", "package_id"),
-    (r"^Revision:\s*(R\d+)", "revision"),
-    (r"^Reviewed Spec Revision:\s*(.+)$", "reviewed_spec_revision"),
-    (r"^Date:\s*([\d-]+)", "date"),
+    (r"^Reference Section:?\s*\|?\s*(\d{2} \d{2} \d{2})", "reference_section"),
+    (r"^Package ID:?\s*\|?\s*([A-Za-z0-9-]+)", "package_id"),
+    (r"^Revision:?\s*\|?\s*(R\d+)", "revision"),
+    (r"^Reviewed Spec Revision:?\s*\|?\s*(.+?)\s*\|?\s*$", "reviewed_spec_revision"),
+    (r"^(?:Date|Submitted):?\s*\|?\s*([\d-]+)", "date"),
 ]
 
 

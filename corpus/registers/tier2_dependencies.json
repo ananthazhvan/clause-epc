@@ -1,0 +1,16 @@
+[
+  {
+    "component": "compressor core CX-90",
+    "equipment_tag": "CH-01",
+    "lead_time_weeks": 24,
+    "status": "shipped to packager",
+    "supplier": "BlueDelta Components"
+  },
+  {
+    "component": "battery cell VRC-12",
+    "equipment_tag": "BAT-01",
+    "lead_time_weeks": 18,
+    "status": "production complete",
+    "supplier": "Pravah Cell Works"
+  }
+]

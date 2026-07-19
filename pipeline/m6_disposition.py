@@ -146,7 +146,9 @@ def main(out="out"):
     with open(f"{out}/dispositions.json", "w") as f:
         json.dump({"queue": packages}, f, indent=1)
     with open(f"{out}/ncr_register.csv", "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(ncr_rows[0].keys()))
+        fields = (list(ncr_rows[0].keys()) if ncr_rows
+                  else ["package", "section", "clause", "severity", "description", "status"])
+        w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
         w.writerows(ncr_rows)
     print(f"S7: {len(ncr_rows)} NCR(s) drafted -> {out}/ncr_register.csv")

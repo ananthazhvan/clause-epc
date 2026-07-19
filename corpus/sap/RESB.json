@@ -1,0 +1,137 @@
+[
+  {
+    "AUFNR": "700000000000",
+    "BDMNG": 2,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000001",
+    "RSNUM": "9000000000",
+    "RSPOS": "0001",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000001",
+    "BDMNG": 4,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000002",
+    "RSNUM": "9000000001",
+    "RSPOS": "0002",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000002",
+    "BDMNG": 4,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000003",
+    "RSNUM": "9000000002",
+    "RSPOS": "0003",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000003",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000004",
+    "RSNUM": "9000000003",
+    "RSPOS": "0004",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000004",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000005",
+    "RSNUM": "9000000004",
+    "RSPOS": "0005",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000005",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000006",
+    "RSNUM": "9000000005",
+    "RSPOS": "0006",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000006",
+    "BDMNG": 4,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000007",
+    "RSNUM": "9000000006",
+    "RSPOS": "0007",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000007",
+    "BDMNG": 4,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000008",
+    "RSNUM": "9000000007",
+    "RSPOS": "0008",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000008",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000009",
+    "RSNUM": "9000000008",
+    "RSPOS": "0009",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000009",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000010",
+    "RSNUM": "9000000009",
+    "RSPOS": "0010",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000010",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000011",
+    "RSNUM": "9000000010",
+    "RSPOS": "0011",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000011",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000012",
+    "RSNUM": "9000000011",
+    "RSPOS": "0012",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000012",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000013",
+    "RSNUM": "9000000012",
+    "RSPOS": "0013",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000013",
+    "BDMNG": 1,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000014",
+    "RSNUM": "9000000013",
+    "RSPOS": "0014",
+    "WERKS": "IN01"
+  },
+  {
+    "AUFNR": "700000000014",
+    "BDMNG": 8,
+    "ENMNG": 0,
+    "MATNR": "MER-MAT-000015",
+    "RSNUM": "9000000014",
+    "RSPOS": "0015",
+    "WERKS": "IN01"
+  }
+]

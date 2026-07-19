@@ -1,0 +1,654 @@
+{
+  "compliant_checks": [
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-001",
+      "clause": "2.3.C",
+      "demonstrated": "7.2 %",
+      "package": "SUB-212200-01-R0",
+      "parameter": "Agent concentration",
+      "section": "21 22 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-002",
+      "clause": "2.5.C",
+      "demonstrated": "24 bar",
+      "package": "SUB-232113-01-R0",
+      "parameter": "Hydrotest pressure",
+      "section": "23 21 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-003",
+      "clause": "3.4.C",
+      "demonstrated": "88 dBA",
+      "package": "SUB-236426-01-R0",
+      "parameter": "Sound pressure at 1 m",
+      "section": "23 64 26"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-004",
+      "clause": "2.1.C",
+      "demonstrated": "6.3",
+      "package": "SUB-236426-01-R1",
+      "parameter": "Full-load COP",
+      "section": "23 64 26"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-005",
+      "clause": "2.3.A",
+      "demonstrated": "415 V",
+      "package": "SUB-262413-01-R0",
+      "parameter": "Rated operational voltage",
+      "section": "26 24 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-006",
+      "clause": "2.4.C",
+      "demonstrated": "70 K",
+      "package": "SUB-262413-02-R0",
+      "parameter": "Busbar temperature rise",
+      "section": "26 24 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-007",
+      "clause": "2.7.D",
+      "demonstrated": "IEC 62040-3:2021 at 0.9 lagging pf",
+      "package": "SUB-263353-01-R0",
+      "parameter": "Performance standard",
+      "section": "26 33 53"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-008",
+      "clause": "2.2.A",
+      "demonstrated": "2000 kVA",
+      "package": "SUB-263353-02-R0",
+      "parameter": "Rated output",
+      "section": "26 33 53"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-009",
+      "clause": "2.2.C",
+      "demonstrated": "0.028 kW/kW",
+      "package": "SUB-236500-01-R0",
+      "parameter": "Fan specific power",
+      "section": "23 65 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-010",
+      "clause": "2.4.A",
+      "demonstrated": "82 dBA",
+      "package": "SUB-236500-01-R1",
+      "parameter": "Sound pressure at 1 m",
+      "section": "23 65 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-011",
+      "clause": "3.4.B",
+      "demonstrated": "80 % in one step",
+      "package": "SUB-263213-01-R0",
+      "parameter": "Load acceptance",
+      "section": "26 32 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-012",
+      "clause": "2.1.C",
+      "demonstrated": "99.9 %",
+      "package": "SUB-260526-01-R0",
+      "parameter": "Earth conductor purity",
+      "section": "26 05 26"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-013",
+      "clause": "2.3.B",
+      "demonstrated": "0.22 dB/km",
+      "package": "SUB-271500-01-R0",
+      "parameter": "Optical attenuation at 1550 nm",
+      "section": "27 15 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-014",
+      "clause": "2.4.D",
+      "demonstrated": "B2ca-s1a,d1,a1",
+      "package": "SUB-271500-02-R0",
+      "parameter": "CPR fire class",
+      "section": "27 15 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-015",
+      "clause": "3.6.A",
+      "demonstrated": "100 %",
+      "package": "SUB-283111-01-R0",
+      "parameter": "Cause-and-effect test coverage",
+      "section": "28 31 11"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-016",
+      "clause": "2.2.B",
+      "demonstrated": "Protocol Revision 18",
+      "package": "SUB-255000-01-R0",
+      "parameter": "BACnet revision",
+      "section": "25 50 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-017",
+      "clause": "2.3.C",
+      "demonstrated": "0.15 C",
+      "package": "SUB-230923-01-R0",
+      "parameter": "Temperature sensor accuracy",
+      "section": "23 09 23"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-018",
+      "clause": "2.4.B",
+      "demonstrated": "10 s",
+      "package": "SUB-212200-02-R0",
+      "parameter": "Discharge duration",
+      "section": "21 22 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-019",
+      "clause": "3.6.B",
+      "demonstrated": "3.0 m/s",
+      "package": "SUB-232113-02-R0",
+      "parameter": "Flushing velocity",
+      "section": "23 21 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-020",
+      "clause": "2.1.B",
+      "demonstrated": "2500 kVA at 0.8 pf",
+      "package": "SUB-263213-02-R0",
+      "parameter": "Prime power rating",
+      "section": "26 32 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-021",
+      "clause": "2.3.B",
+      "demonstrated": "0.5 ohm",
+      "package": "SUB-260526-02-R0",
+      "parameter": "Earth grid resistance",
+      "section": "26 05 26"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-022",
+      "clause": "2.5.A",
+      "demonstrated": "2 s",
+      "package": "SUB-255000-02-R0",
+      "parameter": "Event propagation latency",
+      "section": "25 50 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-023",
+      "clause": "3.4.A",
+      "demonstrated": "10 min",
+      "package": "SUB-212200-01-R0",
+      "parameter": "Room integrity retention",
+      "section": "21 22 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-024",
+      "clause": "2.1.B",
+      "demonstrated": "ASTM A106 Grade B",
+      "package": "SUB-232113-01-R0",
+      "parameter": "Pipe material",
+      "section": "23 21 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-025",
+      "clause": "2.2.B",
+      "demonstrated": "1250 TR",
+      "package": "SUB-236426-01-R0",
+      "parameter": "Cooling duty",
+      "section": "23 64 26"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-026",
+      "clause": "2.3.D",
+      "demonstrated": "85 kPa",
+      "package": "SUB-236426-01-R1",
+      "parameter": "Evaporator pressure drop",
+      "section": "23 64 26"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-027",
+      "clause": "3.5.B",
+      "demonstrated": "2.5 kV for 60 s",
+      "package": "SUB-262413-01-R0",
+      "parameter": "Dielectric withstand",
+      "section": "26 24 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-028",
+      "clause": "2.2.D",
+      "demonstrated": "65 kA for 1 s",
+      "package": "SUB-262413-02-R0",
+      "parameter": "Short-circuit withstand",
+      "section": "26 24 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-029",
+      "clause": "2.4.C",
+      "demonstrated": "96.5 % at 0.9 lagging pf",
+      "package": "SUB-263353-01-R0",
+      "parameter": "Efficiency at 50% load",
+      "section": "26 33 53"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-030",
+      "clause": "2.6.B",
+      "demonstrated": "15 min at 1600 kW",
+      "package": "SUB-263353-02-R0",
+      "parameter": "Battery autonomy",
+      "section": "26 33 53"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-031",
+      "clause": "3.3.B",
+      "demonstrated": "4.5 mm/s",
+      "package": "SUB-236500-01-R0",
+      "parameter": "Vibration velocity",
+      "section": "23 65 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-032",
+      "clause": "2.1.B",
+      "demonstrated": "4500 kW",
+      "package": "SUB-236500-01-R1",
+      "parameter": "Thermal capacity",
+      "section": "23 65 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-033",
+      "clause": "2.3.C",
+      "demonstrated": "0.5 %",
+      "package": "SUB-263213-01-R0",
+      "parameter": "Frequency regulation",
+      "section": "26 32 13"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-034",
+      "clause": "3.3.C",
+      "demonstrated": "0.1 ohm",
+      "package": "SUB-260526-01-R0",
+      "parameter": "Bond continuity",
+      "section": "26 05 26"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-035",
+      "clause": "3.5.A",
+      "demonstrated": "100 %",
+      "package": "SUB-271500-01-R0",
+      "parameter": "Permanent-link test coverage",
+      "section": "27 15 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-036",
+      "clause": "2.2.C",
+      "demonstrated": "47.1 dB",
+      "package": "SUB-271500-02-R0",
+      "parameter": "Channel insertion loss at 500 MHz",
+      "section": "27 15 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-037",
+      "clause": "2.3.D",
+      "demonstrated": "3 s",
+      "package": "SUB-283111-01-R0",
+      "parameter": "Alarm response",
+      "section": "28 31 11"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-038",
+      "clause": "2.5.A",
+      "demonstrated": "2 s",
+      "package": "SUB-255000-01-R0",
+      "parameter": "Event propagation latency",
+      "section": "25 50 00"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-039",
+      "clause": "3.5.A",
+      "demonstrated": "100 %",
+      "package": "SUB-230923-01-R0",
+      "parameter": "Point-to-point test coverage",
+      "section": "23 09 23"
+    },
+    {
+      "basis": "datasheet and scheduled factory verification",
+      "check_id": "MER-OK-040",
+      "clause": "2.2.A",
+      "demonstrated": "42 bar",
+      "package": "SUB-212200-02-R0",
+      "parameter": "Cylinder working pressure",
+      "section": "21 22 00"
+    }
+  ],
+  "labels": [
+    {
+      "check_id": "MER-CHECK-001",
+      "clause": "2.2.A",
+      "file": "submittals/SUB-212200-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-002",
+      "clause": "2.2.D",
+      "file": "submittals/SUB-232113-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-003",
+      "clause": "2.3.D",
+      "file": "submittals/SUB-236426-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-004",
+      "clause": "3.4.C",
+      "file": "submittals/SUB-236426-01-R1.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-005",
+      "clause": "2.2.D",
+      "file": "submittals/SUB-262413-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-006",
+      "clause": "2.3.A",
+      "file": "submittals/SUB-262413-02-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-007",
+      "clause": "2.6.B",
+      "file": "submittals/SUB-263353-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-008",
+      "clause": "2.7.D",
+      "file": "submittals/SUB-263353-02-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-009",
+      "clause": "2.1.B",
+      "file": "submittals/SUB-236500-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-010",
+      "clause": "2.2.C",
+      "file": "submittals/SUB-236500-01-R1.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-011",
+      "clause": "2.4.D",
+      "file": "submittals/SUB-263213-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-012",
+      "clause": "3.4.A",
+      "file": "submittals/SUB-260526-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-013",
+      "clause": "2.2.C",
+      "file": "submittals/SUB-271500-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-014",
+      "clause": "2.3.B",
+      "file": "submittals/SUB-271500-02-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-015",
+      "clause": "2.5.C",
+      "file": "submittals/SUB-283111-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-016",
+      "clause": "3.4.D",
+      "file": "submittals/SUB-255000-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-017",
+      "clause": "2.2.A",
+      "file": "submittals/SUB-230923-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-018",
+      "clause": "2.3.C",
+      "file": "submittals/SUB-212200-02-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-019",
+      "clause": "2.4.B",
+      "file": "submittals/SUB-212200-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-020",
+      "clause": "3.6.B",
+      "file": "submittals/SUB-232113-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-021",
+      "clause": "2.1.C",
+      "file": "submittals/SUB-236426-01-R0.html",
+      "locator": "certificate"
+    },
+    {
+      "check_id": "MER-CHECK-022",
+      "clause": "2.2.B",
+      "file": "submittals/SUB-236426-01-R1.html",
+      "locator": "matrix"
+    },
+    {
+      "check_id": "MER-CHECK-023",
+      "clause": "2.4.C",
+      "file": "submittals/SUB-262413-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-024",
+      "clause": "3.5.B",
+      "file": "submittals/SUB-262413-02-R0.html",
+      "locator": "factory test plan"
+    },
+    {
+      "check_id": "MER-CHECK-025",
+      "clause": "2.2.A",
+      "file": "submittals/SUB-263353-01-R0.html",
+      "locator": "certificate"
+    },
+    {
+      "check_id": "MER-CHECK-026",
+      "clause": "2.4.C",
+      "file": "submittals/SUB-263353-02-R0.html",
+      "locator": "matrix"
+    },
+    {
+      "check_id": "MER-CHECK-027",
+      "clause": "2.4.A",
+      "file": "submittals/SUB-236500-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-028",
+      "clause": "3.3.B",
+      "file": "submittals/SUB-236500-01-R1.html",
+      "locator": "factory test plan"
+    },
+    {
+      "check_id": "MER-CHECK-029",
+      "clause": "2.1.B",
+      "file": "submittals/SUB-263213-01-R0.html",
+      "locator": "certificate"
+    },
+    {
+      "check_id": "MER-CHECK-030",
+      "clause": "2.3.B",
+      "file": "submittals/SUB-260526-01-R0.html",
+      "locator": "matrix"
+    },
+    {
+      "check_id": "MER-CHECK-031",
+      "clause": "2.4.D",
+      "file": "submittals/SUB-271500-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-032",
+      "clause": "3.5.A",
+      "file": "submittals/SUB-271500-02-R0.html",
+      "locator": "factory test plan"
+    },
+    {
+      "check_id": "MER-CHECK-033",
+      "clause": "2.2.B",
+      "file": "submittals/SUB-283111-01-R0.html",
+      "locator": "certificate"
+    },
+    {
+      "check_id": "MER-CHECK-034",
+      "clause": "2.3.C",
+      "file": "submittals/SUB-255000-01-R0.html",
+      "locator": "matrix"
+    },
+    {
+      "check_id": "MER-CHECK-035",
+      "clause": "2.5.B",
+      "file": "submittals/SUB-230923-01-R0.html",
+      "locator": "datasheet"
+    },
+    {
+      "check_id": "MER-CHECK-036",
+      "clause": "3.4.A",
+      "file": "submittals/SUB-212200-02-R0.html",
+      "locator": "factory test plan"
+    },
+    {
+      "check_id": "MER-CHECK-037",
+      "clause": "2.2.A",
+      "file": "submittals/SUB-212200-01-R0.html",
+      "locator": "certificate"
+    },
+    {
+      "check_id": "MER-CHECK-038",
+      "clause": "2.2.D",
+      "file": "submittals/SUB-232113-01-R0.html",
+      "locator": "matrix"
+    },
+    {
+      "check_id": "MER-CHECK-039",
+      "clause": "2.3.D",
+      "file": "submittals/SUB-236426-01-R0.html",
+      "locator": "sap"
+    },
+    {
+      "check_id": "MER-CHECK-040",
+      "clause": "3.4.C",
+      "file": "submittals/SUB-236426-01-R1.html",
+      "locator": "hexagon"
+    },
+    {
+      "check_id": "MER-CHECK-041",
+      "clause": "2.2.D",
+      "file": "submittals/SUB-262413-01-R0.html",
+      "locator": "certificate"
+    },
+    {
+      "check_id": "MER-CHECK-042",
+      "clause": "2.3.A",
+      "file": "submittals/SUB-262413-02-R0.html",
+      "locator": "aconex"
+    },
+    {
+      "check_id": "MER-CHECK-043",
+      "clause": "2.6.B",
+      "file": "submittals/SUB-263353-01-R0.html",
+      "locator": "sap"
+    },
+    {
+      "check_id": "MER-CHECK-044",
+      "clause": "2.7.D",
+      "file": "submittals/SUB-263353-02-R0.html",
+      "locator": "hexagon"
+    },
+    {
+      "check_id": "MER-CHECK-045",
+      "clause": "2.1.B",
+      "file": "submittals/SUB-236500-01-R0.html",
+      "locator": "certificate"
+    },
+    {
+      "check_id": "MER-CHECK-046",
+      "clause": "2.2.C",
+      "file": "submittals/SUB-236500-01-R1.html",
+      "locator": "aconex"
+    },
+    {
+      "check_id": "MER-CHECK-047",
+      "clause": "2.4.D",
+      "file": "submittals/SUB-263213-01-R0.html",
+      "locator": "sap"
+    },
+    {
+      "check_id": "MER-CHECK-048",
+      "clause": "3.4.A",
+      "file": "submittals/SUB-260526-01-R0.html",
+      "locator": "hexagon"
+    }
+  ]
+}

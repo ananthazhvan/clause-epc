@@ -1,0 +1,37 @@
+[
+  {
+    "parent_rsrc_id": 0,
+    "rsrc_id": 1,
+    "rsrc_name": "EPC Management",
+    "rsrc_short_name": "R01",
+    "rsrc_type": "RT_Labor"
+  },
+  {
+    "parent_rsrc_id": 0,
+    "rsrc_id": 2,
+    "rsrc_name": "Electrical Crew",
+    "rsrc_short_name": "R02",
+    "rsrc_type": "RT_Labor"
+  },
+  {
+    "parent_rsrc_id": 0,
+    "rsrc_id": 3,
+    "rsrc_name": "Mechanical Crew",
+    "rsrc_short_name": "R03",
+    "rsrc_type": "RT_Labor"
+  },
+  {
+    "parent_rsrc_id": 0,
+    "rsrc_id": 4,
+    "rsrc_name": "Controls Crew",
+    "rsrc_short_name": "R04",
+    "rsrc_type": "RT_Labor"
+  },
+  {
+    "parent_rsrc_id": 0,
+    "rsrc_id": 5,
+    "rsrc_name": "Commissioning Crew",
+    "rsrc_short_name": "R05",
+    "rsrc_type": "RT_Labor"
+  }
+]

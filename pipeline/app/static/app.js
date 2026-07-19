@@ -320,6 +320,7 @@ function scoreboardCard(s) {
     row("missing evidence", vp.MISSING_EVIDENCE || 0) + row("comply", vp.COMPLY || 0) +
     row("outside package scope", (vp.COVERED_ELSEWHERE || 0) + (vp.NOT_ADDRESSED || 0)) +
     row("NCRs raised", s.ncrs || 0) +
+    (s.manual_hours_baseline ? row("manual review baseline (h)", s.manual_hours_baseline) : "") +
     '<div class="row mt"><button class="btn" id="btn-score">Score vs answer key\u2026</button></div>' +
     '<div id="score-out"></div>' +
     '<div class="form-note">scoring runs AFTER the ledger is computed - the answer key is never an input to the pipeline.</div></div>';

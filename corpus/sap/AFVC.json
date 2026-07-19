@@ -1,0 +1,107 @@
+[
+  {
+    "APLZL": "00000001",
+    "AUFPL": "8000000000",
+    "LTXA1": "Procurement operation 1",
+    "PROJN": "00001100",
+    "VORNR": "0010"
+  },
+  {
+    "APLZL": "00000002",
+    "AUFPL": "8000000001",
+    "LTXA1": "Procurement operation 2",
+    "PROJN": "00001101",
+    "VORNR": "0020"
+  },
+  {
+    "APLZL": "00000003",
+    "AUFPL": "8000000002",
+    "LTXA1": "Procurement operation 3",
+    "PROJN": "00001102",
+    "VORNR": "0030"
+  },
+  {
+    "APLZL": "00000004",
+    "AUFPL": "8000000003",
+    "LTXA1": "Procurement operation 4",
+    "PROJN": "00001103",
+    "VORNR": "0040"
+  },
+  {
+    "APLZL": "00000005",
+    "AUFPL": "8000000004",
+    "LTXA1": "Procurement operation 5",
+    "PROJN": "00001104",
+    "VORNR": "0050"
+  },
+  {
+    "APLZL": "00000006",
+    "AUFPL": "8000000005",
+    "LTXA1": "Procurement operation 6",
+    "PROJN": "00001105",
+    "VORNR": "0060"
+  },
+  {
+    "APLZL": "00000007",
+    "AUFPL": "8000000006",
+    "LTXA1": "Procurement operation 7",
+    "PROJN": "00001106",
+    "VORNR": "0070"
+  },
+  {
+    "APLZL": "00000008",
+    "AUFPL": "8000000007",
+    "LTXA1": "Procurement operation 8",
+    "PROJN": "00001107",
+    "VORNR": "0080"
+  },
+  {
+    "APLZL": "00000009",
+    "AUFPL": "8000000008",
+    "LTXA1": "Procurement operation 9",
+    "PROJN": "00001108",
+    "VORNR": "0090"
+  },
+  {
+    "APLZL": "00000010",
+    "AUFPL": "8000000009",
+    "LTXA1": "Procurement operation 10",
+    "PROJN": "00001109",
+    "VORNR": "0100"
+  },
+  {
+    "APLZL": "00000011",
+    "AUFPL": "8000000010",
+    "LTXA1": "Procurement operation 11",
+    "PROJN": "00001110",
+    "VORNR": "0110"
+  },
+  {
+    "APLZL": "00000012",
+    "AUFPL": "8000000011",
+    "LTXA1": "Procurement operation 12",
+    "PROJN": "00001111",
+    "VORNR": "0120"
+  },
+  {
+    "APLZL": "00000013",
+    "AUFPL": "8000000012",
+    "LTXA1": "Procurement operation 13",
+    "PROJN": "00001100",
+    "VORNR": "0130"
+  },
+  {
+    "APLZL": "00000014",
+    "AUFPL": "8000000013",
+    "LTXA1": "Procurement operation 14",
+    "PROJN": "00001101",
+    "VORNR": "0140"
+  },
+  {
+    "APLZL": "00000015",
+    "AUFPL": "8000000014",
+    "LTXA1": "Procurement operation 15",
+    "PROJN": "00001102",
+    "VORNR": "0150"
+  }
+]

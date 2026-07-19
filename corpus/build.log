@@ -1,0 +1,23 @@
+Phase 0: bible written and locked read-only
+Phase 0 verification: PASS
+Phase 1: specifications rendered; gate PASS
+Phase 2: submittals rendered; gate PASS
+Phase 3: P6 rendered; gate PASS
+Phase 4: SAP rendered; gate PASS
+Phase 5: Aconex rendered; gate PASS
+Phase 6: ACC rendered; gate PASS
+Phase 7: Hexagon rendered; gate PASS
+Phase 8: logistics rendered; gate PASS
+Phase 9: evaluation files rendered; gate PASS
+Phase 9 full verification: PASS
+Phase 10 packaging: ready
+
+Deterministic regeneration: PASS (all generated PDFs byte-identical across two runs)
+Visual QA: representative specification, submittal and addendum passed; no overlap or clipping detected
+Phase 10 packaging: PASS
+
+Cost-to-PO reconciliation gate: PASS within 5%
+Global grading-leakage scan outside restricted folder: PASS
+Deterministic full regeneration: PASS
+
+2026-07-19 correction: rebuilt all specifications in CSI three-part format; rebuilt all vendor submittals; PDF now rendered directly from HTML print CSS; manual QA recorded in manual_qa.md.

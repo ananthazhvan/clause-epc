@@ -201,6 +201,8 @@ REGISTER_SCHEMAS = {
     "cx_test_register.csv": {"test_id", "spec_clause", "acceptance_criteria"},
     "rfi_log.csv": {"rfi_id", "query", "response"},
     "rfi_register.csv": {"rfi_id", "section", "question", "status"},
+    "lifecycle_ledger.csv": {"equipment_tag", "po_number", "stage", "timestamp"},
+    "effort_baseline.csv": {"task", "minutes_per_item", "items_per_project"},
 }
 CLAUSE_LINE_RE = re.compile(r"^\d{2} \d{2} \d{2} Part \d", re.M)
 SEC_RE = re.compile(r"\b(\d{2}) (\d{2}) (\d{2})\b")
@@ -222,11 +224,14 @@ def classify_csv(text):
 
 
 def classify_text(head):
-    first = "\n".join(head.strip().split("\n")[:8])
-    if re.search(r"Package ID:", head) and re.search(r"Reference Section:", head):
+    first = "\n".join(head.strip().split("\n")[:12])
+    # transmittal metadata may be rendered as table cells (no colon after the label)
+    if re.search(r"Package\s*ID\b", head) and re.search(r"Reference\s*Section\b", head):
         return "submittal"
-    if re.search(r"\bADDENDUM\b", first, re.I):
+    if re.search(r"\bADDENDUM\b", first, re.I) or re.search(r"\bADD-\d{3}\b", first):
         return "addendum"
+    if re.search(r"\bSUB-\d{6}-\d{2}(?:-R\d+)?\b", first):
+        return "submittal"
     if len(CLAUSE_LINE_RE.findall(head)) >= 2 or re.search(r"\bSECTION\s+\d{2} \d{2} \d{2}\b", head, re.I):
         return "specification"
     return "project document"
@@ -247,6 +252,7 @@ def doc_text_head(name, ext, data):
         return "\n\n".join(pages[:3]), len(pages), any(p.strip() for p in pages)
     text = data.decode("utf-8", errors="ignore")
     if ext in (".html", ".htm"):
+        text = re.sub(r"<(style|script)\b[^>]*>.*?</\1\s*>", " ", text, flags=re.S | re.I)
         text = re.sub(r"<[^>]+>", " ", text)
     return text[:20000], 1, bool(text.strip())
 
@@ -318,6 +324,72 @@ def feed_kind(obj):
     if isinstance(obj.get("wbsElements"), list) or isinstance(obj.get("costLines"), list):
         return "finance", "SAP PS WBS/cost export -> finance/ (budget-pressure insights)"
     return None
+
+
+TABLE_SYSTEMS = {
+    "p6": {"project", "projwbs", "task", "taskpred", "rsrc", "taskrsrc", "calendar"},
+    "sap": {"proj", "prps", "prhi", "aufk", "afvc", "resb", "coep", "ekko", "ekpo",
+            "eket", "ekbe", "lfa1", "acdoca"},
+    "aconex": {"document_register", "mail_module", "transmittal_registry", "workflow_history"},
+    "acc": {"form_templates", "issues", "worklogentries", "materialsentries", "equipmententries"},
+    "hexagon": {"bom_schema", "material_master", "pcf_repository", "pms_class"},
+}
+
+
+def table_wrap(name, obj):
+    """Bare-list source-system table exports (P6/SAP/Aconex/ACC/Hexagon) ->
+    canonical feed payloads the ontology stage understands. Deterministic."""
+    stem = os.path.splitext(name)[0]
+    low = stem.lower()
+    rows = obj if isinstance(obj, list) else None
+    if rows is None and isinstance(obj, dict):
+        for k in ("rows", "records", "value", "items"):
+            if isinstance(obj.get(k), list):
+                rows = obj[k]
+                break
+    if not rows or not all(isinstance(r, dict) for r in rows[:5]):
+        return None
+    if low in ("worklogentries", "materialsentries", "equipmententries"):
+        key = {"worklogentries": "worklogEntries", "materialsentries": "materialsEntries",
+               "equipmententries": "equipmentEntries"}[low]
+        return "field", {key: rows}, f"ACC {key} table -> field/ (crew and equipment insights)"
+    if "issue" in low:
+        rows = [dict(r, displayId=r.get("displayId") or r.get("issue_id") or r.get("id")) for r in rows]
+        return "quality", {"results": rows}, "ACC issues table -> quality/ (issues join the object graph)"
+    if "document_register" in low or low == "documents":
+        return "documents", {"documents": rows}, "Aconex document register -> documents/ (review-cycle insights)"
+    if "transmittal" in low:
+        return "documents", {"transmittals": rows}, "Aconex transmittal registry -> documents/"
+    if "workflow" in low:
+        return "documents", {"workflows": rows}, "Aconex workflow history -> documents/"
+    if "bom" in low:
+        return "materials", {"bomLines": rows}, "Hexagon BOM table -> materials/ (PMS-class compliance checks)"
+    if "pms" in low:
+        return "materials", {"pmsClasses": rows}, "Hexagon PMS class table -> materials/"
+    system = next((s for s, names in TABLE_SYSTEMS.items() if low in names), None)
+    if system is None:
+        cols = {c.lower() for r in rows[:5] for c in r.keys()}
+        strong = {"task_code", "task_id", "posid", "objnr", "ebeln", "bom_id", "doc_id",
+                  "equipment_tag", "po_number", "part_number", "supplier", "component"}
+        if not cols & strong:
+            return None
+        system = "source"
+    return "tables", {"table": stem, "system": system, "rows": rows}, \
+        f"{system.upper()} table export ({len(rows)} rows) -> tables/ (joined into the object graph by S12)"
+
+
+def _manual_hours():
+    """Total manual coordination baseline (hours) from effort_baseline.csv."""
+    p = os.path.join(STAGE, "registers", "effort_baseline.csv")
+    if not os.path.exists(p):
+        return None
+    try:
+        tot = 0.0
+        for r in csv.DictReader(io.StringIO(open(p).read())):
+            tot += float(r.get("minutes_per_item") or 0) * float(r.get("items_per_project") or 0)
+        return round(tot / 60)
+    except Exception:  # noqa: BLE001
+        return None
 
 
 def merge_po_csv(existing_text, incoming_text, prefer_incoming=False):
@@ -399,6 +471,23 @@ def stage_file(rel, name, data):
         return {"name": name, "kind": "register",
                 "note": "Primavera P6 XML -> schedule.csv - " + cnote,
                 "stored_as": "registers/schedule.csv"}
+    if ext == ".xer":
+        # Primavera P6 native XER: deterministic parse -> canonical schedule.csv
+        if PIPELINE not in sys.path:
+            sys.path.insert(0, PIPELINE)
+        from connectors import p6xer
+        if not p6xer.sniff(data):
+            return {"name": name, "kind": "error", "note": "XER, but no TASK table found - not a Primavera P6 export"}
+        try:
+            text, cnote = p6xer.convert(data)
+        except Exception as e:  # noqa: BLE001
+            return {"name": name, "kind": "error", "note": "P6 XER parse failed: " + str(e)[:120]}
+        d = os.path.join(STAGE, "registers")
+        os.makedirs(d, exist_ok=True)
+        open(os.path.join(d, "schedule.csv"), "wb").write(text.encode("utf-8"))
+        return {"name": name, "kind": "register",
+                "note": "Primavera P6 XER -> schedule.csv - " + cnote,
+                "stored_as": "registers/schedule.csv"}
     if ext == ".json":
         # SAP OData / logistics-visibility connectors: deterministic JSON -> registers
         if PIPELINE not in sys.path:
@@ -446,6 +535,14 @@ def stage_file(rel, name, data):
             os.makedirs(d, exist_ok=True)
             open(os.path.join(d, name), "wb").write(data)
             return {"name": name, "kind": "feed", "note": label, "stored_as": f"{folder}/{name}"}
+        tw = table_wrap(name, obj)
+        if tw:
+            folder, payload, label = tw
+            d = os.path.join(STAGE, folder)
+            os.makedirs(d, exist_ok=True)
+            fname = os.path.splitext(name)[0] + ".json"
+            open(os.path.join(d, fname), "w").write(json.dumps(payload, indent=1))
+            return {"name": name, "kind": "feed", "note": label, "stored_as": f"{folder}/{fname}"}
         return {"name": name, "kind": "error",
                 "note": "JSON, but not a recognizable connector payload (SAP OData POs, shipment visibility, ACC issues or daily logs, Aconex document register, Hexagon BOM, SAP PS finance) - see CORPUS_FORMAT.md"}
     if ext not in (".pdf", ".html", ".htm", ".txt", ".md"):
@@ -623,6 +720,7 @@ def summary():
         "rules": rules, "claims": claims,
         "sections": len(glob.glob(os.path.join(OUT, "rulebook_*.json"))),
         "packages": len(glob.glob(os.path.join(OUT, "claims_*.json"))),
+        "manual_hours_baseline": _manual_hours(),
         "verdicts_pre": pre, "verdicts_post": post,
         "false_comply_pre": fc_pre, "false_comply_post": fc_post,
         "lint_findings": len(lint["findings"]),

@@ -114,7 +114,9 @@ def discover_addenda():
             print(f"S6: {doc.get('doc')} announces an addendum but carries no "
                   "structured actions - route it through the M2 LLM path.")
             continue
-        token = hm.group(1).strip("-")
+        expl = (re.search(r"\bADD-(\d{1,3})\b", head)
+                or re.search(r"\bADD-(\d{1,3})\b", os.path.basename(path), re.I))
+        token = expl.group(1) if expl else hm.group(1).strip("-")
         if token.isdigit():
             aid = f"ADD-{int(token):03d}"
         elif token:
@@ -125,8 +127,11 @@ def discover_addenda():
             c["addendum"] = aid
         adds.append({"id": aid, "date": date or "9999-12-31",
                      "doc": doc.get("doc"), "changes": changes})
-    adds.sort(key=lambda a: (a["date"], a["id"]))
-    return adds
+    best = {}
+    for a in adds:
+        if a["id"] not in best or len(a["changes"]) > len(best[a["id"]]["changes"]):
+            best[a["id"]] = a
+    return sorted(best.values(), key=lambda a: (a["date"], a["id"]))
 
 
 def read_register(name):

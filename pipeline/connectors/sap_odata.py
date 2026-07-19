@@ -41,7 +41,28 @@ def _po_list(obj):
             obj = [obj]
     if not isinstance(obj, list):
         return []
-    return [p for p in obj if isinstance(p, dict) and p.get("PurchaseOrder")]
+    out = []
+    for p in obj:
+        if not isinstance(p, dict):
+            continue
+        if p.get("PurchaseOrder"):
+            out.append(p)
+        elif p.get("EBELN"):  # raw EKKO/EKPO field names from a table-level extract
+            out.append({
+                "PurchaseOrder": p.get("EBELN"),
+                "Supplier": str(p.get("LIFNR") or ""),
+                "CreationDate": p.get("BEDAT") or p.get("AEDAT"),
+                "DocumentCurrency": p.get("WAERS"),
+                "to_PurchaseOrderItem": [{
+                    "Material": p.get("MATNR"),
+                    "OrderQuantity": p.get("MENGE"),
+                    "NetPrice": p.get("NETPR"),
+                    "PurchaseOrderItemText": p.get("TXZ01"),
+                    "ScheduleLineDeliveryDate": p.get("EINDT"),
+                    "DeliveryStatus": p.get("STATUS"),
+                }],
+            })
+    return out
 
 
 def sniff(obj):

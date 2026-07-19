@@ -1,0 +1,16 @@
+po_number,equipment_tag,spec_section,vendor,item_description,value_inr,order_date,lead_time_weeks,delivery_status
+4500012301,CH-01,23 64 26,CryoCore Climate,"1250 TR chiller package; qty 2 @ INR 48,500,000",97000000,2025-12-05,52,Delayed
+4500012302,UPS-01,26 33 53,VoltEdge Power Systems,"2000 kVA UPS blocks; qty 4 @ INR 16,800,000",67200000,2025-12-10,34,In production
+4500012303,BAT-01,26 33 53,VoltEdge Power Systems,"15-minute battery strings; qty 4 @ INR 7,200,000",28800000,2025-12-15,30,Raw material secured
+4500012304,MSB-A,26 24 13,Meridian Switchgear,"65 kA LV switchboard; qty 1 @ INR 31,800,000",31800000,2025-12-20,28,FAT planned
+4500012305,FAS-01,28 31 11,AegisFire Systems,"Fire alarm system; qty 1 @ INR 14,600,000",14600000,2025-12-25,22,Engineering approved
+4500012306,CAF-01,21 22 00,AegisFire Systems,"Clean-agent system; qty 1 @ INR 19,200,000",19200000,2025-12-30,24,Engineering approved
+4500012307,CT-01,23 65 00,Indus Thermal Works,"Cooling tower cells; qty 4 @ INR 9,300,000",37200000,2026-01-04,32,In production
+4500012308,DG-01,26 32 13,Kaveri Prime Energy,"2500 kVA generator sets; qty 4 @ INR 26,500,000",106000000,2026-01-09,40,In production
+4500012309,BMS-01,25 50 00,Nexora Controls India,"BMS EPMS integration; qty 1 @ INR 22,400,000",22400000,2026-01-14,20,Engineering approved
+4500012310,DDC-01,23 09 23,Nexora Controls India,"DDC panels and sensors; qty 1 @ INR 13,800,000",13800000,2026-01-19,18,Raw material secured
+4500012311,CAB-01,27 15 00,SaffronLink Networks,"Copper and fibre cabling; qty 1 @ INR 28,600,000",28600000,2026-01-24,20,Ordered
+4500012312,CHWP-01,23 21 13,Trident Fabrication,"CHW pipework lot; qty 1 @ INR 34,200,000",34200000,2026-01-29,16,Part delivered
+4500012313,EARTH-01,26 05 26,Trident Fabrication,"Earth grid materials; qty 1 @ INR 11,800,000",11800000,2026-02-03,12,Delivered
+4500012314,SYNC-01,26 32 13,Kaveri Prime Energy,"Generator synchronising panel; qty 1 @ INR 12,700,000",12700000,2026-02-08,26,Engineering approved
+4500012315,PDU-01,26 24 13,Meridian Switchgear,"PDU distribution boards; qty 8 @ INR 2,150,000",17200000,2026-02-13,24,In production

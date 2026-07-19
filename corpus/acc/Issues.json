@@ -1,0 +1,317 @@
+[
+  {
+    "issue_id": "58969462-ca04-5241-a8ed-20801207a6e5",
+    "model_node_id": "MER-MODEL-00001",
+    "root_cause_category": "Design coordination",
+    "status": "Open",
+    "title": "Section 21 22 00 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "2c36b80a-6ea5-5255-9ef0-bdbc1f9678d6",
+    "model_node_id": "MER-MODEL-00002",
+    "root_cause_category": "Material",
+    "status": "In review",
+    "title": "Section 23 21 13 clause 2.2.D field issue"
+  },
+  {
+    "issue_id": "b9a47bc0-26e1-517e-9747-020da55c3028",
+    "model_node_id": "MER-MODEL-00003",
+    "root_cause_category": "Workmanship",
+    "status": "Closed",
+    "title": "Section 23 64 26 clause 2.3.D field issue"
+  },
+  {
+    "issue_id": "58e999b4-d57f-5804-91b8-dc7ec1b8c814",
+    "model_node_id": "MER-MODEL-00004",
+    "root_cause_category": "Access",
+    "status": "Open",
+    "title": "Section 23 65 00 clause 3.3.B field issue"
+  },
+  {
+    "issue_id": "d23f3742-cff7-5c6f-8844-cc58da853eae",
+    "model_node_id": "MER-MODEL-00005",
+    "root_cause_category": "Design coordination",
+    "status": "In review",
+    "title": "Section 23 09 23 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "d42748c4-4468-5ebe-a379-92e182541c63",
+    "model_node_id": "MER-MODEL-00006",
+    "root_cause_category": "Material",
+    "status": "Closed",
+    "title": "Section 25 50 00 clause 2.3.C field issue"
+  },
+  {
+    "issue_id": "99d9cb81-e371-52dd-9bc4-cf80d51fa665",
+    "model_node_id": "MER-MODEL-00007",
+    "root_cause_category": "Workmanship",
+    "status": "Open",
+    "title": "Section 26 05 26 clause 3.3.C field issue"
+  },
+  {
+    "issue_id": "3dfce1a5-a50d-5538-85e7-79fc577be0e5",
+    "model_node_id": "MER-MODEL-00008",
+    "root_cause_category": "Access",
+    "status": "In review",
+    "title": "Section 26 24 13 clause 3.5.B field issue"
+  },
+  {
+    "issue_id": "32590b96-4406-5c27-8e84-da13a6768767",
+    "model_node_id": "MER-MODEL-00009",
+    "root_cause_category": "Design coordination",
+    "status": "Closed",
+    "title": "Section 26 32 13 clause 2.1.B field issue"
+  },
+  {
+    "issue_id": "d5ba303a-ec44-5e67-942c-08869c3ce1fe",
+    "model_node_id": "MER-MODEL-00010",
+    "root_cause_category": "Material",
+    "status": "Open",
+    "title": "Section 26 33 53 clause 2.4.C field issue"
+  },
+  {
+    "issue_id": "c7035489-b1ea-5bbd-b5e3-ee1e2fd0cbad",
+    "model_node_id": "MER-MODEL-00011",
+    "root_cause_category": "Workmanship",
+    "status": "In review",
+    "title": "Section 27 15 00 clause 2.4.D field issue"
+  },
+  {
+    "issue_id": "d5a4921f-ebc5-5853-bbec-86aaaf9d6221",
+    "model_node_id": "MER-MODEL-00012",
+    "root_cause_category": "Access",
+    "status": "Closed",
+    "title": "Section 28 31 11 clause 3.6.A field issue"
+  },
+  {
+    "issue_id": "035fa85a-550e-5616-82c9-1d2087f0fb67",
+    "model_node_id": "MER-MODEL-00013",
+    "root_cause_category": "Design coordination",
+    "status": "Open",
+    "title": "Section 21 22 00 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "068c53f7-b356-5f73-9f60-7ef06426cabf",
+    "model_node_id": "MER-MODEL-00014",
+    "root_cause_category": "Material",
+    "status": "In review",
+    "title": "Section 23 21 13 clause 2.2.D field issue"
+  },
+  {
+    "issue_id": "7d58a4d2-bec7-51d0-a055-8ce6dba9e35d",
+    "model_node_id": "MER-MODEL-00015",
+    "root_cause_category": "Workmanship",
+    "status": "Closed",
+    "title": "Section 23 64 26 clause 2.3.D field issue"
+  },
+  {
+    "issue_id": "e600ad85-a8a6-535b-943b-ed484fa16424",
+    "model_node_id": "MER-MODEL-00016",
+    "root_cause_category": "Access",
+    "status": "Open",
+    "title": "Section 23 65 00 clause 3.3.B field issue"
+  },
+  {
+    "issue_id": "92d22f3f-97a8-509b-b967-d2e112815552",
+    "model_node_id": "MER-MODEL-00017",
+    "root_cause_category": "Design coordination",
+    "status": "In review",
+    "title": "Section 23 09 23 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "b480c836-746a-5892-af76-2400ab819a30",
+    "model_node_id": "MER-MODEL-00018",
+    "root_cause_category": "Material",
+    "status": "Closed",
+    "title": "Section 25 50 00 clause 2.3.C field issue"
+  },
+  {
+    "issue_id": "73693555-d8db-5146-91f9-25a1340a8773",
+    "model_node_id": "MER-MODEL-00019",
+    "root_cause_category": "Workmanship",
+    "status": "Open",
+    "title": "Section 26 05 26 clause 3.3.C field issue"
+  },
+  {
+    "issue_id": "3141ac96-dbbc-543f-9277-02ce58c36895",
+    "model_node_id": "MER-MODEL-00020",
+    "root_cause_category": "Access",
+    "status": "In review",
+    "title": "Section 26 24 13 clause 3.5.B field issue"
+  },
+  {
+    "issue_id": "9357a13c-7b76-5a0d-87c5-39aea8caecef",
+    "model_node_id": "MER-MODEL-00021",
+    "root_cause_category": "Design coordination",
+    "status": "Closed",
+    "title": "Section 26 32 13 clause 2.1.B field issue"
+  },
+  {
+    "issue_id": "668ea56d-6567-562b-ad3e-94c85d72b57f",
+    "model_node_id": "MER-MODEL-00022",
+    "root_cause_category": "Material",
+    "status": "Open",
+    "title": "Section 26 33 53 clause 2.4.C field issue"
+  },
+  {
+    "issue_id": "8a600d23-de8b-5bb5-b38f-b27dafc2e287",
+    "model_node_id": "MER-MODEL-00023",
+    "root_cause_category": "Workmanship",
+    "status": "In review",
+    "title": "Section 27 15 00 clause 2.4.D field issue"
+  },
+  {
+    "issue_id": "aea83dcc-9b33-51db-b07c-989c7faf2238",
+    "model_node_id": "MER-MODEL-00024",
+    "root_cause_category": "Access",
+    "status": "Closed",
+    "title": "Section 28 31 11 clause 3.6.A field issue"
+  },
+  {
+    "issue_id": "abdc5b60-8464-5bd6-99f3-7e336f3ed12e",
+    "model_node_id": "MER-MODEL-00025",
+    "root_cause_category": "Design coordination",
+    "status": "Open",
+    "title": "Section 21 22 00 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "901bb3e9-996b-572a-bb58-5c2882812d53",
+    "model_node_id": "MER-MODEL-00026",
+    "root_cause_category": "Material",
+    "status": "In review",
+    "title": "Section 23 21 13 clause 2.2.D field issue"
+  },
+  {
+    "issue_id": "b1be433c-96b9-52f5-af84-622907ced834",
+    "model_node_id": "MER-MODEL-00027",
+    "root_cause_category": "Workmanship",
+    "status": "Closed",
+    "title": "Section 23 64 26 clause 2.3.D field issue"
+  },
+  {
+    "issue_id": "d3e651e9-670e-5520-9393-90fafaa57101",
+    "model_node_id": "MER-MODEL-00028",
+    "root_cause_category": "Access",
+    "status": "Open",
+    "title": "Section 23 65 00 clause 3.3.B field issue"
+  },
+  {
+    "issue_id": "d4fdb48f-2591-5a6e-b751-955b096623e9",
+    "model_node_id": "MER-MODEL-00029",
+    "root_cause_category": "Design coordination",
+    "status": "In review",
+    "title": "Section 23 09 23 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "98777cc0-a77b-5458-aa00-3960f70fff2d",
+    "model_node_id": "MER-MODEL-00030",
+    "root_cause_category": "Material",
+    "status": "Closed",
+    "title": "Section 25 50 00 clause 2.3.C field issue"
+  },
+  {
+    "issue_id": "f682e1cb-70a6-5f1a-991c-96aac421dac3",
+    "model_node_id": "MER-MODEL-00031",
+    "root_cause_category": "Workmanship",
+    "status": "Open",
+    "title": "Section 26 05 26 clause 3.3.C field issue"
+  },
+  {
+    "issue_id": "62b7ccdf-2926-54e9-9399-4a5037c6e3ad",
+    "model_node_id": "MER-MODEL-00032",
+    "root_cause_category": "Access",
+    "status": "In review",
+    "title": "Section 26 24 13 clause 3.5.B field issue"
+  },
+  {
+    "issue_id": "ff457d34-1f07-5854-82ac-0ddd2c29c3f6",
+    "model_node_id": "MER-MODEL-00033",
+    "root_cause_category": "Design coordination",
+    "status": "Closed",
+    "title": "Section 26 32 13 clause 2.1.B field issue"
+  },
+  {
+    "issue_id": "cdcc69d9-7ac0-52ba-8896-3421dc74cdbe",
+    "model_node_id": "MER-MODEL-00034",
+    "root_cause_category": "Material",
+    "status": "Open",
+    "title": "Section 26 33 53 clause 2.4.C field issue"
+  },
+  {
+    "issue_id": "8347904e-d6eb-50f3-a185-dfa79fc39eb6",
+    "model_node_id": "MER-MODEL-00035",
+    "root_cause_category": "Workmanship",
+    "status": "In review",
+    "title": "Section 27 15 00 clause 2.4.D field issue"
+  },
+  {
+    "issue_id": "f2a7bef0-70b0-550c-a308-623e54af300e",
+    "model_node_id": "MER-MODEL-00036",
+    "root_cause_category": "Access",
+    "status": "Closed",
+    "title": "Section 28 31 11 clause 3.6.A field issue"
+  },
+  {
+    "issue_id": "68c7944a-606d-542e-9920-d7ef8b172fe9",
+    "model_node_id": "MER-MODEL-00037",
+    "root_cause_category": "Design coordination",
+    "status": "Open",
+    "title": "Section 21 22 00 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "09ea2252-f78b-53e6-a414-6f0159691f2b",
+    "model_node_id": "MER-MODEL-00038",
+    "root_cause_category": "Material",
+    "status": "In review",
+    "title": "Section 23 21 13 clause 2.2.D field issue"
+  },
+  {
+    "issue_id": "ee8599f9-0c80-5556-a0d1-6d190541e96b",
+    "model_node_id": "MER-MODEL-00039",
+    "root_cause_category": "Workmanship",
+    "status": "Closed",
+    "title": "Section 23 64 26 clause 2.3.D field issue"
+  },
+  {
+    "issue_id": "138b8697-90dc-567e-b822-809c62cdabf2",
+    "model_node_id": "MER-MODEL-00040",
+    "root_cause_category": "Access",
+    "status": "Open",
+    "title": "Section 23 65 00 clause 3.3.B field issue"
+  },
+  {
+    "issue_id": "9be35b4b-3ee8-5f4d-bf62-34f3fc373636",
+    "model_node_id": "MER-MODEL-00041",
+    "root_cause_category": "Design coordination",
+    "status": "In review",
+    "title": "Section 23 09 23 clause 2.2.A field issue"
+  },
+  {
+    "issue_id": "777fcb31-a709-58d6-be88-05d516d55f4f",
+    "model_node_id": "MER-MODEL-00042",
+    "root_cause_category": "Material",
+    "status": "Closed",
+    "title": "Section 25 50 00 clause 2.3.C field issue"
+  },
+  {
+    "issue_id": "11dcb684-44ce-5866-8a42-5d7494170702",
+    "model_node_id": "MER-MODEL-00043",
+    "root_cause_category": "Workmanship",
+    "status": "Open",
+    "title": "Section 26 05 26 clause 3.3.C field issue"
+  },
+  {
+    "issue_id": "68b6c238-4d10-581c-86c9-e2574205ea65",
+    "model_node_id": "MER-MODEL-00044",
+    "root_cause_category": "Access",
+    "status": "In review",
+    "title": "Section 26 24 13 clause 3.5.B field issue"
+  },
+  {
+    "issue_id": "578c1930-790d-5262-b886-c3cf7d7625d7",
+    "model_node_id": "MER-MODEL-00045",
+    "root_cause_category": "Design coordination",
+    "status": "Closed",
+    "title": "Section 26 32 13 clause 2.1.B field issue"
+  }
+]

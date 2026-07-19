@@ -1,0 +1,502 @@
+[
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-001",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-002",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-003",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-004",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-005",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-006",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-007",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-008",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-009",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-010",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-011",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-012",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-013",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-014",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-015",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-016",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-017",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-018",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-019",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-020",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-021",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-022",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-023",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-024",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-025",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-026",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-027",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-028",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-029",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-030",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-031",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-032",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-033",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-034",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-035",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-036",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-037",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-038",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-039",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-040",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-041",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-042",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-043",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-044",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-045",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-046",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-047",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-048",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-049",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-050",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-051",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-052",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-053",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-054",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-055",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-056",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-057",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-058",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-059",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-060",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-061",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-062",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-063",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-064",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-065",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-066",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-067",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-068",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-069",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-070",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-071",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-072",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-073",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-074",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-075",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-076",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-077",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-078",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-079",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-080",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-081",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-082",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-083",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-084",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-085",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-086",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-087",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-088",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-089",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-090",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-091",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-092",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-093",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-094",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-095",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-096",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-097",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-098",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "EPDM",
+    "pms_id": "PMS-CHW-099",
+    "pressure_rating": "PN16"
+  },
+  {
+    "gasket_type": "spiral wound graphite",
+    "pms_id": "PMS-CHW-100",
+    "pressure_rating": "PN16"
+  }
+]

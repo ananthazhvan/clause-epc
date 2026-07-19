@@ -1,0 +1,3247 @@
+identity:
+  project: MERIDIAN-1 Data Centre, Hall A
+  code: MER-1-2026
+  capacity: 4 halls x 5MW
+  timezone: Asia/Kolkata
+  ntp: '2025-11-03'
+  hall_a_rfs: '2026-12-18'
+  electrical: 415V/11kV, 50Hz
+vendors:
+- name: VoltEdge Power Systems
+  sap: '0000104412'
+  voice: precision electrical dossier
+  accent: '#174A7E'
+- name: CryoCore Climate
+  sap: 0000101877
+  voice: thermodynamic performance bulletin
+  accent: '#137C8B'
+- name: AegisFire Systems
+  sap: 0000108230
+  voice: life-safety compliance folio
+  accent: '#A33232'
+- name: Meridian Switchgear
+  sap: '0000110051'
+  voice: certification-led assembly record
+  accent: '#7A5B18'
+- name: Trident Fabrication
+  sap: 0000112584
+  voice: shop fabrication data book
+  accent: '#50666B'
+- name: Nexora Controls India
+  sap: '0000113407'
+  voice: controls integration workbook
+  accent: '#5D3C8C'
+- name: Kaveri Prime Energy
+  sap: 0000114926
+  voice: engineered power package
+  accent: '#8A4B20'
+- name: SaffronLink Networks
+  sap: '0000116073'
+  voice: structured connectivity dossier
+  accent: '#BE6B00'
+- name: Indus Thermal Works
+  sap: 0000117358
+  voice: heat-rejection technical folio
+  accent: '#2D6B47'
+sections:
+- number: 21 22 00
+  title: Clean-Agent Fire-Extinguishing Systems
+  vendor: AegisFire Systems
+  requirements:
+  - clause: 2.2.A
+    parameter: Cylinder working pressure
+    value: 42 bar
+    rule: minimum
+  - clause: 2.3.C
+    parameter: Agent concentration
+    value: 7.2 %
+    rule: minimum
+  - clause: 2.4.B
+    parameter: Discharge duration
+    value: 10 s
+    rule: maximum
+  - clause: 3.4.A
+    parameter: Room integrity retention
+    value: 10 min
+    rule: minimum
+- number: 23 21 13
+  title: Hydronic Piping
+  vendor: Trident Fabrication
+  requirements:
+  - clause: 2.1.B
+    parameter: Pipe material
+    value: ASTM A106 Grade B
+    rule: exact
+  - clause: 2.2.D
+    parameter: Design pressure
+    value: 16 bar
+    rule: minimum
+  - clause: 2.5.C
+    parameter: Hydrotest pressure
+    value: 24 bar
+    rule: minimum
+  - clause: 3.6.B
+    parameter: Flushing velocity
+    value: 3.0 m/s
+    rule: minimum
+- number: 23 64 26
+  title: Water-Cooled Chillers
+  vendor: CryoCore Climate
+  requirements:
+  - clause: 2.1.C
+    parameter: Full-load COP
+    value: '6.3'
+    rule: minimum
+  - clause: 2.2.B
+    parameter: Cooling duty
+    value: 1250 TR
+    rule: minimum
+  - clause: 2.3.D
+    parameter: Evaporator pressure drop
+    value: 85 kPa
+    rule: maximum
+  - clause: 3.4.C
+    parameter: Sound pressure at 1 m
+    value: 88 dBA
+    rule: maximum
+- number: 23 65 00
+  title: Cooling Towers
+  vendor: CryoCore Climate
+  requirements:
+  - clause: 2.1.B
+    parameter: Thermal capacity
+    value: 4500 kW
+    rule: minimum
+  - clause: 2.2.C
+    parameter: Fan specific power
+    value: 0.028 kW/kW
+    rule: maximum
+  - clause: 2.4.A
+    parameter: Sound pressure at 1 m
+    value: 82 dBA
+    rule: maximum
+  - clause: 3.3.B
+    parameter: Vibration velocity
+    value: 4.5 mm/s
+    rule: maximum
+- number: 23 09 23
+  title: Direct Digital Control System
+  vendor: Nexora Controls India
+  requirements:
+  - clause: 2.2.A
+    parameter: Controller scan cycle
+    value: 1 s
+    rule: maximum
+  - clause: 2.3.C
+    parameter: Temperature sensor accuracy
+    value: 0.15 C
+    rule: maximum
+  - clause: 2.5.B
+    parameter: Trend retention
+    value: 24 months
+    rule: minimum
+  - clause: 3.5.A
+    parameter: Point-to-point test coverage
+    value: 100 %
+    rule: exact
+- number: 25 50 00
+  title: BMS/EPMS Integrated Automation
+  vendor: Nexora Controls India
+  requirements:
+  - clause: 2.2.B
+    parameter: BACnet revision
+    value: Protocol Revision 18
+    rule: minimum
+  - clause: 2.3.C
+    parameter: Gateway availability
+    value: 99.95 %
+    rule: minimum
+  - clause: 2.5.A
+    parameter: Event propagation latency
+    value: 2 s
+    rule: maximum
+  - clause: 3.4.D
+    parameter: Integrated point test
+    value: 100 %
+    rule: exact
+- number: 26 05 26
+  title: Grounding and Bonding
+  vendor: Trident Fabrication
+  requirements:
+  - clause: 2.1.C
+    parameter: Earth conductor purity
+    value: 99.9 %
+    rule: minimum
+  - clause: 2.3.B
+    parameter: Earth grid resistance
+    value: 0.5 ohm
+    rule: maximum
+  - clause: 3.3.C
+    parameter: Bond continuity
+    value: 0.1 ohm
+    rule: maximum
+  - clause: 3.4.A
+    parameter: Test standard
+    value: IS 3043:2018
+    rule: exact
+- number: 26 24 13
+  title: Low-Voltage Switchboards
+  vendor: Meridian Switchgear
+  requirements:
+  - clause: 2.2.D
+    parameter: Short-circuit withstand
+    value: 65 kA for 1 s
+    rule: minimum
+  - clause: 2.3.A
+    parameter: Rated operational voltage
+    value: 415 V
+    rule: exact
+  - clause: 2.4.C
+    parameter: Busbar temperature rise
+    value: 70 K
+    rule: maximum
+  - clause: 3.5.B
+    parameter: Dielectric withstand
+    value: 2.5 kV for 60 s
+    rule: minimum
+- number: 26 32 13
+  title: Diesel Generator Sets
+  vendor: Kaveri Prime Energy
+  requirements:
+  - clause: 2.1.B
+    parameter: Prime power rating
+    value: 2500 kVA at 0.8 pf
+    rule: minimum
+  - clause: 2.3.C
+    parameter: Frequency regulation
+    value: 0.5 %
+    rule: maximum
+  - clause: 2.4.D
+    parameter: Fuel autonomy at 100% load
+    value: 24 h
+    rule: minimum
+  - clause: 3.4.B
+    parameter: Load acceptance
+    value: 80 % in one step
+    rule: minimum
+- number: 26 33 53
+  title: Static Uninterruptible Power Supply
+  vendor: VoltEdge Power Systems
+  requirements:
+  - clause: 2.2.A
+    parameter: Rated output
+    value: 2000 kVA
+    rule: minimum
+  - clause: 2.4.C
+    parameter: Efficiency at 50% load
+    value: 96.5 % at 0.9 lagging pf
+    rule: minimum
+  - clause: 2.6.B
+    parameter: Battery autonomy
+    value: 15 min at 1600 kW
+    rule: minimum
+  - clause: 2.7.D
+    parameter: Performance standard
+    value: IEC 62040-3:2021 at 0.9 lagging pf
+    rule: exact
+- number: 27 15 00
+  title: Structured Cabling
+  vendor: SaffronLink Networks
+  requirements:
+  - clause: 2.2.C
+    parameter: Channel insertion loss at 500 MHz
+    value: 47.1 dB
+    rule: maximum
+  - clause: 2.3.B
+    parameter: Optical attenuation at 1550 nm
+    value: 0.22 dB/km
+    rule: maximum
+  - clause: 2.4.D
+    parameter: CPR fire class
+    value: B2ca-s1a,d1,a1
+    rule: minimum
+  - clause: 3.5.A
+    parameter: Permanent-link test coverage
+    value: 100 %
+    rule: exact
+- number: 28 31 11
+  title: Digital Fire-Alarm System
+  vendor: AegisFire Systems
+  requirements:
+  - clause: 2.2.B
+    parameter: Loop capacity
+    value: 250 devices
+    rule: minimum
+  - clause: 2.3.D
+    parameter: Alarm response
+    value: 3 s
+    rule: maximum
+  - clause: 2.5.C
+    parameter: Battery standby
+    value: 24 h plus 30 min alarm
+    rule: minimum
+  - clause: 3.6.A
+    parameter: Cause-and-effect test coverage
+    value: 100 %
+    rule: exact
+packages:
+- id: SUB-212200-01-R0
+  section: 21 22 00
+  vendor: AegisFire Systems
+  scope: Clean-agent cylinders and release panel
+- id: SUB-232113-01-R0
+  section: 23 21 13
+  vendor: Trident Fabrication
+  scope: CHW piping, fittings and mill certificates
+- id: SUB-236426-01-R0
+  section: 23 64 26
+  vendor: CryoCore Climate
+  scope: 1,250 TR water-cooled chiller
+- id: SUB-236426-01-R1
+  section: 23 64 26
+  vendor: CryoCore Climate
+  scope: 1,250 TR chiller revised after ADD-001
+- id: SUB-262413-01-R0
+  section: 26 24 13
+  vendor: Meridian Switchgear
+  scope: Main LV switchboard MSB-A
+- id: SUB-262413-02-R0
+  section: 26 24 13
+  vendor: Meridian Switchgear
+  scope: PDU distribution boards
+- id: SUB-263353-01-R0
+  section: 26 33 53
+  vendor: VoltEdge Power Systems
+  scope: 2,000 kVA modular UPS
+- id: SUB-263353-02-R0
+  section: 26 33 53
+  vendor: VoltEdge Power Systems
+  scope: VRLA battery system
+- id: SUB-236500-01-R0
+  section: 23 65 00
+  vendor: Indus Thermal Works
+  scope: Open-circuit cooling towers
+- id: SUB-236500-01-R1
+  section: 23 65 00
+  vendor: Indus Thermal Works
+  scope: Cooling tower revised acoustics
+- id: SUB-263213-01-R0
+  section: 26 32 13
+  vendor: Kaveri Prime Energy
+  scope: 2,500 kVA diesel generators
+- id: SUB-260526-01-R0
+  section: 26 05 26
+  vendor: Trident Fabrication
+  scope: Copper earth grid and bonds
+- id: SUB-271500-01-R0
+  section: 27 15 00
+  vendor: SaffronLink Networks
+  scope: Category 6A copper system
+- id: SUB-271500-02-R0
+  section: 27 15 00
+  vendor: SaffronLink Networks
+  scope: OS2 optical-fibre backbone
+- id: SUB-283111-01-R0
+  section: 28 31 11
+  vendor: AegisFire Systems
+  scope: Addressable fire alarm
+- id: SUB-255000-01-R0
+  section: 25 50 00
+  vendor: Nexora Controls India
+  scope: BMS/EPMS integration gateway
+- id: SUB-230923-01-R0
+  section: 23 09 23
+  vendor: Nexora Controls India
+  scope: DDC controllers and sensors
+- id: SUB-212200-02-R0
+  section: 21 22 00
+  vendor: AegisFire Systems
+  scope: Room integrity and discharge nozzles
+- id: SUB-232113-02-R0
+  section: 23 21 13
+  vendor: Trident Fabrication
+  scope: Valves, strainers and insulation interfaces
+- id: SUB-263213-02-R0
+  section: 26 32 13
+  vendor: Kaveri Prime Energy
+  scope: Generator synchronising controls
+- id: SUB-260526-02-R0
+  section: 26 05 26
+  vendor: Trident Fabrication
+  scope: Lightning equipotential bonds
+- id: SUB-255000-02-R0
+  section: 25 50 00
+  vendor: Nexora Controls India
+  scope: EPMS meters and protocol schedule
+quality_cases:
+- level: 1
+  package: SUB-212200-01-R0
+  section: 21 22 00
+  clause: 2.2.A
+  parameter: Cylinder working pressure
+  spec_value: 42 bar
+  submitted: below requirement
+  source: datasheet
+  rationale: Cylinder working pressure is stated as below requirement against 42 bar.
+- level: 1
+  package: SUB-232113-01-R0
+  section: 23 21 13
+  clause: 2.2.D
+  parameter: Design pressure
+  spec_value: 16 bar
+  submitted: below requirement
+  source: datasheet
+  rationale: Design pressure is stated as below requirement against 16 bar.
+- level: 1
+  package: SUB-236426-01-R0
+  section: 23 64 26
+  clause: 2.3.D
+  parameter: Evaporator pressure drop
+  spec_value: 85 kPa
+  submitted: above requirement
+  source: datasheet
+  rationale: Evaporator pressure drop is stated as above requirement against 85 kPa.
+- level: 1
+  package: SUB-236426-01-R1
+  section: 23 64 26
+  clause: 3.4.C
+  parameter: Sound pressure at 1 m
+  spec_value: 88 dBA
+  submitted: above requirement
+  source: datasheet
+  rationale: Sound pressure at 1 m is stated as above requirement against 88 dBA.
+- level: 1
+  package: SUB-262413-01-R0
+  section: 26 24 13
+  clause: 2.2.D
+  parameter: Short-circuit withstand
+  spec_value: 65 kA for 1 s
+  submitted: below requirement
+  source: datasheet
+  rationale: Short-circuit withstand is stated as below requirement against 65 kA
+    for 1 s.
+- level: 1
+  package: SUB-262413-02-R0
+  section: 26 24 13
+  clause: 2.3.A
+  parameter: Rated operational voltage
+  spec_value: 415 V
+  submitted: nonmatching value
+  source: datasheet
+  rationale: Rated operational voltage is stated as nonmatching value against 415
+    V.
+- level: 1
+  package: SUB-263353-01-R0
+  section: 26 33 53
+  clause: 2.6.B
+  parameter: Battery autonomy
+  spec_value: 15 min at 1600 kW
+  submitted: below requirement
+  source: datasheet
+  rationale: Battery autonomy is stated as below requirement against 15 min at 1600
+    kW.
+- level: 1
+  package: SUB-263353-02-R0
+  section: 26 33 53
+  clause: 2.7.D
+  parameter: Performance standard
+  spec_value: IEC 62040-3:2021 at 0.9 lagging pf
+  submitted: nonmatching value
+  source: datasheet
+  rationale: Performance standard is stated as nonmatching value against IEC 62040-3:2021
+    at 0.9 lagging pf.
+- level: 1
+  package: SUB-236500-01-R0
+  section: 23 65 00
+  clause: 2.1.B
+  parameter: Thermal capacity
+  spec_value: 4500 kW
+  submitted: below requirement
+  source: datasheet
+  rationale: Thermal capacity is stated as below requirement against 4500 kW.
+- level: 1
+  package: SUB-236500-01-R1
+  section: 23 65 00
+  clause: 2.2.C
+  parameter: Fan specific power
+  spec_value: 0.028 kW/kW
+  submitted: above requirement
+  source: datasheet
+  rationale: Fan specific power is stated as above requirement against 0.028 kW/kW.
+- level: 1
+  package: SUB-263213-01-R0
+  section: 26 32 13
+  clause: 2.4.D
+  parameter: Fuel autonomy at 100% load
+  spec_value: 24 h
+  submitted: below requirement
+  source: datasheet
+  rationale: Fuel autonomy at 100% load is stated as below requirement against 24
+    h.
+- level: 1
+  package: SUB-260526-01-R0
+  section: 26 05 26
+  clause: 3.4.A
+  parameter: Test standard
+  spec_value: IS 3043:2018
+  submitted: nonmatching value
+  source: datasheet
+  rationale: Test standard is stated as nonmatching value against IS 3043:2018.
+- level: 1
+  package: SUB-271500-01-R0
+  section: 27 15 00
+  clause: 2.2.C
+  parameter: Channel insertion loss at 500 MHz
+  spec_value: 47.1 dB
+  submitted: above requirement
+  source: datasheet
+  rationale: Channel insertion loss at 500 MHz is stated as above requirement against
+    47.1 dB.
+- level: 1
+  package: SUB-271500-02-R0
+  section: 27 15 00
+  clause: 2.3.B
+  parameter: Optical attenuation at 1550 nm
+  spec_value: 0.22 dB/km
+  submitted: above requirement
+  source: datasheet
+  rationale: Optical attenuation at 1550 nm is stated as above requirement against
+    0.22 dB/km.
+- level: 1
+  package: SUB-283111-01-R0
+  section: 28 31 11
+  clause: 2.5.C
+  parameter: Battery standby
+  spec_value: 24 h plus 30 min alarm
+  submitted: below requirement
+  source: datasheet
+  rationale: Battery standby is stated as below requirement against 24 h plus 30 min
+    alarm.
+- level: 1
+  package: SUB-255000-01-R0
+  section: 25 50 00
+  clause: 3.4.D
+  parameter: Integrated point test
+  spec_value: 100 %
+  submitted: nonmatching value
+  source: datasheet
+  rationale: Integrated point test is stated as nonmatching value against 100 %.
+- level: 1
+  package: SUB-230923-01-R0
+  section: 23 09 23
+  clause: 2.2.A
+  parameter: Controller scan cycle
+  spec_value: 1 s
+  submitted: above requirement
+  source: datasheet
+  rationale: Controller scan cycle is stated as above requirement against 1 s.
+- level: 1
+  package: SUB-212200-02-R0
+  section: 21 22 00
+  clause: 2.3.C
+  parameter: Agent concentration
+  spec_value: 7.2 %
+  submitted: below requirement
+  source: datasheet
+  rationale: Agent concentration is stated as below requirement against 7.2 %.
+- level: 1
+  package: SUB-212200-01-R0
+  section: 21 22 00
+  clause: 2.4.B
+  parameter: Discharge duration
+  spec_value: 10 s
+  submitted: above requirement
+  source: datasheet
+  rationale: Discharge duration is stated as above requirement against 10 s.
+- level: 1
+  package: SUB-232113-01-R0
+  section: 23 21 13
+  clause: 3.6.B
+  parameter: Flushing velocity
+  spec_value: 3.0 m/s
+  submitted: below requirement
+  source: datasheet
+  rationale: Flushing velocity is stated as below requirement against 3.0 m/s.
+- level: 2
+  package: SUB-236426-01-R0
+  section: 23 64 26
+  clause: 2.1.C
+  parameter: Full-load COP
+  spec_value: '6.3'
+  submitted: tested to superseded 2015 edition
+  source: certificate
+  rationale: Qualification condition for Full-load COP does not demonstrate 6.3.
+- level: 2
+  package: SUB-236426-01-R1
+  section: 23 64 26
+  clause: 2.2.B
+  parameter: Cooling duty
+  spec_value: 1250 TR
+  submitted: evidence available on request
+  source: matrix
+  rationale: Qualification condition for Cooling duty does not demonstrate 1250 TR.
+- level: 2
+  package: SUB-262413-01-R0
+  section: 26 24 13
+  clause: 2.4.C
+  parameter: Busbar temperature rise
+  spec_value: 70 K
+  submitted: declared at unity power factor
+  source: datasheet
+  rationale: Qualification condition for Busbar temperature rise does not demonstrate
+    70 K.
+- level: 2
+  package: SUB-262413-02-R0
+  section: 26 24 13
+  clause: 3.5.B
+  parameter: Dielectric withstand
+  spec_value: 2.5 kV for 60 s
+  submitted: test temperature differs from scheduled duty
+  source: factory test plan
+  rationale: Qualification condition for Dielectric withstand does not demonstrate
+    2.5 kV for 60 s.
+- level: 2
+  package: SUB-263353-01-R0
+  section: 26 33 53
+  clause: 2.2.A
+  parameter: Rated output
+  spec_value: 2000 kVA
+  submitted: tested to superseded 2015 edition
+  source: certificate
+  rationale: Qualification condition for Rated output does not demonstrate 2000 kVA.
+- level: 2
+  package: SUB-263353-02-R0
+  section: 26 33 53
+  clause: 2.4.C
+  parameter: Efficiency at 50% load
+  spec_value: 96.5 % at 0.9 lagging pf
+  submitted: evidence available on request
+  source: matrix
+  rationale: Qualification condition for Efficiency at 50% load does not demonstrate
+    96.5 % at 0.9 lagging pf.
+- level: 2
+  package: SUB-236500-01-R0
+  section: 23 65 00
+  clause: 2.4.A
+  parameter: Sound pressure at 1 m
+  spec_value: 82 dBA
+  submitted: declared at unity power factor
+  source: datasheet
+  rationale: Qualification condition for Sound pressure at 1 m does not demonstrate
+    82 dBA.
+- level: 2
+  package: SUB-236500-01-R1
+  section: 23 65 00
+  clause: 3.3.B
+  parameter: Vibration velocity
+  spec_value: 4.5 mm/s
+  submitted: test temperature differs from scheduled duty
+  source: factory test plan
+  rationale: Qualification condition for Vibration velocity does not demonstrate 4.5
+    mm/s.
+- level: 2
+  package: SUB-263213-01-R0
+  section: 26 32 13
+  clause: 2.1.B
+  parameter: Prime power rating
+  spec_value: 2500 kVA at 0.8 pf
+  submitted: tested to superseded 2015 edition
+  source: certificate
+  rationale: Qualification condition for Prime power rating does not demonstrate 2500
+    kVA at 0.8 pf.
+- level: 2
+  package: SUB-260526-01-R0
+  section: 26 05 26
+  clause: 2.3.B
+  parameter: Earth grid resistance
+  spec_value: 0.5 ohm
+  submitted: evidence available on request
+  source: matrix
+  rationale: Qualification condition for Earth grid resistance does not demonstrate
+    0.5 ohm.
+- level: 2
+  package: SUB-271500-01-R0
+  section: 27 15 00
+  clause: 2.4.D
+  parameter: CPR fire class
+  spec_value: B2ca-s1a,d1,a1
+  submitted: declared at unity power factor
+  source: datasheet
+  rationale: Qualification condition for CPR fire class does not demonstrate B2ca-s1a,d1,a1.
+- level: 2
+  package: SUB-271500-02-R0
+  section: 27 15 00
+  clause: 3.5.A
+  parameter: Permanent-link test coverage
+  spec_value: 100 %
+  submitted: test temperature differs from scheduled duty
+  source: factory test plan
+  rationale: Qualification condition for Permanent-link test coverage does not demonstrate
+    100 %.
+- level: 2
+  package: SUB-283111-01-R0
+  section: 28 31 11
+  clause: 2.2.B
+  parameter: Loop capacity
+  spec_value: 250 devices
+  submitted: tested to superseded 2015 edition
+  source: certificate
+  rationale: Qualification condition for Loop capacity does not demonstrate 250 devices.
+- level: 2
+  package: SUB-255000-01-R0
+  section: 25 50 00
+  clause: 2.3.C
+  parameter: Gateway availability
+  spec_value: 99.95 %
+  submitted: evidence available on request
+  source: matrix
+  rationale: Qualification condition for Gateway availability does not demonstrate
+    99.95 %.
+- level: 2
+  package: SUB-230923-01-R0
+  section: 23 09 23
+  clause: 2.5.B
+  parameter: Trend retention
+  spec_value: 24 months
+  submitted: declared at unity power factor
+  source: datasheet
+  rationale: Qualification condition for Trend retention does not demonstrate 24 months.
+- level: 2
+  package: SUB-212200-02-R0
+  section: 21 22 00
+  clause: 3.4.A
+  parameter: Room integrity retention
+  spec_value: 10 min
+  submitted: test temperature differs from scheduled duty
+  source: factory test plan
+  rationale: Qualification condition for Room integrity retention does not demonstrate
+    10 min.
+- level: 2
+  package: SUB-212200-01-R0
+  section: 21 22 00
+  clause: 2.2.A
+  parameter: Cylinder working pressure
+  spec_value: 42 bar
+  submitted: tested to superseded 2015 edition
+  source: certificate
+  rationale: Qualification condition for Cylinder working pressure does not demonstrate
+    42 bar.
+- level: 2
+  package: SUB-232113-01-R0
+  section: 23 21 13
+  clause: 2.2.D
+  parameter: Design pressure
+  spec_value: 16 bar
+  submitted: evidence available on request
+  source: matrix
+  rationale: Qualification condition for Design pressure does not demonstrate 16 bar.
+- level: 3
+  package: SUB-236426-01-R0
+  section: 23 64 26
+  clause: 2.3.D
+  parameter: Evaporator pressure drop
+  spec_value: 85 kPa
+  submitted: delivery date breaches need date
+  source: sap
+  rationale: Cross-system evidence for Evaporator pressure drop is inconsistent with
+    85 kPa.
+- level: 3
+  package: SUB-236426-01-R1
+  section: 23 64 26
+  clause: 3.4.C
+  parameter: Sound pressure at 1 m
+  spec_value: 88 dBA
+  submitted: traceability reference absent from material master
+  source: hexagon
+  rationale: Cross-system evidence for Sound pressure at 1 m is inconsistent with
+    88 dBA.
+- level: 3
+  package: SUB-262413-01-R0
+  section: 26 24 13
+  clause: 2.2.D
+  parameter: Short-circuit withstand
+  spec_value: 65 kA for 1 s
+  submitted: certificate value conflicts with datasheet
+  source: certificate
+  rationale: Cross-system evidence for Short-circuit withstand is inconsistent with
+    65 kA for 1 s.
+- level: 3
+  package: SUB-262413-02-R0
+  section: 26 24 13
+  clause: 2.3.A
+  parameter: Rated operational voltage
+  spec_value: 415 V
+  submitted: mail commitment conflicts with programme
+  source: aconex
+  rationale: Cross-system evidence for Rated operational voltage is inconsistent with
+    415 V.
+- level: 3
+  package: SUB-263353-01-R0
+  section: 26 33 53
+  clause: 2.6.B
+  parameter: Battery autonomy
+  spec_value: 15 min at 1600 kW
+  submitted: delivery date breaches need date
+  source: sap
+  rationale: Cross-system evidence for Battery autonomy is inconsistent with 15 min
+    at 1600 kW.
+- level: 3
+  package: SUB-263353-02-R0
+  section: 26 33 53
+  clause: 2.7.D
+  parameter: Performance standard
+  spec_value: IEC 62040-3:2021 at 0.9 lagging pf
+  submitted: traceability reference absent from material master
+  source: hexagon
+  rationale: Cross-system evidence for Performance standard is inconsistent with IEC
+    62040-3:2021 at 0.9 lagging pf.
+- level: 3
+  package: SUB-236500-01-R0
+  section: 23 65 00
+  clause: 2.1.B
+  parameter: Thermal capacity
+  spec_value: 4500 kW
+  submitted: certificate value conflicts with datasheet
+  source: certificate
+  rationale: Cross-system evidence for Thermal capacity is inconsistent with 4500
+    kW.
+- level: 3
+  package: SUB-236500-01-R1
+  section: 23 65 00
+  clause: 2.2.C
+  parameter: Fan specific power
+  spec_value: 0.028 kW/kW
+  submitted: mail commitment conflicts with programme
+  source: aconex
+  rationale: Cross-system evidence for Fan specific power is inconsistent with 0.028
+    kW/kW.
+- level: 3
+  package: SUB-263213-01-R0
+  section: 26 32 13
+  clause: 2.4.D
+  parameter: Fuel autonomy at 100% load
+  spec_value: 24 h
+  submitted: delivery date breaches need date
+  source: sap
+  rationale: Cross-system evidence for Fuel autonomy at 100% load is inconsistent
+    with 24 h.
+- level: 3
+  package: SUB-260526-01-R0
+  section: 26 05 26
+  clause: 3.4.A
+  parameter: Test standard
+  spec_value: IS 3043:2018
+  submitted: traceability reference absent from material master
+  source: hexagon
+  rationale: Cross-system evidence for Test standard is inconsistent with IS 3043:2018.
+conforming_examples:
+- package: SUB-212200-01-R0
+  section: 21 22 00
+  clause: 2.3.C
+  parameter: Agent concentration
+  demonstrated: 7.2 %
+  basis: datasheet and scheduled factory verification
+- package: SUB-232113-01-R0
+  section: 23 21 13
+  clause: 2.5.C
+  parameter: Hydrotest pressure
+  demonstrated: 24 bar
+  basis: datasheet and scheduled factory verification
+- package: SUB-236426-01-R0
+  section: 23 64 26
+  clause: 3.4.C
+  parameter: Sound pressure at 1 m
+  demonstrated: 88 dBA
+  basis: datasheet and scheduled factory verification
+- package: SUB-236426-01-R1
+  section: 23 64 26
+  clause: 2.1.C
+  parameter: Full-load COP
+  demonstrated: '6.3'
+  basis: datasheet and scheduled factory verification
+- package: SUB-262413-01-R0
+  section: 26 24 13
+  clause: 2.3.A
+  parameter: Rated operational voltage
+  demonstrated: 415 V
+  basis: datasheet and scheduled factory verification
+- package: SUB-262413-02-R0
+  section: 26 24 13
+  clause: 2.4.C
+  parameter: Busbar temperature rise
+  demonstrated: 70 K
+  basis: datasheet and scheduled factory verification
+- package: SUB-263353-01-R0
+  section: 26 33 53
+  clause: 2.7.D
+  parameter: Performance standard
+  demonstrated: IEC 62040-3:2021 at 0.9 lagging pf
+  basis: datasheet and scheduled factory verification
+- package: SUB-263353-02-R0
+  section: 26 33 53
+  clause: 2.2.A
+  parameter: Rated output
+  demonstrated: 2000 kVA
+  basis: datasheet and scheduled factory verification
+- package: SUB-236500-01-R0
+  section: 23 65 00
+  clause: 2.2.C
+  parameter: Fan specific power
+  demonstrated: 0.028 kW/kW
+  basis: datasheet and scheduled factory verification
+- package: SUB-236500-01-R1
+  section: 23 65 00
+  clause: 2.4.A
+  parameter: Sound pressure at 1 m
+  demonstrated: 82 dBA
+  basis: datasheet and scheduled factory verification
+- package: SUB-263213-01-R0
+  section: 26 32 13
+  clause: 3.4.B
+  parameter: Load acceptance
+  demonstrated: 80 % in one step
+  basis: datasheet and scheduled factory verification
+- package: SUB-260526-01-R0
+  section: 26 05 26
+  clause: 2.1.C
+  parameter: Earth conductor purity
+  demonstrated: 99.9 %
+  basis: datasheet and scheduled factory verification
+- package: SUB-271500-01-R0
+  section: 27 15 00
+  clause: 2.3.B
+  parameter: Optical attenuation at 1550 nm
+  demonstrated: 0.22 dB/km
+  basis: datasheet and scheduled factory verification
+- package: SUB-271500-02-R0
+  section: 27 15 00
+  clause: 2.4.D
+  parameter: CPR fire class
+  demonstrated: B2ca-s1a,d1,a1
+  basis: datasheet and scheduled factory verification
+- package: SUB-283111-01-R0
+  section: 28 31 11
+  clause: 3.6.A
+  parameter: Cause-and-effect test coverage
+  demonstrated: 100 %
+  basis: datasheet and scheduled factory verification
+- package: SUB-255000-01-R0
+  section: 25 50 00
+  clause: 2.2.B
+  parameter: BACnet revision
+  demonstrated: Protocol Revision 18
+  basis: datasheet and scheduled factory verification
+- package: SUB-230923-01-R0
+  section: 23 09 23
+  clause: 2.3.C
+  parameter: Temperature sensor accuracy
+  demonstrated: 0.15 C
+  basis: datasheet and scheduled factory verification
+- package: SUB-212200-02-R0
+  section: 21 22 00
+  clause: 2.4.B
+  parameter: Discharge duration
+  demonstrated: 10 s
+  basis: datasheet and scheduled factory verification
+- package: SUB-232113-02-R0
+  section: 23 21 13
+  clause: 3.6.B
+  parameter: Flushing velocity
+  demonstrated: 3.0 m/s
+  basis: datasheet and scheduled factory verification
+- package: SUB-263213-02-R0
+  section: 26 32 13
+  clause: 2.1.B
+  parameter: Prime power rating
+  demonstrated: 2500 kVA at 0.8 pf
+  basis: datasheet and scheduled factory verification
+- package: SUB-260526-02-R0
+  section: 26 05 26
+  clause: 2.3.B
+  parameter: Earth grid resistance
+  demonstrated: 0.5 ohm
+  basis: datasheet and scheduled factory verification
+- package: SUB-255000-02-R0
+  section: 25 50 00
+  clause: 2.5.A
+  parameter: Event propagation latency
+  demonstrated: 2 s
+  basis: datasheet and scheduled factory verification
+- package: SUB-212200-01-R0
+  section: 21 22 00
+  clause: 3.4.A
+  parameter: Room integrity retention
+  demonstrated: 10 min
+  basis: datasheet and scheduled factory verification
+- package: SUB-232113-01-R0
+  section: 23 21 13
+  clause: 2.1.B
+  parameter: Pipe material
+  demonstrated: ASTM A106 Grade B
+  basis: datasheet and scheduled factory verification
+- package: SUB-236426-01-R0
+  section: 23 64 26
+  clause: 2.2.B
+  parameter: Cooling duty
+  demonstrated: 1250 TR
+  basis: datasheet and scheduled factory verification
+- package: SUB-236426-01-R1
+  section: 23 64 26
+  clause: 2.3.D
+  parameter: Evaporator pressure drop
+  demonstrated: 85 kPa
+  basis: datasheet and scheduled factory verification
+- package: SUB-262413-01-R0
+  section: 26 24 13
+  clause: 3.5.B
+  parameter: Dielectric withstand
+  demonstrated: 2.5 kV for 60 s
+  basis: datasheet and scheduled factory verification
+- package: SUB-262413-02-R0
+  section: 26 24 13
+  clause: 2.2.D
+  parameter: Short-circuit withstand
+  demonstrated: 65 kA for 1 s
+  basis: datasheet and scheduled factory verification
+- package: SUB-263353-01-R0
+  section: 26 33 53
+  clause: 2.4.C
+  parameter: Efficiency at 50% load
+  demonstrated: 96.5 % at 0.9 lagging pf
+  basis: datasheet and scheduled factory verification
+- package: SUB-263353-02-R0
+  section: 26 33 53
+  clause: 2.6.B
+  parameter: Battery autonomy
+  demonstrated: 15 min at 1600 kW
+  basis: datasheet and scheduled factory verification
+- package: SUB-236500-01-R0
+  section: 23 65 00
+  clause: 3.3.B
+  parameter: Vibration velocity
+  demonstrated: 4.5 mm/s
+  basis: datasheet and scheduled factory verification
+- package: SUB-236500-01-R1
+  section: 23 65 00
+  clause: 2.1.B
+  parameter: Thermal capacity
+  demonstrated: 4500 kW
+  basis: datasheet and scheduled factory verification
+- package: SUB-263213-01-R0
+  section: 26 32 13
+  clause: 2.3.C
+  parameter: Frequency regulation
+  demonstrated: 0.5 %
+  basis: datasheet and scheduled factory verification
+- package: SUB-260526-01-R0
+  section: 26 05 26
+  clause: 3.3.C
+  parameter: Bond continuity
+  demonstrated: 0.1 ohm
+  basis: datasheet and scheduled factory verification
+- package: SUB-271500-01-R0
+  section: 27 15 00
+  clause: 3.5.A
+  parameter: Permanent-link test coverage
+  demonstrated: 100 %
+  basis: datasheet and scheduled factory verification
+- package: SUB-271500-02-R0
+  section: 27 15 00
+  clause: 2.2.C
+  parameter: Channel insertion loss at 500 MHz
+  demonstrated: 47.1 dB
+  basis: datasheet and scheduled factory verification
+- package: SUB-283111-01-R0
+  section: 28 31 11
+  clause: 2.3.D
+  parameter: Alarm response
+  demonstrated: 3 s
+  basis: datasheet and scheduled factory verification
+- package: SUB-255000-01-R0
+  section: 25 50 00
+  clause: 2.5.A
+  parameter: Event propagation latency
+  demonstrated: 2 s
+  basis: datasheet and scheduled factory verification
+- package: SUB-230923-01-R0
+  section: 23 09 23
+  clause: 3.5.A
+  parameter: Point-to-point test coverage
+  demonstrated: 100 %
+  basis: datasheet and scheduled factory verification
+- package: SUB-212200-02-R0
+  section: 21 22 00
+  clause: 2.2.A
+  parameter: Cylinder working pressure
+  demonstrated: 42 bar
+  basis: datasheet and scheduled factory verification
+purchase_orders:
+- po_number: '4500012301'
+  equipment_tag: CH-01
+  spec_section: 23 64 26
+  vendor: CryoCore Climate
+  item_description: 1250 TR chiller package; qty 2 @ INR 48,500,000
+  value_inr: 97000000
+  order_date: '2025-12-05'
+  lead_time_weeks: 52
+  delivery_status: Delayed
+  quantity: 2
+  unit_rate: 48500000
+- po_number: '4500012302'
+  equipment_tag: UPS-01
+  spec_section: 26 33 53
+  vendor: VoltEdge Power Systems
+  item_description: 2000 kVA UPS blocks; qty 4 @ INR 16,800,000
+  value_inr: 67200000
+  order_date: '2025-12-10'
+  lead_time_weeks: 34
+  delivery_status: In production
+  quantity: 4
+  unit_rate: 16800000
+- po_number: '4500012303'
+  equipment_tag: BAT-01
+  spec_section: 26 33 53
+  vendor: VoltEdge Power Systems
+  item_description: 15-minute battery strings; qty 4 @ INR 7,200,000
+  value_inr: 28800000
+  order_date: '2025-12-15'
+  lead_time_weeks: 30
+  delivery_status: Raw material secured
+  quantity: 4
+  unit_rate: 7200000
+- po_number: '4500012304'
+  equipment_tag: MSB-A
+  spec_section: 26 24 13
+  vendor: Meridian Switchgear
+  item_description: 65 kA LV switchboard; qty 1 @ INR 31,800,000
+  value_inr: 31800000
+  order_date: '2025-12-20'
+  lead_time_weeks: 28
+  delivery_status: FAT planned
+  quantity: 1
+  unit_rate: 31800000
+- po_number: '4500012305'
+  equipment_tag: FAS-01
+  spec_section: 28 31 11
+  vendor: AegisFire Systems
+  item_description: Fire alarm system; qty 1 @ INR 14,600,000
+  value_inr: 14600000
+  order_date: '2025-12-25'
+  lead_time_weeks: 22
+  delivery_status: Engineering approved
+  quantity: 1
+  unit_rate: 14600000
+- po_number: '4500012306'
+  equipment_tag: CAF-01
+  spec_section: 21 22 00
+  vendor: AegisFire Systems
+  item_description: Clean-agent system; qty 1 @ INR 19,200,000
+  value_inr: 19200000
+  order_date: '2025-12-30'
+  lead_time_weeks: 24
+  delivery_status: Engineering approved
+  quantity: 1
+  unit_rate: 19200000
+- po_number: '4500012307'
+  equipment_tag: CT-01
+  spec_section: 23 65 00
+  vendor: Indus Thermal Works
+  item_description: Cooling tower cells; qty 4 @ INR 9,300,000
+  value_inr: 37200000
+  order_date: '2026-01-04'
+  lead_time_weeks: 32
+  delivery_status: In production
+  quantity: 4
+  unit_rate: 9300000
+- po_number: '4500012308'
+  equipment_tag: DG-01
+  spec_section: 26 32 13
+  vendor: Kaveri Prime Energy
+  item_description: 2500 kVA generator sets; qty 4 @ INR 26,500,000
+  value_inr: 106000000
+  order_date: '2026-01-09'
+  lead_time_weeks: 40
+  delivery_status: In production
+  quantity: 4
+  unit_rate: 26500000
+- po_number: '4500012309'
+  equipment_tag: BMS-01
+  spec_section: 25 50 00
+  vendor: Nexora Controls India
+  item_description: BMS EPMS integration; qty 1 @ INR 22,400,000
+  value_inr: 22400000
+  order_date: '2026-01-14'
+  lead_time_weeks: 20
+  delivery_status: Engineering approved
+  quantity: 1
+  unit_rate: 22400000
+- po_number: '4500012310'
+  equipment_tag: DDC-01
+  spec_section: 23 09 23
+  vendor: Nexora Controls India
+  item_description: DDC panels and sensors; qty 1 @ INR 13,800,000
+  value_inr: 13800000
+  order_date: '2026-01-19'
+  lead_time_weeks: 18
+  delivery_status: Raw material secured
+  quantity: 1
+  unit_rate: 13800000
+- po_number: '4500012311'
+  equipment_tag: CAB-01
+  spec_section: 27 15 00
+  vendor: SaffronLink Networks
+  item_description: Copper and fibre cabling; qty 1 @ INR 28,600,000
+  value_inr: 28600000
+  order_date: '2026-01-24'
+  lead_time_weeks: 20
+  delivery_status: Ordered
+  quantity: 1
+  unit_rate: 28600000
+- po_number: '4500012312'
+  equipment_tag: CHWP-01
+  spec_section: 23 21 13
+  vendor: Trident Fabrication
+  item_description: CHW pipework lot; qty 1 @ INR 34,200,000
+  value_inr: 34200000
+  order_date: '2026-01-29'
+  lead_time_weeks: 16
+  delivery_status: Part delivered
+  quantity: 1
+  unit_rate: 34200000
+- po_number: '4500012313'
+  equipment_tag: EARTH-01
+  spec_section: 26 05 26
+  vendor: Trident Fabrication
+  item_description: Earth grid materials; qty 1 @ INR 11,800,000
+  value_inr: 11800000
+  order_date: '2026-02-03'
+  lead_time_weeks: 12
+  delivery_status: Delivered
+  quantity: 1
+  unit_rate: 11800000
+- po_number: '4500012314'
+  equipment_tag: SYNC-01
+  spec_section: 26 32 13
+  vendor: Kaveri Prime Energy
+  item_description: Generator synchronising panel; qty 1 @ INR 12,700,000
+  value_inr: 12700000
+  order_date: '2026-02-08'
+  lead_time_weeks: 26
+  delivery_status: Engineering approved
+  quantity: 1
+  unit_rate: 12700000
+- po_number: '4500012315'
+  equipment_tag: PDU-01
+  spec_section: 26 24 13
+  vendor: Meridian Switchgear
+  item_description: PDU distribution boards; qty 8 @ INR 2,150,000
+  value_inr: 17200000
+  order_date: '2026-02-13'
+  lead_time_weeks: 24
+  delivery_status: In production
+  quantity: 8
+  unit_rate: 2150000
+activities:
+- activity_id: MER-A-0001
+  name: Procure CH-01 (PO-4500012301)
+  duration_days: 5
+  predecessors: ''
+  float_days: 0
+  critical_path: 'No'
+  start: '2026-01-05'
+  finish: '2026-12-02'
+  wbs: 1
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0002
+  name: Procure UPS-01 (PO-4500012302)
+  duration_days: 6
+  predecessors: MER-A-0001
+  float_days: 29
+  critical_path: 'No'
+  start: '2026-01-07'
+  finish: '2026-01-13'
+  wbs: 2
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0003
+  name: Procure BAT-01 (PO-4500012303)
+  duration_days: 7
+  predecessors: MER-A-0002
+  float_days: 28
+  critical_path: 'No'
+  start: '2026-01-09'
+  finish: '2026-01-16'
+  wbs: 3
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0004
+  name: Procure MSB-A (PO-4500012304)
+  duration_days: 8
+  predecessors: MER-A-0003
+  float_days: 27
+  critical_path: 'No'
+  start: '2026-01-11'
+  finish: '2026-01-19'
+  wbs: 4
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0005
+  name: Procure FAS-01 (PO-4500012305)
+  duration_days: 9
+  predecessors: MER-A-0004
+  float_days: 26
+  critical_path: 'No'
+  start: '2026-01-13'
+  finish: '2026-01-22'
+  wbs: 5
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0006
+  name: Procure CAF-01 (PO-4500012306)
+  duration_days: 10
+  predecessors: MER-A-0005
+  float_days: 25
+  critical_path: 'No'
+  start: '2026-01-15'
+  finish: '2026-01-25'
+  wbs: 6
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0007
+  name: Procure CT-01 (PO-4500012307)
+  duration_days: 11
+  predecessors: MER-A-0006
+  float_days: 24
+  critical_path: 'No'
+  start: '2026-01-17'
+  finish: '2026-01-28'
+  wbs: 7
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0008
+  name: Procure DG-01 (PO-4500012308)
+  duration_days: 12
+  predecessors: MER-A-0007
+  float_days: 23
+  critical_path: 'No'
+  start: '2026-01-19'
+  finish: '2026-01-31'
+  wbs: 8
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0009
+  name: Procure BMS-01 (PO-4500012309)
+  duration_days: 13
+  predecessors: MER-A-0008
+  float_days: 22
+  critical_path: 'No'
+  start: '2026-01-21'
+  finish: '2026-02-03'
+  wbs: 9
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0010
+  name: Procure DDC-01 (PO-4500012310)
+  duration_days: 14
+  predecessors: MER-A-0009
+  float_days: 21
+  critical_path: 'No'
+  start: '2026-01-23'
+  finish: '2026-02-06'
+  wbs: 10
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0011
+  name: Procure CAB-01 (PO-4500012311)
+  duration_days: 15
+  predecessors: MER-A-0010
+  float_days: 20
+  critical_path: 'No'
+  start: '2026-01-25'
+  finish: '2026-02-09'
+  wbs: 11
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0012
+  name: Procure CHWP-01 (PO-4500012312)
+  duration_days: 16
+  predecessors: MER-A-0011
+  float_days: 19
+  critical_path: 'No'
+  start: '2026-01-27'
+  finish: '2026-02-12'
+  wbs: 12
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0013
+  name: Procure EARTH-01 (PO-4500012313)
+  duration_days: 17
+  predecessors: MER-A-0012
+  float_days: 18
+  critical_path: 'No'
+  start: '2026-01-29'
+  finish: '2026-02-15'
+  wbs: 1
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0014
+  name: Procure SYNC-01 (PO-4500012314)
+  duration_days: 18
+  predecessors: MER-A-0013
+  float_days: 17
+  critical_path: 'No'
+  start: '2026-01-31'
+  finish: '2026-02-18'
+  wbs: 2
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0015
+  name: Procure PDU-01 (PO-4500012315)
+  duration_days: 19
+  predecessors: MER-A-0014
+  float_days: 16
+  critical_path: 'No'
+  start: '2026-02-02'
+  finish: '2026-02-21'
+  wbs: 3
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0016
+  name: 11kV intake work package 001
+  duration_days: 20
+  predecessors: MER-A-0015
+  float_days: 15
+  critical_path: 'No'
+  start: '2026-02-04'
+  finish: '2026-02-24'
+  wbs: 4
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0017
+  name: LV distribution work package 002
+  duration_days: 5
+  predecessors: MER-A-0016
+  float_days: 14
+  critical_path: 'No'
+  start: '2026-02-06'
+  finish: '2026-02-11'
+  wbs: 5
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0018
+  name: Chilled-water plant work package 003
+  duration_days: 6
+  predecessors: MER-A-0017
+  float_days: 13
+  critical_path: 'No'
+  start: '2026-02-08'
+  finish: '2026-02-14'
+  wbs: 6
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0019
+  name: White-space fitout work package 004
+  duration_days: 7
+  predecessors: MER-A-0018
+  float_days: 12
+  critical_path: 'No'
+  start: '2026-02-10'
+  finish: '2026-02-17'
+  wbs: 7
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0020
+  name: Controls integration work package 005
+  duration_days: 8
+  predecessors: MER-A-0019
+  float_days: 11
+  critical_path: 'No'
+  start: '2026-02-12'
+  finish: '2026-02-20'
+  wbs: 8
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0021
+  name: Commissioning work package 006
+  duration_days: 9
+  predecessors: MER-A-0020
+  float_days: 10
+  critical_path: 'No'
+  start: '2026-02-14'
+  finish: '2026-02-23'
+  wbs: 9
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0022
+  name: Civil enabling works work package 007
+  duration_days: 10
+  predecessors: MER-A-0021
+  float_days: 9
+  critical_path: 'No'
+  start: '2026-02-16'
+  finish: '2026-02-26'
+  wbs: 10
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0023
+  name: 11kV intake work package 008
+  duration_days: 11
+  predecessors: MER-A-0022
+  float_days: 8
+  critical_path: 'No'
+  start: '2026-02-18'
+  finish: '2026-03-01'
+  wbs: 11
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0024
+  name: LV distribution work package 009
+  duration_days: 12
+  predecessors: MER-A-0023
+  float_days: 7
+  critical_path: 'No'
+  start: '2026-02-20'
+  finish: '2026-03-04'
+  wbs: 12
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0025
+  name: Chilled-water plant work package 010
+  duration_days: 13
+  predecessors: MER-A-0024
+  float_days: 6
+  critical_path: 'No'
+  start: '2026-02-22'
+  finish: '2026-03-07'
+  wbs: 1
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0026
+  name: White-space fitout work package 011
+  duration_days: 14
+  predecessors: MER-A-0025
+  float_days: 5
+  critical_path: 'No'
+  start: '2026-02-24'
+  finish: '2026-03-10'
+  wbs: 2
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0027
+  name: Controls integration work package 012
+  duration_days: 15
+  predecessors: MER-A-0026
+  float_days: 4
+  critical_path: 'No'
+  start: '2026-02-26'
+  finish: '2026-03-13'
+  wbs: 3
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0028
+  name: Commissioning work package 013
+  duration_days: 16
+  predecessors: MER-A-0027
+  float_days: 3
+  critical_path: 'No'
+  start: '2026-02-28'
+  finish: '2026-03-16'
+  wbs: 4
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0029
+  name: Civil enabling works work package 014
+  duration_days: 17
+  predecessors: MER-A-0028
+  float_days: 2
+  critical_path: 'No'
+  start: '2026-03-02'
+  finish: '2026-03-19'
+  wbs: 5
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0030
+  name: 11kV intake work package 015
+  duration_days: 18
+  predecessors: MER-A-0029
+  float_days: 1
+  critical_path: 'No'
+  start: '2026-03-04'
+  finish: '2026-03-22'
+  wbs: 6
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0031
+  name: LV distribution work package 016
+  duration_days: 19
+  predecessors: MER-A-0030
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-03-06'
+  finish: '2026-03-25'
+  wbs: 7
+  pct1: 100
+  pct2: 100
+- activity_id: MER-A-0032
+  name: Chilled-water plant work package 017
+  duration_days: 20
+  predecessors: MER-A-0031
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-03-08'
+  finish: '2026-03-28'
+  wbs: 8
+  pct1: 96
+  pct2: 100
+- activity_id: MER-A-0033
+  name: White-space fitout work package 018
+  duration_days: 5
+  predecessors: MER-A-0032
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-03-10'
+  finish: '2026-03-15'
+  wbs: 9
+  pct1: 88
+  pct2: 100
+- activity_id: MER-A-0034
+  name: Controls integration work package 019
+  duration_days: 6
+  predecessors: MER-A-0033
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-03-12'
+  finish: '2026-03-18'
+  wbs: 10
+  pct1: 80
+  pct2: 100
+- activity_id: MER-A-0035
+  name: Commissioning work package 020
+  duration_days: 7
+  predecessors: MER-A-0034
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-03-14'
+  finish: '2026-03-21'
+  wbs: 11
+  pct1: 72
+  pct2: 100
+- activity_id: MER-A-0036
+  name: Civil enabling works work package 021
+  duration_days: 8
+  predecessors: MER-A-0035
+  float_days: 30
+  critical_path: 'No'
+  start: '2026-03-16'
+  finish: '2026-03-24'
+  wbs: 12
+  pct1: 64
+  pct2: 100
+- activity_id: MER-A-0037
+  name: 11kV intake work package 022
+  duration_days: 9
+  predecessors: MER-A-0036
+  float_days: 29
+  critical_path: 'No'
+  start: '2026-03-18'
+  finish: '2026-03-27'
+  wbs: 1
+  pct1: 56
+  pct2: 100
+- activity_id: MER-A-0038
+  name: LV distribution work package 023
+  duration_days: 10
+  predecessors: MER-A-0037
+  float_days: 28
+  critical_path: 'No'
+  start: '2026-03-20'
+  finish: '2026-03-30'
+  wbs: 2
+  pct1: 48
+  pct2: 100
+- activity_id: MER-A-0039
+  name: Chilled-water plant work package 024
+  duration_days: 11
+  predecessors: MER-A-0038
+  float_days: 27
+  critical_path: 'No'
+  start: '2026-03-22'
+  finish: '2026-04-02'
+  wbs: 3
+  pct1: 40
+  pct2: 100
+- activity_id: MER-A-0040
+  name: White-space fitout work package 025
+  duration_days: 12
+  predecessors: MER-A-0039
+  float_days: 26
+  critical_path: 'No'
+  start: '2026-03-24'
+  finish: '2026-04-05'
+  wbs: 4
+  pct1: 32
+  pct2: 100
+- activity_id: MER-A-0041
+  name: Controls integration work package 026
+  duration_days: 13
+  predecessors: MER-A-0040
+  float_days: 25
+  critical_path: 'No'
+  start: '2026-03-26'
+  finish: '2026-04-08'
+  wbs: 5
+  pct1: 24
+  pct2: 100
+- activity_id: MER-A-0042
+  name: Commissioning work package 027
+  duration_days: 14
+  predecessors: MER-A-0041
+  float_days: 24
+  critical_path: 'No'
+  start: '2026-03-28'
+  finish: '2026-04-11'
+  wbs: 6
+  pct1: 16
+  pct2: 100
+- activity_id: MER-A-0043
+  name: Civil enabling works work package 028
+  duration_days: 15
+  predecessors: MER-A-0042
+  float_days: 23
+  critical_path: 'No'
+  start: '2026-03-30'
+  finish: '2026-04-14'
+  wbs: 7
+  pct1: 8
+  pct2: 100
+- activity_id: MER-A-0044
+  name: 11kV intake work package 029
+  duration_days: 16
+  predecessors: MER-A-0043
+  float_days: 22
+  critical_path: 'No'
+  start: '2026-04-01'
+  finish: '2026-04-17'
+  wbs: 8
+  pct1: 0
+  pct2: 100
+- activity_id: MER-A-0045
+  name: LV distribution work package 030
+  duration_days: 17
+  predecessors: MER-A-0044
+  float_days: 21
+  critical_path: 'No'
+  start: '2026-04-03'
+  finish: '2026-04-20'
+  wbs: 9
+  pct1: 0
+  pct2: 100
+- activity_id: MER-A-0046
+  name: Chilled-water plant work package 031
+  duration_days: 18
+  predecessors: MER-A-0045
+  float_days: 20
+  critical_path: 'No'
+  start: '2026-04-05'
+  finish: '2026-04-23'
+  wbs: 10
+  pct1: 0
+  pct2: 100
+- activity_id: MER-A-0047
+  name: White-space fitout work package 032
+  duration_days: 19
+  predecessors: MER-A-0046
+  float_days: 19
+  critical_path: 'No'
+  start: '2026-04-07'
+  finish: '2026-04-26'
+  wbs: 11
+  pct1: 0
+  pct2: 96
+- activity_id: MER-A-0048
+  name: Controls integration work package 033
+  duration_days: 20
+  predecessors: MER-A-0047
+  float_days: 18
+  critical_path: 'No'
+  start: '2026-04-09'
+  finish: '2026-04-29'
+  wbs: 12
+  pct1: 0
+  pct2: 88
+- activity_id: MER-A-0049
+  name: Commissioning work package 034
+  duration_days: 5
+  predecessors: MER-A-0048
+  float_days: 17
+  critical_path: 'No'
+  start: '2026-04-11'
+  finish: '2026-04-16'
+  wbs: 1
+  pct1: 0
+  pct2: 80
+- activity_id: MER-A-0050
+  name: Civil enabling works work package 035
+  duration_days: 6
+  predecessors: MER-A-0049
+  float_days: 16
+  critical_path: 'No'
+  start: '2026-04-13'
+  finish: '2026-04-19'
+  wbs: 2
+  pct1: 0
+  pct2: 72
+- activity_id: MER-A-0051
+  name: 11kV intake work package 036
+  duration_days: 7
+  predecessors: MER-A-0050
+  float_days: 15
+  critical_path: 'No'
+  start: '2026-04-15'
+  finish: '2026-04-22'
+  wbs: 3
+  pct1: 0
+  pct2: 64
+- activity_id: MER-A-0052
+  name: LV distribution work package 037
+  duration_days: 8
+  predecessors: MER-A-0051
+  float_days: 14
+  critical_path: 'No'
+  start: '2026-04-17'
+  finish: '2026-04-25'
+  wbs: 4
+  pct1: 0
+  pct2: 56
+- activity_id: MER-A-0053
+  name: Chilled-water plant work package 038
+  duration_days: 9
+  predecessors: MER-A-0052
+  float_days: 13
+  critical_path: 'No'
+  start: '2026-04-19'
+  finish: '2026-04-28'
+  wbs: 5
+  pct1: 0
+  pct2: 48
+- activity_id: MER-A-0054
+  name: White-space fitout work package 039
+  duration_days: 10
+  predecessors: MER-A-0053
+  float_days: 12
+  critical_path: 'No'
+  start: '2026-04-21'
+  finish: '2026-05-01'
+  wbs: 6
+  pct1: 0
+  pct2: 40
+- activity_id: MER-A-0055
+  name: Controls integration work package 040
+  duration_days: 11
+  predecessors: MER-A-0054
+  float_days: 11
+  critical_path: 'No'
+  start: '2026-04-23'
+  finish: '2026-05-04'
+  wbs: 7
+  pct1: 0
+  pct2: 32
+- activity_id: MER-A-0056
+  name: Commissioning work package 041
+  duration_days: 12
+  predecessors: MER-A-0055
+  float_days: 10
+  critical_path: 'No'
+  start: '2026-04-25'
+  finish: '2026-05-07'
+  wbs: 8
+  pct1: 0
+  pct2: 24
+- activity_id: MER-A-0057
+  name: Civil enabling works work package 042
+  duration_days: 13
+  predecessors: MER-A-0056
+  float_days: 9
+  critical_path: 'No'
+  start: '2026-04-27'
+  finish: '2026-05-10'
+  wbs: 9
+  pct1: 0
+  pct2: 16
+- activity_id: MER-A-0058
+  name: 11kV intake work package 043
+  duration_days: 14
+  predecessors: MER-A-0057
+  float_days: 8
+  critical_path: 'No'
+  start: '2026-04-29'
+  finish: '2026-05-13'
+  wbs: 10
+  pct1: 0
+  pct2: 8
+- activity_id: MER-A-0059
+  name: LV distribution work package 044
+  duration_days: 15
+  predecessors: MER-A-0058
+  float_days: 7
+  critical_path: 'No'
+  start: '2026-05-01'
+  finish: '2026-05-16'
+  wbs: 11
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0060
+  name: Chilled-water plant work package 045
+  duration_days: 16
+  predecessors: MER-A-0059
+  float_days: 6
+  critical_path: 'No'
+  start: '2026-05-03'
+  finish: '2026-05-19'
+  wbs: 12
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0061
+  name: White-space fitout work package 046
+  duration_days: 17
+  predecessors: MER-A-0060
+  float_days: 5
+  critical_path: 'No'
+  start: '2026-05-05'
+  finish: '2026-05-22'
+  wbs: 1
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0062
+  name: Controls integration work package 047
+  duration_days: 18
+  predecessors: MER-A-0061
+  float_days: 4
+  critical_path: 'No'
+  start: '2026-05-07'
+  finish: '2026-05-25'
+  wbs: 2
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0063
+  name: Commissioning work package 048
+  duration_days: 19
+  predecessors: MER-A-0062
+  float_days: 3
+  critical_path: 'No'
+  start: '2026-05-09'
+  finish: '2026-05-28'
+  wbs: 3
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0064
+  name: Civil enabling works work package 049
+  duration_days: 20
+  predecessors: MER-A-0063
+  float_days: 2
+  critical_path: 'No'
+  start: '2026-05-11'
+  finish: '2026-05-31'
+  wbs: 4
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0065
+  name: 11kV intake work package 050
+  duration_days: 5
+  predecessors: MER-A-0064
+  float_days: 1
+  critical_path: 'No'
+  start: '2026-05-13'
+  finish: '2026-05-18'
+  wbs: 5
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0066
+  name: LV distribution work package 051
+  duration_days: 6
+  predecessors: MER-A-0065
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-05-15'
+  finish: '2026-05-21'
+  wbs: 6
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0067
+  name: Chilled-water plant work package 052
+  duration_days: 7
+  predecessors: MER-A-0066
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-05-17'
+  finish: '2026-05-24'
+  wbs: 7
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0068
+  name: White-space fitout work package 053
+  duration_days: 8
+  predecessors: MER-A-0067
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-05-19'
+  finish: '2026-05-27'
+  wbs: 8
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0069
+  name: Controls integration work package 054
+  duration_days: 9
+  predecessors: MER-A-0068
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-05-21'
+  finish: '2026-05-30'
+  wbs: 9
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0070
+  name: Commissioning work package 055
+  duration_days: 10
+  predecessors: MER-A-0069
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-05-23'
+  finish: '2026-06-02'
+  wbs: 10
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0071
+  name: Civil enabling works work package 056
+  duration_days: 11
+  predecessors: MER-A-0070
+  float_days: 30
+  critical_path: 'No'
+  start: '2026-05-25'
+  finish: '2026-06-05'
+  wbs: 11
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0072
+  name: 11kV intake work package 057
+  duration_days: 12
+  predecessors: MER-A-0071
+  float_days: 29
+  critical_path: 'No'
+  start: '2026-05-27'
+  finish: '2026-06-08'
+  wbs: 12
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0073
+  name: LV distribution work package 058
+  duration_days: 13
+  predecessors: MER-A-0072
+  float_days: 28
+  critical_path: 'No'
+  start: '2026-05-29'
+  finish: '2026-06-11'
+  wbs: 1
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0074
+  name: Chilled-water plant work package 059
+  duration_days: 14
+  predecessors: MER-A-0073
+  float_days: 27
+  critical_path: 'No'
+  start: '2026-05-31'
+  finish: '2026-06-14'
+  wbs: 2
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0075
+  name: White-space fitout work package 060
+  duration_days: 15
+  predecessors: MER-A-0074
+  float_days: 26
+  critical_path: 'No'
+  start: '2026-06-02'
+  finish: '2026-06-17'
+  wbs: 3
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0076
+  name: Controls integration work package 061
+  duration_days: 16
+  predecessors: MER-A-0075
+  float_days: 25
+  critical_path: 'No'
+  start: '2026-06-04'
+  finish: '2026-06-20'
+  wbs: 4
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0077
+  name: Commissioning work package 062
+  duration_days: 17
+  predecessors: MER-A-0076
+  float_days: 24
+  critical_path: 'No'
+  start: '2026-06-06'
+  finish: '2026-06-23'
+  wbs: 5
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0078
+  name: Civil enabling works work package 063
+  duration_days: 18
+  predecessors: MER-A-0077
+  float_days: 23
+  critical_path: 'No'
+  start: '2026-06-08'
+  finish: '2026-06-26'
+  wbs: 6
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0079
+  name: 11kV intake work package 064
+  duration_days: 19
+  predecessors: MER-A-0078
+  float_days: 22
+  critical_path: 'No'
+  start: '2026-06-10'
+  finish: '2026-06-29'
+  wbs: 7
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0080
+  name: LV distribution work package 065
+  duration_days: 20
+  predecessors: MER-A-0079
+  float_days: 21
+  critical_path: 'No'
+  start: '2026-06-12'
+  finish: '2026-07-02'
+  wbs: 8
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0081
+  name: Chilled-water plant work package 066
+  duration_days: 5
+  predecessors: MER-A-0080
+  float_days: 20
+  critical_path: 'No'
+  start: '2026-06-14'
+  finish: '2026-06-19'
+  wbs: 9
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0082
+  name: White-space fitout work package 067
+  duration_days: 6
+  predecessors: MER-A-0081
+  float_days: 19
+  critical_path: 'No'
+  start: '2026-06-16'
+  finish: '2026-06-22'
+  wbs: 10
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0083
+  name: Controls integration work package 068
+  duration_days: 7
+  predecessors: MER-A-0082
+  float_days: 18
+  critical_path: 'No'
+  start: '2026-06-18'
+  finish: '2026-06-25'
+  wbs: 11
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0084
+  name: Commissioning work package 069
+  duration_days: 8
+  predecessors: MER-A-0083
+  float_days: 17
+  critical_path: 'No'
+  start: '2026-06-20'
+  finish: '2026-06-28'
+  wbs: 12
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0085
+  name: Civil enabling works work package 070
+  duration_days: 9
+  predecessors: MER-A-0084
+  float_days: 16
+  critical_path: 'No'
+  start: '2026-06-22'
+  finish: '2026-07-01'
+  wbs: 1
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0086
+  name: 11kV intake work package 071
+  duration_days: 10
+  predecessors: MER-A-0085
+  float_days: 15
+  critical_path: 'No'
+  start: '2026-06-24'
+  finish: '2026-07-04'
+  wbs: 2
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0087
+  name: LV distribution work package 072
+  duration_days: 11
+  predecessors: MER-A-0086
+  float_days: 14
+  critical_path: 'No'
+  start: '2026-06-26'
+  finish: '2026-07-07'
+  wbs: 3
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0088
+  name: Chilled-water plant work package 073
+  duration_days: 12
+  predecessors: MER-A-0087
+  float_days: 13
+  critical_path: 'No'
+  start: '2026-06-28'
+  finish: '2026-07-10'
+  wbs: 4
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0089
+  name: White-space fitout work package 074
+  duration_days: 13
+  predecessors: MER-A-0088
+  float_days: 12
+  critical_path: 'No'
+  start: '2026-06-30'
+  finish: '2026-07-13'
+  wbs: 5
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0090
+  name: Controls integration work package 075
+  duration_days: 14
+  predecessors: MER-A-0089
+  float_days: 11
+  critical_path: 'No'
+  start: '2026-07-02'
+  finish: '2026-07-16'
+  wbs: 6
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0091
+  name: Commissioning work package 076
+  duration_days: 15
+  predecessors: MER-A-0090
+  float_days: 10
+  critical_path: 'No'
+  start: '2026-07-04'
+  finish: '2026-07-19'
+  wbs: 7
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0092
+  name: Civil enabling works work package 077
+  duration_days: 16
+  predecessors: MER-A-0091
+  float_days: 9
+  critical_path: 'No'
+  start: '2026-07-06'
+  finish: '2026-07-22'
+  wbs: 8
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0093
+  name: 11kV intake work package 078
+  duration_days: 17
+  predecessors: MER-A-0092
+  float_days: 8
+  critical_path: 'No'
+  start: '2026-07-08'
+  finish: '2026-07-25'
+  wbs: 9
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0094
+  name: LV distribution work package 079
+  duration_days: 18
+  predecessors: MER-A-0093
+  float_days: 7
+  critical_path: 'No'
+  start: '2026-07-10'
+  finish: '2026-07-28'
+  wbs: 10
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0095
+  name: Chilled-water plant work package 080
+  duration_days: 19
+  predecessors: MER-A-0094
+  float_days: 6
+  critical_path: 'No'
+  start: '2026-07-12'
+  finish: '2026-07-31'
+  wbs: 11
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0096
+  name: White-space fitout work package 081
+  duration_days: 20
+  predecessors: MER-A-0095
+  float_days: 5
+  critical_path: 'No'
+  start: '2026-07-14'
+  finish: '2026-08-03'
+  wbs: 12
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0097
+  name: Controls integration work package 082
+  duration_days: 5
+  predecessors: MER-A-0096
+  float_days: 4
+  critical_path: 'No'
+  start: '2026-07-16'
+  finish: '2026-07-21'
+  wbs: 1
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0098
+  name: Commissioning work package 083
+  duration_days: 6
+  predecessors: MER-A-0097
+  float_days: 3
+  critical_path: 'No'
+  start: '2026-07-18'
+  finish: '2026-07-24'
+  wbs: 2
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0099
+  name: Civil enabling works work package 084
+  duration_days: 7
+  predecessors: MER-A-0098
+  float_days: 2
+  critical_path: 'No'
+  start: '2026-07-20'
+  finish: '2026-07-27'
+  wbs: 3
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0100
+  name: 11kV intake work package 085
+  duration_days: 8
+  predecessors: MER-A-0099
+  float_days: 1
+  critical_path: 'No'
+  start: '2026-07-22'
+  finish: '2026-07-30'
+  wbs: 4
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0101
+  name: LV distribution work package 086
+  duration_days: 9
+  predecessors: MER-A-0100
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-07-24'
+  finish: '2026-08-02'
+  wbs: 5
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0102
+  name: Chilled-water plant work package 087
+  duration_days: 10
+  predecessors: MER-A-0101
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-07-26'
+  finish: '2026-08-05'
+  wbs: 6
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0103
+  name: White-space fitout work package 088
+  duration_days: 11
+  predecessors: MER-A-0102
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-07-28'
+  finish: '2026-08-08'
+  wbs: 7
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0104
+  name: Controls integration work package 089
+  duration_days: 12
+  predecessors: MER-A-0103
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-07-30'
+  finish: '2026-08-11'
+  wbs: 8
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0105
+  name: Commissioning work package 090
+  duration_days: 13
+  predecessors: MER-A-0104
+  float_days: 0
+  critical_path: 'Yes'
+  start: '2026-08-01'
+  finish: '2026-08-14'
+  wbs: 9
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0106
+  name: Civil enabling works work package 091
+  duration_days: 14
+  predecessors: MER-A-0105
+  float_days: 30
+  critical_path: 'No'
+  start: '2026-08-03'
+  finish: '2026-08-17'
+  wbs: 10
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0107
+  name: 11kV intake work package 092
+  duration_days: 15
+  predecessors: MER-A-0106
+  float_days: 29
+  critical_path: 'No'
+  start: '2026-08-05'
+  finish: '2026-08-20'
+  wbs: 11
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0108
+  name: LV distribution work package 093
+  duration_days: 16
+  predecessors: MER-A-0107
+  float_days: 28
+  critical_path: 'No'
+  start: '2026-08-07'
+  finish: '2026-08-23'
+  wbs: 12
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0109
+  name: Chilled-water plant work package 094
+  duration_days: 17
+  predecessors: MER-A-0108
+  float_days: 27
+  critical_path: 'No'
+  start: '2026-08-09'
+  finish: '2026-08-26'
+  wbs: 1
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0110
+  name: White-space fitout work package 095
+  duration_days: 18
+  predecessors: MER-A-0109
+  float_days: 26
+  critical_path: 'No'
+  start: '2026-08-11'
+  finish: '2026-08-29'
+  wbs: 2
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0111
+  name: Controls integration work package 096
+  duration_days: 19
+  predecessors: MER-A-0110
+  float_days: 25
+  critical_path: 'No'
+  start: '2026-08-13'
+  finish: '2026-09-01'
+  wbs: 3
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0112
+  name: Commissioning work package 097
+  duration_days: 20
+  predecessors: MER-A-0111
+  float_days: 24
+  critical_path: 'No'
+  start: '2026-08-15'
+  finish: '2026-09-04'
+  wbs: 4
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0113
+  name: Civil enabling works work package 098
+  duration_days: 5
+  predecessors: MER-A-0112
+  float_days: 23
+  critical_path: 'No'
+  start: '2026-08-17'
+  finish: '2026-08-22'
+  wbs: 5
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0114
+  name: 11kV intake work package 099
+  duration_days: 6
+  predecessors: MER-A-0113
+  float_days: 22
+  critical_path: 'No'
+  start: '2026-08-19'
+  finish: '2026-08-25'
+  wbs: 6
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0115
+  name: LV distribution work package 100
+  duration_days: 7
+  predecessors: MER-A-0114
+  float_days: 21
+  critical_path: 'No'
+  start: '2026-08-21'
+  finish: '2026-08-28'
+  wbs: 7
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0116
+  name: Chilled-water plant work package 101
+  duration_days: 8
+  predecessors: MER-A-0115
+  float_days: 20
+  critical_path: 'No'
+  start: '2026-08-23'
+  finish: '2026-08-31'
+  wbs: 8
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0117
+  name: White-space fitout work package 102
+  duration_days: 9
+  predecessors: MER-A-0116
+  float_days: 19
+  critical_path: 'No'
+  start: '2026-08-25'
+  finish: '2026-09-03'
+  wbs: 9
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0118
+  name: Controls integration work package 103
+  duration_days: 10
+  predecessors: MER-A-0117
+  float_days: 18
+  critical_path: 'No'
+  start: '2026-08-27'
+  finish: '2026-09-06'
+  wbs: 10
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0119
+  name: Commissioning work package 104
+  duration_days: 11
+  predecessors: MER-A-0118
+  float_days: 17
+  critical_path: 'No'
+  start: '2026-08-29'
+  finish: '2026-09-09'
+  wbs: 11
+  pct1: 0
+  pct2: 0
+- activity_id: MER-A-0120
+  name: Civil enabling works work package 105
+  duration_days: 12
+  predecessors: MER-A-0119
+  float_days: 16
+  critical_path: 'No'
+  start: '2026-08-31'
+  finish: '2026-09-12'
+  wbs: 12
+  pct1: 0
+  pct2: 0
+risks:
+- risk: PO arithmetic breaches required-on-site date
+  signal_date: '2026-01-12'
+  impact_date: '2026-08-17'
+  actual_delay_days: 18
+  evidence:
+  - registers/po_register.csv
+  - registers/schedule.csv
+- risk: Float erodes across consecutive data dates
+  signal_date: '2026-05-01'
+  impact_date: '2026-07-20'
+  actual_delay_days: 12
+  evidence:
+  - p6/update_2026-04-01
+  - p6/update_2026-05-01
+- risk: Approval cycle duration trend predicts late resubmittal
+  signal_date: '2026-03-18'
+  impact_date: '2026-04-14'
+  actual_delay_days: 9
+  evidence:
+  - aconex/Workflow_History.json
+  - aconex/Transmittal_Registry.json
+- risk: Transshipment hub dwell exceeds route baseline
+  signal_date: '2026-07-03'
+  impact_date: '2026-08-05'
+  actual_delay_days: 11
+  evidence:
+  - logistics/shipments.json
+  - sap/po_odata.json
+  - p6/update_2026-05-01
+commissioning:
+- test_id: CX-MER-001
+  level: L1
+  system: 21 22 00
+  spec_clause: 21 22 00 2.2.A
+  acceptance_criteria: 'Cylinder working pressure: 42 bar; measured 42 bar'
+  status: Passed
+- test_id: CX-MER-002
+  level: L2
+  system: 21 22 00
+  spec_clause: 21 22 00 2.3.C
+  acceptance_criteria: 'Agent concentration: 7.2 %; measured 7.2 %'
+  status: Passed
+- test_id: CX-MER-003
+  level: L3
+  system: 21 22 00
+  spec_clause: 21 22 00 2.4.B
+  acceptance_criteria: 'Discharge duration: 10 s; measured outside acceptance band'
+  status: Failed
+- test_id: CX-MER-004
+  level: L4
+  system: 23 21 13
+  spec_clause: 23 21 13 2.1.B
+  acceptance_criteria: 'Pipe material: ASTM A106 Grade B; measured ASTM A106 Grade
+    B'
+  status: Passed
+- test_id: CX-MER-005
+  level: L5
+  system: 23 21 13
+  spec_clause: 23 21 13 2.2.D
+  acceptance_criteria: 'Design pressure: 16 bar; measured 16 bar'
+  status: Passed
+- test_id: CX-MER-006
+  level: L1
+  system: 23 21 13
+  spec_clause: 23 21 13 2.5.C
+  acceptance_criteria: 'Hydrotest pressure: 24 bar; measured 24 bar'
+  status: Passed
+- test_id: CX-MER-007
+  level: L2
+  system: 23 21 13
+  spec_clause: 23 21 13 3.6.B
+  acceptance_criteria: 'Flushing velocity: 3.0 m/s; measured outside acceptance band'
+  status: Failed
+- test_id: CX-MER-008
+  level: L3
+  system: 23 64 26
+  spec_clause: 23 64 26 2.1.C
+  acceptance_criteria: 'Full-load COP: 6.3; measured 6.3'
+  status: Passed
+- test_id: CX-MER-009
+  level: L4
+  system: 23 64 26
+  spec_clause: 23 64 26 2.2.B
+  acceptance_criteria: 'Cooling duty: 1250 TR'
+  status: Planned
+- test_id: CX-MER-010
+  level: L5
+  system: 23 64 26
+  spec_clause: 23 64 26 2.3.D
+  acceptance_criteria: 'Evaporator pressure drop: 85 kPa'
+  status: Planned
+- test_id: CX-MER-011
+  level: L1
+  system: 23 65 00
+  spec_clause: 23 65 00 2.1.B
+  acceptance_criteria: 'Thermal capacity: 4500 kW'
+  status: Planned
+- test_id: CX-MER-012
+  level: L2
+  system: 23 65 00
+  spec_clause: 23 65 00 2.2.C
+  acceptance_criteria: 'Fan specific power: 0.028 kW/kW'
+  status: Planned
+- test_id: CX-MER-013
+  level: L3
+  system: 23 65 00
+  spec_clause: 23 65 00 2.4.A
+  acceptance_criteria: 'Sound pressure at 1 m: 82 dBA'
+  status: Planned
+- test_id: CX-MER-014
+  level: L4
+  system: 23 09 23
+  spec_clause: 23 09 23 2.2.A
+  acceptance_criteria: 'Controller scan cycle: 1 s'
+  status: Planned
+- test_id: CX-MER-015
+  level: L5
+  system: 23 09 23
+  spec_clause: 23 09 23 2.3.C
+  acceptance_criteria: 'Temperature sensor accuracy: 0.15 C'
+  status: Planned
+- test_id: CX-MER-016
+  level: L1
+  system: 23 09 23
+  spec_clause: 23 09 23 2.5.B
+  acceptance_criteria: 'Trend retention: 24 months'
+  status: Planned
+- test_id: CX-MER-017
+  level: L2
+  system: 23 09 23
+  spec_clause: 23 09 23 3.5.A
+  acceptance_criteria: 'Point-to-point test coverage: 100 %'
+  status: Planned
+- test_id: CX-MER-018
+  level: L3
+  system: 25 50 00
+  spec_clause: 25 50 00 2.2.B
+  acceptance_criteria: 'BACnet revision: Protocol Revision 18'
+  status: Planned
+- test_id: CX-MER-019
+  level: L4
+  system: 25 50 00
+  spec_clause: 25 50 00 2.5.A
+  acceptance_criteria: 'Event propagation latency: 2 s'
+  status: Planned
+- test_id: CX-MER-020
+  level: L5
+  system: 25 50 00
+  spec_clause: 25 50 00 3.4.D
+  acceptance_criteria: 'Integrated point test: 100 %'
+  status: Planned
+- test_id: CX-MER-021
+  level: L1
+  system: 26 05 26
+  spec_clause: 26 05 26 2.1.C
+  acceptance_criteria: 'Earth conductor purity: 99.9 %'
+  status: Planned
+- test_id: CX-MER-022
+  level: L2
+  system: 26 05 26
+  spec_clause: 26 05 26 2.3.B
+  acceptance_criteria: 'Earth grid resistance: 0.5 ohm'
+  status: Planned
+- test_id: CX-MER-023
+  level: L3
+  system: 26 05 26
+  spec_clause: 26 05 26 3.3.C
+  acceptance_criteria: 'Bond continuity: 0.1 ohm'
+  status: Planned
+- test_id: CX-MER-024
+  level: L4
+  system: 26 05 26
+  spec_clause: 26 05 26 3.4.A
+  acceptance_criteria: 'Test standard: IS 3043:2018'
+  status: Planned
+- test_id: CX-MER-025
+  level: L5
+  system: 26 24 13
+  spec_clause: 26 24 13 2.2.D
+  acceptance_criteria: 'Short-circuit withstand: 65 kA for 1 s'
+  status: Planned
+- test_id: CX-MER-026
+  level: L1
+  system: 26 24 13
+  spec_clause: 26 24 13 2.3.A
+  acceptance_criteria: 'Rated operational voltage: 415 V'
+  status: Planned
+- test_id: CX-MER-027
+  level: L2
+  system: 26 24 13
+  spec_clause: 26 24 13 2.4.C
+  acceptance_criteria: 'Busbar temperature rise: 70 K'
+  status: Planned
+- test_id: CX-MER-028
+  level: L3
+  system: 26 24 13
+  spec_clause: 26 24 13 3.5.B
+  acceptance_criteria: 'Dielectric withstand: 2.5 kV for 60 s'
+  status: Planned
+- test_id: CX-MER-029
+  level: L4
+  system: 26 32 13
+  spec_clause: 26 32 13 2.1.B
+  acceptance_criteria: 'Prime power rating: 2500 kVA at 0.8 pf'
+  status: Planned
+- test_id: CX-MER-030
+  level: L5
+  system: 26 32 13
+  spec_clause: 26 32 13 2.3.C
+  acceptance_criteria: 'Frequency regulation: 0.5 %'
+  status: Planned
+- test_id: CX-MER-031
+  level: L1
+  system: 26 32 13
+  spec_clause: 26 32 13 3.4.B
+  acceptance_criteria: 'Load acceptance: 80 % in one step'
+  status: Planned
+- test_id: CX-MER-032
+  level: L2
+  system: 26 33 53
+  spec_clause: 26 33 53 2.2.A
+  acceptance_criteria: 'Rated output: 2000 kVA'
+  status: Planned
+- test_id: CX-MER-033
+  level: L3
+  system: 26 33 53
+  spec_clause: 26 33 53 2.4.C
+  acceptance_criteria: 'Efficiency at 50% load: 96.5 % at 0.9 lagging pf'
+  status: Planned
+- test_id: CX-MER-034
+  level: L4
+  system: 26 33 53
+  spec_clause: 26 33 53 2.6.B
+  acceptance_criteria: 'Battery autonomy: 15 min at 1600 kW'
+  status: Planned
+- test_id: CX-MER-035
+  level: L5
+  system: 26 33 53
+  spec_clause: 26 33 53 2.7.D
+  acceptance_criteria: 'Performance standard: IEC 62040-3:2021 at 0.9 lagging pf'
+  status: Planned
+- test_id: CX-MER-036
+  level: L1
+  system: 27 15 00
+  spec_clause: 27 15 00 2.2.C
+  acceptance_criteria: 'Channel insertion loss at 500 MHz: 47.1 dB'
+  status: Planned
+- test_id: CX-MER-037
+  level: L2
+  system: 27 15 00
+  spec_clause: 27 15 00 2.3.B
+  acceptance_criteria: 'Optical attenuation at 1550 nm: 0.22 dB/km'
+  status: Planned
+- test_id: CX-MER-038
+  level: L3
+  system: 27 15 00
+  spec_clause: 27 15 00 3.5.A
+  acceptance_criteria: 'Permanent-link test coverage: 100 %'
+  status: Planned
+- test_id: CX-MER-039
+  level: L4
+  system: 28 31 11
+  spec_clause: 28 31 11 2.2.B
+  acceptance_criteria: 'Loop capacity: 250 devices'
+  status: Planned
+- test_id: CX-MER-040
+  level: L5
+  system: 28 31 11
+  spec_clause: 28 31 11 2.3.D
+  acceptance_criteria: 'Alarm response: 3 s'
+  status: Planned
+- test_id: CX-MER-041
+  level: L1
+  system: 28 31 11
+  spec_clause: 28 31 11 2.5.C
+  acceptance_criteria: 'Battery standby: 24 h plus 30 min alarm'
+  status: Planned
+- test_id: CX-MER-042
+  level: L2
+  system: 28 31 11
+  spec_clause: 28 31 11 3.6.A
+  acceptance_criteria: 'Cause-and-effect test coverage: 100 %'
+  status: Planned
+- test_id: CX-MER-043
+  level: L3
+  system: 21 22 00
+  spec_clause: 21 22 00 2.2.A
+  acceptance_criteria: 'Cylinder working pressure: 42 bar'
+  status: Planned
+- test_id: CX-MER-044
+  level: L4
+  system: 21 22 00
+  spec_clause: 21 22 00 2.3.C
+  acceptance_criteria: 'Agent concentration: 7.2 %'
+  status: Planned
+- test_id: CX-MER-045
+  level: L5
+  system: 21 22 00
+  spec_clause: 21 22 00 2.4.B
+  acceptance_criteria: 'Discharge duration: 10 s'
+  status: Planned
+- test_id: CX-MER-046
+  level: L1
+  system: 23 21 13
+  spec_clause: 23 21 13 2.1.B
+  acceptance_criteria: 'Pipe material: ASTM A106 Grade B'
+  status: Planned
+- test_id: CX-MER-047
+  level: L2
+  system: 23 21 13
+  spec_clause: 23 21 13 2.2.D
+  acceptance_criteria: 'Design pressure: 16 bar'
+  status: Planned
+- test_id: CX-MER-048
+  level: L3
+  system: 23 21 13
+  spec_clause: 23 21 13 2.5.C
+  acceptance_criteria: 'Hydrotest pressure: 24 bar'
+  status: Planned
+- test_id: CX-MER-049
+  level: L4
+  system: 23 21 13
+  spec_clause: 23 21 13 3.6.B
+  acceptance_criteria: 'Flushing velocity: 3.0 m/s'
+  status: Planned
+- test_id: CX-MER-050
+  level: L5
+  system: 23 64 26
+  spec_clause: 23 64 26 2.1.C
+  acceptance_criteria: 'Full-load COP: 6.3'
+  status: Planned
+- test_id: CX-MER-051
+  level: L1
+  system: 23 64 26
+  spec_clause: 23 64 26 2.2.B
+  acceptance_criteria: 'Cooling duty: 1250 TR'
+  status: Planned
+- test_id: CX-MER-052
+  level: L2
+  system: 23 64 26
+  spec_clause: 23 64 26 2.3.D
+  acceptance_criteria: 'Evaporator pressure drop: 85 kPa'
+  status: Planned
+- test_id: CX-MER-053
+  level: L3
+  system: 23 65 00
+  spec_clause: 23 65 00 2.1.B
+  acceptance_criteria: 'Thermal capacity: 4500 kW'
+  status: Planned
+- test_id: CX-MER-054
+  level: L4
+  system: 23 65 00
+  spec_clause: 23 65 00 2.2.C
+  acceptance_criteria: 'Fan specific power: 0.028 kW/kW'
+  status: Planned
+- test_id: CX-MER-055
+  level: L5
+  system: 23 65 00
+  spec_clause: 23 65 00 2.4.A
+  acceptance_criteria: 'Sound pressure at 1 m: 82 dBA'
+  status: Planned
+- test_id: CX-MER-056
+  level: L1
+  system: 23 09 23
+  spec_clause: 23 09 23 2.2.A
+  acceptance_criteria: 'Controller scan cycle: 1 s'
+  status: Planned
+- test_id: CX-MER-057
+  level: L2
+  system: 23 09 23
+  spec_clause: 23 09 23 2.3.C
+  acceptance_criteria: 'Temperature sensor accuracy: 0.15 C'
+  status: Planned
+- test_id: CX-MER-058
+  level: L3
+  system: 23 09 23
+  spec_clause: 23 09 23 2.5.B
+  acceptance_criteria: 'Trend retention: 24 months'
+  status: Planned
+- test_id: CX-MER-059
+  level: L4
+  system: 23 09 23
+  spec_clause: 23 09 23 3.5.A
+  acceptance_criteria: 'Point-to-point test coverage: 100 %'
+  status: Planned
+- test_id: CX-MER-060
+  level: L5
+  system: 25 50 00
+  spec_clause: 25 50 00 2.2.B
+  acceptance_criteria: 'BACnet revision: Protocol Revision 18'
+  status: Planned
+- test_id: CX-MER-061
+  level: L1
+  system: 25 50 00
+  spec_clause: 25 50 00 2.5.A
+  acceptance_criteria: 'Event propagation latency: 2 s'
+  status: Planned
+- test_id: CX-MER-062
+  level: L2
+  system: 25 50 00
+  spec_clause: 25 50 00 3.4.D
+  acceptance_criteria: 'Integrated point test: 100 %'
+  status: Planned
+- test_id: CX-MER-063
+  level: L3
+  system: 26 05 26
+  spec_clause: 26 05 26 2.1.C
+  acceptance_criteria: 'Earth conductor purity: 99.9 %'
+  status: Planned
+- test_id: CX-MER-064
+  level: L4
+  system: 26 05 26
+  spec_clause: 26 05 26 2.3.B
+  acceptance_criteria: 'Earth grid resistance: 0.5 ohm'
+  status: Planned
+- test_id: CX-MER-065
+  level: L5
+  system: 26 05 26
+  spec_clause: 26 05 26 3.3.C
+  acceptance_criteria: 'Bond continuity: 0.1 ohm'
+  status: Planned
+- test_id: CX-MER-066
+  level: L1
+  system: 26 05 26
+  spec_clause: 26 05 26 3.4.A
+  acceptance_criteria: 'Test standard: IS 3043:2018'
+  status: Planned
+- test_id: CX-MER-067
+  level: L2
+  system: 26 24 13
+  spec_clause: 26 24 13 2.2.D
+  acceptance_criteria: 'Short-circuit withstand: 65 kA for 1 s'
+  status: Planned
+- test_id: CX-MER-068
+  level: L3
+  system: 26 24 13
+  spec_clause: 26 24 13 2.3.A
+  acceptance_criteria: 'Rated operational voltage: 415 V'
+  status: Planned
+- test_id: CX-MER-069
+  level: L4
+  system: 26 24 13
+  spec_clause: 26 24 13 2.4.C
+  acceptance_criteria: 'Busbar temperature rise: 70 K'
+  status: Planned
+- test_id: CX-MER-070
+  level: L5
+  system: 26 24 13
+  spec_clause: 26 24 13 3.5.B
+  acceptance_criteria: 'Dielectric withstand: 2.5 kV for 60 s'
+  status: Planned
+- test_id: CX-MER-071
+  level: L1
+  system: 26 32 13
+  spec_clause: 26 32 13 2.1.B
+  acceptance_criteria: 'Prime power rating: 2500 kVA at 0.8 pf'
+  status: Planned
+- test_id: CX-MER-072
+  level: L2
+  system: 26 32 13
+  spec_clause: 26 32 13 2.3.C
+  acceptance_criteria: 'Frequency regulation: 0.5 %'
+  status: Planned
+- test_id: CX-MER-073
+  level: L3
+  system: 26 32 13
+  spec_clause: 26 32 13 3.4.B
+  acceptance_criteria: 'Load acceptance: 80 % in one step'
+  status: Planned
+- test_id: CX-MER-074
+  level: L4
+  system: 26 33 53
+  spec_clause: 26 33 53 2.2.A
+  acceptance_criteria: 'Rated output: 2000 kVA'
+  status: Planned
+- test_id: CX-MER-075
+  level: L5
+  system: 26 33 53
+  spec_clause: 26 33 53 2.4.C
+  acceptance_criteria: 'Efficiency at 50% load: 96.5 % at 0.9 lagging pf'
+  status: Planned
+- test_id: CX-MER-076
+  level: L1
+  system: 26 33 53
+  spec_clause: 26 33 53 2.6.B
+  acceptance_criteria: 'Battery autonomy: 15 min at 1600 kW'
+  status: Planned
+- test_id: CX-MER-077
+  level: L2
+  system: 26 33 53
+  spec_clause: 26 33 53 2.7.D
+  acceptance_criteria: 'Performance standard: IEC 62040-3:2021 at 0.9 lagging pf'
+  status: Planned
+- test_id: CX-MER-078
+  level: L3
+  system: 27 15 00
+  spec_clause: 27 15 00 2.2.C
+  acceptance_criteria: 'Channel insertion loss at 500 MHz: 47.1 dB'
+  status: Planned
+- test_id: CX-MER-079
+  level: L4
+  system: 27 15 00
+  spec_clause: 27 15 00 2.3.B
+  acceptance_criteria: 'Optical attenuation at 1550 nm: 0.22 dB/km'
+  status: Planned
+- test_id: CX-MER-080
+  level: L5
+  system: 27 15 00
+  spec_clause: 27 15 00 3.5.A
+  acceptance_criteria: 'Permanent-link test coverage: 100 %'
+  status: Planned
+- test_id: CX-MER-081
+  level: L1
+  system: 28 31 11
+  spec_clause: 28 31 11 2.2.B
+  acceptance_criteria: 'Loop capacity: 250 devices'
+  status: Planned
+- test_id: CX-MER-082
+  level: L2
+  system: 28 31 11
+  spec_clause: 28 31 11 2.3.D
+  acceptance_criteria: 'Alarm response: 3 s'
+  status: Planned
+coverage_omissions:
+- 21 22 00 3.4.A
+- 23 64 26 3.4.C
+- 23 65 00 3.3.B
+- 25 50 00 2.3.C
+- 26 32 13 2.4.D
+- 27 15 00 2.4.D
+rfis:
+- rfi_id: RFI-MER-001
+  section: 21 22 00
+  question: Confirm whether ADD-001 revises chiller full-load COP from 6.0 to 6.3
+    and whether R1 shall supersede R0.
+  status: Closed
+- rfi_id: RFI-MER-002
+  section: 23 21 13
+  question: Confirm interpretation and acceptance evidence for Section 23 21 13 clause
+    2.2.D.
+  status: Answered
+- rfi_id: RFI-MER-003
+  section: 23 64 26
+  question: Confirm interpretation and acceptance evidence for Section 23 64 26 clause
+    2.3.D.
+  status: Open
+- rfi_id: RFI-MER-004
+  section: 23 65 00
+  question: Confirm interpretation and acceptance evidence for Section 23 65 00 clause
+    3.3.B.
+  status: Closed
+- rfi_id: RFI-MER-005
+  section: 23 09 23
+  question: Confirm interpretation and acceptance evidence for Section 23 09 23 clause
+    2.2.A.
+  status: Answered
+- rfi_id: RFI-MER-006
+  section: 25 50 00
+  question: Confirm interpretation and acceptance evidence for Section 25 50 00 clause
+    2.3.C.
+  status: Open
+- rfi_id: RFI-MER-007
+  section: 26 05 26
+  question: Confirm interpretation and acceptance evidence for Section 26 05 26 clause
+    3.3.C.
+  status: Closed
+- rfi_id: RFI-MER-008
+  section: 26 24 13
+  question: Confirm interpretation and acceptance evidence for Section 26 24 13 clause
+    3.5.B.
+  status: Answered
+- rfi_id: RFI-MER-009
+  section: 26 32 13
+  question: Confirm interpretation and acceptance evidence for Section 26 32 13 clause
+    2.1.B.
+  status: Open
+- rfi_id: RFI-MER-010
+  section: 26 33 53
+  question: Confirm interpretation and acceptance evidence for Section 26 33 53 clause
+    2.4.C.
+  status: Closed
+- rfi_id: RFI-MER-011
+  section: 27 15 00
+  question: Confirm interpretation and acceptance evidence for Section 27 15 00 clause
+    2.4.D.
+  status: Answered
+- rfi_id: RFI-MER-012
+  section: 28 31 11
+  question: Confirm interpretation and acceptance evidence for Section 28 31 11 clause
+    3.6.A.
+  status: Open
+- rfi_id: RFI-MER-013
+  section: 21 22 00
+  question: Confirm interpretation and acceptance evidence for Section 21 22 00 clause
+    2.2.A.
+  status: Closed
+- rfi_id: RFI-MER-014
+  section: 23 21 13
+  question: Confirm interpretation and acceptance evidence for Section 23 21 13 clause
+    2.2.D.
+  status: Answered
+- rfi_id: RFI-MER-015
+  section: 23 64 26
+  question: Confirm interpretation and acceptance evidence for Section 23 64 26 clause
+    2.3.D.
+  status: Open
+- rfi_id: RFI-MER-016
+  section: 23 65 00
+  question: Confirm interpretation and acceptance evidence for Section 23 65 00 clause
+    3.3.B.
+  status: Closed
+- rfi_id: RFI-MER-017
+  section: 23 09 23
+  question: Confirm interpretation and acceptance evidence for Section 23 09 23 clause
+    2.2.A.
+  status: Answered
+- rfi_id: RFI-MER-018
+  section: 25 50 00
+  question: Confirm interpretation and acceptance evidence for Section 25 50 00 clause
+    2.3.C.
+  status: Open
+arcs:
+- chiller COP dispute across RFI, ADD-001 and R1
+- UPS efficiency condition at unity pf versus 0.9 lagging
+- switchboard short-circuit certificate rating
+- CryoCore transshipment dwell and programme slip
+- clean-agent cylinder pressure source conflict
+- mill certificate heat trace absent from materials master
+addenda:
+- id: ADD-001
+  date: '2026-03-02'
+  changes:
+  - section: 23 64 26
+    part: '2.1'
+    old: Minimum full-load COP shall be 6.0.
+    new: Minimum full-load COP shall be 6.3.
+    description: Revised chiller efficiency requirement.
+  - section: 26 33 53
+    part: '2.7'
+    old: Test efficiency in accordance with IEC 62040-3.
+    new: Test efficiency in accordance with IEC 62040-3:2021 at 0.9 lagging power
+      factor; unity-power-factor data may be supplementary only.
+    description: Clarified UPS test condition.
+- id: ADD-002
+  date: '2026-05-11'
+  changes:
+  - section: 23 65 00
+    part: '2.4'
+    old: Sound pressure shall not exceed 84 dBA at 1 m.
+    new: Sound pressure shall not exceed 82 dBA at 1 m.
+    description: Revised cooling-tower acoustics.
+  - section: 27 15 00
+    part: '2.4'
+    old: Cable fire performance shall be Cca-s1,d1,a1.
+    new: Cable fire performance shall be B2ca-s1a,d1,a1.
+    description: Enhanced cable fire class.
+physics:
+  chiller:
+    capacity_tr: 1250
+    cop: 6.3
+    input_kw: 697.9
+    kw_per_ton: 0.5583
+  ups:
+    rating_kva: 2000
+    design_pf: 0.8
+    design_kw: 1600
+    efficiency_curve:
+      '25': 95.2
+      '50': 96.6
+      '75': 96.4
+      '100': 96.1
+    battery_minutes: 15
+    battery_delivered_kwh: 421.1
+  cable:
+    base_ampacity_a: 630
+    ambient_factor: 0.94
+    grouping_factor: 0.85
+    installed_ampacity_a: 503.4
+    design_current_a: 480
+commerce:
+  labour_rate_inr_hr: 1250
+  reconciliation_tolerance_pct: 5.0

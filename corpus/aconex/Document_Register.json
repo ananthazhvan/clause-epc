@@ -1,0 +1,322 @@
+[
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10000,
+    "document_number": "SUB-212200-01-R0",
+    "document_type_id": 200,
+    "revision_status": "R0",
+    "title": "Section 21 22 00 clause 2.2.A technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10001,
+    "document_number": "SUB-232113-01-R0",
+    "document_type_id": 201,
+    "revision_status": "R1",
+    "title": "Section 23 21 13 clause 2.2.D technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10002,
+    "document_number": "SUB-236426-01-R0",
+    "document_type_id": 202,
+    "revision_status": "C",
+    "title": "Section 23 64 26 clause 2.3.D technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10003,
+    "document_number": "SUB-236426-01-R1",
+    "document_type_id": 203,
+    "revision_status": "R0",
+    "title": "Section 23 65 00 clause 3.3.B technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10004,
+    "document_number": "SUB-262413-01-R0",
+    "document_type_id": 200,
+    "revision_status": "R1",
+    "title": "Section 23 09 23 clause 2.2.A technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10005,
+    "document_number": "SUB-262413-02-R0",
+    "document_type_id": 201,
+    "revision_status": "C",
+    "title": "Section 25 50 00 clause 2.3.C technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10006,
+    "document_number": "SUB-263353-01-R0",
+    "document_type_id": 202,
+    "revision_status": "R0",
+    "title": "Section 26 05 26 clause 3.3.C technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10007,
+    "document_number": "SUB-263353-02-R0",
+    "document_type_id": 203,
+    "revision_status": "R1",
+    "title": "Section 26 24 13 clause 3.5.B technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10008,
+    "document_number": "SUB-236500-01-R0",
+    "document_type_id": 200,
+    "revision_status": "C",
+    "title": "Section 26 32 13 clause 2.1.B technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10009,
+    "document_number": "SUB-236500-01-R1",
+    "document_type_id": 201,
+    "revision_status": "R0",
+    "title": "Section 26 33 53 clause 2.4.C technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10010,
+    "document_number": "SUB-263213-01-R0",
+    "document_type_id": 202,
+    "revision_status": "R1",
+    "title": "Section 27 15 00 clause 2.4.D technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10011,
+    "document_number": "SUB-260526-01-R0",
+    "document_type_id": 203,
+    "revision_status": "C",
+    "title": "Section 28 31 11 clause 3.6.A technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10012,
+    "document_number": "SUB-271500-01-R0",
+    "document_type_id": 200,
+    "revision_status": "R0",
+    "title": "Section 21 22 00 clause 2.2.A technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10013,
+    "document_number": "SUB-271500-02-R0",
+    "document_type_id": 201,
+    "revision_status": "R1",
+    "title": "Section 23 21 13 clause 2.2.D technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10014,
+    "document_number": "SUB-283111-01-R0",
+    "document_type_id": 202,
+    "revision_status": "C",
+    "title": "Section 23 64 26 clause 2.3.D technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10015,
+    "document_number": "SUB-255000-01-R0",
+    "document_type_id": 203,
+    "revision_status": "R0",
+    "title": "Section 23 65 00 clause 3.3.B technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10016,
+    "document_number": "SUB-230923-01-R0",
+    "document_type_id": 200,
+    "revision_status": "R1",
+    "title": "Section 23 09 23 clause 2.2.A technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10017,
+    "document_number": "SUB-212200-02-R0",
+    "document_type_id": 201,
+    "revision_status": "C",
+    "title": "Section 25 50 00 clause 2.3.C technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10018,
+    "document_number": "SUB-232113-02-R0",
+    "document_type_id": 202,
+    "revision_status": "R0",
+    "title": "Section 26 05 26 clause 3.3.C technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10019,
+    "document_number": "SUB-263213-02-R0",
+    "document_type_id": 203,
+    "revision_status": "R1",
+    "title": "Section 26 24 13 clause 3.5.B technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10020,
+    "document_number": "SUB-260526-02-R0",
+    "document_type_id": 200,
+    "revision_status": "C",
+    "title": "Section 26 32 13 clause 2.1.B technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10021,
+    "document_number": "SUB-255000-02-R0",
+    "document_type_id": 201,
+    "revision_status": "R0",
+    "title": "Section 26 33 53 clause 2.4.C technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10022,
+    "document_number": "MER-COR-023",
+    "document_type_id": 202,
+    "revision_status": "R1",
+    "title": "Section 27 15 00 clause 2.4.D technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10023,
+    "document_number": "MER-COR-024",
+    "document_type_id": 203,
+    "revision_status": "C",
+    "title": "Section 28 31 11 clause 3.6.A technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10024,
+    "document_number": "MER-COR-025",
+    "document_type_id": 200,
+    "revision_status": "R0",
+    "title": "Section 21 22 00 clause 2.2.A technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10025,
+    "document_number": "MER-COR-026",
+    "document_type_id": 201,
+    "revision_status": "R1",
+    "title": "Section 23 21 13 clause 2.2.D technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10026,
+    "document_number": "MER-COR-027",
+    "document_type_id": 202,
+    "revision_status": "C",
+    "title": "Section 23 64 26 clause 2.3.D technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10027,
+    "document_number": "MER-COR-028",
+    "document_type_id": 203,
+    "revision_status": "R0",
+    "title": "Section 23 65 00 clause 3.3.B technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10028,
+    "document_number": "MER-COR-029",
+    "document_type_id": 200,
+    "revision_status": "R1",
+    "title": "Section 23 09 23 clause 2.2.A technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10029,
+    "document_number": "MER-COR-030",
+    "document_type_id": 201,
+    "revision_status": "C",
+    "title": "Section 25 50 00 clause 2.3.C technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10030,
+    "document_number": "MER-COR-031",
+    "document_type_id": 202,
+    "revision_status": "R0",
+    "title": "Section 26 05 26 clause 3.3.C technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10031,
+    "document_number": "MER-COR-032",
+    "document_type_id": 203,
+    "revision_status": "R1",
+    "title": "Section 26 24 13 clause 3.5.B technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10032,
+    "document_number": "MER-COR-033",
+    "document_type_id": 200,
+    "revision_status": "C",
+    "title": "Section 26 32 13 clause 2.1.B technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10033,
+    "document_number": "MER-COR-034",
+    "document_type_id": 201,
+    "revision_status": "R0",
+    "title": "Section 26 33 53 clause 2.4.C technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10034,
+    "document_number": "MER-COR-035",
+    "document_type_id": 202,
+    "revision_status": "R1",
+    "title": "Section 27 15 00 clause 2.4.D technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10035,
+    "document_number": "MER-COR-036",
+    "document_type_id": 203,
+    "revision_status": "C",
+    "title": "Section 28 31 11 clause 3.6.A technical correspondence"
+  },
+  {
+    "discipline": "Mechanical",
+    "doc_id": 10036,
+    "document_number": "MER-COR-037",
+    "document_type_id": 200,
+    "revision_status": "R0",
+    "title": "Section 21 22 00 clause 2.2.A technical correspondence"
+  },
+  {
+    "discipline": "Electrical",
+    "doc_id": 10037,
+    "document_number": "MER-COR-038",
+    "document_type_id": 201,
+    "revision_status": "R1",
+    "title": "Section 23 21 13 clause 2.2.D technical correspondence"
+  },
+  {
+    "discipline": "Controls",
+    "doc_id": 10038,
+    "document_number": "MER-COR-039",
+    "document_type_id": 202,
+    "revision_status": "C",
+    "title": "Section 23 64 26 clause 2.3.D technical correspondence"
+  },
+  {
+    "discipline": "Life Safety",
+    "doc_id": 10039,
+    "document_number": "MER-COR-040",
+    "document_type_id": 203,
+    "revision_status": "R0",
+    "title": "Section 23 65 00 clause 3.3.B technical correspondence"
+  }
+]

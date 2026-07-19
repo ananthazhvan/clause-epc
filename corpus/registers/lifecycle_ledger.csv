@@ -1,0 +1,106 @@
+equipment_tag,po_number,stage,timestamp,source
+CH-01,4500012301,PO placed,2025-12-05T00:00:00+05:30,project controls ledger
+CH-01,4500012301,Engineering approved,2026-01-02T00:00:00+05:30,project controls ledger
+CH-01,4500012301,Raw material secured,2026-01-29T00:00:00+05:30,project controls ledger
+CH-01,4500012301,Production start,2026-02-21T00:00:00+05:30,project controls ledger
+CH-01,4500012301,FAT passed,2026-05-04T00:00:00+05:30,project controls ledger
+CH-01,4500012301,Packed,2026-05-11T00:00:00+05:30,project controls ledger
+CH-01,4500012301,Shipped,2026-05-16T00:00:00+05:30,project controls ledger
+UPS-01,4500012302,PO placed,2025-12-10T00:00:00+05:30,project controls ledger
+UPS-01,4500012302,Engineering approved,2026-01-07T00:00:00+05:30,project controls ledger
+UPS-01,4500012302,Raw material secured,2026-02-03T00:00:00+05:30,project controls ledger
+UPS-01,4500012302,Production start,2026-02-26T00:00:00+05:30,project controls ledger
+UPS-01,4500012302,FAT passed,2026-05-09T00:00:00+05:30,project controls ledger
+UPS-01,4500012302,Packed,2026-05-16T00:00:00+05:30,project controls ledger
+UPS-01,4500012302,Shipped,2026-05-21T00:00:00+05:30,project controls ledger
+BAT-01,4500012303,PO placed,2025-12-15T00:00:00+05:30,project controls ledger
+BAT-01,4500012303,Engineering approved,2026-01-12T00:00:00+05:30,project controls ledger
+BAT-01,4500012303,Raw material secured,2026-02-08T00:00:00+05:30,project controls ledger
+BAT-01,4500012303,Production start,2026-03-03T00:00:00+05:30,project controls ledger
+BAT-01,4500012303,FAT passed,2026-05-14T00:00:00+05:30,project controls ledger
+BAT-01,4500012303,Packed,2026-05-21T00:00:00+05:30,project controls ledger
+BAT-01,4500012303,Shipped,2026-05-26T00:00:00+05:30,project controls ledger
+MSB-A,4500012304,PO placed,2025-12-20T00:00:00+05:30,project controls ledger
+MSB-A,4500012304,Engineering approved,2026-01-17T00:00:00+05:30,project controls ledger
+MSB-A,4500012304,Raw material secured,2026-02-13T00:00:00+05:30,project controls ledger
+MSB-A,4500012304,Production start,2026-03-08T00:00:00+05:30,project controls ledger
+MSB-A,4500012304,FAT passed,2026-05-19T00:00:00+05:30,project controls ledger
+MSB-A,4500012304,Packed,2026-05-26T00:00:00+05:30,project controls ledger
+MSB-A,4500012304,Shipped,2026-05-31T00:00:00+05:30,project controls ledger
+FAS-01,4500012305,PO placed,2025-12-25T00:00:00+05:30,project controls ledger
+FAS-01,4500012305,Engineering approved,2026-01-22T00:00:00+05:30,project controls ledger
+FAS-01,4500012305,Raw material secured,2026-02-18T00:00:00+05:30,project controls ledger
+FAS-01,4500012305,Production start,2026-03-13T00:00:00+05:30,project controls ledger
+FAS-01,4500012305,FAT passed,2026-05-24T00:00:00+05:30,project controls ledger
+FAS-01,4500012305,Packed,2026-05-31T00:00:00+05:30,project controls ledger
+FAS-01,4500012305,Shipped,2026-06-05T00:00:00+05:30,project controls ledger
+CAF-01,4500012306,PO placed,2025-12-30T00:00:00+05:30,project controls ledger
+CAF-01,4500012306,Engineering approved,2026-01-27T00:00:00+05:30,project controls ledger
+CAF-01,4500012306,Raw material secured,2026-02-23T00:00:00+05:30,project controls ledger
+CAF-01,4500012306,Production start,2026-03-18T00:00:00+05:30,project controls ledger
+CAF-01,4500012306,FAT passed,2026-05-29T00:00:00+05:30,project controls ledger
+CAF-01,4500012306,Packed,2026-06-05T00:00:00+05:30,project controls ledger
+CAF-01,4500012306,Shipped,2026-06-10T00:00:00+05:30,project controls ledger
+CT-01,4500012307,PO placed,2026-01-04T00:00:00+05:30,project controls ledger
+CT-01,4500012307,Engineering approved,2026-02-01T00:00:00+05:30,project controls ledger
+CT-01,4500012307,Raw material secured,2026-02-28T00:00:00+05:30,project controls ledger
+CT-01,4500012307,Production start,2026-03-23T00:00:00+05:30,project controls ledger
+CT-01,4500012307,FAT passed,2026-06-03T00:00:00+05:30,project controls ledger
+CT-01,4500012307,Packed,2026-06-10T00:00:00+05:30,project controls ledger
+CT-01,4500012307,Shipped,2026-06-15T00:00:00+05:30,project controls ledger
+DG-01,4500012308,PO placed,2026-01-09T00:00:00+05:30,project controls ledger
+DG-01,4500012308,Engineering approved,2026-02-06T00:00:00+05:30,project controls ledger
+DG-01,4500012308,Raw material secured,2026-03-05T00:00:00+05:30,project controls ledger
+DG-01,4500012308,Production start,2026-03-28T00:00:00+05:30,project controls ledger
+DG-01,4500012308,FAT passed,2026-06-08T00:00:00+05:30,project controls ledger
+DG-01,4500012308,Packed,2026-06-15T00:00:00+05:30,project controls ledger
+DG-01,4500012308,Shipped,2026-06-20T00:00:00+05:30,project controls ledger
+BMS-01,4500012309,PO placed,2026-01-14T00:00:00+05:30,project controls ledger
+BMS-01,4500012309,Engineering approved,2026-02-11T00:00:00+05:30,project controls ledger
+BMS-01,4500012309,Raw material secured,2026-03-10T00:00:00+05:30,project controls ledger
+BMS-01,4500012309,Production start,2026-04-02T00:00:00+05:30,project controls ledger
+BMS-01,4500012309,FAT passed,2026-06-13T00:00:00+05:30,project controls ledger
+BMS-01,4500012309,Packed,2026-06-20T00:00:00+05:30,project controls ledger
+BMS-01,4500012309,Shipped,2026-06-25T00:00:00+05:30,project controls ledger
+DDC-01,4500012310,PO placed,2026-01-19T00:00:00+05:30,project controls ledger
+DDC-01,4500012310,Engineering approved,2026-02-16T00:00:00+05:30,project controls ledger
+DDC-01,4500012310,Raw material secured,2026-03-15T00:00:00+05:30,project controls ledger
+DDC-01,4500012310,Production start,2026-04-07T00:00:00+05:30,project controls ledger
+DDC-01,4500012310,FAT passed,2026-06-18T00:00:00+05:30,project controls ledger
+DDC-01,4500012310,Packed,2026-06-25T00:00:00+05:30,project controls ledger
+DDC-01,4500012310,Shipped,2026-06-30T00:00:00+05:30,project controls ledger
+CAB-01,4500012311,PO placed,2026-01-24T00:00:00+05:30,project controls ledger
+CAB-01,4500012311,Engineering approved,2026-02-21T00:00:00+05:30,project controls ledger
+CAB-01,4500012311,Raw material secured,2026-03-20T00:00:00+05:30,project controls ledger
+CAB-01,4500012311,Production start,2026-04-12T00:00:00+05:30,project controls ledger
+CAB-01,4500012311,FAT passed,2026-06-23T00:00:00+05:30,project controls ledger
+CAB-01,4500012311,Packed,2026-06-30T00:00:00+05:30,project controls ledger
+CAB-01,4500012311,Shipped,2026-07-05T00:00:00+05:30,project controls ledger
+CHWP-01,4500012312,PO placed,2026-01-29T00:00:00+05:30,project controls ledger
+CHWP-01,4500012312,Engineering approved,2026-02-26T00:00:00+05:30,project controls ledger
+CHWP-01,4500012312,Raw material secured,2026-03-25T00:00:00+05:30,project controls ledger
+CHWP-01,4500012312,Production start,2026-04-17T00:00:00+05:30,project controls ledger
+CHWP-01,4500012312,FAT passed,2026-06-28T00:00:00+05:30,project controls ledger
+CHWP-01,4500012312,Packed,2026-07-05T00:00:00+05:30,project controls ledger
+CHWP-01,4500012312,Shipped,2026-07-10T00:00:00+05:30,project controls ledger
+EARTH-01,4500012313,PO placed,2026-02-03T00:00:00+05:30,project controls ledger
+EARTH-01,4500012313,Engineering approved,2026-03-03T00:00:00+05:30,project controls ledger
+EARTH-01,4500012313,Raw material secured,2026-03-30T00:00:00+05:30,project controls ledger
+EARTH-01,4500012313,Production start,2026-04-22T00:00:00+05:30,project controls ledger
+EARTH-01,4500012313,FAT passed,2026-07-03T00:00:00+05:30,project controls ledger
+EARTH-01,4500012313,Packed,2026-07-10T00:00:00+05:30,project controls ledger
+EARTH-01,4500012313,Shipped,2026-07-15T00:00:00+05:30,project controls ledger
+SYNC-01,4500012314,PO placed,2026-02-08T00:00:00+05:30,project controls ledger
+SYNC-01,4500012314,Engineering approved,2026-03-08T00:00:00+05:30,project controls ledger
+SYNC-01,4500012314,Raw material secured,2026-04-04T00:00:00+05:30,project controls ledger
+SYNC-01,4500012314,Production start,2026-04-27T00:00:00+05:30,project controls ledger
+SYNC-01,4500012314,FAT passed,2026-07-08T00:00:00+05:30,project controls ledger
+SYNC-01,4500012314,Packed,2026-07-15T00:00:00+05:30,project controls ledger
+SYNC-01,4500012314,Shipped,2026-07-20T00:00:00+05:30,project controls ledger
+PDU-01,4500012315,PO placed,2026-02-13T00:00:00+05:30,project controls ledger
+PDU-01,4500012315,Engineering approved,2026-03-13T00:00:00+05:30,project controls ledger
+PDU-01,4500012315,Raw material secured,2026-04-09T00:00:00+05:30,project controls ledger
+PDU-01,4500012315,Production start,2026-05-02T00:00:00+05:30,project controls ledger
+PDU-01,4500012315,FAT passed,2026-07-13T00:00:00+05:30,project controls ledger
+PDU-01,4500012315,Packed,2026-07-20T00:00:00+05:30,project controls ledger
+PDU-01,4500012315,Shipped,2026-07-25T00:00:00+05:30,project controls ledger

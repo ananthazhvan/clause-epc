@@ -1,0 +1,346 @@
+[
+  {
+    "equipmentTag": "CH-01",
+    "loadNumber": "FK-MER-0001",
+    "poNumber": "4500012301",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-15T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-17T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-06-29T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-16T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-19T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-21T00:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "equipmentTag": "UPS-01",
+    "loadNumber": "FK-MER-0002",
+    "poNumber": "4500012302",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-16T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-18T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-06-30T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-06T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-09T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-11T00:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "equipmentTag": "BAT-01",
+    "loadNumber": "FK-MER-0003",
+    "poNumber": "4500012303",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-17T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-19T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-07-01T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-07T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-10T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-12T00:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "equipmentTag": "MSB-A",
+    "loadNumber": "FK-MER-0004",
+    "poNumber": "4500012304",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-18T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-20T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-07-02T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-08T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-11T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-13T00:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "equipmentTag": "FAS-01",
+    "loadNumber": "FK-MER-0005",
+    "poNumber": "4500012305",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-19T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-21T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-07-03T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-09T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-12T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-14T00:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "equipmentTag": "CAF-01",
+    "loadNumber": "FK-MER-0006",
+    "poNumber": "4500012306",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-20T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-22T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-07-04T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-10T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-13T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-15T00:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "equipmentTag": "CT-01",
+    "loadNumber": "FK-MER-0007",
+    "poNumber": "4500012307",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-21T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-23T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-07-05T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-11T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-14T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-16T00:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "equipmentTag": "DG-01",
+    "loadNumber": "FK-MER-0008",
+    "poNumber": "4500012308",
+    "positionUpdates": [
+      {
+        "latitude": 51.92,
+        "locationDescription": "CryoCore Works, Rotterdam, NL",
+        "longitude": 4.48,
+        "timestamp": "2026-06-22T00:00:00+05:30"
+      },
+      {
+        "latitude": 51.95,
+        "locationDescription": "Port of Rotterdam, NL",
+        "longitude": 4.14,
+        "timestamp": "2026-06-24T00:00:00+05:30"
+      },
+      {
+        "latitude": 1.26,
+        "locationDescription": "Port of Singapore, SG",
+        "longitude": 103.84,
+        "timestamp": "2026-07-06T00:00:00+05:30"
+      },
+      {
+        "latitude": 18.95,
+        "locationDescription": "Nhava Sheva Port, IN",
+        "longitude": 72.95,
+        "timestamp": "2026-07-12T00:00:00+05:30"
+      },
+      {
+        "latitude": 20.4,
+        "locationDescription": "ICD Tumb, Vapi, IN",
+        "longitude": 72.89,
+        "timestamp": "2026-07-15T00:00:00+05:30"
+      },
+      {
+        "latitude": 19.05,
+        "locationDescription": "MERIDIAN-1 Site, Navi Mumbai, IN",
+        "longitude": 73.02,
+        "timestamp": "2026-07-17T00:00:00+05:30"
+      }
+    ]
+  }
+]

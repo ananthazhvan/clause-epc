@@ -1,0 +1,83 @@
+test_id,level,system,spec_clause,acceptance_criteria,status
+CX-MER-001,L1,21 22 00,21 22 00 2.2.A,Cylinder working pressure: 42 bar; measured 42 bar,Passed
+CX-MER-002,L2,21 22 00,21 22 00 2.3.C,Agent concentration: 7.2 %; measured 7.2 %,Passed
+CX-MER-003,L3,21 22 00,21 22 00 2.4.B,Discharge duration: 10 s; measured outside acceptance band,Failed
+CX-MER-004,L4,23 21 13,23 21 13 2.1.B,Pipe material: ASTM A106 Grade B; measured ASTM A106 Grade B,Passed
+CX-MER-005,L5,23 21 13,23 21 13 2.2.D,Design pressure: 16 bar; measured 16 bar,Passed
+CX-MER-006,L1,23 21 13,23 21 13 2.5.C,Hydrotest pressure: 24 bar; measured 24 bar,Passed
+CX-MER-007,L2,23 21 13,23 21 13 3.6.B,Flushing velocity: 3.0 m/s; measured outside acceptance band,Failed
+CX-MER-008,L3,23 64 26,23 64 26 2.1.C,Full-load COP: 6.3; measured 6.3,Passed
+CX-MER-009,L4,23 64 26,23 64 26 2.2.B,Cooling duty: 1250 TR,Planned
+CX-MER-010,L5,23 64 26,23 64 26 2.3.D,Evaporator pressure drop: 85 kPa,Planned
+CX-MER-011,L1,23 65 00,23 65 00 2.1.B,Thermal capacity: 4500 kW,Planned
+CX-MER-012,L2,23 65 00,23 65 00 2.2.C,Fan specific power: 0.028 kW/kW,Planned
+CX-MER-013,L3,23 65 00,23 65 00 2.4.A,Sound pressure at 1 m: 82 dBA,Planned
+CX-MER-014,L4,23 09 23,23 09 23 2.2.A,Controller scan cycle: 1 s,Planned
+CX-MER-015,L5,23 09 23,23 09 23 2.3.C,Temperature sensor accuracy: 0.15 C,Planned
+CX-MER-016,L1,23 09 23,23 09 23 2.5.B,Trend retention: 24 months,Planned
+CX-MER-017,L2,23 09 23,23 09 23 3.5.A,Point-to-point test coverage: 100 %,Planned
+CX-MER-018,L3,25 50 00,25 50 00 2.2.B,BACnet revision: Protocol Revision 18,Planned
+CX-MER-019,L4,25 50 00,25 50 00 2.5.A,Event propagation latency: 2 s,Planned
+CX-MER-020,L5,25 50 00,25 50 00 3.4.D,Integrated point test: 100 %,Planned
+CX-MER-021,L1,26 05 26,26 05 26 2.1.C,Earth conductor purity: 99.9 %,Planned
+CX-MER-022,L2,26 05 26,26 05 26 2.3.B,Earth grid resistance: 0.5 ohm,Planned
+CX-MER-023,L3,26 05 26,26 05 26 3.3.C,Bond continuity: 0.1 ohm,Planned
+CX-MER-024,L4,26 05 26,26 05 26 3.4.A,Test standard: IS 3043:2018,Planned
+CX-MER-025,L5,26 24 13,26 24 13 2.2.D,Short-circuit withstand: 65 kA for 1 s,Planned
+CX-MER-026,L1,26 24 13,26 24 13 2.3.A,Rated operational voltage: 415 V,Planned
+CX-MER-027,L2,26 24 13,26 24 13 2.4.C,Busbar temperature rise: 70 K,Planned
+CX-MER-028,L3,26 24 13,26 24 13 3.5.B,Dielectric withstand: 2.5 kV for 60 s,Planned
+CX-MER-029,L4,26 32 13,26 32 13 2.1.B,Prime power rating: 2500 kVA at 0.8 pf,Planned
+CX-MER-030,L5,26 32 13,26 32 13 2.3.C,Frequency regulation: 0.5 %,Planned
+CX-MER-031,L1,26 32 13,26 32 13 3.4.B,Load acceptance: 80 % in one step,Planned
+CX-MER-032,L2,26 33 53,26 33 53 2.2.A,Rated output: 2000 kVA,Planned
+CX-MER-033,L3,26 33 53,26 33 53 2.4.C,Efficiency at 50% load: 96.5 % at 0.9 lagging pf,Planned
+CX-MER-034,L4,26 33 53,26 33 53 2.6.B,Battery autonomy: 15 min at 1600 kW,Planned
+CX-MER-035,L5,26 33 53,26 33 53 2.7.D,Performance standard: IEC 62040-3:2021 at 0.9 lagging pf,Planned
+CX-MER-036,L1,27 15 00,27 15 00 2.2.C,Channel insertion loss at 500 MHz: 47.1 dB,Planned
+CX-MER-037,L2,27 15 00,27 15 00 2.3.B,Optical attenuation at 1550 nm: 0.22 dB/km,Planned
+CX-MER-038,L3,27 15 00,27 15 00 3.5.A,Permanent-link test coverage: 100 %,Planned
+CX-MER-039,L4,28 31 11,28 31 11 2.2.B,Loop capacity: 250 devices,Planned
+CX-MER-040,L5,28 31 11,28 31 11 2.3.D,Alarm response: 3 s,Planned
+CX-MER-041,L1,28 31 11,28 31 11 2.5.C,Battery standby: 24 h plus 30 min alarm,Planned
+CX-MER-042,L2,28 31 11,28 31 11 3.6.A,Cause-and-effect test coverage: 100 %,Planned
+CX-MER-043,L3,21 22 00,21 22 00 2.2.A,Cylinder working pressure: 42 bar,Planned
+CX-MER-044,L4,21 22 00,21 22 00 2.3.C,Agent concentration: 7.2 %,Planned
+CX-MER-045,L5,21 22 00,21 22 00 2.4.B,Discharge duration: 10 s,Planned
+CX-MER-046,L1,23 21 13,23 21 13 2.1.B,Pipe material: ASTM A106 Grade B,Planned
+CX-MER-047,L2,23 21 13,23 21 13 2.2.D,Design pressure: 16 bar,Planned
+CX-MER-048,L3,23 21 13,23 21 13 2.5.C,Hydrotest pressure: 24 bar,Planned
+CX-MER-049,L4,23 21 13,23 21 13 3.6.B,Flushing velocity: 3.0 m/s,Planned
+CX-MER-050,L5,23 64 26,23 64 26 2.1.C,Full-load COP: 6.3,Planned
+CX-MER-051,L1,23 64 26,23 64 26 2.2.B,Cooling duty: 1250 TR,Planned
+CX-MER-052,L2,23 64 26,23 64 26 2.3.D,Evaporator pressure drop: 85 kPa,Planned
+CX-MER-053,L3,23 65 00,23 65 00 2.1.B,Thermal capacity: 4500 kW,Planned
+CX-MER-054,L4,23 65 00,23 65 00 2.2.C,Fan specific power: 0.028 kW/kW,Planned
+CX-MER-055,L5,23 65 00,23 65 00 2.4.A,Sound pressure at 1 m: 82 dBA,Planned
+CX-MER-056,L1,23 09 23,23 09 23 2.2.A,Controller scan cycle: 1 s,Planned
+CX-MER-057,L2,23 09 23,23 09 23 2.3.C,Temperature sensor accuracy: 0.15 C,Planned
+CX-MER-058,L3,23 09 23,23 09 23 2.5.B,Trend retention: 24 months,Planned
+CX-MER-059,L4,23 09 23,23 09 23 3.5.A,Point-to-point test coverage: 100 %,Planned
+CX-MER-060,L5,25 50 00,25 50 00 2.2.B,BACnet revision: Protocol Revision 18,Planned
+CX-MER-061,L1,25 50 00,25 50 00 2.5.A,Event propagation latency: 2 s,Planned
+CX-MER-062,L2,25 50 00,25 50 00 3.4.D,Integrated point test: 100 %,Planned
+CX-MER-063,L3,26 05 26,26 05 26 2.1.C,Earth conductor purity: 99.9 %,Planned
+CX-MER-064,L4,26 05 26,26 05 26 2.3.B,Earth grid resistance: 0.5 ohm,Planned
+CX-MER-065,L5,26 05 26,26 05 26 3.3.C,Bond continuity: 0.1 ohm,Planned
+CX-MER-066,L1,26 05 26,26 05 26 3.4.A,Test standard: IS 3043:2018,Planned
+CX-MER-067,L2,26 24 13,26 24 13 2.2.D,Short-circuit withstand: 65 kA for 1 s,Planned
+CX-MER-068,L3,26 24 13,26 24 13 2.3.A,Rated operational voltage: 415 V,Planned
+CX-MER-069,L4,26 24 13,26 24 13 2.4.C,Busbar temperature rise: 70 K,Planned
+CX-MER-070,L5,26 24 13,26 24 13 3.5.B,Dielectric withstand: 2.5 kV for 60 s,Planned
+CX-MER-071,L1,26 32 13,26 32 13 2.1.B,Prime power rating: 2500 kVA at 0.8 pf,Planned
+CX-MER-072,L2,26 32 13,26 32 13 2.3.C,Frequency regulation: 0.5 %,Planned
+CX-MER-073,L3,26 32 13,26 32 13 3.4.B,Load acceptance: 80 % in one step,Planned
+CX-MER-074,L4,26 33 53,26 33 53 2.2.A,Rated output: 2000 kVA,Planned
+CX-MER-075,L5,26 33 53,26 33 53 2.4.C,Efficiency at 50% load: 96.5 % at 0.9 lagging pf,Planned
+CX-MER-076,L1,26 33 53,26 33 53 2.6.B,Battery autonomy: 15 min at 1600 kW,Planned
+CX-MER-077,L2,26 33 53,26 33 53 2.7.D,Performance standard: IEC 62040-3:2021 at 0.9 lagging pf,Planned
+CX-MER-078,L3,27 15 00,27 15 00 2.2.C,Channel insertion loss at 500 MHz: 47.1 dB,Planned
+CX-MER-079,L4,27 15 00,27 15 00 2.3.B,Optical attenuation at 1550 nm: 0.22 dB/km,Planned
+CX-MER-080,L5,27 15 00,27 15 00 3.5.A,Permanent-link test coverage: 100 %,Planned
+CX-MER-081,L1,28 31 11,28 31 11 2.2.B,Loop capacity: 250 devices,Planned
+CX-MER-082,L2,28 31 11,28 31 11 2.3.D,Alarm response: 3 s,Planned

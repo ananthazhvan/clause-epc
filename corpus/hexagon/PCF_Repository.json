@@ -1,0 +1,502 @@
+[
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0001",
+    "pcf_file_id": "PCF-00001",
+    "weld_joint_id": "WJ-000001"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0002",
+    "pcf_file_id": "PCF-00002",
+    "weld_joint_id": "WJ-000002"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0003",
+    "pcf_file_id": "PCF-00003",
+    "weld_joint_id": "WJ-000003"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0004",
+    "pcf_file_id": "PCF-00004",
+    "weld_joint_id": "WJ-000004"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0005",
+    "pcf_file_id": "PCF-00005",
+    "weld_joint_id": "WJ-000005"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0006",
+    "pcf_file_id": "PCF-00006",
+    "weld_joint_id": "WJ-000006"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0007",
+    "pcf_file_id": "PCF-00007",
+    "weld_joint_id": "WJ-000007"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0008",
+    "pcf_file_id": "PCF-00008",
+    "weld_joint_id": "WJ-000008"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0009",
+    "pcf_file_id": "PCF-00009",
+    "weld_joint_id": "WJ-000009"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0010",
+    "pcf_file_id": "PCF-00010",
+    "weld_joint_id": "WJ-000010"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0011",
+    "pcf_file_id": "PCF-00011",
+    "weld_joint_id": "WJ-000011"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0012",
+    "pcf_file_id": "PCF-00012",
+    "weld_joint_id": "WJ-000012"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0013",
+    "pcf_file_id": "PCF-00013",
+    "weld_joint_id": "WJ-000013"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0014",
+    "pcf_file_id": "PCF-00014",
+    "weld_joint_id": "WJ-000014"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0015",
+    "pcf_file_id": "PCF-00015",
+    "weld_joint_id": "WJ-000015"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0016",
+    "pcf_file_id": "PCF-00016",
+    "weld_joint_id": "WJ-000016"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0017",
+    "pcf_file_id": "PCF-00017",
+    "weld_joint_id": "WJ-000017"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0018",
+    "pcf_file_id": "PCF-00018",
+    "weld_joint_id": "WJ-000018"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0019",
+    "pcf_file_id": "PCF-00019",
+    "weld_joint_id": "WJ-000019"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0020",
+    "pcf_file_id": "PCF-00020",
+    "weld_joint_id": "WJ-000020"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0021",
+    "pcf_file_id": "PCF-00021",
+    "weld_joint_id": "WJ-000021"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0022",
+    "pcf_file_id": "PCF-00022",
+    "weld_joint_id": "WJ-000022"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0023",
+    "pcf_file_id": "PCF-00023",
+    "weld_joint_id": "WJ-000023"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0024",
+    "pcf_file_id": "PCF-00024",
+    "weld_joint_id": "WJ-000024"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0025",
+    "pcf_file_id": "PCF-00025",
+    "weld_joint_id": "WJ-000025"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0026",
+    "pcf_file_id": "PCF-00026",
+    "weld_joint_id": "WJ-000026"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0027",
+    "pcf_file_id": "PCF-00027",
+    "weld_joint_id": "WJ-000027"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0028",
+    "pcf_file_id": "PCF-00028",
+    "weld_joint_id": "WJ-000028"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0029",
+    "pcf_file_id": "PCF-00029",
+    "weld_joint_id": "WJ-000029"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0030",
+    "pcf_file_id": "PCF-00030",
+    "weld_joint_id": "WJ-000030"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0031",
+    "pcf_file_id": "PCF-00031",
+    "weld_joint_id": "WJ-000031"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0032",
+    "pcf_file_id": "PCF-00032",
+    "weld_joint_id": "WJ-000032"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0033",
+    "pcf_file_id": "PCF-00033",
+    "weld_joint_id": "WJ-000033"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0034",
+    "pcf_file_id": "PCF-00034",
+    "weld_joint_id": "WJ-000034"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0035",
+    "pcf_file_id": "PCF-00035",
+    "weld_joint_id": "WJ-000035"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0036",
+    "pcf_file_id": "PCF-00036",
+    "weld_joint_id": "WJ-000036"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0037",
+    "pcf_file_id": "PCF-00037",
+    "weld_joint_id": "WJ-000037"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0038",
+    "pcf_file_id": "PCF-00038",
+    "weld_joint_id": "WJ-000038"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0039",
+    "pcf_file_id": "PCF-00039",
+    "weld_joint_id": "WJ-000039"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0040",
+    "pcf_file_id": "PCF-00040",
+    "weld_joint_id": "WJ-000040"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0041",
+    "pcf_file_id": "PCF-00041",
+    "weld_joint_id": "WJ-000041"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0042",
+    "pcf_file_id": "PCF-00042",
+    "weld_joint_id": "WJ-000042"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0043",
+    "pcf_file_id": "PCF-00043",
+    "weld_joint_id": "WJ-000043"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0044",
+    "pcf_file_id": "PCF-00044",
+    "weld_joint_id": "WJ-000044"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0045",
+    "pcf_file_id": "PCF-00045",
+    "weld_joint_id": "WJ-000045"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0046",
+    "pcf_file_id": "PCF-00046",
+    "weld_joint_id": "WJ-000046"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0047",
+    "pcf_file_id": "PCF-00047",
+    "weld_joint_id": "WJ-000047"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0048",
+    "pcf_file_id": "PCF-00048",
+    "weld_joint_id": "WJ-000048"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0049",
+    "pcf_file_id": "PCF-00049",
+    "weld_joint_id": "WJ-000049"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0050",
+    "pcf_file_id": "PCF-00050",
+    "weld_joint_id": "WJ-000050"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0051",
+    "pcf_file_id": "PCF-00051",
+    "weld_joint_id": "WJ-000051"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0052",
+    "pcf_file_id": "PCF-00052",
+    "weld_joint_id": "WJ-000052"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0053",
+    "pcf_file_id": "PCF-00053",
+    "weld_joint_id": "WJ-000053"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0054",
+    "pcf_file_id": "PCF-00054",
+    "weld_joint_id": "WJ-000054"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0055",
+    "pcf_file_id": "PCF-00055",
+    "weld_joint_id": "WJ-000055"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0056",
+    "pcf_file_id": "PCF-00056",
+    "weld_joint_id": "WJ-000056"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0057",
+    "pcf_file_id": "PCF-00057",
+    "weld_joint_id": "WJ-000057"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0058",
+    "pcf_file_id": "PCF-00058",
+    "weld_joint_id": "WJ-000058"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0059",
+    "pcf_file_id": "PCF-00059",
+    "weld_joint_id": "WJ-000059"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0060",
+    "pcf_file_id": "PCF-00060",
+    "weld_joint_id": "WJ-000060"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0061",
+    "pcf_file_id": "PCF-00061",
+    "weld_joint_id": "WJ-000061"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0062",
+    "pcf_file_id": "PCF-00062",
+    "weld_joint_id": "WJ-000062"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0063",
+    "pcf_file_id": "PCF-00063",
+    "weld_joint_id": "WJ-000063"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0064",
+    "pcf_file_id": "PCF-00064",
+    "weld_joint_id": "WJ-000064"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0065",
+    "pcf_file_id": "PCF-00065",
+    "weld_joint_id": "WJ-000065"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0066",
+    "pcf_file_id": "PCF-00066",
+    "weld_joint_id": "WJ-000066"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0067",
+    "pcf_file_id": "PCF-00067",
+    "weld_joint_id": "WJ-000067"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0068",
+    "pcf_file_id": "PCF-00068",
+    "weld_joint_id": "WJ-000068"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0069",
+    "pcf_file_id": "PCF-00069",
+    "weld_joint_id": "WJ-000069"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0070",
+    "pcf_file_id": "PCF-00070",
+    "weld_joint_id": "WJ-000070"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0071",
+    "pcf_file_id": "PCF-00071",
+    "weld_joint_id": "WJ-000071"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0072",
+    "pcf_file_id": "PCF-00072",
+    "weld_joint_id": "WJ-000072"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0073",
+    "pcf_file_id": "PCF-00073",
+    "weld_joint_id": "WJ-000073"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0074",
+    "pcf_file_id": "PCF-00074",
+    "weld_joint_id": "WJ-000074"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0075",
+    "pcf_file_id": "PCF-00075",
+    "weld_joint_id": "WJ-000075"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0076",
+    "pcf_file_id": "PCF-00076",
+    "weld_joint_id": "WJ-000076"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0077",
+    "pcf_file_id": "PCF-00077",
+    "weld_joint_id": "WJ-000077"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0078",
+    "pcf_file_id": "PCF-00078",
+    "weld_joint_id": "WJ-000078"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0079",
+    "pcf_file_id": "PCF-00079",
+    "weld_joint_id": "WJ-000079"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0080",
+    "pcf_file_id": "PCF-00080",
+    "weld_joint_id": "WJ-000080"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0081",
+    "pcf_file_id": "PCF-00081",
+    "weld_joint_id": "WJ-000081"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0082",
+    "pcf_file_id": "PCF-00082",
+    "weld_joint_id": "WJ-000082"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0083",
+    "pcf_file_id": "PCF-00083",
+    "weld_joint_id": "WJ-000083"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0084",
+    "pcf_file_id": "PCF-00084",
+    "weld_joint_id": "WJ-000084"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0085",
+    "pcf_file_id": "PCF-00085",
+    "weld_joint_id": "WJ-000085"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0086",
+    "pcf_file_id": "PCF-00086",
+    "weld_joint_id": "WJ-000086"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0087",
+    "pcf_file_id": "PCF-00087",
+    "weld_joint_id": "WJ-000087"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0088",
+    "pcf_file_id": "PCF-00088",
+    "weld_joint_id": "WJ-000088"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0089",
+    "pcf_file_id": "PCF-00089",
+    "weld_joint_id": "WJ-000089"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0090",
+    "pcf_file_id": "PCF-00090",
+    "weld_joint_id": "WJ-000090"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0091",
+    "pcf_file_id": "PCF-00091",
+    "weld_joint_id": "WJ-000091"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0092",
+    "pcf_file_id": "PCF-00092",
+    "weld_joint_id": "WJ-000092"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0093",
+    "pcf_file_id": "PCF-00093",
+    "weld_joint_id": "WJ-000093"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0094",
+    "pcf_file_id": "PCF-00094",
+    "weld_joint_id": "WJ-000094"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0095",
+    "pcf_file_id": "PCF-00095",
+    "weld_joint_id": "WJ-000095"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0096",
+    "pcf_file_id": "PCF-00096",
+    "weld_joint_id": "WJ-000096"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0097",
+    "pcf_file_id": "PCF-00097",
+    "weld_joint_id": "WJ-000097"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0098",
+    "pcf_file_id": "PCF-00098",
+    "weld_joint_id": "WJ-000098"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0099",
+    "pcf_file_id": "PCF-00099",
+    "weld_joint_id": "WJ-000099"
+  },
+  {
+    "isometric_drawing_ref": "MER-M-ISO-0100",
+    "pcf_file_id": "PCF-00100",
+    "weld_joint_id": "WJ-000100"
+  }
+]
