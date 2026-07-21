@@ -172,6 +172,29 @@ def main():
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
 
+    # Purge artifacts from corpora no longer staged - stale runs poison the
+    # scoreboard with out-of-scope checks and phantom deviations.
+    staged_names = [os.path.basename(p) for p in
+                    glob.glob(os.path.join(args.corpus, "**", "*"), recursive=True)]
+    staged_blob = " ".join(staged_names)
+    pkgs = set(re.findall(r"SUB-\d{6}-\d{2}-R\d+", staged_blob))
+    sigs = set()
+    for b in staged_names:
+        dd = re.sub(r"\D", "", os.path.splitext(b)[0])
+        if len(dd) >= 6:
+            sigs.add(dd[:6])
+    for f in glob.glob(os.path.join(args.out, "*.json")):
+        b = os.path.basename(f)
+        mm = re.match(r"(?:claims|verdicts|doc)_(SUB-\d{6}-\d{2}-R\d+)", b)
+        if mm and mm.group(1) not in pkgs:
+            os.remove(f)
+            print(f"{b:30s} purged - package no longer staged")
+            continue
+        mm = re.match(r"(?:spec|doc)_(\d{2})_?(\d{2})_?(\d{2})", b)
+        if mm and "".join(mm.groups()) not in sigs:
+            os.remove(f)
+            print(f"{b:30s} purged - section no longer staged")
+
     banned = ["project_bible", "labels.json", "curves_data"]
     pdfs = sorted(
         p for ext in ("pdf", "html", "htm", "txt", "md")

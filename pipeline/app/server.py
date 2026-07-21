@@ -707,6 +707,99 @@ def build_catalog():
     return {"systems": sorted(systems.values(), key=lambda g: order.index(g["id"]) if g["id"] in order else 99)}
 
 
+def build_compliance():
+    """Section-by-section detection ledger - powers the Compliance tab."""
+    secs = {}
+    for p in glob.glob(os.path.join(OUT, "spec_*.json")):
+        d = json.load(open(p))
+        s = d.get("section")
+        if s:
+            secs[s] = {"section": s, "source": d.get("source_pdf"), "clauses": len(d.get("clauses") or []),
+                       "rules": 0, "packages": [], "checks": 0, "verdicts": {},
+                       "deviations": [], "reviews": []}
+    claims_by_pkg = {}
+    for p in glob.glob(os.path.join(OUT, "claims_*.json")):
+        d = json.load(open(p))
+        cl = d.get("claims") if isinstance(d, dict) else d
+        claims_by_pkg[os.path.basename(p)[7:-5]] = len(cl or [])
+    rules_by_sec = {}
+    for p in glob.glob(os.path.join(OUT, "verdicts_*.json")):
+        v = json.load(open(p))
+        e = secs.get(v.get("section"))
+        if e is None:
+            continue
+        e["packages"].append({"package": v.get("package"), "claims": claims_by_pkg.get(v.get("package"), 0)})
+        for r in v.get("results", []):
+            e["checks"] += 1
+            vd = str(r.get("verdict") or "UNKNOWN")
+            e["verdicts"][vd] = e["verdicts"].get(vd, 0) + 1
+            rules_by_sec.setdefault(v.get("section"), set()).add(r.get("rule_id"))
+            if vd == "DEVIATION" and len(e["deviations"]) < 12:
+                e["deviations"].append({"package": v.get("package"), "parameter": r.get("parameter"),
+                                        "reason": str(r.get("reason"))[:220]})
+            if vd == "NEEDS_REVIEW" and len(e["reviews"]) < 10:
+                e["reviews"].append({"package": v.get("package"), "parameter": r.get("parameter"),
+                                     "reason": str(r.get("reason"))[:220]})
+    for s, e in secs.items():
+        e["rules"] = len(rules_by_sec.get(s) or ())
+    return {"sections": sorted(secs.values(), key=lambda x: x["section"]),
+            "totals": {"packages": len(claims_by_pkg), "claims": sum(claims_by_pkg.values()),
+                       "checks": sum(e["checks"] for e in secs.values())},
+            "how": ["Every spec clause goes to the model alone -> structured rule JSON (parameter, operator, limit, unit, condition).",
+                    "Every submittal page goes to the model alone -> claim JSON (parameter, value, unit, quote, page number).",
+                    "Rules x claims are joined deterministically - unit-normalized comparison, no model in that loop.",
+                    "Checks the join cannot settle are adjudicated by the model against the full package text.",
+                    "Conflict sweep: any parameter the package quotes twice with different values is routed to a human with both quotes.",
+                    "Answer-key scoring runs after the ledger is frozen - the key is never a pipeline input."]}
+
+
+def build_risk(q):
+    """Deterministic PO-to-schedule join + seeded Monte Carlo - the Risk tab."""
+    import math
+    sr = load("supply_risk.json") or {}
+    items = sr.get("items") or []
+    bias = float(q.get("delay_days") or 0)
+    sigma = max(0.0, float(q.get("sigma_days") or 14))
+    trials = max(200, min(20000, int(float(q.get("trials") or 2000))))
+    seed = int(float(q.get("seed") or 42))
+
+    def uniforms(s):
+        x = (s * 2654435761 + 1013904223) & 0xFFFFFFFF
+        while True:
+            x = (x * 1664525 + 1013904223) & 0xFFFFFFFF
+            yield (x or 1) / 4294967296.0
+
+    rows = []
+    for it in items:
+        m = it.get("margin_days")
+        if m is None:
+            continue
+        g = uniforms(seed + int(re.sub(r"\D", "", str(it.get("po") or "0"))[-6:] or 0))
+        breach = 0
+        for _ in range(trials):
+            u1, u2 = next(g), next(g)
+            z = math.sqrt(-2 * math.log(u1)) * math.cos(2 * math.pi * u2)
+            if m - (bias + sigma * z) < 0:
+                breach += 1
+        p = breach / trials
+        rows.append({"po": it.get("po"), "vendor": it.get("vendor"), "item": it.get("item"),
+                     "value_inr": it.get("value_inr"), "critical_path": it.get("critical_path"),
+                     "sap": {"delivery_status": it.get("delivery_status"),
+                             "projected_arrival": it.get("projected_arrival"), "location": it.get("location")},
+                     "p6": {"activity": it.get("activity"), "activity_name": it.get("activity_name"),
+                            "needed_on_site": it.get("needed_on_site"), "float_days": it.get("float_days")},
+                     "join": {"margin_days": m, "status": it.get("status"),
+                              "breach_in_weeks": (0 if m < 0 else round(m / 7.0, 1)),
+                              "p_breach": round(p, 3)}})
+    rows.sort(key=lambda r: (-r["join"]["p_breach"], r["join"]["margin_days"]))
+    return {"params": {"delay_days": bias, "sigma_days": sigma, "trials": trials, "seed": seed},
+            "items": rows,
+            "summary": {"pos": len(rows),
+                        "already_late": sum(1 for r in rows if r["join"]["margin_days"] < 0),
+                        "expected_breaches": round(sum(r["join"]["p_breach"] for r in rows), 1),
+                        "value_at_risk_inr": round(sum(float(r.get("value_inr") or 0) * r["join"]["p_breach"] for r in rows))}}
+
+
 def score_answer_key(key):
     """EVAL ONLY - compare the finished ledger against an answer key the user
     explicitly uploads AFTER a run. Never read by any pipeline stage."""
@@ -748,8 +841,11 @@ def score_answer_key(key):
         tally["planted"] += 1
         want = toks(it.get("spec_clause")) | toks(it.get("parameter")) | \
                toks(it.get("clause")) | toks(it.get("description")) | toks(it.get("explanation"))
+        doc = str(it.get("document") or it.get("package") or "").strip()
+        cand = [r for r in rows if r.get("package") == doc] if doc else []
+        cand = cand or rows  # fall back when the key names no (or an unknown) package
         best, bs = None, 0
-        for r in rows:
+        for r in cand:
             sc = len(want & toks(row_text(r)))
             if sc > bs:
                 best, bs = r, sc
@@ -1008,6 +1104,13 @@ class Handler(BaseHTTPRequestHandler):
             ("project",): project_state,
             ("catalog",): build_catalog,
         }
+        if parts == ["compliance"]:
+            return self._send(200, build_compliance())
+        if parts == ["risk"]:
+            try:
+                return self._send(200, build_risk(q))
+            except (ValueError, TypeError) as e:
+                return self._send(400, {"error": str(e)[:200]})
         key = tuple(parts)
         if key in simple:
             return self._send(200, simple[key]())

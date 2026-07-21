@@ -252,6 +252,25 @@ async function vGlobe(view) {
     markers.length = 0;
     for (const s of ships) {
       const g = s.geo;
+      const tr = (g.trail || []).filter((p) => p && p[0] != null && p[1] != null);
+      if (tr.length > 1) {
+        ctx.strokeStyle = COL.warn; ctx.lineWidth = 1.3; ctx.setLineDash([]); ctx.globalAlpha = 0.85;
+        ctx.beginPath();
+        let tpen = false;
+        for (let ti = 1; ti < tr.length; ti++) {
+          for (const p of arc3([tr[ti - 1][0], tr[ti - 1][1]], [tr[ti][0], tr[ti][1]], 24)) {
+            const q = proj(p[0], p[1]);
+            if (q[2] > 0.015) { if (tpen) ctx.lineTo(q[0], q[1]); else { ctx.moveTo(q[0], q[1]); tpen = true; } }
+            else tpen = false;
+          }
+        }
+        ctx.stroke();
+        for (const t of tr) {
+          const q = proj(t[0], t[1]);
+          if (q[2] > 0.015) { ctx.beginPath(); ctx.arc(q[0], q[1], 1.8, 0, Math.PI * 2); ctx.fillStyle = COL.ink3; ctx.fill(); }
+        }
+        ctx.globalAlpha = 1;
+      }
       if (g.origin && g.destination && g.origin[0] != null && g.destination[0] != null) {
         ctx.strokeStyle = COL.ink3; ctx.lineWidth = 1; ctx.setLineDash([2, 4]); ctx.globalAlpha = 0.8;
         ctx.beginPath();

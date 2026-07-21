@@ -127,6 +127,8 @@ const ROUTES = [
   { id: "graph", label: "Graph", icon: "graph", fn: vGraph, group: 1 },
   { id: "globe", label: "Globe", icon: "facility", fn: vGlobe, group: 1 },
   { id: "data", label: "Data", icon: "hub", fn: vData, group: 1 },
+  { id: "compliance", label: "Compliance", icon: "review", fn: vCompliance, group: 2 },
+  { id: "risk", label: "Risk", icon: "graph", fn: vRisk, group: 2 },
   { id: "review", label: "Ledger", icon: "review", fn: vReview, group: 2 },
   { id: "queue", label: "Queue", icon: "queue", fn: vQueue, group: 2 },
   { id: "cx", label: "Cx", icon: "cx", fn: vCx, group: 3 },
@@ -1201,4 +1203,81 @@ async function vData(view) {
             "</details>";
         }).join("") + "</div>";
     }).join("") + "</div>";
+}
+
+/* ============================== Compliance tab ============================ */
+async function vCompliance(view) {
+  view.innerHTML = '<div class="view">' + head("Spec compliance", "loading\u2026") + "</div>";
+  let c = null;
+  try { c = await (await fetch("/api/compliance")).json(); } catch (e) { c = null; }
+  if (!c || !(c.sections || []).length) {
+    view.innerHTML = '<div class="view">' + head("Spec compliance", "no run yet - upload documents and run the pipeline") + "</div>";
+    return;
+  }
+  const VC = { COMPLY: "var(--ok,#3f7d4e)", DEVIATION: "var(--bad,#b3382e)", NEEDS_REVIEW: "var(--warn,#a07416)", MISSING_EVIDENCE: "var(--ink3,#94886e)" };
+  const chip = (t) => '<span class="mono" style="display:inline-block;background:var(--inset,#ece4d2);border-radius:10px;padding:2px 10px;margin:2px 6px 2px 0;font-size:12px">' + t + "</span>";
+  const bar = (vd, total) => '<div style="display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--inset,#ece4d2);margin:8px 0 4px">' +
+    Object.entries(vd).filter(([k, n]) => n > 0).map(([k, n]) =>
+      '<span title="' + esc(k) + ': ' + n + '" style="width:' + (100 * n / Math.max(total, 1)) + '%;background:' + (VC[k] || "var(--raised,#e3d9c4)") + '"></span>').join("") + "</div>";
+  const t = c.totals || {};
+  const how = '<div class="card" style="padding:12px 16px;margin-bottom:12px"><b>How detection works</b><ol style="margin:6px 0 2px 18px;padding:0">' +
+    (c.how || []).map((s) => '<li class="form-note" style="margin:3px 0">' + esc(s) + "</li>").join("") + "</ol></div>";
+  view.innerHTML = '<div class="view">' +
+    head("Spec compliance", "detection accuracy, section by section \u00b7 " + (t.packages || 0) + " packages \u00b7 " + (t.claims || 0) + " claims \u00b7 " + (t.checks || 0) + " checks") + how +
+    c.sections.map((s) => {
+      const total = s.checks || 0;
+      const counts = Object.entries(s.verdicts || {}).filter(([k, n]) => n > 0).map(([k, n]) =>
+        '<span class="mono" style="margin-right:14px;color:' + (VC[k] || "inherit") + '">' + esc(k.toLowerCase().split("_").join(" ")) + " " + n + "</span>").join("");
+      const li = (arr) => (arr || []).map((d) => '<div class="form-note" style="margin:6px 0"><b class="mono">' + esc(String(d.package || "")) + "</b> \u00b7 " + esc(String(d.parameter || "")) + "<br>" + esc(String(d.reason || "")) + "</div>").join("") || '<div class="form-note">none</div>';
+      return '<div class="card" style="padding:12px 16px;margin-bottom:10px"><b>' + esc(s.section) + '</b> <span class="form-note mono">' + esc(s.source || "") + "</span>" +
+        '<div style="margin:6px 0 0">' + chip(s.clauses + " clauses") + chip(s.rules + " rules") + chip((s.packages || []).length + " package(s)") + chip(total + " checks") + "</div>" +
+        bar(s.verdicts || {}, total) + '<div style="margin:2px 0 8px">' + counts + "</div>" +
+        "<details><summary>deviations (" + (s.deviations || []).length + ")</summary>" + li(s.deviations) + "</details>" +
+        "<details><summary>routed to review (" + (s.reviews || []).length + ")</summary>" + li(s.reviews) + "</details></div>";
+    }).join("") + "</div>";
+}
+
+/* ================================ Risk tab ================================ */
+async function vRisk(view) {
+  const st = { delay: 0, sigma: 14 };
+  async function render() {
+    let r = null;
+    try { r = await (await fetch("/api/risk?delay_days=" + st.delay + "&sigma_days=" + st.sigma + "&trials=2000")).json(); } catch (e) { r = null; }
+    if (!r || !(r.items || []).length) {
+      view.innerHTML = '<div class="view">' + head("Schedule risk", "needs po_register.csv + schedule.csv and a pipeline run") + "</div>";
+      return;
+    }
+    const s = r.summary || {};
+    const strip = '<div class="card" style="padding:12px 16px;margin-bottom:12px"><b>One forecast from two systems nobody joins</b>' +
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">' +
+      '<div class="card" style="flex:1;min-width:190px;padding:10px 12px"><b>From SAP</b><div class="form-note">purchase order \u00b7 vendor \u00b7 delivery status \u00b7 projected arrival</div></div>' +
+      '<div class="card" style="flex:1;min-width:190px;padding:10px 12px"><b>From Primavera P6</b><div class="form-note">activity that needs it \u00b7 need-by date \u00b7 float (schedule slack)</div></div>' +
+      '<div class="card" style="flex:1;min-width:190px;padding:10px 12px"><b>The join</b><div class="form-note">margin = need-by + float \u2212 arrival. Negative means the critical path breaks. Monte Carlo (2000 seeded trials) turns the sliders into P(breach).</div></div></div></div>';
+    const sliders = '<div class="card" style="padding:12px 16px;margin-bottom:12px"><b>Stress the forecast</b>' +
+      '<div class="form-note" style="margin-top:6px">extra vendor delay: <b>' + st.delay + '</b> days</div><input id="rk-delay" type="range" min="0" max="90" step="5" value="' + st.delay + '" style="width:100%">' +
+      '<div class="form-note">lead-time uncertainty \u03c3: <b>' + st.sigma + '</b> days</div><input id="rk-sigma" type="range" min="0" max="60" step="2" value="' + st.sigma + '" style="width:100%">' +
+      '<div class="form-note mono">seed 42 \u00b7 same sliders, same numbers, every run - deterministic by construction</div></div>';
+    const chip = (t) => '<span class="mono" style="display:inline-block;background:var(--inset,#ece4d2);border-radius:10px;padding:2px 10px;margin:2px 6px 2px 0;font-size:12px">' + t + "</span>";
+    const chips = '<div style="margin-bottom:10px">' + chip(s.pos + " POs joined") + chip(s.already_late + " already late") + chip("expected breaches " + s.expected_breaches) + chip("value at risk \u20b9" + Number(s.value_at_risk_inr || 0).toLocaleString("en-IN")) + "</div>";
+    const rows = r.items.map((it) => {
+      const p = it.join.p_breach, m = it.join.margin_days;
+      const col = p > 0.5 ? "var(--bad,#b3382e)" : p > 0.15 ? "var(--warn,#a07416)" : "var(--ok,#3f7d4e)";
+      return "<tr>" +
+        '<td class="mono" style="padding:5px 10px 5px 0">' + esc(String(it.po)) + (it.critical_path ? " \u26a1" : "") + "</td>" +
+        '<td style="padding:5px 10px 5px 0">' + esc(String(it.vendor || "")) + "</td>" +
+        '<td class="mono" style="padding:5px 10px 5px 0">' + esc(String(it.p6.needed_on_site || "")) + "</td>" +
+        '<td class="mono" style="padding:5px 10px 5px 0">' + esc(String(it.sap.projected_arrival || "")) + "</td>" +
+        '<td class="mono" style="padding:5px 10px 5px 0">' + esc(String(it.p6.float_days)) + "</td>" +
+        '<td class="mono" style="padding:5px 10px 5px 0;color:' + (m < 0 ? "var(--bad,#b3382e)" : "inherit") + '">' + m + "</td>" +
+        '<td style="padding:5px 0"><span style="display:inline-block;background:var(--inset,#ece4d2);border-radius:4px;height:11px;width:110px;vertical-align:middle"><span style="display:block;height:11px;border-radius:4px;width:' + Math.round(p * 110) + 'px;background:' + col + '"></span></span> <span class="mono">' + Math.round(p * 100) + "%</span></td></tr>";
+    }).join("");
+    const table = '<div class="card" style="padding:12px 16px;overflow-x:auto"><table style="border-collapse:collapse;width:100%"><thead><tr>' +
+      ["PO", "vendor", "need-by (P6)", "arrival (SAP)", "float d", "margin d", "P(breach)"].map((h) => '<th class="form-note" style="text-align:left;padding:0 10px 6px 0">' + h + "</th>").join("") +
+      "</tr></thead><tbody>" + rows + "</tbody></table></div>";
+    view.innerHTML = '<div class="view">' + head("Schedule risk", "deterministic PO \u00d7 CPM join + seeded Monte Carlo \u00b7 \u26a1 = critical path") + strip + sliders + chips + table + "</div>";
+    const d = $("#rk-delay"), g = $("#rk-sigma");
+    if (d) d.onchange = (e) => { st.delay = +e.target.value; render(); };
+    if (g) g.onchange = (e) => { st.sigma = +e.target.value; render(); };
+  }
+  await render();
 }

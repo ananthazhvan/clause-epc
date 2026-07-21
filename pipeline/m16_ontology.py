@@ -240,8 +240,10 @@ def main():
                          "delay_reason": sh.get("delayReasonDescription") or sh.get("exceptionDescription")},
                   geo={"lat": last.get("latitude", org.get("latitude")),
                        "lon": last.get("longitude", org.get("longitude")),
-                       "origin": [org.get("latitude"), org.get("longitude")],
-                       "destination": [dst.get("latitude"), dst.get("longitude")],
+                       "origin": [org.get("latitude", (pos[0].get("latitude") if pos else None)),
+                                  org.get("longitude", (pos[0].get("longitude") if pos else None))],
+                       "destination": [dst.get("latitude", (pos[-1].get("latitude") if pos else None)),
+                                       dst.get("longitude", (pos[-1].get("longitude") if pos else None))],
                        "trail": [[u.get("latitude"), u.get("longitude")] for u in pos]})
             ref = po_by_digits.get(digits((sh.get("referenceNumbers") or {}).get("purchaseOrder")))
             if ref:
