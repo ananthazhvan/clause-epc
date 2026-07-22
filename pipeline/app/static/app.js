@@ -970,11 +970,15 @@ async function vNcr(view) {
   const cols = rows.length ? Object.keys(rows[0]).slice(0, 7) : [];
   view.innerHTML = '<div class="view">' +
     head("NCR register", rows.length + " non-conformance reports, auto-raised from deviations") +
-    '<div class="card"><table><tr>' + cols.map((c) => "<th>" + esc(c) + "</th>").join("") + "</tr>" +
+    '<div class="card" style="overflow-x:auto"><table style="width:100%"><tr>' + cols.map((c) => '<th style="text-align:left;white-space:nowrap;padding:6px 16px 6px 0">' + esc(c) + "</th>").join("") + "</tr>" +
     rows.map((r) => "<tr>" + cols.map((c) => {
       const val = String(r[c] == null ? "" : r[c]);
-      if (/^(DEVIATION|COMPLY|NEEDS_REVIEW|OPEN|CLOSED|PENDING)$/.test(val)) return "<td>" + stamp(val, "straight") + "</td>";
-      return '<td class="' + (/^[\d.,-]+$/.test(val) ? "mono r" : "") + '">' + esc(val.slice(0, 90)) + "</td>";
+      const td = (inner, extra) => '<td style="vertical-align:top;padding:7px 16px 7px 0;' + (extra || "") + '">' + inner + "</td>";
+      if (/^(DEVIATION|COMPLY|NEEDS_REVIEW|OPEN|CLOSED|PENDING)$/.test(val)) return td(stamp(val, "straight"));
+      if (/^[\d.,-]+$/.test(val)) return td('<span class="mono">' + esc(val) + "</span>", "text-align:right;white-space:nowrap");
+      if (/^(NCR|SUB|MER|ADD)-/.test(val)) return td('<span class="mono">' + esc(val) + "</span>", "white-space:nowrap");
+      if (val.length > 60) return td('<div style="max-width:420px;white-space:normal;overflow-wrap:anywhere;line-height:1.5">' + esc(val) + "</div>");
+      return td(esc(val), val.length > 24 ? "white-space:normal;max-width:220px" : "white-space:nowrap");
     }).join("") + "</tr>").join("") + "</table></div></div>";
 }
 
@@ -1272,7 +1276,7 @@ async function vRisk(view) {
         '<td style="padding:5px 0"><span style="display:inline-block;background:var(--inset,#ece4d2);border-radius:4px;height:11px;width:110px;vertical-align:middle"><span style="display:block;height:11px;border-radius:4px;width:' + Math.round(p * 110) + 'px;background:' + col + '"></span></span> <span class="mono">' + Math.round(p * 100) + "%</span></td></tr>";
     }).join("");
     const table = '<div class="card" style="padding:12px 16px;overflow-x:auto"><table style="border-collapse:collapse;width:100%"><thead><tr>' +
-      ["PO", "vendor", "need-by (P6)", "arrival (SAP)", "float d", "margin d", "P(breach)"].map((h) => '<th class="form-note" style="text-align:left;padding:0 10px 6px 0">' + h + "</th>").join("") +
+      ["PO", "vendor", "need-by (P6)", "arrival (SAP)", "float d", "margin d (after float)", "P(breach)"].map((h) => '<th class="form-note" style="text-align:left;padding:0 10px 6px 0">' + h + "</th>").join("") +
       "</tr></thead><tbody>" + rows + "</tbody></table></div>";
     view.innerHTML = '<div class="view">' + head("Schedule risk", "deterministic PO \u00d7 CPM join + seeded Monte Carlo \u00b7 \u26a1 = critical path") + strip + sliders + chips + table + "</div>";
     const d = $("#rk-delay"), g = $("#rk-sigma");

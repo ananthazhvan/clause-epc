@@ -129,9 +129,19 @@ def main():
             unlinked.append(rec)
             continue
         a = act_by_id[matched]
-        need = es[matched]
-        margin = need - arrival
+        # The material is needed when the work that CONSUMES it starts - the
+        # earliest successor of the matched procure/deliver activity. If the
+        # schedule names no successor, use the activity's early finish. Never
+        # its early start: a procurement's start is the order date, not the
+        # date the site needs the equipment.
+        _succ = [es[_sid] for _sid, _sa in act_by_id.items()
+                 if matched in [_p.strip() for _p in (_sa.get("predecessors") or "").split(";") if _p.strip()]]
+        need = min(_succ) if _succ else es[matched] + float(a.get("duration_days") or 0)
         flt = float(a.get("float_days") or 0)
+        # Float is the schedule's permission to slip. The join breaches only
+        # when the arrival eats past need-by PLUS float - 'projected
+        # availability > need date - float' is the whole forecast.
+        margin = (need + flt) - arrival
         critical = (a.get("critical_path") or "").strip().lower() in ("yes", "true", "1", "y")
         status = ("RECEIVED" if (p.get("delivery_status") or "").upper() == "DELIVERED"
                   else "LATE" if margin < 0
@@ -153,8 +163,8 @@ def main():
                 "needed_on_site": rec["needed_on_site"],
                 "projected_arrival": rec["projected_arrival"],
                 "margin_days": rec["margin_days"],
-                "days_to_act": max(0, int(round(margin + flt))),
-                "schedule_float_absorbs": bool(margin < 0 and over <= flt),
+                "days_to_act": max(0, int(round(margin))),
+                "schedule_float_absorbs": bool(margin >= 0 > margin - flt),
             })
     alerts.sort(key=lambda x: x["margin_days"])
     counts = {}

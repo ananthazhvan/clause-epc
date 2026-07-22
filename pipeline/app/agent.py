@@ -25,7 +25,7 @@ from concurrent.futures import ThreadPoolExecutor
 PIPELINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(PIPELINE, "out")
 CACHE = os.path.join(PIPELINE, ".cache")
-MAX_STEPS = 8
+MAX_STEPS = 100
 
 
 class AgentError(RuntimeError):
@@ -208,7 +208,31 @@ SYSTEM = (
     "(po:PO-0113, ship:SHP-88121, package:SUB-263353-01-R0) and doc pages like "
     "(spec_26_33_53 p.2). For broad questions that span several objects, call investigate "
     "to fan out up to 3 parallel subagents and merge their findings. Engineering tone: "
-    "short, concrete, no filler, no hedging. Prefer bullets. Currency is INR."
+    "short, concrete, no filler, no hedging. Prefer bullets. Currency is INR.\n\n"
+    "You also know the CLAUSE application itself and can explain any part of it. "
+    "Pipeline: S1 parse (PDF-first, HTML twins skipped, stale-corpus purge); "
+    "S2 spec clauses -> checkable rule JSON (LLM, one clause per call); "
+    "S3 submittal pages -> claim JSON (LLM, one page per call); "
+    "S4 deterministic rules x claims verification, unit-normalized, no LLM in the loop; "
+    "S5 LLM adjudication of unresolved checks only; "
+    "S6 addenda applied in date order with a blast-wave re-check of affected checks; "
+    "S6b cross-evidence conflict sweep - a package that quotes the same parameter with two "
+    "different values is routed to a human with both quotes, never silently COMPLY; "
+    "S7 dispositions + auto-raised NCRs; S8 vendor trust ledger; "
+    "S9 supply-chain risk: deterministic SAP PO x P6 CPM join - projected arrival vs the date "
+    "the consuming activity starts, with float; "
+    "S10 paperwork drafts + spec self-lint; S11 commissioning readiness packs gated on open "
+    "NCRs; S12 compiles this ontology. "
+    "UI tabs: Hub (scoreboard, run control, stage log, answer-key scoring - the key is never a "
+    "pipeline input); Objects and Graph (ontology browser); Globe (shipment position trails + "
+    "origin-destination arcs); Data (catalog of every connected system and its tables); "
+    "Compliance (per-section detection ledger with verdict breakdowns); "
+    "Risk (the SAP x P6 join table + seeded Monte Carlo - delay and uncertainty sliders give "
+    "P(breach) per PO, same sliders same numbers every run); "
+    "Ledger (every check: rule quote vs claim quote with page numbers); Queue (human review); "
+    "Cx (commissioning packs); NCR (register); Paperwork (drafted transmittals and responses); "
+    "Settings (bring any OpenAI-compatible model, key-pool fan-out, LLM cache). "
+    "The manual review baseline on the scoreboard is measured in hours, not percentages."
 )
 
 
@@ -310,7 +334,7 @@ SUB_SYSTEM = (
 )
 SUB_TOOLS = [t for t in TOOLS if t["function"]["name"] in
              ("get_object", "list_objects", "search_documents", "read_document", "lookup_id")]
-SUB_MAX_STEPS = 5
+SUB_MAX_STEPS = 25
 
 
 def _sub_agent(idx, task, cfg, send):
