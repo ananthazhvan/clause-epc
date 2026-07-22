@@ -5,3 +5,8 @@ __pycache__/
 .DS_Store
 .ipynb_checkpoints/
 .env
+pipeline/.env
+pipeline/out/
+pipeline/workspace/
+__pycache__/
+*.pyc
