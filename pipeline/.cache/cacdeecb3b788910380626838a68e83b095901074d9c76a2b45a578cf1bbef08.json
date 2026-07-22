@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"elec.test_standard\",\n      \"operator\": \"==\",\n      \"value\": \"IS 10118 and IS 6665\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Emergency lighting and exit signs shall be tested to IS 10118 and IS 6665.\"\n    }\n  ]\n}"}

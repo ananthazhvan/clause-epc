@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "Let me analyze what the CX page is based on the data returned. Let me also search for more context.", "tool_calls": [{"index": 0, "id": "call_00_yBT53an5zbVFvTUenJFf7141", "type": "function", "function": {"name": "search_documents", "arguments": "{\"query\": \"commissioning CX page test levels\"}"}}]}

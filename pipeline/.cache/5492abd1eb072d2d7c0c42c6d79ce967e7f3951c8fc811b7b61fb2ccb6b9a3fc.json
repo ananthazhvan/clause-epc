@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.power_cable_termination_torque_marked\",\n      \"operator\": \"exists\",\n      \"value\": null,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Verify all power cable terminations have been torque-marked per manufacturer specifications.\"\n    }\n  ]\n}"}

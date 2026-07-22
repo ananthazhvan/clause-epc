@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"misc.event_timestamp_timezone\",\n      \"value\": \"Asia/Kolkata\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"transmittal\",\n      \"quote\": \"Times and dates use Asia/Kolkata\",\n      \"confidence\": 1.0\n    }\n  ]\n}"}

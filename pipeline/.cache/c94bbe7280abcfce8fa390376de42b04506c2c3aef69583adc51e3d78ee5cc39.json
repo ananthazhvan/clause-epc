@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.power_cable_insulation_resistance\",\n      \"operator\": \">=\",\n      \"value\": 100,\n      \"unit\": \"M\u03a9\",\n      \"condition\": \"tested at 1000 VDC for LV circuits\",\n      \"quote\": \"Minimum acceptable insulation resistance is 100 M\u03a9 at 1000 VDC for LV circuits.\"\n    }\n  ]\n}"}

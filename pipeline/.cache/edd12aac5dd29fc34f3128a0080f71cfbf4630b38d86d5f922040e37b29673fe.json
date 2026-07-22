@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.certification_standard\",\n      \"operator\": \"==\",\n      \"value\": \"IEC 62040-3\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"UPS equipment shall be tested and certified in accordance with IEC 62040-3 (Method of Specifying the Performance and Test Requirements).\"\n    }\n  ]\n}"}

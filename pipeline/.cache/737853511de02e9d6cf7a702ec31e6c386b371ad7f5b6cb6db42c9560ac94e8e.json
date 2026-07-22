@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"gen.prime_power_rating_kva\",\n      \"value\": \"2500\",\n      \"unit\": \"kVA\",\n      \"condition\": null,\n      \"location\": \"prose\",\n      \"quote\": \"2,500 kVA diesel generators\",\n      \"confidence\": 0.95\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.battery_runtime_full_load\",\n      \"operator\": \">=\",\n      \"value\": 12,\n      \"unit\": \"minutes\",\n      \"condition\": \"at full load\",\n      \"quote\": \"Battery runtime at full load shall be a minimum of 12 minutes.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.redundant_takeover_full_load\",\n      \"operator\": \"exists\",\n      \"value\": \"true\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Remaining equipment shall assume full load without interruption.\"\n    }\n  ]\n}"}

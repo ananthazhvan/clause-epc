@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.output_power_interruption_detected\",\n      \"operator\": \"==\",\n      \"value\": false,\n      \"unit\": null,\n      \"condition\": \"throughout the transfer sequence\",\n      \"quote\": \"Verify the UPS maintains uninterrupted output power throughout the transfer sequence.\"\n    }\n  ]\n}"}

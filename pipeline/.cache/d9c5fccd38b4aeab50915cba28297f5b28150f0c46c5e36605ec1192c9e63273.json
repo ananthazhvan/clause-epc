@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"unmapped.cable_type\",\n      \"value\": \"OmniLink Control Cable 12Cx2.5sqmm\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"prose\",\n      \"quote\": \"OmniLink Control Cable 12Cx2.5sqmm\",\n      \"confidence\": 0.9\n    }\n  ]\n}"}

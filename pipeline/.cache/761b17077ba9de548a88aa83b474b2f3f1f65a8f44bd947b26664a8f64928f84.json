@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.warranty_duration_months\",\n      \"operator\": \">=\",\n      \"value\": 24,\n      \"unit\": \"months\",\n      \"condition\": \"from the date of commissioning\",\n      \"quote\": \"The manufacturer shall provide a minimum of 24 months on-site warranty from the date of commissioning.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.day_tank_capacity_l\",\n      \"operator\": \">=\",\n      \"value\": 1040,\n      \"unit\": \"L\",\n      \"condition\": null,\n      \"quote\": \"Based on the specified fuel consumption rate of 520 litres per hour, the minimum day tank capacity shall be 1040 litres.\"\n    }\n  ]\n}"}

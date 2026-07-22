@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.manufacturer\",\n      \"operator\": \"in\",\n      \"value\": [\"VoltEdge Power Systems\"],\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Acceptable UPS manufacturers: VoltEdge Power Systems, or approved equivalent meeting all performance requirements of this section.\"\n    }\n  ]\n}"}

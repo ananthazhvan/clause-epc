@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.cylinder_working_pressure_bar\",\n      \"operator\": \">=\",\n      \"value\": 42,\n      \"unit\": \"bar\",\n      \"condition\": null,\n      \"quote\": \"Cylinder working pressure shall be not less than 42 bar.\"\n    }\n  ]\n}"}

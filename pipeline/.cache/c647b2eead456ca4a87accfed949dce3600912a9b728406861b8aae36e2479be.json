@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.pedestal_height_mm\",\n      \"operator\": \"==\",\n      \"value\": 600,\n      \"unit\": \"mm\",\n      \"condition\": null,\n      \"quote\": \"Equipment shall be suitable for installation on raised access \ufb02oor with standard pedestal height of 600 mm.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.vibration_velocity\",\n      \"operator\": \"<=\",\n      \"value\": 4.5,\n      \"unit\": \"mm/s\",\n      \"condition\": null,\n      \"quote\": \"Vibration velocity shall not exceed 4.5 mm/s.\"\n    }\n  ]\n}"}

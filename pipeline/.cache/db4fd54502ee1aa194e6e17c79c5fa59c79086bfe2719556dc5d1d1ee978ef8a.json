@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.agent_discharge_time\",\n      \"operator\": \"<=\",\n      \"value\": 10,\n      \"unit\": \"s\",\n      \"condition\": \"to 95 percent of design concentration\",\n      \"quote\": \"Agent discharge to 95 percent of design concentration shall complete within 10 seconds per NFPA 2001.\"\n    }\n  ]\n}"}

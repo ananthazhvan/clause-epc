@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"swgr.short_circuit_withstand_duration\",\n      \"operator\": \">=\",\n      \"value\": 3,\n      \"unit\": \"s\",\n      \"condition\": null,\n      \"quote\": \"Short-circuit current withstand duration shall be a minimum of 3 seconds.\"\n    }\n  ]\n}"}

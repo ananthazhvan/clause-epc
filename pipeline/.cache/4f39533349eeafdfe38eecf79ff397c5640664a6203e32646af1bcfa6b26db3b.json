@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.alarm_response_time_s\",\n      \"operator\": \"<=\",\n      \"value\": 3,\n      \"unit\": \"s\",\n      \"condition\": null,\n      \"quote\": \"Alarm response shall not exceed 3 s.\"\n    }\n  ]\n}"}

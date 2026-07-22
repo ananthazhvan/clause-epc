@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.iec_62040_3_compliance\",\n      \"operator\": \"==\",\n      \"value\": \"IEC 62040-3:2021\",\n      \"unit\": null,\n      \"condition\": \"at 0.9 lagging pf\",\n      \"quote\": \"Performance standard shall be IEC 62040-3:2021 at 0.9 lagging pf.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"swgr.certification_standard\",\n      \"operator\": \"==\",\n      \"value\": \"UL 347\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Medium voltage switchgear shall be certified in accordance with UL 347.\"\n    }\n  ]\n}"}

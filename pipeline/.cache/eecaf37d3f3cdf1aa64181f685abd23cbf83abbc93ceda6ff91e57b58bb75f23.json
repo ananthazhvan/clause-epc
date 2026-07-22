@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.battery_cabinet_hydrogen_detection_sensor_exists\",\n      \"operator\": \"exists\",\n      \"value\": \"true\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Battery cabinets shall include hydrogen gas detection sensors with alarm contacts connected to the BMS.\"\n    }\n  ]\n}"}

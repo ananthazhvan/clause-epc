@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.short_circuit_withstand\",\n      \"operator\": \">=\",\n      \"value\": 65,\n      \"unit\": \"kA\",\n      \"condition\": \"for 1 s\",\n      \"quote\": \"Short-circuit withstand shall be not less than 65 kA for 1 s.\"\n    }\n  ]\n}"}

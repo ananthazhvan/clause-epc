@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.cop\",\n      \"operator\": \">=\",\n      \"value\": 6.3,\n      \"unit\": null,\n      \"condition\": \"Full-load\",\n      \"quote\": \"Full-load COP shall be not less than 6.3.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.output_frequency_regulation\",\n      \"operator\": \"range\",\n      \"value\": [49.95, 50.05],\n      \"unit\": \"Hz\",\n      \"condition\": \"under free-running conditions\",\n      \"quote\": \"Output frequency regulation shall be within +/- 0.1% of 50 Hz under free-running conditions.\"\n    }\n  ]\n}"}

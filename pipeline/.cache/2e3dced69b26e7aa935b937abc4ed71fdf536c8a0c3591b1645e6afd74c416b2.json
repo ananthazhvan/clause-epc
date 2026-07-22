@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.battery_cabinet_lvd_contactor\",\n      \"operator\": \"exists\",\n      \"value\": null,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"A Low Voltage Disconnect (LVD) contactor shall be provided on each battery cabinet to prevent deep discharge damage.\"\n    }\n  ]\n}"}

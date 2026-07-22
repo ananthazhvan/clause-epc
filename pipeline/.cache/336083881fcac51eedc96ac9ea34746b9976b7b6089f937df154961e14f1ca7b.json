@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"unmapped.cooling_capacity\",\n      \"value\": \"1250\",\n      \"unit\": \"TR\",\n      \"condition\": null,\n      \"location\": \"transmittal\",\n      \"quote\": \"1,250 TR chiller revised after ADD-001\",\n      \"confidence\": 0.9\n    }\n  ]\n}"}

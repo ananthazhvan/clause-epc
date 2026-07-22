@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.frequency_regulation\",\n      \"operator\": \"<=\",\n      \"value\": 0.5,\n      \"unit\": \"%\",\n      \"condition\": null,\n      \"quote\": \"Frequency regulation shall not exceed 0.5 %.\"\n    }\n  ]\n}"}

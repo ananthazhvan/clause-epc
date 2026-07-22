@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.takeover_interruption\",\n      \"operator\": \"absent\",\n      \"value\": \"interruption\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Remaining equipment shall assume full load without interruption.\"\n    }\n  ]\n}"}

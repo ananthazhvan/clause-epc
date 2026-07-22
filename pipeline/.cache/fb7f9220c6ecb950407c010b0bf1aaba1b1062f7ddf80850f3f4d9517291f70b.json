@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.major_deficiencies_closed\",\n      \"operator\": \"==\",\n      \"value\": true,\n      \"unit\": null,\n      \"condition\": \"before functional performance testing\",\n      \"quote\": \"Close major deficiencies before functional performance testing.\"\n    }\n  ]\n}"}

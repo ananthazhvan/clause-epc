@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.manufacturer\",\n      \"operator\": \"==\",\n      \"value\": \"Deccan Diesel Co.\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Acceptable generator set manufacturers: Deccan Diesel Co., or approved equivalent meeting all performance requirements of this section.\"\n    }\n  ]\n}"}

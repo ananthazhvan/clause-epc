@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.agent_hold_time_minutes\",\n      \"operator\": \">=\",\n      \"value\": 10,\n      \"unit\": \"min\",\n      \"condition\": null,\n      \"quote\": \"Agent hold time (retention) shall be a minimum of 10 minutes (600 seconds) to prevent re-ignition.\"\n    }\n  ]\n}"}

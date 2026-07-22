@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.ambient_temp_rating_continuous_degC\",\n      \"operator\": \">=\",\n      \"value\": 40,\n      \"unit\": \"deg C\",\n      \"condition\": \"continuous operation\",\n      \"quote\": \"All equipment shall be rated for continuous operation at 40\u00b0C ambient temperature.\"\n    }\n  ]\n}"}

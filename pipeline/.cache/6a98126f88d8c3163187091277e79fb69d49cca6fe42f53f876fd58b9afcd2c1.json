@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.interruption_duration_s\",\n      \"operator\": \"==\",\n      \"value\": 0,\n      \"unit\": \"s\",\n      \"condition\": null,\n      \"quote\": \"Remaining equipment shall assume full load without interruption.\"\n    }\n  ]\n}"}

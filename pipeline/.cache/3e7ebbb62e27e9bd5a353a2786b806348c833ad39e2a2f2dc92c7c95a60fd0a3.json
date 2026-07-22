@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.fire_class\",\n      \"operator\": \"==\",\n      \"value\": \"B2ca-s1a,d1,a1\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"CPR fire class shall be not less than B2ca-s1a,d1,a1.\"\n    }\n  ]\n}"}

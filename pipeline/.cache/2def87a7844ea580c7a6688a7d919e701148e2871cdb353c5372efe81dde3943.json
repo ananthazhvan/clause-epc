@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.rated_output_kva\",\n      \"operator\": \">=\",\n      \"value\": 2000,\n      \"unit\": \"kVA\",\n      \"condition\": null,\n      \"quote\": \"Rated output shall be not less than 2000 kVA.\"\n    }\n  ]\n}"}

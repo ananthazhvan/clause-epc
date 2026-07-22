@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.point_to_point_test_coverage\",\n      \"operator\": \"==\",\n      \"value\": 100,\n      \"unit\": \"%\",\n      \"condition\": null,\n      \"quote\": \"Point-to-point test coverage shall be 100 %.\"\n    }\n  ]\n}"}

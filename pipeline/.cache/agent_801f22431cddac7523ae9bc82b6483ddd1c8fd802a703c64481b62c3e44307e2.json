@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "The user is asking about a specific submittal ID \"SUB-261326-01-R0\" and why it's connected to many different clauses. Let me look this up.", "tool_calls": [{"index": 0, "id": "call_00_T1ZgoClnSbb1U64SQ2pB4830", "type": "function", "function": {"name": "lookup_id", "arguments": "{\"id\": \"SUB-261326-01-R0\"}"}}]}

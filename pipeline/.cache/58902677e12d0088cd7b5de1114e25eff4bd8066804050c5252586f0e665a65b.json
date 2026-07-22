@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"swgr.insulation_resistance_mohm\",\n      \"operator\": \">=\",\n      \"value\": 1000,\n      \"unit\": \"M\u03a9\",\n      \"condition\": \"at 5 kV DC\",\n      \"quote\": \"Minimum acceptable IR value is 1000 M\u03a9 at 5 kV DC.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.efficiency_50_load\",\n      \"operator\": \">=\",\n      \"value\": 96.5,\n      \"unit\": \"%\",\n      \"condition\": \"at 0.9 lagging pf\",\n      \"quote\": \"Efficiency at 50% load shall be not less than 96.5 % at 0.9 lagging pf.\"\n    }\n  ]\n}"}

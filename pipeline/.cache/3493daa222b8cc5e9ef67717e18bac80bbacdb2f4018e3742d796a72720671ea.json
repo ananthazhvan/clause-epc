@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.sound_pressure_at_1m\",\n      \"operator\": \"<=\",\n      \"value\": 88,\n      \"unit\": \"dBA\",\n      \"condition\": null,\n      \"quote\": \"Sound pressure at 1 m shall not exceed 88 dBA.\"\n    }\n  ]\n}"}

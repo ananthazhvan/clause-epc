@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"ups.battery_autonomy\",\n      \"value\": \"12\",\n      \"unit\": \"minutes\",\n      \"condition\": \"at 1,600 kW\",\n      \"location\": \"compliance_matrix\",\n      \"quote\": \"2.6.B Battery autonomy 12 minutes at 1,600 kW datasheet\",\n      \"confidence\": 0.95\n    }\n  ]\n}"}

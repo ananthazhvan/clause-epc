@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.topology\",\n      \"operator\": \"==\",\n      \"value\": \"double-conversion online mode (VFI-SS-111)\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"UPS operating topology shall be double-conversion online mode (VFI-SS-111) per IEC 62040-3 classification.\"\n    }\n  ]\n}"}

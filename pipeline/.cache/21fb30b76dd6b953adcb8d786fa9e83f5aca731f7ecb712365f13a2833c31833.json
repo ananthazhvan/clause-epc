@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.rated_operational_voltage\",\n      \"operator\": \"==\",\n      \"value\": 415,\n      \"unit\": \"V\",\n      \"condition\": null,\n      \"quote\": \"Rated operational voltage shall be 415 V.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "The user says \"RF draft 001\" is on the paperwork page. Let me check the paperwork page data.", "tool_calls": [{"index": 0, "id": "call_00_LQ9xJVqQuO5ZBIgWjv3h5964", "type": "function", "function": {"name": "get_page_data", "arguments": "{\"page\": \"paperwork\"}"}}]}

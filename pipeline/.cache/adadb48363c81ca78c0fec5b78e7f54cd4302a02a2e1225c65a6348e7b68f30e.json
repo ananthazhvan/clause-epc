@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.day_tank_capacity_l\",\n      \"operator\": \">=\",\n      \"value\": 1200,\n      \"unit\": \"L\",\n      \"condition\": null,\n      \"quote\": \"Fuel day tanks located indoors shall have a minimum capacity of 1200 litres.\"\n    }\n  ]\n}"}

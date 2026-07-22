@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"crah.cooling_capacity\",\n      \"operator\": \"==\",\n      \"value\": \"full load\",\n      \"unit\": null,\n      \"condition\": \"during simulated system failure and redundant takeover\",\n      \"quote\": \"Remaining equipment shall assume full load without interruption.\"\n    }\n  ]\n}"}

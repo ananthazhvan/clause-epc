@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.module_failure_load_continuity\",\n      \"operator\": \"exists\",\n      \"value\": null,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Remaining modules shall assume full load without interruption.\"\n    }\n  ]\n}"}

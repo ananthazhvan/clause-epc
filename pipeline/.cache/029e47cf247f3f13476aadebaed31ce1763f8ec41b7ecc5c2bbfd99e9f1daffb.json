@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.fan_specific_power\",\n      \"operator\": \"<=\",\n      \"value\": 0.028,\n      \"unit\": \"kW/kW\",\n      \"condition\": null,\n      \"quote\": \"Fan specific power shall not exceed 0.028 kW/kW.\"\n    }\n  ]\n}"}

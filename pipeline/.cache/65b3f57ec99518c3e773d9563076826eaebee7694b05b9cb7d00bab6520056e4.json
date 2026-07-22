@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.loop_capacity\",\n      \"operator\": \">=\",\n      \"value\": 250,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Loop capacity shall be not less than 250 devices.\"\n    }\n  ]\n}"}

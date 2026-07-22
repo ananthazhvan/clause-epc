@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"misc.test_standard\",\n      \"value\": \"Section 26 05 26\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"table\",\n      \"quote\": \"40 Rated functional test Section 26 05 26 H FAT record\",\n      \"confidence\": 0.9\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "Let me check the spec document for section 26 13 26 to understand the scope.", "tool_calls": [{"index": 0, "id": "call_00_hHqrTh5ArzxFMoJQ3CT66099", "type": "function", "function": {"name": "search_documents", "arguments": "{\"query\": \"26 13 26 spec\"}"}}]}

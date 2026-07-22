@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "Let me search for the P6 table reference.", "tool_calls": [{"index": 0, "id": "call_00_sJJ20gD5jgyVCGREw95C7564", "type": "function", "function": {"name": "search_documents", "arguments": "{\"query\": \"P6 TASK\"}"}}]}

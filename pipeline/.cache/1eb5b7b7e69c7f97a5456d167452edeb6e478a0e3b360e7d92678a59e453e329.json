@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.efficiency_full_load\",\n      \"operator\": \">=\",\n      \"value\": 95.0,\n      \"unit\": \"%\",\n      \"condition\": \"at full rated load in normal operating mode\",\n      \"quote\": \"System efficiency at full rated load shall be a minimum of 95.0% in normal operating mode.\"\n    }\n  ]\n}"}

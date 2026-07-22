@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.catalogue_values_replacing_certified_data\",\n      \"operator\": \"absent\",\n      \"value\": null,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Published catalogue values shall not replace project-condition certified data.\"\n    }\n  ]\n}"}

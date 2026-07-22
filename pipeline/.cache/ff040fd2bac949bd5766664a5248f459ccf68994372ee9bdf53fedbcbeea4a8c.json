@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.battery_autonomy_minutes\",\n      \"operator\": \">=\",\n      \"value\": 15,\n      \"unit\": \"min\",\n      \"condition\": \"at 1600 kW\",\n      \"quote\": \"Battery autonomy shall be not less than 15 min at 1600 kW.\"\n    }\n  ]\n}"}

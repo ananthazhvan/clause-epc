@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.input_power_factor\",\n      \"operator\": \">=\",\n      \"value\": 0.99,\n      \"unit\": null,\n      \"condition\": \"at full rated load\",\n      \"quote\": \"Input power factor shall be 0.99 or better at full rated load.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.cop\",\n      \"operator\": \">=\",\n      \"value\": 5.2,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"The UPS system shall achieve a minimum COP of 5.2.\"\n    }\n  ]\n}"}

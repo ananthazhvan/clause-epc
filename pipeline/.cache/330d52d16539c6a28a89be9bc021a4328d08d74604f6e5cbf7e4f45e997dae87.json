@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"crah.ambient_temperature_continuous_rating_degc\",\n      \"operator\": \"==\",\n      \"value\": 40,\n      \"unit\": \"deg C\",\n      \"condition\": null,\n      \"quote\": \"All equipment shall be rated for continuous operation at 40\u00b0C ambient temperature.\"\n    }\n  ]\n}"}

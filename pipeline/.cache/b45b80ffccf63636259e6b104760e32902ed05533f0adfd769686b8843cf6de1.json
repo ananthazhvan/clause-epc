@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.output_power_factor\",\n      \"operator\": \"==\",\n      \"value\": 1.0,\n      \"unit\": null,\n      \"condition\": \"at full rated load\",\n      \"quote\": \"UPS module output power factor shall be unity (1.0 PF) at full rated load. No derating for power factor below unity is permitted.\"\n    }\n  ]\n}"}

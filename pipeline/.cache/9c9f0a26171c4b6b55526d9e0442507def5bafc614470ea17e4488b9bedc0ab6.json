@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.redundancy_configuration\",\n      \"operator\": \"==\",\n      \"value\": \"N+1 redundant\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"The system shall be configured in a fully redundant N+1 configuration.\"\n    }\n  ]\n}"}

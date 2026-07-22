@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.bond_continuity_ohm\",\n      \"operator\": \"<=\",\n      \"value\": 0.1,\n      \"unit\": \"ohm\",\n      \"condition\": null,\n      \"quote\": \"Bond continuity shall not exceed 0.1 ohm.\"\n    }\n  ]\n}"}

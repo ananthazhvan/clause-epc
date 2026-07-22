@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.redundancy_configuration\",\n      \"operator\": \"==\",\n      \"value\": \"N+2\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"The UPS system shall be configured with N+2 redundancy.\"\n    }\n  ]\n}"}

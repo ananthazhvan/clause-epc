@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"swgr.manufacturer\",\n      \"operator\": \"in\",\n      \"value\": [\"Trident Switchgear\"],\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Acceptable switchgear manufacturers: Trident Switchgear, or approved equivalent meeting all performance requirements of this section.\"\n    }\n  ]\n}"}

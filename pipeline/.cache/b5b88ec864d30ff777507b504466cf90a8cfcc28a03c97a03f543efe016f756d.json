@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.total_clean_agent_quantity_kg\",\n      \"operator\": \">=\",\n      \"value\": 12500,\n      \"unit\": \"kg\",\n      \"condition\": null,\n      \"quote\": \"Minimum total clean agent quantity for the campus shall be 12,500 kg of FK-5-1-12.\"\n    }\n  ]\n}"}

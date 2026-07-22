@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.sound_pressure_level\",\n      \"operator\": \"<=\",\n      \"value\": 85,\n      \"unit\": \"dBA\",\n      \"condition\": \"at 1 metre per AHRI 575\",\n      \"quote\": \"Sound pressure level shall not exceed 85 dBA at 1 metre per AHRI 575.\"\n    }\n  ]\n}"}

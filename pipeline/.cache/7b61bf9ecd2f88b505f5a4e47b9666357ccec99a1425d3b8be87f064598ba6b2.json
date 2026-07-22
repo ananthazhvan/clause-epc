@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.cooling_duty\",\n      \"operator\": \">=\",\n      \"value\": 1250,\n      \"unit\": \"TR\",\n      \"condition\": null,\n      \"quote\": \"Cooling duty shall be not less than 1250 TR.\"\n    }\n  ]\n}"}

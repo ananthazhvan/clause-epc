@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"swgr.manufacturing_facility_iso_9001_certification\",\n      \"operator\": \"exists\",\n      \"value\": \"true\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Manufacturing facility shall hold current ISO 9001 certification.\"\n    }\n  ]\n}"}

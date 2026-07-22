@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.thermal_capacity_kW\",\n      \"operator\": \">=\",\n      \"value\": 4500,\n      \"unit\": \"kW\",\n      \"condition\": null,\n      \"quote\": \"Thermal capacity shall be not less than 4500 kW.\"\n    }\n  ]\n}"}

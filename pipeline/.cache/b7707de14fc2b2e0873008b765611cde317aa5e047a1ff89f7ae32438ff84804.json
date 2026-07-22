@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.prime_power_rating_kva\",\n      \"operator\": \">=\",\n      \"value\": 2500,\n      \"unit\": \"kVA\",\n      \"condition\": \"at 0.8 pf\",\n      \"quote\": \"Prime power rating shall be not less than 2500 kVA at 0.8 pf.\"\n    }\n  ]\n}"}

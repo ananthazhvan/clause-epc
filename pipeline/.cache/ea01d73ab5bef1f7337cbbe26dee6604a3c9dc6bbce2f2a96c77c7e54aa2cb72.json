@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.anti_vibration_pads\",\n      \"operator\": \"==\",\n      \"value\": \"provided\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Anti-vibration pads shall be provided under all mounting points.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.insulation_resistance\",\n      \"operator\": \">=\",\n      \"value\": 100,\n      \"unit\": \"M\u03a9\",\n      \"condition\": \"at 1000 VDC\",\n      \"quote\": \"Minimum acceptable insulation resistance is 100 M\u03a9 at 1000 VDC.\"\n    }\n  ]\n}"}

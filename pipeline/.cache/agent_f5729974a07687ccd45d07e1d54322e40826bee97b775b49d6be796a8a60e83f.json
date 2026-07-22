@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "Let me get the exact text from spec page 2.", "tool_calls": [{"index": 0, "id": "call_00_qxqbgwRPZSEa681Dm9h47742", "type": "function", "function": {"name": "read_document", "arguments": "{\"doc\": \"spec_26_33_53.pdf\", \"page\": 2}"}}]}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.time_to_rated_speed_and_voltage\",\n      \"operator\": \"<=\",\n      \"value\": 10,\n      \"unit\": \"seconds\",\n      \"condition\": \"initial no-load start test\",\n      \"quote\": \"Engine shall reach rated speed and voltage within 10 seconds of the start command.\"\n    }\n  ]\n}"}

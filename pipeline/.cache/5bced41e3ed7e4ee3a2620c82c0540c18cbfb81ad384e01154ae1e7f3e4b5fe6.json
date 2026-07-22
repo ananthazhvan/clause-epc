@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"elec.routine_tests_performed\",\n      \"operator\": \"==\",\n      \"value\": \"true\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"All factory-assembled electrical equipment shall be subjected to routine tests at the manufacturer's facility prior to shipment.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.clean_agent_piping_joint_type\",\n      \"operator\": \"in\",\n      \"value\": [\"threaded\", \"groove-coupled\"],\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"All piping joints shall be threaded or groove-coupled as specified by the system manufacturer.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.channel_insertion_loss_f500mhz\",\n      \"operator\": \"<=\",\n      \"value\": 47.1,\n      \"unit\": \"dB\",\n      \"condition\": \"at 500 MHz\",\n      \"quote\": \"Channel insertion loss at 500 MHz shall not exceed 47.1 dB.\"\n    }\n  ]\n}"}

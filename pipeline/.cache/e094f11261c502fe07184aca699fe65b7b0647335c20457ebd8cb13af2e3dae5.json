@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.bms_signal_display_correctness\",\n      \"operator\": \"==\",\n      \"value\": true,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Verify all alarm and status signals are correctly displayed on the central BMS operator console.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"misc.optical_fibre_backbone_type\",\n      \"value\": \"OS2\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"transmittal\",\n      \"quote\": \"OS2 optical-fibre backbone\",\n      \"confidence\": 1.0\n    }\n  ]\n}"}

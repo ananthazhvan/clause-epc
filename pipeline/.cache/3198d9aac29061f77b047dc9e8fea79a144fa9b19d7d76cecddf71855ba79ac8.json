@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"crah.refrigerant_type\",\n      \"operator\": \"==\",\n      \"value\": \"R-410A\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Where the CRAH unit incorporates a direct expansion (DX) trim cooling circuit, the refrigerant type shall be R-410A only.\"\n    }\n  ]\n}"}

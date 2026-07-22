@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.porosity\",\n      \"operator\": \"absent\",\n      \"value\": null,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"NDE. Porosity in any examined joint is cause for rejection of that joint.\"\n    }\n  ]\n}"}

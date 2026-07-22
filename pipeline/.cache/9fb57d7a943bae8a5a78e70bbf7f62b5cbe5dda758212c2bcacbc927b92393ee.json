@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.uninterrupted_operation\",\n      \"operator\": \"==\",\n      \"value\": \"true\",\n      \"unit\": null,\n      \"condition\": \"during coordinated full-load transfer test from utility to standby and back\",\n      \"quote\": \"Verify uninterrupted operation throughout the sequence.\"\n    }\n  ]\n}"}

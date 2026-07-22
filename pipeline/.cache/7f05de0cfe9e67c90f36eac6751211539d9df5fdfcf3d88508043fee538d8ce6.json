@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.inverter_efficiency_full_load\",\n      \"operator\": \">=\",\n      \"value\": 96.0,\n      \"unit\": \"%\",\n      \"condition\": \"at full load\",\n      \"quote\": \"Inverter efficiency shall be not less than 96.0 percent at full load.\"\n    }\n  ]\n}"}

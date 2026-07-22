@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"ups.certification_standard\",\n      \"value\": \"IEC 62040-3\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"compliance_matrix\",\n      \"quote\": \"26 33 53 Part 1.4.1.C\",\n      \"confidence\": 1.0\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"elec.submittal_review_turnaround_days\",\n      \"operator\": \"<=\",\n      \"value\": 14,\n      \"unit\": \"calendar days\",\n      \"condition\": null,\n      \"quote\": \"Submittal review turnaround time is 14 calendar days from receipt of the complete package.\"\n    }\n  ]\n}"}

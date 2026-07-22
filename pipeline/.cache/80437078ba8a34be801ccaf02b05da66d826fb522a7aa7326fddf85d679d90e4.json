@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.load_acceptance\",\n      \"operator\": \">=\",\n      \"value\": 80,\n      \"unit\": \"%\",\n      \"condition\": \"at stable scheduled conditions\",\n      \"quote\": \"Load acceptance shall be not less than 80 % in one step.\"\n    }\n  ]\n}"}

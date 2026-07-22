@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"crah.cop\",\n      \"operator\": \">=\",\n      \"value\": 5.2,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Unit coefficient of performance (COP) shall be a minimum of 5.2.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.parallel_load_imbalance\",\n      \"operator\": \"<=\",\n      \"value\": 5,\n      \"unit\": \"%\",\n      \"condition\": \"while operating in parallel with active load sharing enabled\",\n      \"quote\": \"Load imbalance between parallel modules shall not exceed 5% of rated load.\"\n    }\n  ]\n}"}

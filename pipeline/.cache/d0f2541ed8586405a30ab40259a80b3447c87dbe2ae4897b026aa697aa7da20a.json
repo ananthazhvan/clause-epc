@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.installation_level_deviation\",\n      \"operator\": \"<=\",\n      \"value\": 2,\n      \"unit\": \"mm\",\n      \"condition\": \"across the base frame\",\n      \"quote\": \"Anti-vibration mounts shall be adjusted to achieve level installation within 2 mm across the base frame.\"\n    }\n  ]\n}"}

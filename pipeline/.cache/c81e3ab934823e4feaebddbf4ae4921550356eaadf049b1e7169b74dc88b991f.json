@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"crah.valve_type\",\n      \"operator\": \"==\",\n      \"value\": \"2-way modulating control valve\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"CRAH unit shall be equipped with a 2-way modulating control valve for chilled water flow regulation.\"\n    }\n  ]\n}"}

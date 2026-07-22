@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.efficiency_test_standard\",\n      \"operator\": \"==\",\n      \"value\": \"IEC 62040-3\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Factory witness test per IEC 62040-3;\"\n    }\n  ]\n}"}

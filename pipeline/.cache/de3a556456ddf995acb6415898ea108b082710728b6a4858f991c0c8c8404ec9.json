@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.battery_cabinet_max_floor_load_weight_kg\",\n      \"operator\": \"<=\",\n      \"value\": 2800,\n      \"unit\": \"kg\",\n      \"condition\": \"fully loaded battery cabinet\",\n      \"quote\": \"Maximum floor-load weight per fully loaded battery cabinet shall not exceed 2800 kg.\"\n    }\n  ]\n}"}

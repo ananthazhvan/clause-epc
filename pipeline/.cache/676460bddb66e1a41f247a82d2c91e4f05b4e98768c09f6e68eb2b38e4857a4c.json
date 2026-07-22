@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.design_pressure_bar\",\n      \"operator\": \">=\",\n      \"value\": 16,\n      \"unit\": \"bar\",\n      \"condition\": null,\n      \"quote\": \"Design pressure shall be not less than 16 bar.\"\n    }\n  ]\n}"}

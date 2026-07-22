@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.evaporator_pressure_drop\",\n      \"operator\": \"<=\",\n      \"value\": 85,\n      \"unit\": \"kPa\",\n      \"condition\": null,\n      \"quote\": \"Evaporator pressure drop shall not exceed 85 kPa.\"\n    }\n  ]\n}"}

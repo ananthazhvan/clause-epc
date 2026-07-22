@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.controller_scan_cycle_s\",\n      \"operator\": \"<=\",\n      \"value\": 1,\n      \"unit\": \"s\",\n      \"condition\": null,\n      \"quote\": \"Controller scan cycle shall not exceed 1 s.\"\n    }\n  ]\n}"}

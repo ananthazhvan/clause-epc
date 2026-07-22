@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.test_report_prepared_by_qualified_technician\",\n      \"operator\": \"exists\",\n      \"value\": null,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Test report shall be prepared by a qualified fire protection technician.\"\n    }\n  ]\n}"}

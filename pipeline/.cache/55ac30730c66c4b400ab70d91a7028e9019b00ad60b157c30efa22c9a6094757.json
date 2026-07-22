@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.room_integrity_retention\",\n      \"operator\": \">=\",\n      \"value\": 10,\n      \"unit\": \"min\",\n      \"condition\": null,\n      \"quote\": \"Room integrity retention shall be not less than 10 min.\"\n    }\n  ]\n}"}

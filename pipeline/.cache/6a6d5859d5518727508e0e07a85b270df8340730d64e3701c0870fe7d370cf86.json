@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"unmapped.time_zone\",\n      \"value\": \"Asia/Kolkata\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"prose\",\n      \"quote\": \"Controlled project document \u2022 Times and dates use Asia/Kolkata \u2022 Uncontrolled when printed\",\n      \"confidence\": 0.6\n    }\n  ]\n}"}

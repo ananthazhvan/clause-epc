@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"unmapped.times_timezone\",\n      \"value\": \"Asia/Kolkata\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"prose\",\n      \"quote\": \"Times and dates use Asia/Kolkata\",\n      \"confidence\": 0.6\n    }\n  ]\n}"}

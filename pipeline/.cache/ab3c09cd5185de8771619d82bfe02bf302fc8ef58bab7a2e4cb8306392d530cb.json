@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"misc.horizontal_cabling_category\",\n      \"value\": \"Category 6A\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"transmittal\",\n      \"quote\": \"Category 6A copper system\",\n      \"confidence\": 0.9\n    }\n  ]\n}"}

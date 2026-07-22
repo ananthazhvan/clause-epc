@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.flushing_velocity\",\n      \"operator\": \">=\",\n      \"value\": 3.0,\n      \"unit\": \"m/s\",\n      \"condition\": null,\n      \"quote\": \"Flushing velocity shall be not less than 3.0 m/s.\"\n    }\n  ]\n}"}

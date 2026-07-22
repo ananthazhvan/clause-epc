@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.alarm_and_status_signals\",\n      \"operator\": \"exists\",\n      \"value\": null,\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Verify all UPS alarm and status signals are correctly mapped and displayed on the central BMS operator console.\"\n    }\n  ]\n}"}

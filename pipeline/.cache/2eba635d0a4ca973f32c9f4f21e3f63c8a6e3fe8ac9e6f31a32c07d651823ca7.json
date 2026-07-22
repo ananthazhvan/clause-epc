@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"elec.compliance_standard\",\n      \"operator\": \"==\",\n      \"value\": \"NFPA 2001 (2008 Edition)\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"All fire alarm and electrical installations shall comply with NFPA 2001 (2008 Edition).\"\n    }\n  ]\n}"}

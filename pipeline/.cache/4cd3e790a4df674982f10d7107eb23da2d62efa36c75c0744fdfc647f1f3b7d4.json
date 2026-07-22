@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.manufacturer\",\n      \"operator\": \"in\",\n      \"value\": [\"VisionPro\"],\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Acceptable manufacturers: VisionPro or approved equivalent meeting all performance requirements of this section.\"\n    }\n  ]\n}"}

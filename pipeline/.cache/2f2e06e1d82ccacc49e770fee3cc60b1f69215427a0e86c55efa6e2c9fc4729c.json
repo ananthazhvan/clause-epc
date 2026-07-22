@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.event_timestamp_sync\",\n      \"operator\": \"==\",\n      \"value\": \"project NTP service\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Synchronise event timestamps to the project NTP service in Asia/Kolkata.\"\n    }\n  ]\n}"}

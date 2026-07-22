@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.piping_material\",\n      \"operator\": \"==\",\n      \"value\": \"carbon steel\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Carbon-steel chilled-water piping\"\n    }\n  ]\n}"}

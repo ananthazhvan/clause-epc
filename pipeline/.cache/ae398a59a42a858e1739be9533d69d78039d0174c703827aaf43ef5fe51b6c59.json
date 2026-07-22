@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.data_source\",\n      \"operator\": \"==\",\n      \"value\": \"project_condition_certified\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Published catalogue values shall not replace project-condition certified data.\"\n    }\n  ]\n}"}

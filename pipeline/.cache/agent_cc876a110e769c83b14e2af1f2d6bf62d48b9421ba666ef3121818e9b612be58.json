@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "The user is giving an example of a question I should answer. Let me look up that ID to show them how it works.", "tool_calls": [{"index": 0, "id": "call_00_SFXxn22o8oRuVID53If33247", "type": "function", "function": {"name": "lookup_id", "arguments": "{\"id\": \"R-26-33-53-07\"}"}}]}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.input_thd\",\n      \"operator\": \"<=\",\n      \"value\": 5,\n      \"unit\": \"%\",\n      \"condition\": \"at 100 percent load\",\n      \"quote\": \"Input current total harmonic distortion (THDi) shall not exceed 5 percent at 100 percent load.\"\n    }\n  ]\n}"}

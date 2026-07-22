@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.gateway_availability\",\n      \"operator\": \">=\",\n      \"value\": 99.95,\n      \"unit\": \"%\",\n      \"condition\": null,\n      \"quote\": \"Gateway availability shall be not less than 99.95 %.\"\n    }\n  ]\n}"}

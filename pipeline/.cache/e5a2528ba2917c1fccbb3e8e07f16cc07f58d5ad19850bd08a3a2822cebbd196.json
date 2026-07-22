@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.battery_runtime_power_factor\",\n      \"operator\": \"==\",\n      \"value\": 1.0,\n      \"unit\": null,\n      \"condition\": \"at a load power factor of 1.0 PF (unity)\",\n      \"quote\": \"Battery runtime performance shall be rated and verified at a load power factor of 1.0 PF (unity).\"\n    }\n  ]\n}"}

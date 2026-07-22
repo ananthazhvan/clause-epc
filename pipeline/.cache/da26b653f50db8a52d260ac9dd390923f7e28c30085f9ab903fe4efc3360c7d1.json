@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.optical_attenuation_1550_nm\",\n      \"operator\": \"<=\",\n      \"value\": 0.22,\n      \"unit\": \"dB/km\",\n      \"condition\": null,\n      \"quote\": \"Optical attenuation at 1550 nm shall not exceed 0.22 dB/km.\"\n    }\n  ]\n}"}

@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"elec.compliance_standard\",\n      \"operator\": \"==\",\n      \"value\": \"IS 3043 and IEC 62305\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Earthing and lightning protection system components shall comply with IS 3043 and IEC 62305.\"\n    }\n  ]\n}"}

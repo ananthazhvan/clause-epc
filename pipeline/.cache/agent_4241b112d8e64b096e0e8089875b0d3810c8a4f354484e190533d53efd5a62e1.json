@@ -1,0 +1,1 @@
+{"role": "assistant", "content": "", "reasoning_content": "Let me read the SUB-236426-01 document to see the details of the submittal and understand what's deviating.", "tool_calls": [{"index": 0, "id": "call_00_pZUQ49SmeKFPPydf8wS22500", "type": "function", "function": {"name": "read_document", "arguments": "{\"doc\": \"SUB-236426-01-R0.pdf\", \"page\": 1}"}}]}

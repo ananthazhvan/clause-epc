@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.battery_90pct_recharge_time\",\n      \"operator\": \"<=\",\n      \"value\": 8,\n      \"unit\": \"hours\",\n      \"condition\": \"from fully discharged state\",\n      \"quote\": \"Battery system shall reach 90% of nominal capacity within 8 hours of recharge initiation.\"\n    }\n  ]\n}"}

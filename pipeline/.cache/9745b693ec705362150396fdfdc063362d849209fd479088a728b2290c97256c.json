@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"crah.manufacturer\",\n      \"operator\": \"==\",\n      \"value\": \"CryoCore Climate\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Acceptable CRAH manufacturers: CryoCore Climate, or approved equivalent meeting all performance requirements of this section.\"\n    }\n  ]\n}"}

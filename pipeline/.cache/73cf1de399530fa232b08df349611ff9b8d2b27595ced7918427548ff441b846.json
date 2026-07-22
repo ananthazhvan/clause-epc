@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.design_concentration_volume_percent\",\n      \"operator\": \"==\",\n      \"value\": 4.7,\n      \"unit\": \"%\",\n      \"condition\": \"for Class A and Class C fire hazards\",\n      \"quote\": \"Design concentration shall be 4.7% by volume (v/v) for Class A and Class C fire hazards.\"\n    }\n  ]\n}"}

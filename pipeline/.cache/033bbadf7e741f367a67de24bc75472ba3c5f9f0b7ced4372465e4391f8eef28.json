@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.agent_concentration_pct\",\n      \"operator\": \">=\",\n      \"value\": 7.2,\n      \"unit\": \"%\",\n      \"condition\": null,\n      \"quote\": \"Agent concentration shall be not less than 7.2 %.\"\n    }\n  ]\n}"}

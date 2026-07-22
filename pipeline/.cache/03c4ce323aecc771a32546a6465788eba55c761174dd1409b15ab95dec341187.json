@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"gen.fuel_consumption_rate_50_load\",\n      \"operator\": \"exists\",\n      \"value\": true,\n      \"unit\": null,\n      \"condition\": \"at 50% load\",\n      \"quote\": \"Fuel consumption rate at 50% load shall be submitted in the vendor performance data table.\"\n    }\n  ]\n}"}

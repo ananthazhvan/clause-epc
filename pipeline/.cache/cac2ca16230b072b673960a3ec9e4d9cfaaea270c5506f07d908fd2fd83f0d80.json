@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.test_standard\",\n      \"operator\": \"==\",\n      \"value\": \"IS 3043:2018\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Test standard shall be IS 3043:2018.\"\n    }\n  ]\n}"}

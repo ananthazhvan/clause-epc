@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.integrated_point_test_percentage\",\n      \"operator\": \"==\",\n      \"value\": 100,\n      \"unit\": \"%\",\n      \"condition\": \"at stable scheduled conditions\",\n      \"quote\": \"Integrated point test shall be 100 %.\"\n    }\n  ]\n}"}

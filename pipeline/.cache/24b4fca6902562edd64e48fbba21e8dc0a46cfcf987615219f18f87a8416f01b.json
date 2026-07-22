@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.earth_grid_resistance_ohm\",\n      \"operator\": \"<=\",\n      \"value\": 0.5,\n      \"unit\": \"ohm\",\n      \"condition\": null,\n      \"quote\": \"Earth grid resistance shall not exceed 0.5 ohm.\"\n    }\n  ]\n}"}

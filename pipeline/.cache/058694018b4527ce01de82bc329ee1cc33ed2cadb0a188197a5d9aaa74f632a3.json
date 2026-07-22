@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"ups.redundant_takeover_capability\",\n      \"operator\": \"exists\",\n      \"value\": \"true\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Remaining equipment shall assume full load without interruption.\"\n    }\n  ]\n}"}

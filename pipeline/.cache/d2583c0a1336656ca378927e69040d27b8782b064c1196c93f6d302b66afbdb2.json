@@ -1,0 +1,1 @@
+{"content": "{\n  \"claims\": [\n    {\n      \"parameter\": \"misc.purchase_order\",\n      \"value\": \"0000112584\",\n      \"unit\": null,\n      \"condition\": null,\n      \"location\": \"transmittal\",\n      \"quote\": \"SHOP FABRICATION DATA BOOK \u2022 SAP 0000112584\",\n      \"confidence\": 0.9\n    }\n  ]\n}"}

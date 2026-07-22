@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"misc.ambient_temperature_continuous\",\n      \"operator\": \">=\",\n      \"value\": 40,\n      \"unit\": \"deg C\",\n      \"condition\": \"continuous operation\",\n      \"quote\": \"All equipment shall be rated for continuous operation at 40\u00b0C ambient temperature.\"\n    }\n  ]\n}"}

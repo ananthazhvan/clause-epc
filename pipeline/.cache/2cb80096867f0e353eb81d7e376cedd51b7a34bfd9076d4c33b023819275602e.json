@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"fire.nozzle_type\",\n      \"operator\": \"==\",\n      \"value\": \"360-degree pattern type specifically for FK-5-1-12 agent\",\n      \"unit\": null,\n      \"condition\": null,\n      \"quote\": \"Discharge nozzles shall be 360-degree pattern type designed specifically for FK-5-1-12 agent.\"\n    }\n  ]\n}"}

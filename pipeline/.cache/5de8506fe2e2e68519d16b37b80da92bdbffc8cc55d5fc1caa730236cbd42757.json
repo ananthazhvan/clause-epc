@@ -1,0 +1,1 @@
+{"content": "{\n  \"rules\": [\n    {\n      \"parameter\": \"crah.test_duration_hours\",\n      \"operator\": \"==\",\n      \"value\": 72,\n      \"unit\": \"h\",\n      \"condition\": \"under simulated IT load\",\n      \"quote\": \"Perform 72-hour continuous run test under simulated IT load.\"\n    }\n  ]\n}"}
